@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
     private OfferingAdapter adapter;
     private List<Offering> allOfferings;
     private Query query;
+    private SwipeRefreshLayout swipeContainer;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -47,6 +49,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvOfferings = view.findViewById(R.id.rvOfferings);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         query = new Query();
         allOfferings = new ArrayList<>();
@@ -55,6 +58,19 @@ public class HomeFragment extends Fragment {
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         queryPosts();
     }
@@ -70,7 +86,9 @@ public class HomeFragment extends Fragment {
                 for (Offering offering : offerings) {
                     Log.i(TAG, "Offering: " + offering.getTitle());
                 }
+                adapter.clear();
                 allOfferings.addAll(offerings);
+                swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();
             }
         });
