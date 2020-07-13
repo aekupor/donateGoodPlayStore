@@ -9,9 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.donategood.fragments.DetailFragment;
 import com.example.donategood.models.Offering;
 import com.example.donategood.R;
 import com.parse.ParseException;
@@ -93,6 +97,9 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 Log.i(TAG, "offering clicked: " + offering.getTitle());
 
                 //go to detail fragment
+                final FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                Fragment fragment = DetailFragment.newInstance(offering.getObjectId());
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             }
         }
     }

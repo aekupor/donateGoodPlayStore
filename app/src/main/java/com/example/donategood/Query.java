@@ -6,7 +6,7 @@ import com.parse.ParseQuery;
 
 public class Query {
 
-    protected void queryAllPosts(FindCallback<Offering> callback) {
+    public void queryAllPosts(FindCallback<Offering> callback) {
         Integer displayLimit = 20;
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.setLimit(displayLimit);
