@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.donategood.EndlessRecyclerViewScrollListener;
 import com.example.donategood.models.Offering;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.Query;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     private List<Offering> allOfferings;
     private Query query;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,6 +74,16 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                queryPosts(page);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvOfferings.addOnScrollListener(scrollListener);
+
         queryPosts();
     }
 
@@ -87,9 +99,11 @@ public class HomeFragment extends Fragment {
                     Log.i(TAG, "Offering: " + offering.getTitle());
                 }
                 adapter.clear();
+                allOfferings.clear();
                 allOfferings.addAll(offerings);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();
+                scrollListener.resetState();
             }
         });
     }
