@@ -48,7 +48,7 @@ public class Offering extends ParseObject {
         put(KEY_IMAGE, image);
     }
 
-    public ArrayList<ParseFile> getImages() {
-        return (ArrayList<ParseFile>) get(KEY_IMAGES);
+    public ArrayList<ParseUser> getImages() {
+        return (ArrayList<ParseUser>) get(KEY_IMAGES);
     }
 }

@@ -20,6 +20,7 @@ import com.example.donategood.models.Offering;
 import com.example.donategood.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,10 +88,14 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                         .into(ivOfferingPhoto);
             }
 
-            ArrayList<ParseFile> images = offering.getImages();
+            ArrayList<ParseUser> images = offering.getImages();
             if (images != null) {
-                for (ParseFile img : images) {
-                    Log.i(TAG, "image" + img.getUrl());
+                for (ParseUser img : images) {
+                    try {
+                        Log.i(TAG, "image" + img.fetchIfNeeded().getUsername());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
