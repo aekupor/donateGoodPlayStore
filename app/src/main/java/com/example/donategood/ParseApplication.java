@@ -2,6 +2,7 @@ package com.example.donategood;
 
 import android.app.Application;
 
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.Parse;
 import com.parse.ParseObject;

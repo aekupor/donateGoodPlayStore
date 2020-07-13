@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.donategood.fragments.DetailFragment;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.example.donategood.R;
 import com.parse.ParseException;
@@ -47,7 +48,11 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Offering offering = offerings.get(position);
-        holder.bind(offering);
+        try {
+            holder.bind(offering);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -60,6 +65,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private TextView tvTitle;
         private TextView tvPrice;
         private TextView tvUser;
+        private TextView tvCharity;
         private ImageView ivOfferingPhoto;
 
         public ViewHolder(@NonNull View itemView) {
@@ -67,19 +73,19 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvUser = itemView.findViewById(R.id.tvUser);
+            tvCharity = itemView.findViewById(R.id.tvCharity);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
 
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Offering offering) {
+        public void bind(Offering offering) throws ParseException {
             tvTitle.setText(offering.getTitle());
             tvPrice.setText(Integer.toString(offering.getPrice()));
-            try {
-                tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
+
+            Charity charity = offering.getCharity().fetchIfNeeded();
+            tvCharity.setText(charity.getTitle());
 
             ParseFile image = offering.getImage();
             if (image != null) {
