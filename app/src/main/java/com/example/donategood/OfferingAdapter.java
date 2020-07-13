@@ -46,11 +46,13 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
 
         private TextView tvTitle;
         private TextView tvPrice;
+        private TextView tvUser;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvUser = itemView.findViewById(R.id.tvUser);
 
             itemView.setOnClickListener(this);
         }
@@ -58,6 +60,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         public void bind(Offering offering) {
             tvTitle.setText(offering.getTitle());
             tvPrice.setText(Integer.toString(offering.getPrice()));
+            tvUser.setText(offering.getUser().getUsername());
         }
 
         public void onClick(View v) {
