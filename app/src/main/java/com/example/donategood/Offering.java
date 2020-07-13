@@ -1,6 +1,7 @@
 package com.example.donategood;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -10,6 +11,7 @@ public class Offering extends ParseObject {
     public static final String KEY_TITLE = "title";
     public static final String KEY_PRICE = "price";
     public static final String KEY_USER = "user";
+    public static final String KEY_IMAGE = "image";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -33,5 +35,13 @@ public class Offering extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public ParseFile getImage() {
+        return getParseFile(KEY_IMAGE);
+    }
+
+    public void setImage(ParseFile image) {
+        put(KEY_IMAGE, image);
     }
 }

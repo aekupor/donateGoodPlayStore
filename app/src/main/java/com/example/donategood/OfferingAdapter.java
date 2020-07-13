@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 
 import java.util.List;
 
@@ -49,12 +52,14 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private TextView tvTitle;
         private TextView tvPrice;
         private TextView tvUser;
+        private ImageView ivOfferingPhoto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvUser = itemView.findViewById(R.id.tvUser);
+            ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
 
             itemView.setOnClickListener(this);
         }
@@ -66,6 +71,13 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
             } catch (ParseException e) {
                 e.printStackTrace();
+            }
+
+            ParseFile image = offering.getImage();
+            if (image != null) {
+                Glide.with(context)
+                        .load(offering.getImage().getUrl())
+                        .into(ivOfferingPhoto);
             }
         }
 
