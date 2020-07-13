@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.parse.ParseException;
+
 import java.util.List;
 
 public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHolder> {
@@ -60,7 +62,11 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         public void bind(Offering offering) {
             tvTitle.setText(offering.getTitle());
             tvPrice.setText(Integer.toString(offering.getPrice()));
-            tvUser.setText(offering.getUser().getUsername());
+            try {
+                tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         public void onClick(View v) {
