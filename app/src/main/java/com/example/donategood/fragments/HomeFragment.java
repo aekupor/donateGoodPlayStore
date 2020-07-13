@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryPosts();
+               queryPosts(0);
             }
         });
         // Configure the refreshing colors
@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore: " + page);
                 // Triggered only when new data needs to be appended to the list
                 queryPosts(page);
             }
@@ -84,11 +85,11 @@ public class HomeFragment extends Fragment {
         // Adds the scroll listener to RecyclerView
         rvOfferings.addOnScrollListener(scrollListener);
 
-        queryPosts();
+        queryPosts(0);
     }
 
-    protected void queryPosts() {
-        query.queryAllPosts(new FindCallback<Offering>() {
+    protected void queryPosts(int page) {
+        query.queryAllPosts(page, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
@@ -98,12 +99,9 @@ public class HomeFragment extends Fragment {
                 for (Offering offering : offerings) {
                     Log.i(TAG, "Offering: " + offering.getTitle());
                 }
-                adapter.clear();
-                allOfferings.clear();
                 allOfferings.addAll(offerings);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();
-                scrollListener.resetState();
             }
         });
     }
