@@ -1,6 +1,7 @@
 package com.example.donategood.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 @ParseClassName("Charity")
@@ -23,5 +24,13 @@ public class Charity extends ParseObject {
 
     public void setWebsite(String website) {
         put(KEY_WEBSITE, website);
+    }
+
+    public ParseFile getImage() {
+        return getParseFile(KEY_WEBSITE);
+    }
+
+    public void setImage(ParseFile image) {
+        put(KEY_WEBSITE, image);
     }
 }
