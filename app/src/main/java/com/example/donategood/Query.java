@@ -10,6 +10,7 @@ public class Query {
         Integer displayLimit = 20;
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.setLimit(displayLimit);
+        query.whereEqualTo("isBought", false);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
