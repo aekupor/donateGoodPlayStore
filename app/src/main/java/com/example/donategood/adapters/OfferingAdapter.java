@@ -67,6 +67,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private TextView tvUser;
         private TextView tvCharity;
         private ImageView ivOfferingPhoto;
+        private ImageView ivCharityProfile;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +76,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvUser = itemView.findViewById(R.id.tvUser);
             tvCharity = itemView.findViewById(R.id.tvCharity);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
+            ivCharityProfile = itemView.findViewById(R.id.ivCharityProfile);
 
             itemView.setOnClickListener(this);
         }
@@ -90,8 +92,15 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             ParseFile image = offering.getImage();
             if (image != null) {
                 Glide.with(context)
-                        .load(offering.getImage().getUrl())
+                        .load(image.getUrl())
                         .into(ivOfferingPhoto);
+            }
+
+            ParseFile charityImage = offering.getCharity().getImage();
+            if (charityImage != null) {
+                Glide.with(context)
+                        .load(charityImage.getUrl())
+                        .into(ivCharityProfile);
             }
 
             //TODO: change to ParseFiles and get an array of images
