@@ -131,20 +131,6 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 }
                 tvTagList.setText(tagList);
             }
-
-            //TODO: change to ParseFiles and get an array of images
-            /*
-            ArrayList<ParseUser> images = offering.getImages();
-            if (images != null) {
-                for (ParseUser img : images) {
-                    try {
-                        Log.i(TAG, "image" + img.fetchIfNeeded().getUsername());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-             */
         }
 
         public void onClick(View v) {

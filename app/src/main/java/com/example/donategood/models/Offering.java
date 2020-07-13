@@ -16,7 +16,6 @@ public class Offering extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_CHARITY = "charity";
     public static final String KEY_TAGS = "tags";
-    //public static final String KEY_IMAGES = "images";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -65,10 +64,4 @@ public class Offering extends ParseObject {
     public void setTags(ArrayList<String> tags) {
         put(KEY_CHARITY, tags);
     }
-
-    /*
-    public ArrayList<ParseUser> getImages() {
-        return (ArrayList<ParseUser>) get(KEY_IMAGES);
-    }
-     */
 }
