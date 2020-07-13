@@ -1,4 +1,4 @@
-package com.example.donategood;
+package com.example.donategood.fragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.donategood.R;
 
 public class SearchFragment extends Fragment {
 

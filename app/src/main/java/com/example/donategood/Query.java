@@ -1,5 +1,6 @@
 package com.example.donategood;
 
+import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 

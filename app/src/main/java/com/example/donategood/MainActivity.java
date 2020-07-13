@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.donategood.fragments.ComposeFragment;
+import com.example.donategood.fragments.HomeFragment;
+import com.example.donategood.fragments.ProfileFragment;
+import com.example.donategood.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

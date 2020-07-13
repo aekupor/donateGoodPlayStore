@@ -1,4 +1,4 @@
-package com.example.donategood;
+package com.example.donategood.fragments;
 
 import android.os.Bundle;
 
@@ -13,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.donategood.models.Offering;
+import com.example.donategood.adapters.OfferingAdapter;
+import com.example.donategood.Query;
+import com.example.donategood.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 

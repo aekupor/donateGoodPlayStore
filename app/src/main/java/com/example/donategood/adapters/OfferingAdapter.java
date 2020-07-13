@@ -1,4 +1,4 @@
-package com.example.donategood;
+package com.example.donategood.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.donategood.models.Offering;
+import com.example.donategood.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 

@@ -1,4 +1,4 @@
-package com.example.donategood;
+package com.example.donategood.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
