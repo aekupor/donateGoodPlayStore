@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvOfferings;
     private OfferingAdapter adapter;
     private List<Offering> allOfferings;
+    private Query query;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -40,11 +44,29 @@ public class HomeFragment extends Fragment {
 
         rvOfferings = view.findViewById(R.id.rvOfferings);
 
+        query = new Query();
         allOfferings = new ArrayList<>();
         adapter = new OfferingAdapter(getContext(), allOfferings);
 
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
+    }
+
+    protected void queryPosts() {
+        query.queryAllPosts(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting offerings", e);
+                    return;
+                }
+                for (Offering offering : offerings) {
+                    Log.i(TAG, "Offering: " + offering.getTitle());
+                }
+                allOfferings.addAll(offerings);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
