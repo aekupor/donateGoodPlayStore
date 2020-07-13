@@ -88,6 +88,8 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                         .into(ivOfferingPhoto);
             }
 
+            //TODO: change to ParseFiles and get an array of images
+            /*
             ArrayList<ParseUser> images = offering.getImages();
             if (images != null) {
                 for (ParseUser img : images) {
@@ -98,6 +100,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                     }
                 }
             }
+             */
         }
 
         public void onClick(View v) {

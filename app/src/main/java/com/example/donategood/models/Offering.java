@@ -14,7 +14,7 @@ public class Offering extends ParseObject {
     public static final String KEY_PRICE = "price";
     public static final String KEY_USER = "user";
     public static final String KEY_IMAGE = "image";
-    public static final String KEY_IMAGES = "images";
+    //public static final String KEY_IMAGES = "images";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -48,7 +48,9 @@ public class Offering extends ParseObject {
         put(KEY_IMAGE, image);
     }
 
+    /*
     public ArrayList<ParseUser> getImages() {
         return (ArrayList<ParseUser>) get(KEY_IMAGES);
     }
+     */
 }
