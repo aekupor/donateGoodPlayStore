@@ -101,6 +101,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             Charity charity = offering.getCharity().fetchIfNeeded();
             tvCharity.setText(charity.getTitle());
 
+            ivOfferingPhoto.setImageDrawable(null);
             ParseFile image = offering.getImage();
             if (image != null) {
                 Glide.with(context)
@@ -108,6 +109,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                         .into(ivOfferingPhoto);
             }
 
+            ivCharityProfile.setImageDrawable(null);
             ParseFile charityImage = offering.getCharity().getImage();
             if (charityImage != null) {
                 Glide.with(context)
