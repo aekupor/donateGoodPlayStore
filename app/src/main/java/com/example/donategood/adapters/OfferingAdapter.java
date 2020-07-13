@@ -21,6 +21,7 @@ import com.example.donategood.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHolder> {
@@ -84,6 +85,13 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 Glide.with(context)
                         .load(offering.getImage().getUrl())
                         .into(ivOfferingPhoto);
+            }
+
+            ArrayList<ParseFile> images = offering.getImages();
+            if (images != null) {
+                for (ParseFile img : images) {
+                    Log.i(TAG, "image" + img.getUrl());
+                }
             }
         }
 

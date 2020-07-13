@@ -5,6 +5,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+
 @ParseClassName("Offering")
 public class Offering extends ParseObject {
 
@@ -12,6 +14,7 @@ public class Offering extends ParseObject {
     public static final String KEY_PRICE = "price";
     public static final String KEY_USER = "user";
     public static final String KEY_IMAGE = "image";
+    public static final String KEY_IMAGES = "images";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -43,5 +46,9 @@ public class Offering extends ParseObject {
 
     public void setImage(ParseFile image) {
         put(KEY_IMAGE, image);
+    }
+
+    public ArrayList<ParseFile> getImages() {
+        return (ArrayList<ParseFile>) get(KEY_IMAGES);
     }
 }
