@@ -78,6 +78,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private TextView tvPrice;
         private TextView tvUser;
         private TextView tvCharity;
+        private TextView tvTagList;
         private ImageView ivOfferingPhoto;
         private ImageView ivCharityProfile;
 
@@ -87,6 +88,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvUser = itemView.findViewById(R.id.tvUser);
             tvCharity = itemView.findViewById(R.id.tvCharity);
+            tvTagList = itemView.findViewById(R.id.tvTagList);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
             ivCharityProfile = itemView.findViewById(R.id.ivCharityProfile);
 
@@ -115,6 +117,19 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 Glide.with(context)
                         .load(charityImage.getUrl())
                         .into(ivCharityProfile);
+            }
+
+            ArrayList<String> tags = offering.getTags();
+            if (tags != null) {
+                String tagList = "";
+                for (String tag : tags) {
+                    if (tagList == "") {
+                        tagList = tag;
+                    } else {
+                        tagList += ", " + tag;
+                    }
+                }
+                tvTagList.setText(tagList);
             }
 
             //TODO: change to ParseFiles and get an array of images
