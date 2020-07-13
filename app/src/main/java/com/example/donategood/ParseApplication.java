@@ -16,6 +16,7 @@ public class ParseApplication extends Application {
 
         // Register parse models
         ParseObject.registerSubclass(Offering.class);
+        ParseObject.registerSubclass(Charity.class);
 
         // Use for troubleshooting -- remove this line for production
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
