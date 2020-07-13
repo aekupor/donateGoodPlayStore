@@ -118,6 +118,18 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
              */
         }
 
+        // Clean all elements of the recycler
+        public void clear() {
+            offerings.clear();
+            notifyDataSetChanged();
+        }
+
+        // Add a list of items -- change to type used
+        public void addAll(List<Offering> list) {
+            offerings.addAll(list);
+            notifyDataSetChanged();
+        }
+
         public void onClick(View v) {
             // get item position
             int position = getAdapterPosition();
