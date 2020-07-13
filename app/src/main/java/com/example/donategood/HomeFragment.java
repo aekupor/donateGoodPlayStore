@@ -51,6 +51,8 @@ public class HomeFragment extends Fragment {
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
+
+        queryPosts();
     }
 
     protected void queryPosts() {

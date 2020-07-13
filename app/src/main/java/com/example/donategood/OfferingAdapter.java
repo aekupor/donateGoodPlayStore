@@ -57,7 +57,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
 
         public void bind(Offering offering) {
             tvTitle.setText(offering.getTitle());
-            tvPrice.setText(offering.getPrice());
+            tvPrice.setText(Integer.toString(offering.getPrice()));
         }
 
         public void onClick(View v) {
