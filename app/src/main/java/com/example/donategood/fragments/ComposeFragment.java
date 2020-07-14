@@ -105,6 +105,7 @@ public class ComposeFragment extends Fragment {
     }
 
     private void savePost() {
+        pb.setVisibility(ProgressBar.VISIBLE);
         Offering offering = new Offering();
         offering.setTitle(title);
         offering.setImage(new ParseFile(photoFile));
@@ -121,6 +122,7 @@ public class ComposeFragment extends Fragment {
                 etTitle.setText("");
                 etPrice.setText("");
                 ivPhoto.setImageResource(0);
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
