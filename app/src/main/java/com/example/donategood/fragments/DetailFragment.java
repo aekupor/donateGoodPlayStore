@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.donategood.LoadPost;
 import com.example.donategood.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
@@ -31,6 +32,7 @@ public class DetailFragment extends Fragment {
     private String offeringId;
     private Query query;
     private Offering offering;
+    private LoadPost loadPost;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -71,6 +73,8 @@ public class DetailFragment extends Fragment {
         tvCharity = view.findViewById(R.id.tvDetailCharity);
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
 
+        loadPost = new LoadPost();
+
         query = new Query();
         query.queryOfferingById(offeringId, new FindCallback<Offering>() {
             @Override
@@ -84,23 +88,7 @@ public class DetailFragment extends Fragment {
 
                 tvTitle.setText(offering.getTitle());
                 tvPrice.setText(Integer.toString(offering.getPrice()));
-                if (offering.getCharity() != null) {
-                    try {
-                        Charity charity = offering.getCharity().fetchIfNeeded();
-                        tvCharity.setText(charity.getTitle());
-                        ParseFile charityImage = offering.getCharity().getImage();
-                        if (charityImage != null) {
-                            Glide.with(getContext())
-                                    .load(charityImage.getUrl())
-                                    .into(ivCharityImage);
-                        }
-                    } catch (ParseException ex) {
-                        ex.printStackTrace();
-                    }
-
-                } else {
-                    tvCharity.setText("No charity currently");
-                }
+                loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
             }
         });
 
