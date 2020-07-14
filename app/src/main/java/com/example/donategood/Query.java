@@ -28,4 +28,11 @@ public class Query {
         query.whereEqualTo("title", charityName);
         query.findInBackground(callback);
     }
+
+    public void queryOfferingById(String postId, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.setLimit(1);
+        query.whereEqualTo("objectId", postId);
+        query.findInBackground(callback);
+    }
 }

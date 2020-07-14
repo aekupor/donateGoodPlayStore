@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.donategood.Query;
 import com.example.donategood.R;
 
 public class DetailFragment extends Fragment {
@@ -18,6 +19,7 @@ public class DetailFragment extends Fragment {
     public static final String TAG = "DetailFragment";
 
     private String offeringId;
+    private Query query;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -47,5 +49,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        query = new Query();
     }
 }
