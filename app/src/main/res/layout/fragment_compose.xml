@@ -20,10 +20,23 @@
         android:hint="price" />
 
     <Button
-        android:id="@+id/btnSubmit"
+        android:id="@+id/btnTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etPrice"
+        android:text="Take Photo" />
+
+    <ImageView
+        android:id="@+id/ivComposePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTakePhoto" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivComposePhoto"
         android:layout_marginTop="4dp"
         android:text="Submit" />
 

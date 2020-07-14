@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.donategood.Query;
@@ -28,6 +29,8 @@ public class ComposeFragment extends Fragment {
     private Query query;
     private EditText etTitle;
     private EditText etPrice;
+    private Button btnTakePhoto;
+    private ImageView ivPhoto;
     private Button btnSubmit;
 
     private String title;
@@ -48,12 +51,23 @@ public class ComposeFragment extends Fragment {
 
         etTitle = view.findViewById(R.id.etTitle);
         etPrice = view.findViewById(R.id.etPrice);
+        btnTakePhoto = view.findViewById(R.id.btnTakePhoto);
+        ivPhoto = view.findViewById(R.id.ivComposePhoto);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         query = new Query();
+
+        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnTakePhoto onClick");
+
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "btnSubmit onClick");
                 title = etTitle.getText().toString();
                 price = etPrice.getText().toString();
                 if (title.isEmpty()) {
