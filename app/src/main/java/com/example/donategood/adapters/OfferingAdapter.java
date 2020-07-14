@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.donategood.LoadPost;
 import com.example.donategood.fragments.DetailFragment;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
@@ -82,6 +83,8 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private ImageView ivOfferingPhoto;
         private ImageView ivCharityProfile;
 
+        private LoadPost loadPost;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
@@ -92,6 +95,8 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
             ivCharityProfile = itemView.findViewById(R.id.ivCharityProfile);
 
+            loadPost = new LoadPost();
+
             itemView.setOnClickListener(this);
         }
 
@@ -100,19 +105,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvPrice.setText(Integer.toString(offering.getPrice()));
             tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
 
-            if (offering.getCharity() != null) {
-                Charity charity = offering.getCharity().fetchIfNeeded();
-                tvCharity.setText(charity.getTitle());
-                ivCharityProfile.setImageDrawable(null);
-                ParseFile charityImage = offering.getCharity().getImage();
-                if (charityImage != null) {
-                    Glide.with(context)
-                            .load(charityImage.getUrl())
-                            .into(ivCharityProfile);
-                }
-            } else {
-                tvCharity.setText("No charity currently");
-            }
+            loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
 
             ivOfferingPhoto.setImageDrawable(null);
             ParseFile image = offering.getImage();
