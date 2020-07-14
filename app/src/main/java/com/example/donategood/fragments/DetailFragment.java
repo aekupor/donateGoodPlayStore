@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -110,5 +112,10 @@ public class DetailFragment extends Fragment {
 
     private void goToCharity() {
         Log.i(TAG, "go to charity");
+
+        //go to charity fragment
+        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+        Fragment fragment = CharityFragment.newInstance(offering.getCharity().getObjectId());
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
     }
 }

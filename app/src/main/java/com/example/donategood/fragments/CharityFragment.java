@@ -12,13 +12,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.donategood.R;
+import com.example.donategood.models.Charity;
 
 public class CharityFragment extends Fragment {
 
     public static final String TAG = "CharityFragment";
 
+    private String charityId;
+    private Charity charity;
+
     public CharityFragment() {
         // Required empty public constructor
+    }
+
+    public static CharityFragment newInstance (String charityId) {
+        CharityFragment fragment = new CharityFragment();
+        Bundle args = new Bundle();
+        args.putString("charityId", charityId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        charityId = getArguments().getString("charityId", "");
+        Log.i(TAG, "charity id: " + charityId);
     }
 
     @Override
