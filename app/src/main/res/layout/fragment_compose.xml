@@ -39,11 +39,17 @@
         android:layout_height="200dp"
         android:layout_below="@+id/btnUploadPhoto" />
 
+    <Spinner
+        android:id="@+id/spinnerCharity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivComposePhoto" />
+
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivComposePhoto"
+        android:layout_below="@+id/spinnerCharity"
         android:layout_marginTop="4dp"
         android:text="Submit" />
 
