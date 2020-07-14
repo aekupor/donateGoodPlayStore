@@ -10,6 +10,8 @@ import com.example.donategood.models.Offering;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 
+import java.util.ArrayList;
+
 public class LoadPost {
 
     public void setCharity(Offering offering, Context context, TextView tvCharity, ImageView ivCharityProfile) {
@@ -38,6 +40,20 @@ public class LoadPost {
             Glide.with(context)
                     .load(image.getUrl())
                     .into(ivOfferingPhoto);
+        }
+    }
+
+    public void setTags(ArrayList<String> tags, TextView tvTagList) {
+        if (tags != null) {
+            String tagList = "";
+            for (String tag : tags) {
+                if (tagList == "") {
+                    tagList = tag;
+                } else {
+                    tagList += ", " + tag;
+                }
+            }
+            tvTagList.setText(tagList);
         }
     }
 }

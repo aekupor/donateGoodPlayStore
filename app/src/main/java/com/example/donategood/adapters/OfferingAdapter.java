@@ -107,19 +107,9 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
 
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
+            loadPost.setTags(offering.getTags(), tvTagList);
 
-            ArrayList<String> tags = offering.getTags();
-            if (tags != null) {
-                String tagList = "";
-                for (String tag : tags) {
-                    if (tagList == "") {
-                        tagList = tag;
-                    } else {
-                        tagList += ", " + tag;
-                    }
-                }
-                tvTagList.setText(tagList);
-            }
+
         }
 
         public void onClick(View v) {
