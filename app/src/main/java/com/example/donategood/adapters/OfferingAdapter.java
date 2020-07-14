@@ -106,14 +106,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
 
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
-
-            ivOfferingPhoto.setImageDrawable(null);
-            ParseFile image = offering.getImage();
-            if (image != null) {
-                Glide.with(context)
-                        .load(image.getUrl())
-                        .into(ivOfferingPhoto);
-            }
+            loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
 
             ArrayList<String> tags = offering.getTags();
             if (tags != null) {

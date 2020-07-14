@@ -31,4 +31,13 @@ public class LoadPost {
             tvCharity.setText("No charity currently");
         }
     }
+
+    public void setPostImage(ParseFile image, Context context, ImageView ivOfferingPhoto) {
+        ivOfferingPhoto.setImageDrawable(null);
+        if (image != null) {
+            Glide.with(context)
+                    .load(image.getUrl())
+                    .into(ivOfferingPhoto);
+        }
+    }
 }
