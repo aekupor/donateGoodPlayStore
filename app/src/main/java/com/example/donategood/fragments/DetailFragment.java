@@ -36,6 +36,7 @@ public class DetailFragment extends Fragment {
 
     private TextView tvTitle;
     private TextView tvPrice;
+    private TextView tvUser;
     private TextView tvCharity;
     private ImageView ivCharityImage;
 
@@ -71,6 +72,7 @@ public class DetailFragment extends Fragment {
         tvTitle = view.findViewById(R.id.tvDetailTitle);
         tvPrice = view.findViewById(R.id.tvDetailPrice);
         tvCharity = view.findViewById(R.id.tvDetailCharity);
+        tvUser = view.findViewById(R.id.tvDetailUser);
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
 
         loadPost = new LoadPost();
@@ -86,8 +88,7 @@ public class DetailFragment extends Fragment {
                 offering = objects.get(0);
                 Log.i(TAG, "got offering with title: " + offering.getTitle());
 
-                tvTitle.setText(offering.getTitle());
-                tvPrice.setText(Integer.toString(offering.getPrice()));
+                loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
             }
         });

@@ -28,7 +28,7 @@
         android:id="@+id/tvDetailCharity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailPrice"
+        android:layout_below="@+id/tvDetailUser"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivDetailCharityImage"
@@ -40,9 +40,18 @@
         android:id="@+id/ivDetailCharityImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/tvDetailPrice"
+        android:layout_below="@+id/tvDetailUser"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="404dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvDetailUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDetailPrice"
+        android:layout_marginTop="4dp"
+        tools:text="Ashlee" />
 </RelativeLayout>
