@@ -115,7 +115,7 @@ public class DetailFragment extends Fragment {
 
         //go to charity fragment
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
-        Fragment fragment = CharityFragment.newInstance(offering.getCharity().getObjectId());
+        Fragment fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
     }
 }
