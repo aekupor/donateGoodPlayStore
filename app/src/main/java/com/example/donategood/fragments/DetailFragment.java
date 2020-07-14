@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.donategood.Query;
 import com.example.donategood.R;
@@ -26,6 +28,11 @@ public class DetailFragment extends Fragment {
     private String offeringId;
     private Query query;
     private Offering offering;
+
+    private TextView tvTitle;
+    private TextView tvPrice;
+    private TextView tvCharity;
+    private ImageView ivCharityImage;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -55,6 +62,11 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        tvTitle = view.findViewById(R.id.tvDetailTitle);
+        tvPrice = view.findViewById(R.id.tvDetailPrice);
+        tvCharity = view.findViewById(R.id.tvDetailCharity);
+        ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
 
         query = new Query();
         query.queryOfferingById(offeringId, new FindCallback<Offering>() {
