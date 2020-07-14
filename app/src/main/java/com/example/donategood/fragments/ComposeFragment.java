@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.donategood.Camera;
@@ -47,6 +48,7 @@ public class ComposeFragment extends Fragment {
     private Button btnTakePhoto;
     private ImageView ivPhoto;
     private Button btnSubmit;
+    private ProgressBar pb;
 
     private String title;
     private String price;
@@ -71,6 +73,7 @@ public class ComposeFragment extends Fragment {
         btnTakePhoto = view.findViewById(R.id.btnTakePhoto);
         ivPhoto = view.findViewById(R.id.ivComposePhoto);
         btnSubmit = view.findViewById(R.id.btnSubmit);
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
 
         query = new Query();
         camera = new Camera();
