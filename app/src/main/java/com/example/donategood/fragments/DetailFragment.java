@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.donategood.Query;
 import com.example.donategood.R;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 
 import java.util.List;
 
@@ -78,6 +81,26 @@ public class DetailFragment extends Fragment {
                 }
                 offering = objects.get(0);
                 Log.i(TAG, "got offering with title: " + offering.getTitle());
+
+                tvTitle.setText(offering.getTitle());
+                tvPrice.setText(Integer.toString(offering.getPrice()));
+                if (offering.getCharity() != null) {
+                    try {
+                        Charity charity = offering.getCharity().fetchIfNeeded();
+                        tvCharity.setText(charity.getTitle());
+                        ParseFile charityImage = offering.getCharity().getImage();
+                        if (charityImage != null) {
+                            Glide.with(getContext())
+                                    .load(charityImage.getUrl())
+                                    .into(ivCharityImage);
+                        }
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+
+                } else {
+                    tvCharity.setText("No charity currently");
+                }
             }
         });
 
