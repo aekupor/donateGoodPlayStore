@@ -4,6 +4,7 @@ import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class Query {
 
@@ -26,6 +27,13 @@ public class Query {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.setLimit(1);
         query.whereEqualTo("title", charityName);
+        query.findInBackground(callback);
+    }
+
+    public void queryUserByName(String userName, FindCallback<ParseUser> callback) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.setLimit(1);
+        query.whereEqualTo("username", userName);
         query.findInBackground(callback);
     }
 

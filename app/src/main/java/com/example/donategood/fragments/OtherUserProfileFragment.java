@@ -15,8 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.donategood.LoadPost;
+import com.example.donategood.Query;
 import com.example.donategood.R;
+import com.example.donategood.models.Offering;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 
 public class OtherUserProfileFragment extends Fragment {
@@ -24,6 +30,7 @@ public class OtherUserProfileFragment extends Fragment {
     public static final String TAG = "OtherUserProfileFragment";
 
     private LoadPost loadPost;
+    private Query query;
 
     private TextView tvName;
     private ImageView ivProfileImage;
@@ -65,7 +72,18 @@ public class OtherUserProfileFragment extends Fragment {
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
 
         loadPost = new LoadPost();
+        query = new Query();
 
-        //loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
+        query.queryUserByName(userName, new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting user profile", e);
+                    return;
+                }
+                user = objects.get(0);
+                loadPost.setUser(user, getContext(), tvName, ivProfileImage);
+            }
+        });
     }
 }
