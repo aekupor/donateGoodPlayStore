@@ -60,6 +60,7 @@ public class ComposeFragment extends Fragment {
     private String title;
     private String price;
     private String charity;
+    private Spinner spinner;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -87,20 +88,7 @@ public class ComposeFragment extends Fragment {
         query = new Query();
         camera = new Camera();
 
-        // Create drop down elements for spinner
-        List<String> charities = new ArrayList<>();
-        charities.add("charity 1");
-        charities.add("charity 2");
-        charities.add("charity 3");
-
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
-        // Create an ArrayAdapter for spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charities);
-
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        setUpSpinner(view);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -220,5 +208,22 @@ public class ComposeFragment extends Fragment {
             ivPhoto.setImageBitmap(selectedImage);
             photoFile = camera.createFile(getContext(), selectedImage);
         }
+    }
+
+    private void setUpSpinner(View view) {
+        // Create drop down elements for spinner
+        List<String> charities = new ArrayList<>();
+        charities.add("charity 1");
+        charities.add("charity 2");
+        charities.add("charity 3");
+
+        spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
+        // Create an ArrayAdapter for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charities);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
     }
 }
