@@ -45,11 +45,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivComposePhoto" />
 
+    <EditText
+        android:id="@+id/etTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerCharity"
+        android:layout_marginTop="4dp"
+        android:hint="tags" />
+
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerCharity"
+        android:layout_below="@+id/etTags"
         android:layout_marginTop="4dp"
         android:text="Submit" />
 

@@ -56,11 +56,13 @@ public class ComposeFragment extends Fragment {
     private Button btnTakePhoto;
     private Button btnUploadPhoto;
     private ImageView ivPhoto;
+    private EditText etTags;
     private Button btnSubmit;
     private ProgressBar pb;
 
     private String title;
     private String price;
+    private ArrayList<String> tags;
     private String charity;
     private Spinner spinner;
     private File photoFile;
@@ -84,6 +86,7 @@ public class ComposeFragment extends Fragment {
         btnTakePhoto = view.findViewById(R.id.btnTakePhoto);
         btnUploadPhoto = view.findViewById(R.id.btnUploadPhoto);
         ivPhoto = view.findViewById(R.id.ivComposePhoto);
+        etTags = view.findViewById(R.id.etTags);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
 
@@ -115,6 +118,8 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "btnSubmit onClick");
                 title = etTitle.getText().toString();
                 price = etPrice.getText().toString();
+                tags = editTags(etTags.getText().toString());
+
                 if (title.isEmpty()) {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -127,23 +132,28 @@ public class ComposeFragment extends Fragment {
         });
     }
 
+    private ArrayList<String> editTags(String tags) {
+        ArrayList<String> tagList = new ArrayList<>();
+        return tagList;
+    }
+
     private void savePost() {
         pb.setVisibility(ProgressBar.VISIBLE);
         query.queryCharityByName(charity, new FindCallback<Charity>() {
             @Override
-            public void done(List<Charity> objects, ParseException e) {
+            public void done(List<Charity> charities, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Successfully got charity");
-                Charity charityObj = objects.get(0);
 
                 Offering offering = new Offering();
                 offering.setTitle(title);
                 offering.setImage(new ParseFile(photoFile));
                 offering.setPrice(Integer.valueOf(price));
-                offering.setCharity(charityObj);
+                offering.setCharity(charities.get(0));
+                //offering.setTags(tags);
                 offering.setUser(ParseUser.getCurrentUser());
                 offering.saveInBackground(new SaveCallback() {
                     @Override
