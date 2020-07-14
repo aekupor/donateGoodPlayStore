@@ -134,32 +134,24 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.i(TAG, "onActivityResult");
+        Bitmap image = null;
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // Load the taken image into a preview
-                ivProfileImage.setImageBitmap(takenImage);
-                ParseFile file = new ParseFile(photoFile);
-                ParseUser.getCurrentUser().put("profileImage", file);
-                ParseUser.getCurrentUser().saveInBackground();
+                image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
                 return;
             }
         } else if ((data != null) && requestCode == UPLOAD_PHOTO_CODE) {
             Uri photoUri = data.getData();
-
-            // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = camera.loadFromUri(photoUri, getContext());
-
-            // Load the selected image into a preview
-            ivProfileImage.setImageBitmap(selectedImage);
-            photoFile = camera.createFile(getContext(), selectedImage);
-            ParseFile parseFile = new ParseFile(photoFile);
-            ParseUser.getCurrentUser().put("profileImage", parseFile);
-            ParseUser.getCurrentUser().saveInBackground();
+            image = camera.loadFromUri(photoUri, getContext());
+            photoFile = camera.createFile(getContext(), image);
         }
+        ivProfileImage.setImageBitmap(image);
+        ParseFile file = new ParseFile(photoFile);
+        ParseUser.getCurrentUser().put("profileImage", file);
+        ParseUser.getCurrentUser().saveInBackground();
     }
 }
