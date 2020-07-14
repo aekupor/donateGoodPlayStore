@@ -75,6 +75,20 @@ public class DetailFragment extends Fragment {
         tvUser = view.findViewById(R.id.tvDetailUser);
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
 
+        tvCharity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToCharity();
+            }
+        });
+
+        ivCharityImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToCharity();
+            }
+        });
+
         loadPost = new LoadPost();
 
         query = new Query();
@@ -92,6 +106,9 @@ public class DetailFragment extends Fragment {
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
             }
         });
+    }
 
+    private void goToCharity() {
+        Log.i(TAG, "go to charity");
     }
 }
