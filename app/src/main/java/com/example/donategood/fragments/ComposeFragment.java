@@ -35,6 +35,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -85,14 +87,21 @@ public class ComposeFragment extends Fragment {
         query = new Query();
         camera = new Camera();
 
+        // Create drop down elements for spinner
+        List<String> charities = new ArrayList<>();
+        charities.add("charity 1");
+        charities.add("charity 2");
+        charities.add("charity 3");
+
         Spinner spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(getContext(), R.array.charities_array, android.R.layout.simple_spinner_item);
+        // Create an ArrayAdapter for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charities);
+
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
