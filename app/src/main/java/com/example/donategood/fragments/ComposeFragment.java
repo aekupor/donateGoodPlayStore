@@ -78,7 +78,7 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnTakePhoto onClick");
-
+                launchCamera();
             }
         });
 
@@ -126,7 +126,7 @@ public class ComposeFragment extends Fragment {
         photoFile = camera.getPhotoFileUri(photoFileName, getContext());
 
         // wrap File object into a content provider; required for API >= 24
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider.donateGood", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
