@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.donategood.LoadPost;
 import com.example.donategood.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
@@ -24,9 +27,13 @@ public class CharityFragment extends Fragment {
 
     public static final String TAG = "CharityFragment";
 
-    private String charityName;
     private Query query;
+    private LoadPost loadPost;
+
     private Charity charity;
+    private String charityName;
+    private TextView tvTitle;
+    private ImageView ivProfileImage;
 
     public CharityFragment() {
         // Required empty public constructor
@@ -57,6 +64,10 @@ public class CharityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tvTitle = view.findViewById(R.id.tvCharityCharityTitle);
+        ivProfileImage = view.findViewById(R.id.ivCharityChairtyImage);
+
+        loadPost = new LoadPost();
         query = new Query();
         query.queryCharityByName(charityName, new FindCallback<Charity>() {
             @Override
@@ -67,6 +78,8 @@ public class CharityFragment extends Fragment {
                 }
                 charity = objects.get(0);
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
+
+                loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
             }
         });
     }

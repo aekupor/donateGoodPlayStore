@@ -34,6 +34,17 @@ public class LoadPost {
         }
     }
 
+    public void setCharityWithCharity(Charity charity, Context context, TextView tvCharity, ImageView ivCharityProfile) {
+            tvCharity.setText(charity.getTitle());
+            ivCharityProfile.setImageDrawable(null);
+            ParseFile charityImage = charity.getImage();
+            if (charityImage != null) {
+                Glide.with(context)
+                        .load(charityImage.getUrl())
+                        .into(ivCharityProfile);
+            }
+    }
+
     public void setPostImage(ParseFile image, Context context, ImageView ivOfferingPhoto) {
         ivOfferingPhoto.setImageDrawable(null);
         if (image != null) {
