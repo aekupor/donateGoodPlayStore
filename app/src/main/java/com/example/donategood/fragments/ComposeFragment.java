@@ -129,23 +129,36 @@ public class ComposeFragment extends Fragment {
 
     private void savePost() {
         pb.setVisibility(ProgressBar.VISIBLE);
-        Offering offering = new Offering();
-        offering.setTitle(title);
-        offering.setImage(new ParseFile(photoFile));
-        offering.setPrice(Integer.valueOf(price));
-        offering.setUser(ParseUser.getCurrentUser());
-        offering.saveInBackground(new SaveCallback() {
+        query.queryCharityByName(charity, new FindCallback<Charity>() {
             @Override
-            public void done(ParseException e) {
+            public void done(List<Charity> objects, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
-                Log.i(TAG, "Post save was successful!");
-                etTitle.setText("");
-                etPrice.setText("");
-                ivPhoto.setImageResource(0);
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                Log.i(TAG, "Successfully got charity");
+                Charity charityObj = objects.get(0);
+
+                Offering offering = new Offering();
+                offering.setTitle(title);
+                offering.setImage(new ParseFile(photoFile));
+                offering.setPrice(Integer.valueOf(price));
+                offering.setCharity(charityObj);
+                offering.setUser(ParseUser.getCurrentUser());
+                offering.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "Post save was successful!");
+                        etTitle.setText("");
+                        etPrice.setText("");
+                        ivPhoto.setImageResource(0);
+                        pb.setVisibility(ProgressBar.INVISIBLE);
+                    }
+                });
             }
         });
     }

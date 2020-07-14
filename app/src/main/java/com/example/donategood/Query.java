@@ -21,4 +21,11 @@ public class Query {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.findInBackground(callback);
     }
+
+    public void queryCharityByName(String charityName, FindCallback<Charity> callback) {
+        ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
+        query.setLimit(1);
+        query.whereEqualTo("title", charityName);
+        query.findInBackground(callback);
+    }
 }
