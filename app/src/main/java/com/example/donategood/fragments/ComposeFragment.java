@@ -8,8 +8,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -152,7 +154,7 @@ public class ComposeFragment extends Fragment {
                 }
                 Log.i(TAG, "Successfully got charity");
 
-                Offering offering = new Offering();
+                final Offering offering = new Offering();
                 offering.setTitle(title);
                 offering.setImage(new ParseFile(photoFile));
                 offering.setPrice(Integer.valueOf(price));
@@ -172,6 +174,11 @@ public class ComposeFragment extends Fragment {
                         etTags.setText("");
                         ivPhoto.setImageResource(0);
                         pb.setVisibility(ProgressBar.INVISIBLE);
+
+                        //go to detail fragment
+                        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                        Fragment fragment = DetailFragment.newInstance(offering.getObjectId());
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                     }
                 });
             }
