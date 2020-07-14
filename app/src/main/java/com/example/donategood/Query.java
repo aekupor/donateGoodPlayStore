@@ -1,5 +1,6 @@
 package com.example.donategood;
 
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
@@ -13,6 +14,11 @@ public class Query {
         query.setSkip(page * displayLimit);
         query.whereEqualTo("isBought", false);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
+    public void queryAllCharities(FindCallback<Charity> callback) {
+        ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.findInBackground(callback);
     }
 }

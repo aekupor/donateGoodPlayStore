@@ -28,7 +28,9 @@ import android.widget.Toast;
 import com.example.donategood.Camera;
 import com.example.donategood.Query;
 import com.example.donategood.R;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -88,20 +90,8 @@ public class ComposeFragment extends Fragment {
         query = new Query();
         camera = new Camera();
 
+        spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
         setUpSpinner(view);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                charity = (String) adapterView.getItemAtPosition(pos);
-                Log.i(TAG, "onItemSelected with charity: " + charity);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.i(TAG, "onNothingSelected");
-            }
-        });
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,19 +201,40 @@ public class ComposeFragment extends Fragment {
     }
 
     private void setUpSpinner(View view) {
-        // Create drop down elements for spinner
-        List<String> charities = new ArrayList<>();
-        charities.add("charity 1");
-        charities.add("charity 2");
-        charities.add("charity 3");
+        final List<String> charitiesNames = new ArrayList<>();
+        query.queryAllCharities(new FindCallback<Charity>() {
+            @Override
+            public void done(List<Charity> charities, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error getting charities", e);
+                }
+                Log.i(TAG, "Successfully got charities");
+                //populate charitiesNames with all names of charities in database
+                for (Charity charity : charities) {
+                    charitiesNames.add(charity.getTitle());
+                }
 
-        spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
-        // Create an ArrayAdapter for spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charities);
+                // Create an ArrayAdapter for spinner
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charitiesNames);
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // Apply the adapter to the spinner
+                spinner.setAdapter(adapter);
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                        charity = (String) adapterView.getItemAtPosition(pos);
+                        Log.i(TAG, "onItemSelected with charity: " + charity);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        Log.i(TAG, "onNothingSelected");
+                    }
+                });
+            }
+        });
     }
 }
