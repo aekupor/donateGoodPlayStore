@@ -13,6 +13,11 @@ import android.view.ViewGroup;
 
 import com.example.donategood.Query;
 import com.example.donategood.R;
+import com.example.donategood.models.Offering;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
+import java.util.List;
 
 public class DetailFragment extends Fragment {
 
@@ -20,6 +25,7 @@ public class DetailFragment extends Fragment {
 
     private String offeringId;
     private Query query;
+    private Offering offering;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -51,5 +57,17 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         query = new Query();
+        query.queryOfferingById(offeringId, new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting post", e);
+                    return;
+                }
+                offering = objects.get(0);
+                Log.i(TAG, "got offering with title: " + offering.getTitle());
+            }
+        });
+
     }
 }
