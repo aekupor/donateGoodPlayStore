@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,10 @@ import android.widget.Toast;
 
 import com.example.donategood.Query;
 import com.example.donategood.R;
+import com.example.donategood.models.Offering;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class ComposeFragment extends Fragment {
 
@@ -64,6 +69,21 @@ public class ComposeFragment extends Fragment {
     }
 
     private void savePost() {
-        
+        Offering offering = new Offering();
+        offering.setTitle(title);
+        offering.setPrice(Integer.valueOf(price));
+        offering.setUser(ParseUser.getCurrentUser());
+        offering.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Post save was successful!");
+                etTitle.setText("");
+                etPrice.setText("");
+            }
+        });
     }
 }
