@@ -49,11 +49,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Offering offering = offerings.get(position);
-        try {
-            holder.bind(offering);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        holder.bind(offering);
     }
 
     @Override
@@ -100,16 +96,11 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Offering offering) throws ParseException {
-            tvTitle.setText(offering.getTitle());
-            tvPrice.setText(Integer.toString(offering.getPrice()));
-            tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
-
+        public void bind(Offering offering) {
+            loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
             loadPost.setTags(offering.getTags(), tvTagList);
-
-
         }
 
         public void onClick(View v) {
