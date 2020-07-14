@@ -39,6 +39,7 @@ public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
     public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 10;
+    public static final Integer UPLOAD_PHOTO_CODE = 20;
 
     private Query query;
     private Camera camera;
@@ -92,7 +93,7 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnUploadPhoto onClick");
-
+                pickPhoto(view);
             }
         });
 
@@ -153,6 +154,17 @@ public class ComposeFragment extends Fragment {
         }
     }
 
+    public void pickPhoto(View view) {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, UPLOAD_PHOTO_CODE);
+        }
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -165,6 +177,15 @@ public class ComposeFragment extends Fragment {
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        } else if ((data != null) && requestCode == UPLOAD_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+
+            // Load the image located at photoUri into selectedImage
+            Bitmap selectedImage = camera.loadFromUri(photoUri, getContext());
+
+            // Load the selected image into a preview
+            ivPhoto.setImageBitmap(selectedImage);
+            photoFile = camera.createFile(getContext(), selectedImage);
         }
     }
 }
