@@ -100,8 +100,19 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvPrice.setText(Integer.toString(offering.getPrice()));
             tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
 
-            Charity charity = offering.getCharity().fetchIfNeeded();
-            tvCharity.setText(charity.getTitle());
+            if (offering.getCharity() != null) {
+                Charity charity = offering.getCharity().fetchIfNeeded();
+                tvCharity.setText(charity.getTitle());
+                ivCharityProfile.setImageDrawable(null);
+                ParseFile charityImage = offering.getCharity().getImage();
+                if (charityImage != null) {
+                    Glide.with(context)
+                            .load(charityImage.getUrl())
+                            .into(ivCharityProfile);
+                }
+            } else {
+                tvCharity.setText("No charity currently");
+            }
 
             ivOfferingPhoto.setImageDrawable(null);
             ParseFile image = offering.getImage();
@@ -109,14 +120,6 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 Glide.with(context)
                         .load(image.getUrl())
                         .into(ivOfferingPhoto);
-            }
-
-            ivCharityProfile.setImageDrawable(null);
-            ParseFile charityImage = offering.getCharity().getImage();
-            if (charityImage != null) {
-                Glide.with(context)
-                        .load(charityImage.getUrl())
-                        .into(ivCharityProfile);
             }
 
             ArrayList<String> tags = offering.getTags();
