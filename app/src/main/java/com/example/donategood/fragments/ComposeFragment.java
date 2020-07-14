@@ -38,6 +38,7 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -133,7 +134,10 @@ public class ComposeFragment extends Fragment {
     }
 
     private ArrayList<String> editTags(String tags) {
+        String[] tagArray = tags.split(", ");
         ArrayList<String> tagList = new ArrayList<>();
+        tagList.addAll(Arrays.asList(tagArray));
+        Log.i(TAG, "TAGS: " + tagList.toString());
         return tagList;
     }
 
@@ -153,7 +157,7 @@ public class ComposeFragment extends Fragment {
                 offering.setImage(new ParseFile(photoFile));
                 offering.setPrice(Integer.valueOf(price));
                 offering.setCharity(charities.get(0));
-                //offering.setTags(tags);
+                offering.setTags(tags);
                 offering.setUser(ParseUser.getCurrentUser());
                 offering.saveInBackground(new SaveCallback() {
                     @Override
@@ -165,6 +169,7 @@ public class ComposeFragment extends Fragment {
                         Log.i(TAG, "Post save was successful!");
                         etTitle.setText("");
                         etPrice.setText("");
+                        etTags.setText("");
                         ivPhoto.setImageResource(0);
                         pb.setVisibility(ProgressBar.INVISIBLE);
                     }

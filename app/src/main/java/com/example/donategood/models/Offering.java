@@ -62,6 +62,6 @@ public class Offering extends ParseObject {
     }
 
     public void setTags(ArrayList<String> tags) {
-        put(KEY_CHARITY, tags);
+        put(KEY_TAGS, tags);
     }
 }
