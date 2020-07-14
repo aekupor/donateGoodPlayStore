@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ public class ComposeFragment extends Fragment {
 
     private String title;
     private String price;
+    private String charity;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -64,7 +66,7 @@ public class ComposeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_compose, container, false);
     }
 
@@ -85,11 +87,24 @@ public class ComposeFragment extends Fragment {
 
         Spinner spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.charities_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(getContext(), R.array.charities_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                charity = (String) adapterView.getItemAtPosition(pos);
+                Log.i(TAG, "onItemSelected with charity: " + charity);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.i(TAG, "onNothingSelected");
+            }
+        });
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +188,6 @@ public class ComposeFragment extends Fragment {
             startActivityForResult(intent, UPLOAD_PHOTO_CODE);
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
