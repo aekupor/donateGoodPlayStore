@@ -91,6 +91,13 @@ public class DetailFragment extends Fragment {
             }
         });
 
+        tvUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToUser();
+            }
+        });
+
         loadPost = new LoadPost();
 
         query = new Query();
@@ -116,6 +123,15 @@ public class DetailFragment extends Fragment {
         //go to charity fragment
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+    }
+
+    private void goToUser() {
+        Log.i(TAG, "go to user");
+
+        //go to user fragment
+        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+        Fragment fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText());
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
     }
 }

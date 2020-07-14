@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.example.donategood.LoadPost;
 import com.example.donategood.Query;
 import com.example.donategood.R;
-import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
