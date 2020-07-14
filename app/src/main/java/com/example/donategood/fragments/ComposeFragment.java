@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.donategood.Query;
 import com.example.donategood.R;
@@ -23,6 +24,9 @@ public class ComposeFragment extends Fragment {
     private EditText etTitle;
     private EditText etPrice;
     private Button btnSubmit;
+
+    private String title;
+    private String price;
 
     public ComposeFragment() {
         //required empty public constructor
@@ -41,5 +45,25 @@ public class ComposeFragment extends Fragment {
         etPrice = view.findViewById(R.id.etPrice);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         query = new Query();
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                title = etTitle.getText().toString();
+                price = etPrice.getText().toString();
+                if (title.isEmpty()) {
+                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (price.isEmpty()) {
+                    Toast.makeText(getContext(), "Price cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                savePost();
+            }
+        });
+    }
+
+    private void savePost() {
+        
     }
 }
