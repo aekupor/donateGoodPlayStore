@@ -26,11 +26,18 @@
         android:layout_below="@+id/etPrice"
         android:text="Take Photo" />
 
+    <Button
+        android:id="@+id/btnUploadPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTakePhoto"
+        android:text="Upload Photo" />
+
     <ImageView
         android:id="@+id/ivComposePhoto"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:layout_below="@+id/btnTakePhoto" />
+        android:layout_below="@+id/btnUploadPhoto" />
 
     <Button
         android:id="@+id/btnSubmit"

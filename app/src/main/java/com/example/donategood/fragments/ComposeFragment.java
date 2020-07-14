@@ -46,6 +46,7 @@ public class ComposeFragment extends Fragment {
     private EditText etTitle;
     private EditText etPrice;
     private Button btnTakePhoto;
+    private Button btnUploadPhoto;
     private ImageView ivPhoto;
     private Button btnSubmit;
     private ProgressBar pb;
@@ -71,6 +72,7 @@ public class ComposeFragment extends Fragment {
         etTitle = view.findViewById(R.id.etTitle);
         etPrice = view.findViewById(R.id.etPrice);
         btnTakePhoto = view.findViewById(R.id.btnTakePhoto);
+        btnUploadPhoto = view.findViewById(R.id.btnUploadPhoto);
         ivPhoto = view.findViewById(R.id.ivComposePhoto);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
@@ -83,6 +85,14 @@ public class ComposeFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "btnTakePhoto onClick");
                 launchCamera();
+            }
+        });
+
+        btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnUploadPhoto onClick");
+
             }
         });
 
