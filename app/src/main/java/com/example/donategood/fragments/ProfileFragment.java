@@ -30,6 +30,7 @@ import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.File;
@@ -140,8 +141,12 @@ public class ProfileFragment extends Fragment {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // Load the taken image into a preview
                 ivProfileImage.setImageBitmap(takenImage);
+                ParseFile file = new ParseFile(photoFile);
+                ParseUser.getCurrentUser().put("profileImage", file);
+                ParseUser.getCurrentUser().saveInBackground();
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                return;
             }
         } else if ((data != null) && requestCode == UPLOAD_PHOTO_CODE) {
             Uri photoUri = data.getData();
@@ -152,6 +157,9 @@ public class ProfileFragment extends Fragment {
             // Load the selected image into a preview
             ivProfileImage.setImageBitmap(selectedImage);
             photoFile = camera.createFile(getContext(), selectedImage);
+            ParseFile parseFile = new ParseFile(photoFile);
+            ParseUser.getCurrentUser().put("profileImage", parseFile);
+            ParseUser.getCurrentUser().saveInBackground();
         }
     }
 }
