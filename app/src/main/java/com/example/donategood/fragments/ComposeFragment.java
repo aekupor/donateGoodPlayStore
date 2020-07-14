@@ -6,24 +6,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.example.donategood.Query;
 import com.example.donategood.R;
 
 public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
 
+    private Query query;
+    private EditText etTitle;
+    private EditText etPrice;
+    private Button btnSubmit;
+
     public ComposeFragment() {
-        // Required empty public constructor
+        //required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_compose, container, false);
     }
 
@@ -31,6 +37,9 @@ public class ComposeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i(TAG, "onViewCreated in ComposeFragment");
+        etTitle = view.findViewById(R.id.etTitle);
+        etPrice = view.findViewById(R.id.etPrice);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        query = new Query();
     }
 }
