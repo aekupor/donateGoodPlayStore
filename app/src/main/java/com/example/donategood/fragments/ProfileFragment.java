@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.donategood.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.parse.ParseUser;
@@ -22,9 +24,11 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
 
+    private LoadPost loadPost;
+
     private Button btnLogout;
     private TextView tvName;
-    private TextView ivProfileImage;
+    private ImageView ivProfileImage;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -43,6 +47,10 @@ public class ProfileFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         tvName = view.findViewById(R.id.tvProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
+
+        loadPost = new LoadPost();
+
+        loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.donategood;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,7 +10,9 @@ import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class LoadPost {
@@ -76,5 +79,21 @@ public class LoadPost {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setUser(ParseUser user, Context context, TextView tvTitle, ImageView ivPhoto) {
+        tvTitle.setText(user.getUsername());
+        Serializable profileImage;
+
+        if (user.getParseFile("profileImage") != null) {
+            profileImage = user.getParseFile("profileImage").getUrl();
+        } else {
+            profileImage = R.drawable.ic_baseline_person_outline_24;
+        }
+
+        Glide.with(context)
+                .load(profileImage)
+                .circleCrop()
+                .into(ivPhoto);
     }
 }
