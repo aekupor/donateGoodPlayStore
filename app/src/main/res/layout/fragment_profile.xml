@@ -28,4 +28,20 @@
         android:layout_marginTop="4dp"
         tools:src="@tools:sample/avatars" />
 
+    <Button
+        android:id="@+id/btnProfileTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfileProfileImage"
+        android:layout_marginTop="4dp"
+        android:text="Take Photo" />
+
+    <Button
+        android:id="@+id/btnProfileUploadPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnProfileTakePhoto"
+        android:layout_marginTop="4dp"
+        android:text="Upload Photo" />
+
 </RelativeLayout>

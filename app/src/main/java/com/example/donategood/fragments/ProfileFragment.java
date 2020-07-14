@@ -27,6 +27,8 @@ public class ProfileFragment extends Fragment {
     private LoadPost loadPost;
 
     private Button btnLogout;
+    private Button btnTakePhoto;
+    private Button btnUploadPhoto;
     private TextView tvName;
     private ImageView ivProfileImage;
 
@@ -47,6 +49,8 @@ public class ProfileFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         tvName = view.findViewById(R.id.tvProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
+        btnTakePhoto = view.findViewById(R.id.btnProfileTakePhoto);
+        btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
 
         loadPost = new LoadPost();
 
