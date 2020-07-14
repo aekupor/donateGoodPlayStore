@@ -26,6 +26,7 @@ import com.example.donategood.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Offering;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -103,6 +104,7 @@ public class ComposeFragment extends Fragment {
     private void savePost() {
         Offering offering = new Offering();
         offering.setTitle(title);
+        offering.setImage(new ParseFile(photoFile));
         offering.setPrice(Integer.valueOf(price));
         offering.setUser(ParseUser.getCurrentUser());
         offering.saveInBackground(new SaveCallback() {
@@ -115,6 +117,7 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "Post save was successful!");
                 etTitle.setText("");
                 etPrice.setText("");
+                ivPhoto.setImageResource(0);
             }
         });
     }
