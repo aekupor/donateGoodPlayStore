@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-    <TextView
-        android:id="@+id/tvProfileTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile Fragment" />
-
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfileTitle"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_marginTop="4dp"
         android:text="Logout" />
+
+    <TextView
+        android:id="@+id/tvProfileProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Ashlee" />
+
+    <ImageView
+        android:id="@+id/ivProfileProfileImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/btnLogout"
+        android:layout_marginTop="4dp"
+        tools:src="@tools:sample/avatars" />
 
 </RelativeLayout>
