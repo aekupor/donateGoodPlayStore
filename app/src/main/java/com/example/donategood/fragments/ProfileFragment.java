@@ -28,6 +28,7 @@ import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -60,6 +61,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvBoughtItems;
     private OfferingAdapter adapter;
     private List<Offering> boughtOfferings;
+    private Query query;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -82,6 +84,7 @@ public class ProfileFragment extends Fragment {
         btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
         rvBoughtItems = view.findViewById(R.id.rvBoughtItems);
 
+        query = new Query();
         boughtOfferings = new ArrayList<>();
         adapter = new OfferingAdapter(getContext(), boughtOfferings);
 
@@ -122,7 +125,20 @@ public class ProfileFragment extends Fragment {
     }
 
     protected void queryBoughtPosts() {
-        
+        query.queryBoughtPostsByUser(ParseUser.getCurrentUser(), new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting offerings", e);
+                    return;
+                }
+                for (Offering offering : offerings) {
+                    Log.i(TAG, "Offering: " + offering.getTitle());
+                }
+                boughtOfferings.addAll(offerings);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     protected void launchCamera() {
