@@ -38,6 +38,7 @@ public class OtherUserProfileFragment extends Fragment {
 
     private TextView tvName;
     private ImageView ivProfileImage;
+    private TextView tvMoneyRaised;
     private RecyclerView rvSellingItems;
     private OfferingAdapter adapter;
     private List<Offering> sellingOfferings;
@@ -77,6 +78,7 @@ public class OtherUserProfileFragment extends Fragment {
 
         tvName = view.findViewById(R.id.tvOtherProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
+        tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
         rvSellingItems = view.findViewById(R.id.rvOtherUserSelling);
 
         sellingOfferings = new ArrayList<>();
@@ -100,6 +102,8 @@ public class OtherUserProfileFragment extends Fragment {
                 loadPost.setUser(user, getContext(), tvName, ivProfileImage);
 
                 querySellingPosts();
+
+                queryMoneyRaised();
             }
         });
     }
@@ -118,6 +122,24 @@ public class OtherUserProfileFragment extends Fragment {
                 }
                 sellingOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    protected void queryMoneyRaised() {
+        query.queryMoneyRaised(user, new FindCallback<Offering>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting offerings", e);
+                    return;
+                }
+                Integer moneyRaised = 0;
+                for (Offering offering : offerings) {
+                    moneyRaised += offering.getPrice();
+                }
+                tvMoneyRaised.setText(moneyRaised.toString());
             }
         });
     }
