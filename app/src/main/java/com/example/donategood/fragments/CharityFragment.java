@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
+import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CharityFragment extends Fragment {
@@ -28,6 +33,9 @@ public class CharityFragment extends Fragment {
 
     private Query query;
     private LoadPost loadPost;
+    private RecyclerView rvOfferings;
+    private OfferingAdapter adapter;
+    private List<Offering> allOfferings;
 
     private Charity charity;
     private String charityName;
@@ -67,6 +75,15 @@ public class CharityFragment extends Fragment {
         tvTitle = view.findViewById(R.id.tvCharityCharityTitle);
         ivProfileImage = view.findViewById(R.id.ivCharityChairtyImage);
         tvMoneyRaised = view.findViewById(R.id.tvCharityMoneyRaised);
+        rvOfferings = view.findViewById(R.id.rvCharitySellingOfferings);
+
+        query = new Query();
+        allOfferings = new ArrayList<>();
+        adapter = new OfferingAdapter(getContext(), allOfferings);
+
+        rvOfferings.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvOfferings.setLayoutManager(linearLayoutManager);
 
         loadPost = new LoadPost();
         query = new Query();
