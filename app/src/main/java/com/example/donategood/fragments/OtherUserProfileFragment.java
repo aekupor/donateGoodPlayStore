@@ -46,6 +46,10 @@ public class OtherUserProfileFragment extends Fragment {
     private RecyclerView rvOfferings;
     private OfferingAdapter adapter;
     private List<Offering> selectedOfferings;
+    private TextView tvBoughtTitle;
+    private TextView tvSoldTitle;
+    private TextView tvSellingTitle;
+    private ProgressBar pb;
 
     private String userName;
     private ParseUser user;
@@ -84,6 +88,10 @@ public class OtherUserProfileFragment extends Fragment {
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
         rvOfferings = view.findViewById(R.id.rvOtherUserSelling);
+        tvBoughtTitle = view.findViewById(R.id.tvOtherBoughtTitle);
+        tvSellingTitle = view.findViewById(R.id.tvOtherSellingTitle);
+        tvSoldTitle = view.findViewById(R.id.tvOtherSoldTitle);
+        pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
 
         selectedOfferings = new ArrayList<>();
         adapter = new OfferingAdapter(getContext(), selectedOfferings);
@@ -94,6 +102,27 @@ public class OtherUserProfileFragment extends Fragment {
 
         loadPost = new LoadPost();
         query = new Query();
+
+        tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(KEY_BOUGHT);
+            }
+        });
+
+        tvSellingTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(KEY_SELLING);
+            }
+        });
+
+        tvSoldTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(KEY_SOLD);
+            }
+        });
 
         query.queryUserByName(userName, new FindCallback<ParseUser>() {
             @Override
@@ -113,7 +142,7 @@ public class OtherUserProfileFragment extends Fragment {
     }
 
     protected void queryPosts(String queryType) {
-        //pb.setVisibility(ProgressBar.VISIBLE);
+        pb.setVisibility(ProgressBar.VISIBLE);
         query.queryPosts(queryType, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
@@ -127,7 +156,7 @@ public class OtherUserProfileFragment extends Fragment {
                 selectedOfferings.clear();
                 selectedOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
-                //pb.setVisibility(ProgressBar.INVISIBLE);
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
