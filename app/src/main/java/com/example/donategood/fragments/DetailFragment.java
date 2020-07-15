@@ -146,6 +146,7 @@ public class DetailFragment extends Fragment {
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
         offering.setIsBought(true);
+        offering.setBoughtBy(ParseUser.getCurrentUser());
         offering.saveInBackground();
     }
 }

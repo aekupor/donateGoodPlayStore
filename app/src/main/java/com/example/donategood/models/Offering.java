@@ -17,6 +17,7 @@ public class Offering extends ParseObject {
     public static final String KEY_CHARITY = "charity";
     public static final String KEY_TAGS = "tags";
     public static final String KEY_BOUGHT = "isBought";
+    public static final String KEY_BOUGHT_BY = "boughtBy";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -72,5 +73,13 @@ public class Offering extends ParseObject {
 
     public void setIsBought(Boolean bought) {
         put(KEY_BOUGHT, bought);
+    }
+
+    public ParseUser getBoughtBy() {
+        return getParseUser(KEY_BOUGHT_BY);
+    }
+
+    public void setBoughtBy(ParseUser user) {
+        put(KEY_BOUGHT_BY, user);
     }
 }
