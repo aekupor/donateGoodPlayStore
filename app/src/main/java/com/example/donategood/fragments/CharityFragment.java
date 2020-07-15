@@ -99,6 +99,24 @@ public class CharityFragment extends Fragment {
 
                 loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
                 query.queryCharityMoneyRaised(charity, tvMoneyRaised);
+                queryAvailablePosts();
+            }
+        });
+    }
+
+    private void queryAvailablePosts() {
+        query.queryPostsByCharity(charity, false, new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting offerings", e);
+                    return;
+                }
+                if (offerings != null) {
+                    Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
+                    allOfferings.addAll(offerings);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
