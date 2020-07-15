@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
         //if user is already logged in, send to MainActivity
         if (ParseUser.getCurrentUser() != null) {
             goToMainActivity();
