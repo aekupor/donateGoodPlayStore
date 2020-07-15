@@ -59,6 +59,9 @@ public class ProfileFragment extends Fragment {
     private TextView tvName;
     private ImageView ivProfileImage;
     private TextView tvMoneyRaised;
+    private TextView tvYouBoughtTitle;
+    private TextView tvYouSellingTitle;
+    private TextView tvYouSoldTitle;
 
     private RecyclerView rvBoughtItems;
     private OfferingAdapter adapter;
@@ -86,6 +89,9 @@ public class ProfileFragment extends Fragment {
         btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
         tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
         rvBoughtItems = view.findViewById(R.id.rvBoughtItems);
+        tvYouBoughtTitle = view.findViewById(R.id.tvYouBoughtTitle);
+        tvYouSellingTitle = view.findViewById(R.id.tvYouSellingTitle);
+        tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
 
         query = new Query();
         boughtOfferings = new ArrayList<>();
@@ -121,6 +127,27 @@ public class ProfileFragment extends Fragment {
                 ParseUser.logOut();
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 startActivity(i);
+            }
+        });
+
+        tvYouBoughtTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryBoughtPosts();
+            }
+        });
+
+        tvYouSellingTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        tvYouSoldTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
