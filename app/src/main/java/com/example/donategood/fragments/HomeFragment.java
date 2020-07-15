@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.donategood.EndlessRecyclerViewScrollListener;
 import com.example.donategood.models.Offering;
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment {
     private Query query;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private ProgressBar pb;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
 
         rvOfferings = view.findViewById(R.id.rvOfferings);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        pb = (ProgressBar) view.findViewById(R.id.pbHomeLoading);
 
         query = new Query();
         allOfferings = new ArrayList<>();
@@ -89,6 +92,7 @@ public class HomeFragment extends Fragment {
     }
 
     protected void queryPosts(int page) {
+        pb.setVisibility(ProgressBar.VISIBLE);
         query.queryAllPosts(page, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -102,6 +106,7 @@ public class HomeFragment extends Fragment {
                 allOfferings.addAll(offerings);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
