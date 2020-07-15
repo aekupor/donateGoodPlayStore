@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.OfferingAdapter;
@@ -60,5 +61,21 @@ public class SearchFragment extends Fragment {
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchText = etSearchText.getText().toString();
+                if (searchText.isEmpty()) {
+                    Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    querySearch(searchText);
+                }
+            }
+        });
+    }
+
+    private void querySearch(String searchText) {
+        Log.i(TAG, "Search for: " + searchText);
     }
 }
