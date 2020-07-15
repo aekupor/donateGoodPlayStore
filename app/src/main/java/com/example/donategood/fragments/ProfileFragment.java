@@ -152,6 +152,8 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 Log.i(TAG, "Got this number of offerings: " + offerings.size());
+                adapter.clear();
+                boughtOfferings.clear();
                 boughtOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
@@ -160,9 +162,9 @@ public class ProfileFragment extends Fragment {
         if (queryType.equals(KEY_BOUGHT)) {
             query.queryBoughtPostsByUser(ParseUser.getCurrentUser(), callback);
         } else if (queryType.equals(KEY_SELLING)) {
-
+            query.querySellingPostsByUser(ParseUser.getCurrentUser(), false, callback);
         } else if (queryType.equals(KEY_SOLD)) {
-
+            query.querySellingPostsByUser(ParseUser.getCurrentUser(), true, callback);
         }
     }
 

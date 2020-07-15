@@ -109,7 +109,7 @@ public class OtherUserProfileFragment extends Fragment {
     }
 
     protected void querySellingPosts() {
-        query.querySellingPostsByUser(user, new FindCallback<Offering>() {
+        query.querySellingPostsByUser(user, false, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(List<Offering> offerings, ParseException e) {
