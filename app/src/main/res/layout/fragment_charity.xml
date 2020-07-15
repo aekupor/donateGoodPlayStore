@@ -42,7 +42,7 @@
         android:id="@+id/tvCharitySoldTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivCharityChairtyImage"
+        android:layout_below="@+id/tvCharityMoneyRaised"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:text="See What You Sold" />
@@ -51,7 +51,7 @@
         android:id="@+id/tvCharitySellingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivCharityChairtyImage"
+        android:layout_below="@+id/tvCharityMoneyRaised"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/tvCharitySoldTitle"
