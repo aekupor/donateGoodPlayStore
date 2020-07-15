@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.OfferingAdapter;
@@ -50,6 +51,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvYouBoughtTitle;
     private TextView tvYouSellingTitle;
     private TextView tvYouSoldTitle;
+    private ProgressBar pb;
 
     private RecyclerView rvBoughtItems;
     private OfferingAdapter adapter;
@@ -80,6 +82,7 @@ public class ProfileFragment extends Fragment {
         tvYouBoughtTitle = view.findViewById(R.id.tvYouBoughtTitle);
         tvYouSellingTitle = view.findViewById(R.id.tvYouSellingTitle);
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
+        pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
 
         query = new Query();
         boughtOfferings = new ArrayList<>();
@@ -144,6 +147,7 @@ public class ProfileFragment extends Fragment {
     }
 
     protected void queryPosts(String queryType) {
+        pb.setVisibility(ProgressBar.VISIBLE);
         FindCallback<Offering> callback = new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -156,6 +160,7 @@ public class ProfileFragment extends Fragment {
                 boughtOfferings.clear();
                 boughtOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         };
 
