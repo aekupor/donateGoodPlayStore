@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 10;
     public static final Integer UPLOAD_PHOTO_CODE = 20;
+    public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE = 30;
+    public static final Integer UPLOAD_PHOTO_CODE_PROFILE = 40;
 
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -83,22 +85,29 @@ public class MainActivity extends AppCompatActivity {
 
         Camera camera = ProfileFragment.getCamera();
         File photoFile = camera.getPhotoFile();
+        Context mainContext = camera.getContext();
 
         Bitmap image = null;
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
             if (resultCode == RESULT_OK) {
                 image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
             } else { // Result was a failure
                 Toast.makeText(getApplicationContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
                 return;
             }
-        } else if ((data != null) && requestCode == UPLOAD_PHOTO_CODE) {
+        } else if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
             Uri photoUri = data.getData();
-            image = camera.loadFromUri(photoUri, getApplicationContext());
-            photoFile = camera.createFile(getApplicationContext(), image);
+            image = camera.loadFromUri(photoUri, mainContext);
+            photoFile = camera.createFile(mainContext, image);
         }
 
-        ImageView ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
+        ImageView ivPhotoToUpload;
+
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
+        } else {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
+        }
         ivPhotoToUpload.setImageBitmap(image);
         ParseFile file = new ParseFile(photoFile);
         ParseUser.getCurrentUser().put("profileImage", file);

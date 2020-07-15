@@ -23,9 +23,12 @@ public class Camera {
     public static final String TAG = "CAMERA";
     public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 10;
     public static final Integer UPLOAD_PHOTO_CODE = 20;
+    public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE = 30;
+    public static final Integer UPLOAD_PHOTO_CODE_PROFILE = 40;
 
     public File photoFile;
     public String photoFileName = "photo.jpg";
+    public Context mainContext;
 
     // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName, Context context) {
@@ -91,7 +94,8 @@ public class Camera {
         return f;
     }
 
-    public void launchCamera(Context context) {
+    public void launchCamera(Context context, Boolean profile) {
+        mainContext = context;
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference for future access
@@ -103,21 +107,34 @@ public class Camera {
 
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             // Start the image capture intent to take photo
-            ((Activity) context).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            if (profile) {
+                ((Activity) context).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE);
+            } else {
+                ((Activity) context).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            }
         }
     }
 
-    public void pickPhoto(Context context) {
+    public void pickPhoto(Context context, Boolean profile) {
+        mainContext = context;
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             // Bring up gallery to select a photo
-            ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CODE);
+            if (profile) {
+                ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CODE_PROFILE);
+            } else {
+                ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CODE);
+            }
         }
     }
 
     public File getPhotoFile() {
         return photoFile;
+    }
+
+    public Context getContext() {
+        return mainContext;
     }
 }

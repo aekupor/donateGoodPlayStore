@@ -101,14 +101,14 @@ public class ProfileFragment extends Fragment {
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                camera.launchCamera(getContext());
+                camera.launchCamera(getContext(), true);
             }
         });
 
         btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                camera.pickPhoto(getContext());
+                camera.pickPhoto(getContext(), true);
             }
         });
 
