@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.OfferingAdapter;
+import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
@@ -54,7 +55,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar pb;
 
     private RecyclerView rvBoughtItems;
-    private OfferingAdapter adapter;
+    private SmallOfferingAdapter adapter;
     private List<Offering> selectedOfferings;
     private Query query;
 
@@ -86,7 +87,7 @@ public class ProfileFragment extends Fragment {
 
         query = new Query();
         selectedOfferings = new ArrayList<>();
-        adapter = new OfferingAdapter(getContext(), selectedOfferings);
+        adapter = new SmallOfferingAdapter(getContext(), selectedOfferings);
 
         rvBoughtItems.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

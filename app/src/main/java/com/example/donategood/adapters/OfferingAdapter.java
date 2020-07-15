@@ -25,7 +25,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
 
     public static final String TAG = "OfferingAdapter";
 
-    private Context context;
+    protected Context context;
     private List<Offering> offerings;
 
     public OfferingAdapter(Context context, List<Offering> offerings) {
