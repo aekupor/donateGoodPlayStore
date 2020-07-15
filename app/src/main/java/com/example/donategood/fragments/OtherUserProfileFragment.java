@@ -98,6 +98,26 @@ public class OtherUserProfileFragment extends Fragment {
                 }
                 user = objects.get(0);
                 loadPost.setUser(user, getContext(), tvName, ivProfileImage);
+
+                querySellingPosts();
+            }
+        });
+    }
+
+    protected void querySellingPosts() {
+        query.querySellingPostsByUser(user, new FindCallback<Offering>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting offerings", e);
+                    return;
+                }
+                for (Offering offering : offerings) {
+                    Log.i(TAG, "Offering: " + offering.getTitle());
+                }
+                sellingOfferings.addAll(offerings);
+                adapter.notifyDataSetChanged();
             }
         });
     }

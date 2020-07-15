@@ -51,4 +51,12 @@ public class Query {
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
+
+    public void querySellingPostsByUser(ParseUser user, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereEqualTo("isBought", false);
+        query.whereEqualTo("user", user);
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
 }
