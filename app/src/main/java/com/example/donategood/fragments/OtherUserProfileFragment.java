@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.OfferingAdapter;
@@ -32,6 +33,9 @@ import java.util.List;
 public class OtherUserProfileFragment extends Fragment {
 
     public static final String TAG = "OtherUserProfileFragment";
+    public static final String KEY_BOUGHT = "bought";
+    public static final String KEY_SELLING = "selling";
+    public static final String KEY_SOLD = "sold";
 
     private LoadPost loadPost;
     private Query query;
@@ -39,9 +43,9 @@ public class OtherUserProfileFragment extends Fragment {
     private TextView tvName;
     private ImageView ivProfileImage;
     private TextView tvMoneyRaised;
-    private RecyclerView rvSellingItems;
+    private RecyclerView rvOfferings;
     private OfferingAdapter adapter;
-    private List<Offering> sellingOfferings;
+    private List<Offering> selectedOfferings;
 
     private String userName;
     private ParseUser user;
@@ -79,14 +83,14 @@ public class OtherUserProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvOtherProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
-        rvSellingItems = view.findViewById(R.id.rvOtherUserSelling);
+        rvOfferings = view.findViewById(R.id.rvOtherUserSelling);
 
-        sellingOfferings = new ArrayList<>();
-        adapter = new OfferingAdapter(getContext(), sellingOfferings);
+        selectedOfferings = new ArrayList<>();
+        adapter = new OfferingAdapter(getContext(), selectedOfferings);
 
-        rvSellingItems.setAdapter(adapter);
+        rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvSellingItems.setLayoutManager(linearLayoutManager);
+        rvOfferings.setLayoutManager(linearLayoutManager);
 
         loadPost = new LoadPost();
         query = new Query();
@@ -101,15 +105,16 @@ public class OtherUserProfileFragment extends Fragment {
                 user = objects.get(0);
                 loadPost.setUser(user, getContext(), tvName, ivProfileImage);
 
-                querySellingPosts();
+                queryPosts(KEY_BOUGHT);
 
                 query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
             }
         });
     }
 
-    protected void querySellingPosts() {
-        query.querySellingPostsByUser(user, false, new FindCallback<Offering>() {
+    protected void queryPosts(String queryType) {
+        //pb.setVisibility(ProgressBar.VISIBLE);
+        query.queryPosts(queryType, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -117,11 +122,12 @@ public class OtherUserProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting offerings", e);
                     return;
                 }
-                for (Offering offering : offerings) {
-                    Log.i(TAG, "Offering: " + offering.getTitle());
-                }
-                sellingOfferings.addAll(offerings);
+                Log.i(TAG, "Got this number of offerings: " + offerings.size());
+                adapter.clear();
+                selectedOfferings.clear();
+                selectedOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
+                //pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
