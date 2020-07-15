@@ -143,4 +143,12 @@ public class Query {
         query.whereEqualTo("charity", charity);
         query.findInBackground(callback);
     }
+
+    public void search(String searchText, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereContains("title", searchText);
+        query.whereEqualTo("isBought", false);
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
 }
