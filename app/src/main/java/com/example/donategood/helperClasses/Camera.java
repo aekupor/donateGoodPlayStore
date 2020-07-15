@@ -134,6 +134,10 @@ public class Camera {
         return photoFile;
     }
 
+    public void setPhotoFile(File file) {
+        photoFile = file;
+    }
+
     public Context getContext() {
         return mainContext;
     }

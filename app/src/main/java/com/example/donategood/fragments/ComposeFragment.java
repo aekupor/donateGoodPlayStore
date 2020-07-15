@@ -52,7 +52,7 @@ public class ComposeFragment extends Fragment {
     public static final Integer UPLOAD_PHOTO_CODE = 20;
 
     private Query query;
-    private Camera camera;
+    private static Camera camera;
 
     private EditText etTitle;
     private EditText etPrice;
@@ -103,7 +103,7 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnTakePhoto onClick");
-                launchCamera();
+                camera.launchCamera(getContext(), false);
             }
         });
 
@@ -111,7 +111,7 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnUploadPhoto onClick");
-                pickPhoto(view);
+                camera.pickPhoto(getContext(), false);
             }
         });
 
@@ -156,7 +156,7 @@ public class ComposeFragment extends Fragment {
 
                 final Offering offering = new Offering();
                 offering.setTitle(title);
-                offering.setImage(new ParseFile(photoFile));
+                offering.setImage(new ParseFile(camera.getPhotoFile()));
                 offering.setPrice(Integer.valueOf(price));
                 offering.setCharity(charities.get(0));
                 offering.setTags(tags);
@@ -183,55 +183,6 @@ public class ComposeFragment extends Fragment {
                 });
             }
         });
-    }
-
-    protected void launchCamera() {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
-        photoFile = camera.getPhotoFileUri(photoFileName, getContext());
-
-        // wrap File object into a content provider; required for API >= 24
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider.donateGood", photoFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
-        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }
-    }
-
-    public void pickPhoto(View view) {
-        // Create intent for picking a photo from the gallery
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Bring up gallery to select a photo
-            startActivityForResult(intent, UPLOAD_PHOTO_CODE);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.i(TAG, "onActivityResult");
-        Bitmap image = null;
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        } else if ((data != null) && requestCode == UPLOAD_PHOTO_CODE) {
-            Uri photoUri = data.getData();
-            image = camera.loadFromUri(photoUri, getContext());
-            photoFile = camera.createFile(getContext(), image);
-        }
-        ivPhoto.setImageBitmap(image);
-        ParseFile file = new ParseFile(photoFile);
-        ParseUser.getCurrentUser().put("profileImage", file);
-        ParseUser.getCurrentUser().saveInBackground();
     }
 
     private void setUpSpinner(View view) {
@@ -270,5 +221,9 @@ public class ComposeFragment extends Fragment {
                 });
             }
         });
+    }
+
+    public static Camera getCamera() {
+        return camera;
     }
 }

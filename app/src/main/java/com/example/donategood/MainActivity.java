@@ -83,7 +83,16 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult");
 
-        Camera camera = ProfileFragment.getCamera();
+        ImageView ivPhotoToUpload;
+        Camera camera;
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
+            camera = ProfileFragment.getCamera();
+        } else {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
+            camera = ComposeFragment.getCamera();
+        }
+        //Camera camera = ProfileFragment.getCamera();
         File photoFile = camera.getPhotoFile();
         Context mainContext = camera.getContext();
 
@@ -99,15 +108,9 @@ public class MainActivity extends AppCompatActivity {
             Uri photoUri = data.getData();
             image = camera.loadFromUri(photoUri, mainContext);
             photoFile = camera.createFile(mainContext, image);
+            camera.setPhotoFile(photoFile);
         }
 
-        ImageView ivPhotoToUpload;
-
-        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
-            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
-        } else {
-            ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
-        }
         ivPhotoToUpload.setImageBitmap(image);
         ParseFile file = new ParseFile(photoFile);
         ParseUser.getCurrentUser().put("profileImage", file);
