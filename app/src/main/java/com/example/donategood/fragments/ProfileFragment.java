@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -21,14 +23,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
+import com.example.donategood.models.Offering;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -49,6 +57,10 @@ public class ProfileFragment extends Fragment {
     private TextView tvName;
     private ImageView ivProfileImage;
 
+    private RecyclerView rvBoughtItems;
+    private OfferingAdapter adapter;
+    private List<Offering> boughtOfferings;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -68,6 +80,14 @@ public class ProfileFragment extends Fragment {
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
         btnTakePhoto = view.findViewById(R.id.btnProfileTakePhoto);
         btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
+        rvBoughtItems = view.findViewById(R.id.rvBoughtItems);
+
+        boughtOfferings = new ArrayList<>();
+        adapter = new OfferingAdapter(getContext(), boughtOfferings);
+
+        rvBoughtItems.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvBoughtItems.setLayoutManager(linearLayoutManager);
 
         loadPost = new LoadPost();
         camera = new Camera();
@@ -97,6 +117,12 @@ public class ProfileFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        queryBoughtPosts();
+    }
+
+    protected void queryBoughtPosts() {
+        
     }
 
     protected void launchCamera() {

@@ -44,4 +44,15 @@
         android:layout_marginTop="4dp"
         android:text="Upload Photo" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBoughtItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnProfileUploadPhoto"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp" />
+
 </RelativeLayout>
