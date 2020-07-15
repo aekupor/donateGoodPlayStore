@@ -40,6 +40,7 @@ public class DetailFragment extends Fragment {
     private TextView tvUser;
     private TextView tvCharity;
     private ImageView ivCharityImage;
+    private ImageView ivOfferingPhoto;
     private Button btnPurchase;
 
     public DetailFragment() {
@@ -77,6 +78,7 @@ public class DetailFragment extends Fragment {
         tvUser = view.findViewById(R.id.tvDetailUser);
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
         btnPurchase = view.findViewById(R.id.btnPurchase);
+        ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +123,7 @@ public class DetailFragment extends Fragment {
 
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
+                loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
             }
         });
     }

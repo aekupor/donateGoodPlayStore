@@ -62,4 +62,12 @@
         android:layout_below="@+id/ivDetailCharityImage"
         android:layout_marginTop="4dp"
         android:text="Purchase" />
+
+    <ImageView
+        android:id="@+id/ivDetailOfferingPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnPurchase"
+        android:layout_marginTop="20dp"
+        tools:srcCompat="@tools:sample/avatars" />
 </RelativeLayout>
