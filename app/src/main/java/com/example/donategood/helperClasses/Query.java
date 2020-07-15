@@ -15,6 +15,11 @@ import java.util.List;
 
 public class Query {
 
+
+    public static final String KEY_BOUGHT = "bought";
+    public static final String KEY_SELLING = "selling";
+    public static final String KEY_SOLD = "sold";
+
     public void queryAllPosts(Integer page, FindCallback<Offering> callback) {
         Integer displayLimit = 2;
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
@@ -150,5 +155,15 @@ public class Query {
         query.whereEqualTo("isBought", false);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
+    }
+
+    public void queryPosts(String queryType, FindCallback<Offering> callback) {
+        if (queryType.equals(KEY_BOUGHT)) {
+            queryBoughtPostsByUser(ParseUser.getCurrentUser(), callback);
+        } else if (queryType.equals(KEY_SELLING)) {
+            querySellingPostsByUser(ParseUser.getCurrentUser(), false, callback);
+        } else if (queryType.equals(KEY_SOLD)) {
+            querySellingPostsByUser(ParseUser.getCurrentUser(), true, callback);
+        }
     }
 }

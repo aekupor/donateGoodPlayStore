@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
 
     private RecyclerView rvBoughtItems;
     private OfferingAdapter adapter;
-    private List<Offering> boughtOfferings;
+    private List<Offering> selectedOfferings;
     private Query query;
 
     public ProfileFragment() {
@@ -85,8 +85,8 @@ public class ProfileFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
 
         query = new Query();
-        boughtOfferings = new ArrayList<>();
-        adapter = new OfferingAdapter(getContext(), boughtOfferings);
+        selectedOfferings = new ArrayList<>();
+        adapter = new OfferingAdapter(getContext(), selectedOfferings);
 
         rvBoughtItems.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -148,7 +148,7 @@ public class ProfileFragment extends Fragment {
 
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
-        FindCallback<Offering> callback = new FindCallback<Offering>() {
+        query.queryPosts(queryType, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
@@ -157,20 +157,12 @@ public class ProfileFragment extends Fragment {
                 }
                 Log.i(TAG, "Got this number of offerings: " + offerings.size());
                 adapter.clear();
-                boughtOfferings.clear();
-                boughtOfferings.addAll(offerings);
+                selectedOfferings.clear();
+                selectedOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
                 pb.setVisibility(ProgressBar.INVISIBLE);
             }
-        };
-
-        if (queryType.equals(KEY_BOUGHT)) {
-            query.queryBoughtPostsByUser(ParseUser.getCurrentUser(), callback);
-        } else if (queryType.equals(KEY_SELLING)) {
-            query.querySellingPostsByUser(ParseUser.getCurrentUser(), false, callback);
-        } else if (queryType.equals(KEY_SOLD)) {
-            query.querySellingPostsByUser(ParseUser.getCurrentUser(), true, callback);
-        }
+        });
     }
 
     public static Camera getCamera() {
