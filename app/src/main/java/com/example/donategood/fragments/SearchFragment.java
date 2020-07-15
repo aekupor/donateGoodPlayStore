@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -15,6 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.donategood.R;
+import com.example.donategood.adapters.OfferingAdapter;
+import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Offering;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
@@ -22,7 +29,11 @@ public class SearchFragment extends Fragment {
 
     private EditText etSearchText;
     private Button btnSearch;
+
     private RecyclerView rvOfferings;
+    private OfferingAdapter adapter;
+    private List<Offering> allOfferings;
+    private Query query;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -41,5 +52,13 @@ public class SearchFragment extends Fragment {
         etSearchText = view.findViewById(R.id.etSearchBar);
         btnSearch = view.findViewById(R.id.btnSearch);
         rvOfferings = view.findViewById(R.id.rvSearchOfferings);
+
+        query = new Query();
+        allOfferings = new ArrayList<>();
+        adapter = new OfferingAdapter(getContext(), allOfferings);
+
+        rvOfferings.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvOfferings.setLayoutManager(linearLayoutManager);
     }
 }
