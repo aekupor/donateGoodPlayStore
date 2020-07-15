@@ -14,17 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.donategood.LoadPost;
+import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.fragments.DetailFragment;
-import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.example.donategood.R;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHolder> {

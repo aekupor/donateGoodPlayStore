@@ -1,4 +1,4 @@
-package com.example.donategood;
+package com.example.donategood.helperClasses;
 
 import android.content.Context;
 import android.graphics.Bitmap;

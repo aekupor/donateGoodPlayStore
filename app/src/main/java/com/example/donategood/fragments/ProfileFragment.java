@@ -16,26 +16,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.donategood.Camera;
-import com.example.donategood.LoadPost;
+import com.example.donategood.helperClasses.Camera;
+import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
-import com.example.donategood.models.Charity;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 

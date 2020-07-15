@@ -27,8 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.donategood.Camera;
-import com.example.donategood.Query;
+import com.example.donategood.helperClasses.Camera;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;

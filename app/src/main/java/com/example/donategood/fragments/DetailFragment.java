@@ -15,15 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.donategood.LoadPost;
-import com.example.donategood.Query;
+import com.example.donategood.helperClasses.LoadPost;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
-import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 
 import java.util.List;
 

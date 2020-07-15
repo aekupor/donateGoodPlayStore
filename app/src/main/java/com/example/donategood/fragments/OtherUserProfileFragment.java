@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.donategood.LoadPost;
-import com.example.donategood.Query;
+import com.example.donategood.helperClasses.LoadPost;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;

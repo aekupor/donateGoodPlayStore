@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.donategood.LoadPost;
-import com.example.donategood.Query;
+import com.example.donategood.helperClasses.LoadPost;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.parse.FindCallback;

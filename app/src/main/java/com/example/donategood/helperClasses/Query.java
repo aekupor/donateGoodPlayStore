@@ -1,4 +1,4 @@
-package com.example.donategood;
+package com.example.donategood.helperClasses;
 
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;

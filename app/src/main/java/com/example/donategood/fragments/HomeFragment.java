@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.example.donategood.EndlessRecyclerViewScrollListener;
 import com.example.donategood.models.Offering;
 import com.example.donategood.adapters.OfferingAdapter;
-import com.example.donategood.Query;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
