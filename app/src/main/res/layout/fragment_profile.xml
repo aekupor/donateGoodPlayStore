@@ -94,7 +94,7 @@
         android:text="See What You Selling" />
 
     <ProgressBar
-        android:id="@+id/pbCharityLoading"
+        android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvYouSellingTitle"

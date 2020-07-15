@@ -95,11 +95,26 @@ public class CharityFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
 
+        tvCharitySoldTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(true);
+            }
+        });
+
+        tvCharitySellingTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(false);
+            }
+        });
+
         loadPost = new LoadPost();
         query = new Query();
         query.queryCharityByName(charityName, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> objects, ParseException e) {
+                pb.setVisibility(ProgressBar.VISIBLE);
                 if (e != null) {
                     Log.e(TAG, "Error finding charity", e);
                     return;
@@ -109,13 +124,15 @@ public class CharityFragment extends Fragment {
 
                 loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
                 query.queryCharityMoneyRaised(charity, tvMoneyRaised);
-                queryAvailablePosts();
+                pb.setVisibility(ProgressBar.INVISIBLE);
+                queryPosts(false);
             }
         });
     }
 
-    private void queryAvailablePosts() {
-        query.queryPostsByCharity(charity, false, new FindCallback<Offering>() {
+    private void queryPosts(Boolean bought) {
+        pb.setVisibility(ProgressBar.VISIBLE);
+        query.queryPostsByCharity(charity, bought, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
@@ -124,8 +141,10 @@ public class CharityFragment extends Fragment {
                 }
                 if (offerings != null) {
                     Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
+                    allOfferings.clear();
                     allOfferings.addAll(offerings);
                     adapter.notifyDataSetChanged();
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                 }
             }
         });
