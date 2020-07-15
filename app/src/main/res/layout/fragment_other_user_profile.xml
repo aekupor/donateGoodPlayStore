@@ -26,7 +26,7 @@
         android:id="@+id/rvOtherUserSelling"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ivOtherProfileProfileImage"
+        android:layout_below="@+id/tvOtherBoughtTitle"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="4dp" />
@@ -40,4 +40,42 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivOtherProfileProfileImage"
         tools:text="100" />
+
+    <TextView
+        android:id="@+id/tvOtherBoughtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivOtherProfileProfileImage"
+        android:layout_marginTop="4dp"
+        android:text="See What Bought" />
+
+    <TextView
+        android:id="@+id/tvOtherSoldTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivOtherProfileProfileImage"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tvOtherBoughtTitle"
+        android:text="See What Sold" />
+
+    <TextView
+        android:id="@+id/tvOtherSellingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivOtherProfileProfileImage"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tvOtherSoldTitle"
+        android:text="See What Selling" />
+
+    <ProgressBar
+        android:id="@+id/pbOtherProfileLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvOtherSellingTitle"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/tvOtherUserMoneyRaised"
+        android:visibility="invisible" />
 </RelativeLayout>
