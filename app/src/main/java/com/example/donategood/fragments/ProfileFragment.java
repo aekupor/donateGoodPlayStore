@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
     private Button btnUploadPhoto;
     private TextView tvName;
     private ImageView ivProfileImage;
+    private TextView tvMoneyRaised;
 
     private RecyclerView rvBoughtItems;
     private OfferingAdapter adapter;
@@ -83,6 +84,7 @@ public class ProfileFragment extends Fragment {
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
         btnTakePhoto = view.findViewById(R.id.btnProfileTakePhoto);
         btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
+        tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
         rvBoughtItems = view.findViewById(R.id.rvBoughtItems);
 
         query = new Query();
@@ -123,6 +125,7 @@ public class ProfileFragment extends Fragment {
         });
 
         queryBoughtPosts();
+        query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
     }
 
     protected void queryBoughtPosts() {

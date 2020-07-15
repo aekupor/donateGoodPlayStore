@@ -103,7 +103,7 @@ public class OtherUserProfileFragment extends Fragment {
 
                 querySellingPosts();
 
-                queryMoneyRaised();
+                query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
             }
         });
     }
@@ -124,9 +124,5 @@ public class OtherUserProfileFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-    }
-
-    protected void queryMoneyRaised() {
-        query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
     }
 }
