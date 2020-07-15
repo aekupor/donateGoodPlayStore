@@ -54,4 +54,12 @@
         android:layout_below="@+id/tvDetailPrice"
         android:layout_marginTop="4dp"
         tools:text="Ashlee" />
+
+    <Button
+        android:id="@+id/btnPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDetailCharityImage"
+        android:layout_marginTop="4dp"
+        android:text="Purchase" />
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class DetailFragment extends Fragment {
     private TextView tvUser;
     private TextView tvCharity;
     private ImageView ivCharityImage;
+    private Button btnPurchase;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -73,6 +75,7 @@ public class DetailFragment extends Fragment {
         tvCharity = view.findViewById(R.id.tvDetailCharity);
         tvUser = view.findViewById(R.id.tvDetailUser);
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
+        btnPurchase = view.findViewById(R.id.btnPurchase);
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +95,13 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 goToUser();
+            }
+        });
+
+        btnPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                purchaseItem();
             }
         });
 
@@ -130,5 +140,9 @@ public class DetailFragment extends Fragment {
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText());
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+    }
+
+    private void purchaseItem() {
+        Log.i(TAG, "purchase item");
     }
 }
