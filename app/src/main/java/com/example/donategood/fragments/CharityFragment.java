@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -115,7 +117,10 @@ public class CharityFragment extends Fragment {
         btnWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                charityWebView.loadUrl(charity.getWebsite());
+                //go to webview fragment
+                final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                Fragment fragment = WebViewFragment.newInstance(charity.getWebsite());
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             }
         });
 
