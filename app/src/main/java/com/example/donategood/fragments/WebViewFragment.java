@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.example.donategood.R;
 
@@ -18,6 +19,7 @@ public class WebViewFragment extends Fragment {
     public static final String TAG = "WebViewFragment";
 
     private String url;
+    private WebView webView;
 
     public WebViewFragment() {
         // Required empty public constructor
@@ -47,5 +49,8 @@ public class WebViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        webView = view.findViewById(R.id.webviewCharity);
+        webView.loadUrl(url);
     }
 }

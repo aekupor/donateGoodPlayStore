@@ -51,7 +51,6 @@ public class CharityFragment extends Fragment {
     private TextView tvCharitySellingTitle;
     private TextView tvCharitySoldTitle;
     private Button btnWebsite;
-    private WebView charityWebView;
 
     public CharityFragment() {
         // Required empty public constructor
@@ -90,7 +89,6 @@ public class CharityFragment extends Fragment {
         tvCharitySellingTitle = view.findViewById(R.id.tvCharitySellingTitle);
         tvCharitySoldTitle = view.findViewById(R.id.tvCharitySoldTitle);
         btnWebsite = view.findViewById(R.id.btnCharityWebsite);
-        charityWebView = (WebView) view.findViewById(R.id.charityWebView);
 
         query = new Query();
         allOfferings = new ArrayList<>();
