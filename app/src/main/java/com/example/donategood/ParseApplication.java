@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -11,9 +13,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ParseApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
         // Register parse models
         ParseObject.registerSubclass(Offering.class);

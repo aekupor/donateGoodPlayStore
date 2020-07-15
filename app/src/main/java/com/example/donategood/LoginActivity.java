@@ -10,30 +10,59 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
+    private static final String EMAIL = "email";
 
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
     private Button btnRegister;
+    private LoginButton fbLoginButton;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+
+        fbLoginButton = (LoginButton) findViewById(R.id.btnFBLogin);
+        fbLoginButton.setReadPermissions(Arrays.asList(EMAIL));
+
+        // Callback registration
+        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                Log.i(TAG, "onSuccess FB login");
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Log.i(TAG, "onCancel FB login");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Log.i(TAG, "onError FB login");
+            }
+        });
 
         //if user is already logged in, send to MainActivity
         if (ParseUser.getCurrentUser() != null) {
@@ -112,5 +141,11 @@ public class LoginActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
