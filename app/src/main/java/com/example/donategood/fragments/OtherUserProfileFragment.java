@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.OfferingAdapter;
+import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
@@ -46,7 +47,7 @@ public class OtherUserProfileFragment extends Fragment {
     private ImageView ivProfileImage;
     private TextView tvMoneyRaised;
     private RecyclerView rvOfferings;
-    private OfferingAdapter adapter;
+    private SmallOfferingAdapter adapter;
     private List<Offering> selectedOfferings;
     private TextView tvBoughtTitle;
     private TextView tvSoldTitle;
@@ -104,7 +105,7 @@ public class OtherUserProfileFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
 
         selectedOfferings = new ArrayList<>();
-        adapter = new OfferingAdapter(getContext(), selectedOfferings);
+        adapter = new SmallOfferingAdapter(getContext(), selectedOfferings);
 
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

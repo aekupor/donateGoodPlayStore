@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.OfferingAdapter;
+import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
@@ -39,7 +40,7 @@ public class CharityFragment extends Fragment {
     private Query query;
     private LoadPost loadPost;
     private RecyclerView rvOfferings;
-    private OfferingAdapter adapter;
+    private SmallOfferingAdapter adapter;
     private List<Offering> allOfferings;
 
     private Charity charity;
@@ -92,7 +93,7 @@ public class CharityFragment extends Fragment {
 
         query = new Query();
         allOfferings = new ArrayList<>();
-        adapter = new OfferingAdapter(getContext(), allOfferings);
+        adapter = new SmallOfferingAdapter(getContext(), allOfferings);
 
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
