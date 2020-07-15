@@ -33,8 +33,46 @@
         android:id="@+id/rvCharitySellingOfferings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvCharityMoneyRaised"
+        android:layout_below="@+id/tvCharitySoldTitle"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/tvCharitySoldTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivCharityChairtyImage"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="See What You Sold" />
+
+    <TextView
+        android:id="@+id/tvCharitySellingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivCharityChairtyImage"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/tvCharitySoldTitle"
+        android:text="See What You Selling" />
+
+    <ProgressBar
+        android:id="@+id/pbCharityLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toEndOf="@+id/ivCharityChairtyImage"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btnCharityWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@+id/ivCharityChairtyImage"
+        android:text="See Website" />
 </RelativeLayout>

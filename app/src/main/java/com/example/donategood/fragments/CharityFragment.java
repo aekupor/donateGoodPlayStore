@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.OfferingAdapter;
@@ -42,6 +44,10 @@ public class CharityFragment extends Fragment {
     private TextView tvTitle;
     private ImageView ivProfileImage;
     private TextView tvMoneyRaised;
+    private ProgressBar pb;
+    private TextView tvCharitySellingTitle;
+    private TextView tvCharitySoldTitle;
+    private Button btnWebsite;
 
     public CharityFragment() {
         // Required empty public constructor
@@ -76,6 +82,10 @@ public class CharityFragment extends Fragment {
         ivProfileImage = view.findViewById(R.id.ivCharityChairtyImage);
         tvMoneyRaised = view.findViewById(R.id.tvCharityMoneyRaised);
         rvOfferings = view.findViewById(R.id.rvCharitySellingOfferings);
+        pb = (ProgressBar) view.findViewById(R.id.pbCharityLoading);
+        tvCharitySellingTitle = view.findViewById(R.id.tvCharitySellingTitle);
+        tvCharitySoldTitle = view.findViewById(R.id.tvCharitySoldTitle);
+        btnWebsite = view.findViewById(R.id.btnCharityWebsite);
 
         query = new Query();
         allOfferings = new ArrayList<>();
