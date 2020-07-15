@@ -93,4 +93,14 @@
         android:layout_toEndOf="@+id/tvYouSoldTitle"
         android:text="See What You Selling" />
 
+    <ProgressBar
+        android:id="@+id/pbProfileLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvYouSellingTitle"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toEndOf="@+id/btnProfileUploadPhoto"
+        android:visibility="invisible" />
+
 </RelativeLayout>
