@@ -59,4 +59,19 @@ public class Query {
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
+
+    public void queryMoneyBought(ParseUser user, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereEqualTo("isBought", true);
+        query.whereEqualTo("boughtBy", user);
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
+    public void queryMoneySold(ParseUser user, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereEqualTo("isBought", true);
+        query.whereEqualTo("user", user);
+        query.findInBackground(callback);
+    }
 }

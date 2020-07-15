@@ -127,7 +127,8 @@ public class OtherUserProfileFragment extends Fragment {
     }
 
     protected void queryMoneyRaised() {
-        query.queryMoneyRaised(user, new FindCallback<Offering>() {
+        final Integer[] moneyRaised = {0};
+        query.queryMoneyBought(user, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -135,12 +136,27 @@ public class OtherUserProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting offerings", e);
                     return;
                 }
-                Integer moneyRaised = 0;
                 for (Offering offering : offerings) {
-                    moneyRaised += offering.getPrice();
+                    moneyRaised[0] += offering.getPrice();
                 }
-                tvMoneyRaised.setText(moneyRaised.toString());
+
+                query.queryMoneySold(user, new FindCallback<Offering>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void done(List<Offering> offerings, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Issue with getting offerings", e);
+                            return;
+                        }
+                        for (Offering offering : offerings) {
+                            moneyRaised[0] += offering.getPrice();
+                        }
+                        tvMoneyRaised.setText(moneyRaised[0].toString());
+                    }
+                });
             }
         });
+
+
     }
 }
