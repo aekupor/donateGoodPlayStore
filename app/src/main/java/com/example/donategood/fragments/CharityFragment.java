@@ -33,6 +33,7 @@ public class CharityFragment extends Fragment {
     private String charityName;
     private TextView tvTitle;
     private ImageView ivProfileImage;
+    private TextView tvMoneyRaised;
 
     public CharityFragment() {
         // Required empty public constructor
@@ -65,6 +66,7 @@ public class CharityFragment extends Fragment {
 
         tvTitle = view.findViewById(R.id.tvCharityCharityTitle);
         ivProfileImage = view.findViewById(R.id.ivCharityChairtyImage);
+        tvMoneyRaised = view.findViewById(R.id.tvCharityMoneyRaised);
 
         loadPost = new LoadPost();
         query = new Query();
@@ -79,6 +81,7 @@ public class CharityFragment extends Fragment {
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
 
                 loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
+                query.queryCharityMoneyRaised(charity, tvMoneyRaised);
             }
         });
     }

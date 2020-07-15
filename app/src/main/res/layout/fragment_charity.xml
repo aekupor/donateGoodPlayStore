@@ -20,4 +20,12 @@
         android:layout_below="@+id/tvCharityCharityTitle"
         android:layout_marginTop="4dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvCharityMoneyRaised"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivCharityChairtyImage"
+        android:layout_marginTop="4dp"
+        tools:text="100" />
 </RelativeLayout>
