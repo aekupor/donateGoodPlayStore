@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
+    //called when camera is closed
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -92,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
             camera = ComposeFragment.getCamera();
         }
-        //Camera camera = ProfileFragment.getCamera();
         File photoFile = camera.getPhotoFile();
         Context mainContext = camera.getContext();
 

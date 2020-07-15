@@ -5,7 +5,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -84,6 +86,14 @@ public class OtherUserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //if user clicked on is signed in user
+        if (userName.equals(ParseUser.getCurrentUser().getUsername())) {
+            final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+            Fragment fragment = new ProfileFragment();
+            fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+            return;
+        }
+
         tvName = view.findViewById(R.id.tvOtherProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
@@ -136,7 +146,7 @@ public class OtherUserProfileFragment extends Fragment {
 
                 queryPosts(KEY_BOUGHT);
 
-                query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
+                query.queryMoneyRaised(user, tvMoneyRaised);
             }
         });
     }
