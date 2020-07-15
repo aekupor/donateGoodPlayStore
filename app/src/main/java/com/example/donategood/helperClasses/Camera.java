@@ -1,6 +1,8 @@
 package com.example.donategood.helperClasses;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
@@ -8,6 +10,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+
+import androidx.core.content.FileProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -17,6 +21,11 @@ import java.io.IOException;
 
 public class Camera {
     public static final String TAG = "CAMERA";
+    public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 10;
+    public static final Integer UPLOAD_PHOTO_CODE = 20;
+
+    public File photoFile;
+    public String photoFileName = "photo.jpg";
 
     // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName, Context context) {
@@ -26,7 +35,7 @@ public class Camera {
         File mediaStorageDir = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(TAG, "failed to create directory");
         }
 
@@ -38,7 +47,7 @@ public class Camera {
         Bitmap image = null;
         try {
             // check version of Android on device
-            if(Build.VERSION.SDK_INT > 27){
+            if (Build.VERSION.SDK_INT > 27) {
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(context.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
@@ -80,5 +89,35 @@ public class Camera {
             e.printStackTrace();
         }
         return f;
+    }
+
+    public void launchCamera(Context context) {
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create a File reference for future access
+        photoFile = getPhotoFileUri(photoFileName, context);
+
+        // wrap File object into a content provider; required for API >= 24
+        Uri fileProvider = FileProvider.getUriForFile(context, "com.codepath.fileprovider.donateGood", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            // Start the image capture intent to take photo
+            ((Activity) context).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    public void pickPhoto(Context context) {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CODE);
+        }
+    }
+
+    public File getPhotoFile() {
+        return photoFile;
     }
 }

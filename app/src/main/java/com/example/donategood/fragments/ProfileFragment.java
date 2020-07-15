@@ -1,5 +1,6 @@
 package com.example.donategood.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,7 +49,7 @@ public class ProfileFragment extends Fragment {
     public static final Integer UPLOAD_PHOTO_CODE = 20;
 
     private LoadPost loadPost;
-    private Camera camera;
+    private static Camera camera;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -100,14 +101,14 @@ public class ProfileFragment extends Fragment {
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchCamera();
+                camera.launchCamera(getContext());
             }
         });
 
         btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickPhoto();
+                camera.pickPhoto(getContext());
             }
         });
 
@@ -141,52 +142,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    protected void launchCamera() {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
-        photoFile = camera.getPhotoFileUri(photoFileName, getContext());
-
-        // wrap File object into a content provider; required for API >= 24
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider.donateGood", photoFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
-        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }
-    }
-
-    public void pickPhoto() {
-        // Create intent for picking a photo from the gallery
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Bring up gallery to select a photo
-            startActivityForResult(intent, UPLOAD_PHOTO_CODE);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.i(TAG, "onActivityResult");
-        Bitmap image = null;
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        } else if ((data != null) && requestCode == UPLOAD_PHOTO_CODE) {
-            Uri photoUri = data.getData();
-            image = camera.loadFromUri(photoUri, getContext());
-            photoFile = camera.createFile(getContext(), image);
-        }
-        ivProfileImage.setImageBitmap(image);
-        ParseFile file = new ParseFile(photoFile);
-        ParseUser.getCurrentUser().put("profileImage", file);
-        ParseUser.getCurrentUser().saveInBackground();
+    public static Camera getCamera() {
+        return camera;
     }
 }
