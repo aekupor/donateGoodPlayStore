@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.SearchFragment">
 
-    <TextView
+    <EditText
+        android:id="@+id/etSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"
+        android:hint="what are you looking for?" />
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_marginTop="4dp"
+        android:text="Search" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchOfferings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Search fragment" />
+        android:layout_below="@+id/btnSearch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp" />
 
-</FrameLayout>
+</RelativeLayout>
