@@ -1,20 +1,14 @@
 package com.example.donategood.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
@@ -33,25 +26,20 @@ import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
-    public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 10;
-    public static final Integer UPLOAD_PHOTO_CODE = 20;
+    public static final String KEY_BOUGHT = "bought";
+    public static final String KEY_SELLING = "selling";
+    public static final String KEY_SOLD = "sold";
 
     private LoadPost loadPost;
     private static Camera camera;
-    private File photoFile;
-    public String photoFileName = "photo.jpg";
 
     private Button btnLogout;
     private Button btnTakePhoto;
@@ -133,43 +121,49 @@ public class ProfileFragment extends Fragment {
         tvYouBoughtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queryBoughtPosts();
+                queryPosts(KEY_BOUGHT);
             }
         });
 
         tvYouSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                queryPosts(KEY_SELLING);
             }
         });
 
         tvYouSoldTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                queryPosts(KEY_SOLD);
             }
         });
 
-        queryBoughtPosts();
+        queryPosts("bought");
         query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
     }
 
-    protected void queryBoughtPosts() {
-        query.queryBoughtPostsByUser(ParseUser.getCurrentUser(), new FindCallback<Offering>() {
+    protected void queryPosts(String queryType) {
+        FindCallback<Offering> callback = new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting offerings", e);
                     return;
                 }
-                for (Offering offering : offerings) {
-                    Log.i(TAG, "Offering: " + offering.getTitle());
-                }
+                Log.i(TAG, "Got this number of offerings: " + offerings.size());
                 boughtOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
-        });
+        };
+
+        if (queryType.equals(KEY_BOUGHT)) {
+            query.queryBoughtPostsByUser(ParseUser.getCurrentUser(), callback);
+        } else if (queryType.equals(KEY_SELLING)) {
+
+        } else if (queryType.equals(KEY_SOLD)) {
+
+        }
     }
 
     public static Camera getCamera() {
