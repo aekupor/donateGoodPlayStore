@@ -22,6 +22,7 @@ import com.example.donategood.R;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -144,5 +145,7 @@ public class DetailFragment extends Fragment {
 
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
+        offering.setIsBought(true);
+        offering.saveInBackground();
     }
 }
