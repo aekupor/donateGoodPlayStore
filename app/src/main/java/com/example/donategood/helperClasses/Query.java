@@ -97,6 +97,23 @@ public class Query {
         });
     }
 
+    public void queryCharityMoneyRaised(Charity charity, final TextView tvMoney) {
+        final Integer[] moneyRaised = {0};
+        queryMoneyCharity(charity, new FindCallback<Offering>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (Offering offering : offerings) {
+                    moneyRaised[0] += offering.getPrice();
+                }
+                tvMoney.setText(moneyRaised[0].toString());
+            }
+        });
+    }
+
     public void queryMoneyBought(ParseUser user, FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", true);
@@ -109,6 +126,13 @@ public class Query {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", true);
         query.whereEqualTo("user", user);
+        query.findInBackground(callback);
+    }
+
+    public void queryMoneyCharity(Charity charity, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereEqualTo("isBought", true);
+        query.whereEqualTo("charity", charity);
         query.findInBackground(callback);
     }
 }
