@@ -140,37 +140,8 @@ public class DetailFragment extends Fragment {
     }
 
     private void setShareButton() {
-        //try to share button but not working for now
-        /*
-        final Bitmap[] image = {null};
-
-        Glide.with(this)
-                .asBitmap()
-                .load(offering.getImage().getUrl())
-                .into(new CustomTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        image[0] = resource;
-                        Log.i(TAG, "created image bitmap");
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-                    }
-                });
-
-
-        SharePhoto photo = new SharePhoto.Builder()
-                .setBitmap(image[0])
-                .build();
-        content = new SharePhotoContent.Builder()
-                .addPhoto(photo)
-                .build();
-        */
-
-        //temporary content to share for testing purposes
         content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                .setContentUrl(Uri.parse(offering.getImage().getUrl()))
                 .build();
 
         shareButton.setShareContent(content);
