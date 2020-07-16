@@ -47,8 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivOfferingPhoto"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/ivCharityProfile"
         tools:text="Buy From a Black Woman" />
 

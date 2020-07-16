@@ -19,42 +19,54 @@
         android:id="@+id/fbShareButtonDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="109dp"
-        android:layout_marginEnd="147dp" />
+        android:layout_below="@+id/tvDetailTagList"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/btnPurchase" />
 
     <TextView
         android:id="@+id/tvDetailPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDetailTitle"
-        android:layout_marginTop="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvDetailTitle"
         tools:layout_editor_absoluteX="84dp"
         tools:text="20" />
-
-    <TextView
-        android:id="@+id/tvDetailCharity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailUser"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/ivDetailCharityImage"
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="328dp"
-        tools:text="BLM" />
 
     <ImageView
         android:id="@+id/ivDetailCharityImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/tvDetailUser"
+        android:layout_below="@+id/ivDetailOfferingPhoto"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="4dp"
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="404dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvDetailCharity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDetailOfferingPhoto"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/ivDetailCharityImage"
+        tools:layout_editor_absoluteX="212dp"
+        tools:layout_editor_absoluteY="328dp"
+        tools:text="BLM" />
+
+    <Button
+        android:id="@+id/btnPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDetailTagList"
+        android:layout_marginTop="20dp"
+        android:text="Purchase" />
 
     <TextView
         android:id="@+id/tvDetailUser"
@@ -64,27 +76,39 @@
         android:layout_marginTop="4dp"
         tools:text="Ashlee" />
 
-    <Button
-        android:id="@+id/btnPurchase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailCharityImage"
-        android:layout_marginTop="4dp"
-        android:text="Purchase" />
-
     <ImageView
         android:id="@+id/ivDetailOfferingPhoto"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_below="@+id/btnPurchase"
-        android:layout_marginTop="20dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/tvDetailUser"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvDetailTagList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailOfferingPhoto"
+        android:layout_below="@+id/ivDetailCharityImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="7dp"
         android:layout_marginTop="20dp"
         tools:text="BLM, cheap, test" />
+
+    <TextView
+        android:id="@+id/tvRecommendOfferingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnPurchase"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"
+        android:text="See Other Recommended Offerings:" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecommendOfferings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvRecommendOfferingsTitle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="4dp" />
 </RelativeLayout>
