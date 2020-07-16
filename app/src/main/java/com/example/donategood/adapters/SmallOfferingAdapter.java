@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.models.Offering;
+import com.parse.ParseException;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
         private TextView tvPrice;
         private TextView tvUser;
         private ImageView ivOfferingPhoto;
+        private TextView tvBoughtBy;
 
         private LoadPost loadPost;
 
@@ -43,6 +45,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvUser = itemView.findViewById(R.id.tvUser);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
+            tvBoughtBy = itemView.findViewById(R.id.tvBoughtBy);
 
             loadPost = new LoadPost();
 
@@ -52,6 +55,15 @@ public class SmallOfferingAdapter extends OfferingAdapter {
         public void bind(Offering offering) {
             loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
+            if (offering.getIsBought() == true) {
+                try {
+                    tvBoughtBy.setText("Bought by: " + offering.getBoughtBy().fetchIfNeeded().getUsername());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                tvBoughtBy.setText("");
+            }
         }
     }
 }
