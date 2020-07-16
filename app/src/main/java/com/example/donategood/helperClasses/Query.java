@@ -1,6 +1,7 @@
 package com.example.donategood.helperClasses;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -171,6 +172,19 @@ public class Query {
             querySellingPostsByUser(user, false, callback);
         } else if (queryType.equals(KEY_SOLD)) {
             querySellingPostsByUser(user, true, callback);
+        }
+    }
+
+    public void setBold(String queryType, TextView tvSold, TextView tvSelling, TextView tvBought) {
+        tvSold.setTypeface(null, Typeface.NORMAL);
+        tvSelling.setTypeface(null, Typeface.NORMAL);
+        tvBought.setTypeface(null, Typeface.NORMAL);
+        if (queryType.equals(KEY_BOUGHT)) {
+            tvBought.setTypeface(null, Typeface.BOLD);
+        } else if (queryType.equals(KEY_SELLING)) {
+            tvSelling.setTypeface(null, Typeface.BOLD);
+        } else {
+            tvSold.setTypeface(null, Typeface.BOLD);
         }
     }
 }
