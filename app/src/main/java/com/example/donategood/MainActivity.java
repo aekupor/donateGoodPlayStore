@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult");
-        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE) {
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             ImageView ivPhotoToUpload;
             Camera camera;
             if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
