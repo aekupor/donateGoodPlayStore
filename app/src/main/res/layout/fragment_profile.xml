@@ -48,7 +48,7 @@
         android:id="@+id/rvBoughtItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvYouSellingTitle"
+        android:layout_below="@id/buttonLinear"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="4dp"
@@ -65,39 +65,47 @@
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         tools:text="100" />
 
-    <TextView
-        android:id="@+id/tvYouBoughtTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/buttonLinear"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileUploadPhoto"
-        android:layout_marginTop="4dp"
-        android:text="See What You Bought" />
+        android:layout_below="@id/btnProfileUploadPhoto"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tvYouSoldTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileUploadPhoto"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/tvYouBoughtTitle"
-        android:text="See What You Sold" />
+        <TextView
+            android:id="@+id/tvYouBoughtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="Bought"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvYouSellingTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileUploadPhoto"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/tvYouSoldTitle"
-        android:text="See What You Selling" />
+        <TextView
+            android:id="@+id/tvYouSoldTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="Sold"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvYouSellingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="Selling"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvYouSellingTitle"
+        android:layout_above="@+id/buttonLinear"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="4dp"
         android:layout_toEndOf="@+id/btnProfileUploadPhoto"

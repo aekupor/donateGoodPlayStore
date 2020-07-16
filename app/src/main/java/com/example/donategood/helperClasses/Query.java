@@ -110,7 +110,7 @@ public class Query {
                         for (Offering offering : offerings) {
                             moneyRaised[0] += offering.getPrice();
                         }
-                        tvMoney.setText(moneyRaised[0].toString());
+                        tvMoney.setText("$" + moneyRaised[0].toString());
                     }
                 });
             }
