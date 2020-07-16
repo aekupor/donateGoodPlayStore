@@ -14,6 +14,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.LoginStatusCallback;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -65,6 +66,25 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(TAG, "onError FB login");
             }
         });
+
+        //enable express login
+        LoginManager.getInstance().retrieveLoginStatus(this, new LoginStatusCallback() {
+            @Override
+            public void onCompleted(AccessToken accessToken) {
+                // User was previously logged in, can log them in directly here.
+                // If this callback is called, a popup notification appears that says
+                // "Logged in as <User Name>"
+            }
+            @Override
+            public void onFailure() {
+                // No access token could be retrieved for the user
+            }
+            @Override
+            public void onError(Exception exception) {
+                // An error occurred
+            }
+        });
+
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
