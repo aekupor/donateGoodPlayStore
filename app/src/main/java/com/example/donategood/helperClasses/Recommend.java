@@ -6,6 +6,7 @@ import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,11 @@ public class Recommend {
     private Map<Offering, Integer> pointValues;
     private Query query;
 
-    public void getRecommendedOfferings(Offering offering) {
+    private ArrayList<String> mainTags;
+
+    public void getRecommendedOfferings(final Offering mainOffering) {
         pointValues = new HashMap<>();
+        mainTags = mainOffering.getTags();
         query = new Query();
         query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
             @Override
@@ -29,6 +33,12 @@ public class Recommend {
                 }
                 for (Offering offering : offerings) {
                     Log.i(TAG, "Offering: " + offering.getTitle());
+
+                    if (offering.equals(mainOffering)) {
+                        //if offering is the same, do not include as recommended offering
+                        continue;
+                    }
+
                     //add point value of 1 as placeholder
                     pointValues.put(offering, 1);
                 }
