@@ -132,53 +132,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
-
-            //get user name from FB
-            /*
-            GraphRequest request = GraphRequest.newMeRequest(
-                    accessToken,
-                    new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(JSONObject object, GraphResponse response) {
-                            try {
-                                Log.i(TAG, "got graph response: " + object.getString("name"));
-                                userId[0] = object.getLong("id");
-
-                                //get user profile picture from FB
-                                GraphRequest photoRequest = GraphRequest.newGraphPathRequest(
-                                        accessToken,
-                                        "/" + userId[0] +"/picture?redirect=false",
-                                        new GraphRequest.Callback() {
-                                            @Override
-                                            public void onCompleted(GraphResponse response) {
-                                                Log.i(TAG, "got profile image: " + response.toString());
-                                                try {
-                                                    JSONObject data = response.getJSONObject().getJSONObject("data");
-                                                    Log.i(TAG, "got data: " + data.toString());
-                                                    String url = data.getString("url");
-                                                    Log.i(TAG, "got image url: " + url);
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        });
-
-                                photoRequest.executeAsync();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name");
-            request.setParameters(parameters);
-            request.executeAsync();
-
-             */
-
-
         }
 
         //if user is already logged in, send to MainActivity
