@@ -18,18 +18,27 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
+import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +105,54 @@ public class ProfileFragment extends Fragment {
         loadPost = new LoadPost();
         camera = new Camera();
 
-        loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
+        if (ParseUser.getCurrentUser() == null) {
+            //user is logged in with facebook and not parse
+            Log.i(TAG, "user is logged in with FB");
+
+            final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            final Long[] userId = new Long[1];
+            final FBQuery fbQuery = new FBQuery();
+
+            //get user name from FB
+            fbQuery.getName(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        String name = object.getString("name");
+                        Log.i(TAG, "got graph response: " + name);
+                        userId[0] = object.getLong("id");
+                        
+                        tvName.setText(name);
+
+                        //get user profile picture from FB
+                        fbQuery.getProfileImage(accessToken, userId[0], new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                Log.i(TAG, "got profile image: " + response.toString());
+                                try {
+                                    JSONObject data = response.getJSONObject().getJSONObject("data");
+                                    Log.i(TAG, "got data: " + data.toString());
+                                    String url = data.getString("url");
+                                    Log.i(TAG, "got image url: " + url);
+
+                                    Glide.with(getContext())
+                                            .load(url)
+                                            .circleCrop()
+                                            .into(ivProfileImage);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } else {
+            loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
+        }
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
