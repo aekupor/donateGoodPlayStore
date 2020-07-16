@@ -62,8 +62,9 @@ public class Recommend {
     private Integer checkCharity(Charity mainCharity, Charity otherCharity) {
         if (mainCharity.getObjectId().equals(otherCharity.getObjectId())) {
             return 2;
+        } else if (mainCharity.getGrouping().equals(otherCharity.getGrouping())) {
+            return 1;
         }
-        //TODO: if same type of charity (i.e. environmental, BLM, etc.), add 1 point
         return 0;
     }
 
