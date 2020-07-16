@@ -174,7 +174,7 @@ public class DetailFragment extends Fragment {
                        return;
                    }
                    for (Offering otherOffering : offerings) {
-                       if (otherOffering.equals(offering)) {
+                       if (otherOffering.getObjectId().equals(offering.getObjectId())) {
                            //if offering is the same, do not include as recommended offering
                            continue;
                        }
@@ -187,6 +187,7 @@ public class DetailFragment extends Fragment {
                    Log.i(TAG, "sorted point values list: " + sortedPointValues[0].toString());
 
                    adapter.clear();
+                   reccomendedOfferings.clear();
                    reccomendedOfferings.addAll(sortedPointValues[0].keySet());
                    adapter.notifyDataSetChanged();
                }

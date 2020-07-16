@@ -60,7 +60,7 @@ public class Recommend {
     }
 
     private Integer checkCharity(Charity mainCharity, Charity otherCharity) {
-        if (mainCharity.equals(otherCharity)) {
+        if (mainCharity.getObjectId().equals(otherCharity.getObjectId())) {
             return 2;
         }
         //TODO: if same type of charity (i.e. environmental, BLM, etc.), add 1 point
@@ -78,7 +78,7 @@ public class Recommend {
     }
 
     private Integer checkSellingUser(ParseUser mainUser, ParseUser otherUser) {
-        if (mainUser.equals(otherUser)) {
+        if (mainUser.getObjectId().equals(otherUser.getObjectId())) {
             return 2;
         }
         return 0;
