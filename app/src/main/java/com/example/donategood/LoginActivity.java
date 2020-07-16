@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.donategood.helperClasses.FBQuery;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -101,8 +102,39 @@ public class LoginActivity extends AppCompatActivity {
             Log.i(TAG, "user is logged in");
 
             final Long[] userId = new Long[1];
+            final FBQuery fbQuery = new FBQuery();
 
             //get user name from FB
+            fbQuery.getName(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        Log.i(TAG, "got graph response: " + object.getString("name"));
+                        userId[0] = object.getLong("id");
+
+                        //get user profile picture from FB
+                        fbQuery.getProfileImage(accessToken, userId[0], new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                Log.i(TAG, "got profile image: " + response.toString());
+                                try {
+                                    JSONObject data = response.getJSONObject().getJSONObject("data");
+                                    Log.i(TAG, "got data: " + data.toString());
+                                    String url = data.getString("url");
+                                    Log.i(TAG, "got image url: " + url);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            //get user name from FB
+            /*
             GraphRequest request = GraphRequest.newMeRequest(
                     accessToken,
                     new GraphRequest.GraphJSONObjectCallback() {
@@ -111,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 Log.i(TAG, "got graph response: " + object.getString("name"));
                                 userId[0] = object.getLong("id");
-                                
+
                                 //get user profile picture from FB
                                 GraphRequest photoRequest = GraphRequest.newGraphPathRequest(
                                         accessToken,
@@ -143,6 +175,8 @@ public class LoginActivity extends AppCompatActivity {
             parameters.putString("fields", "id,name");
             request.setParameters(parameters);
             request.executeAsync();
+
+             */
 
 
         }
