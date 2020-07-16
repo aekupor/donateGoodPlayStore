@@ -118,11 +118,9 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response) {
                     try {
-                        String name = object.getString("name");
+                        final String name = object.getString("name");
                         Log.i(TAG, "got graph response: " + name);
                         userId[0] = object.getLong("id");
-                        
-                        tvName.setText(name);
 
                         //get user profile picture from FB
                         fbQuery.getProfileImage(accessToken, userId[0], new GraphRequest.Callback() {
@@ -135,11 +133,7 @@ public class ProfileFragment extends Fragment {
                                     String url = data.getString("url");
                                     Log.i(TAG, "got image url: " + url);
 
-                                    Glide.with(getContext())
-                                            .load(url)
-                                            .circleCrop()
-                                            .into(ivProfileImage);
-
+                                    loadPost.setUserFromFB(name, url, getContext(), tvName, ivProfileImage);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

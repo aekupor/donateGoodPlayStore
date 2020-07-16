@@ -97,4 +97,12 @@ public class LoadPost {
                 .circleCrop()
                 .into(ivPhoto);
     }
+
+    public void setUserFromFB(String name, String url, Context context, TextView tvTitle, ImageView ivPhoto) {
+        tvTitle.setText(name);
+        Glide.with(context)
+                .load(url)
+                .circleCrop()
+                .into(ivPhoto);
+    }
 }
