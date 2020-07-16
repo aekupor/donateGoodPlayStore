@@ -154,12 +154,25 @@ public class DetailFragment extends Fragment {
                 loadPost.setTags(offering.getTags(), tvTags);
 
                 setShareButton();
+                queryRecommendedPosts();
             }
         });
     }
 
-    private void queryReccommendedPosts() {
-        
+    private void queryRecommendedPosts() {
+        //TODO: make algorithm to find recommended posts
+        query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting recommended posts", e);
+                    return;
+                }
+                adapter.clear();
+                reccomendedOfferings.addAll(objects);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void setShareButton() {
