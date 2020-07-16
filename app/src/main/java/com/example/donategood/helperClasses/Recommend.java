@@ -48,6 +48,7 @@ public class Recommend {
         Integer pointValue = 0;
         pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
         pointValue += checkCharity(mainOffering.getCharity(), offering.getCharity());
+        pointValue += checkTags(mainOffering.getTags(), offering.getTags());
         return pointValue;
     }
 
@@ -67,5 +68,15 @@ public class Recommend {
         }
         //TODO: if same type of charity (i.e. environmental, BLM, etc.), add 1 point
         return 0;
+    }
+
+    private Integer checkTags(ArrayList<String> mainTags, ArrayList<String> otherTags) {
+        Integer points = 0;
+        for (String tag : mainTags) {
+            if (otherTags.contains(tag)) {
+                points++;
+            }
+        }
+        return points;
     }
 }
