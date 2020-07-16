@@ -198,7 +198,7 @@ public class ProfileFragment extends Fragment {
 
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
-        query.queryPosts(queryType, new FindCallback<Offering>() {
+        query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {

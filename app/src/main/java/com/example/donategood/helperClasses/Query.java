@@ -164,13 +164,13 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryPosts(String queryType, FindCallback<Offering> callback) {
+    public void queryPosts(ParseUser user, String queryType, FindCallback<Offering> callback) {
         if (queryType.equals(KEY_BOUGHT)) {
-            queryBoughtPostsByUser(ParseUser.getCurrentUser(), callback);
+            queryBoughtPostsByUser(user, callback);
         } else if (queryType.equals(KEY_SELLING)) {
-            querySellingPostsByUser(ParseUser.getCurrentUser(), false, callback);
+            querySellingPostsByUser(user, false, callback);
         } else if (queryType.equals(KEY_SOLD)) {
-            querySellingPostsByUser(ParseUser.getCurrentUser(), true, callback);
+            querySellingPostsByUser(user, true, callback);
         }
     }
 }

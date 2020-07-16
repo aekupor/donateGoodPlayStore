@@ -154,7 +154,7 @@ public class OtherUserProfileFragment extends Fragment {
 
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
-        query.queryPosts(queryType, new FindCallback<Offering>() {
+        query.queryPosts(user, queryType, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
             public void done(List<Offering> offerings, ParseException e) {
