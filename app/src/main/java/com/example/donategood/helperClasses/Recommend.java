@@ -39,10 +39,26 @@ public class Recommend {
                         continue;
                     }
 
-                    //add point value of 1 as placeholder
-                    pointValues.put(offering, 1);
+                    Integer pointValue = getPointValue(mainOffering, offering);
+                    pointValues.put(offering, pointValue);
                 }
             }
         });
+    }
+
+    private Integer getPointValue(Offering mainOffering, Offering offering) {
+        Integer pointValue = 0;
+        pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
+        return pointValue;
+    }
+
+    private Integer checkPrice(Integer mainPrice, Integer otherPrice) {
+        Integer priceDifference = Math.abs(mainPrice - otherPrice);
+        if (priceDifference <= 5) {
+            return 2;
+        } else if (priceDifference <= 20) {
+            return 1;
+        }
+        return 0;
     }
 }
