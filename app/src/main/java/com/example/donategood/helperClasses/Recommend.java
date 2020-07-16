@@ -6,6 +6,7 @@ import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class Recommend {
         pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
         pointValue += checkCharity(mainOffering.getCharity(), offering.getCharity());
         pointValue += checkTags(mainOffering.getTags(), offering.getTags());
+        pointValue += checkSellingUser(mainOffering.getUser(), offering.getUser());
         return pointValue;
     }
 
@@ -78,5 +80,12 @@ public class Recommend {
             }
         }
         return points;
+    }
+
+    private Integer checkSellingUser(ParseUser mainUser, ParseUser otherUser) {
+        if (mainUser.equals(otherUser)) {
+            return 2;
+        }
+        return 0;
     }
 }
