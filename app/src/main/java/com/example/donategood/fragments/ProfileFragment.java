@@ -104,12 +104,12 @@ public class ProfileFragment extends Fragment {
 
         loadPost = new LoadPost();
         camera = new Camera();
-
-        if (ParseUser.getCurrentUser() == null) {
-            //user is logged in with facebook and not parse
+        
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if (isLoggedIn) {
+            //user is logged in with facebook
             Log.i(TAG, "user is logged in with FB");
-
-            final AccessToken accessToken = AccessToken.getCurrentAccessToken();
             final Long[] userId = new Long[1];
             final FBQuery fbQuery = new FBQuery();
 
@@ -143,6 +143,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } else {
+            //user is not logged in with FB
             loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
         }
 

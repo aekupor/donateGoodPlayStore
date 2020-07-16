@@ -95,12 +95,6 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        if (isLoggedIn) {
-            goToMainActivity();
-        }
-
         //if user is already logged in, send to MainActivity
         if (ParseUser.getCurrentUser() != null) {
             goToMainActivity();
