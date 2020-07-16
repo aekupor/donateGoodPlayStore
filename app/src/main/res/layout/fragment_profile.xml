@@ -10,22 +10,24 @@
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfileProfileName"
-        android:layout_marginTop="4dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="-1dp"
         android:text="Logout" />
 
     <TextView
         android:id="@+id/tvProfileProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
         tools:text="Ashlee" />
 
     <ImageView
         android:id="@+id/ivProfileProfileImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/btnLogout"
-        android:layout_marginTop="4dp"
         tools:src="@tools:sample/avatars" />
 
     <Button
@@ -40,15 +42,17 @@
         android:id="@+id/btnProfileUploadPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileTakePhoto"
+        android:layout_below="@+id/ivProfileProfileImage"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/btnProfileTakePhoto"
         android:text="Upload Photo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBoughtItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/buttonLinear"
+        android:layout_below="@id/line"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="4dp"
@@ -59,7 +63,7 @@
         android:id="@+id/tvProfileMoneyRaised"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogout"
+        android:layout_below="@+id/tvProfileProfileName"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
@@ -100,6 +104,13 @@
             android:text="Selling"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/buttonLinear"/>
 
     <ProgressBar
         android:id="@+id/pbProfileLoading"
