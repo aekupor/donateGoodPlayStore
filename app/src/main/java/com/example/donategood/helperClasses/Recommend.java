@@ -21,36 +21,7 @@ public class Recommend {
 
     public static final String TAG = "Recommend";
 
-    private Map<Offering, Integer> pointValues;
-    private Query query;
-
-    public void getRecommendedOfferings(final Offering mainOffering) {
-        pointValues = new HashMap<>();
-        query = new Query();
-        query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
-            @Override
-            public void done(List<Offering> offerings, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting offerings", e);
-                    return;
-                }
-                for (Offering offering : offerings) {
-                    Log.i(TAG, "Offering: " + offering.getTitle());
-
-                    if (offering.equals(mainOffering)) {
-                        //if offering is the same, do not include as recommended offering
-                        continue;
-                    }
-
-                    Integer pointValue = getPointValue(mainOffering, offering);
-                    pointValues.put(offering, pointValue);
-                }
-                Log.i(TAG, "point values list: " + pointValues.toString());
-            }
-        });
-    }
-
-    public HashMap<Offering, Integer> sortMapByPoints() {
+    public HashMap<Offering, Integer> sortMapByPoints(Map<Offering, Integer> pointValues) {
         // Create a list from elements of HashMap
         List<Map.Entry<Offering, Integer> > list = new LinkedList<Map.Entry<Offering, Integer> >(pointValues.entrySet());
 
@@ -71,7 +42,7 @@ public class Recommend {
         return temp;
     }
 
-    private Integer getPointValue(Offering mainOffering, Offering offering) {
+    public Integer getPointValue(Offering mainOffering, Offering offering) {
         Integer pointValue = 0;
         pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
         pointValue += checkCharity(mainOffering.getCharity(), offering.getCharity());
