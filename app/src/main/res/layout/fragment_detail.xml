@@ -75,8 +75,16 @@
     <ImageView
         android:id="@+id/ivDetailOfferingPhoto"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_below="@+id/btnPurchase"
         android:layout_marginTop="20dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvDetailTagList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDetailOfferingPhoto"
+        android:layout_marginTop="20dp"
+        tools:text="BLM, cheap, test" />
 </RelativeLayout>

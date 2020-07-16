@@ -74,7 +74,7 @@ public class LoadPost {
 
     public void setTitlePriceUser(Offering offering, TextView tvTitle, TextView tvPrice, TextView tvUser) {
         tvTitle.setText(offering.getTitle());
-        tvPrice.setText(Integer.toString(offering.getPrice()));
+        tvPrice.setText("$" + Integer.toString(offering.getPrice()));
         try {
             tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
         } catch (ParseException e) {

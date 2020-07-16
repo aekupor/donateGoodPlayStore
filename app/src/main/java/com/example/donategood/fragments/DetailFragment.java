@@ -46,6 +46,7 @@ public class DetailFragment extends Fragment {
     private ImageView ivCharityImage;
     private ImageView ivOfferingPhoto;
     private Button btnPurchase;
+    private TextView tvTags;
 
     private ShareButton shareButton;
     private ShareLinkContent content;
@@ -87,7 +88,7 @@ public class DetailFragment extends Fragment {
         btnPurchase = view.findViewById(R.id.btnPurchase);
         ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
         shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
-
+        tvTags = view.findViewById(R.id.tvDetailTagList);
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +134,7 @@ public class DetailFragment extends Fragment {
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
                 loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+                loadPost.setTags(offering.getTags(), tvTags);
 
                 setShareButton();
             }

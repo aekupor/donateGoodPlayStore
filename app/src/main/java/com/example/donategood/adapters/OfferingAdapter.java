@@ -69,7 +69,6 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private TextView tvPrice;
         private TextView tvUser;
         private TextView tvCharity;
-        private TextView tvTagList;
         private ImageView ivOfferingPhoto;
         private ImageView ivCharityProfile;
 
@@ -81,7 +80,6 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvUser = itemView.findViewById(R.id.tvUser);
             tvCharity = itemView.findViewById(R.id.tvCharity);
-            tvTagList = itemView.findViewById(R.id.tvTagList);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
             ivCharityProfile = itemView.findViewById(R.id.ivCharityProfile);
 
@@ -94,7 +92,6 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
-            loadPost.setTags(offering.getTags(), tvTagList);
         }
 
         public void onClick(View v) {
