@@ -49,4 +49,6 @@ dependencies {
 
     //for facebook SDK
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    compile 'com.facebook.android:facebook-share:[5,6)'
+
 }

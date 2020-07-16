@@ -126,10 +126,8 @@ public class ProfileFragment extends Fragment {
                         fbQuery.getProfileImage(accessToken, userId[0], new GraphRequest.Callback() {
                             @Override
                             public void onCompleted(GraphResponse response) {
-                                Log.i(TAG, "got profile image: " + response.toString());
                                 try {
                                     JSONObject data = response.getJSONObject().getJSONObject("data");
-                                    Log.i(TAG, "got data: " + data.toString());
                                     String url = data.getString("url");
                                     Log.i(TAG, "got image url: " + url);
 

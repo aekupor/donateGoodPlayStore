@@ -25,6 +25,10 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
+        <provider android:authorities="com.facebook.app.FacebookContentProviderDonateGood"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
