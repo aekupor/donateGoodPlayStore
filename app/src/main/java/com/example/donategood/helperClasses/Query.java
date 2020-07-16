@@ -30,6 +30,13 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    public void queryAllPostsWithoutPage(FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereEqualTo("isBought", false);
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
     public void queryAllCharities(FindCallback<Charity> callback) {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.findInBackground(callback);

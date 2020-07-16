@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.donategood.adapters.OfferingAdapter;
+import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
@@ -28,6 +32,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailFragment extends Fragment {
@@ -47,6 +52,10 @@ public class DetailFragment extends Fragment {
     private ImageView ivOfferingPhoto;
     private Button btnPurchase;
     private TextView tvTags;
+
+    private RecyclerView rvRecommendedOfferings;
+    private SmallOfferingAdapter adapter;
+    private List<Offering> reccomendedOfferings;
 
     private ShareButton shareButton;
     private ShareLinkContent content;
@@ -89,6 +98,14 @@ public class DetailFragment extends Fragment {
         ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
         shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
         tvTags = view.findViewById(R.id.tvDetailTagList);
+        rvRecommendedOfferings = view.findViewById(R.id.rvRecommendOfferings);
+
+        reccomendedOfferings = new ArrayList<>();
+        adapter = new SmallOfferingAdapter(getContext(), reccomendedOfferings);
+
+        rvRecommendedOfferings.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvRecommendedOfferings.setLayoutManager(linearLayoutManager);
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +156,10 @@ public class DetailFragment extends Fragment {
                 setShareButton();
             }
         });
+    }
+
+    private void queryReccommendedPosts() {
+        
     }
 
     private void setShareButton() {
