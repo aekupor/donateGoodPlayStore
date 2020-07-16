@@ -118,9 +118,6 @@ public class OtherUserProfileFragment extends Fragment {
         tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-                tvBoughtTitle.setTypeface(null, Typeface.BOLD);
                 queryPosts(KEY_BOUGHT);
             }
         });
@@ -128,9 +125,6 @@ public class OtherUserProfileFragment extends Fragment {
         tvSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-                tvSellingTitle.setTypeface(null, Typeface.BOLD);
-                tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(KEY_SELLING);
             }
         });
@@ -138,9 +132,6 @@ public class OtherUserProfileFragment extends Fragment {
         tvSoldTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvSoldTitle.setTypeface(null, Typeface.BOLD);
-                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-                tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(KEY_SOLD);
             }
         });
@@ -156,9 +147,6 @@ public class OtherUserProfileFragment extends Fragment {
                 loadPost.setUser(user, getContext(), tvName, ivProfileImage);
 
                 queryPosts(KEY_BOUGHT);
-                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-                tvBoughtTitle.setTypeface(null, Typeface.BOLD);
 
                 query.queryMoneyRaised(user, tvMoneyRaised);
             }
@@ -167,6 +155,7 @@ public class OtherUserProfileFragment extends Fragment {
 
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
+        query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
         query.queryPosts(user, queryType, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
