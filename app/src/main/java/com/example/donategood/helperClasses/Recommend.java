@@ -2,6 +2,7 @@ package com.example.donategood.helperClasses;
 
 import android.util.Log;
 
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -18,11 +19,8 @@ public class Recommend {
     private Map<Offering, Integer> pointValues;
     private Query query;
 
-    private ArrayList<String> mainTags;
-
     public void getRecommendedOfferings(final Offering mainOffering) {
         pointValues = new HashMap<>();
-        mainTags = mainOffering.getTags();
         query = new Query();
         query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
             @Override
@@ -49,6 +47,7 @@ public class Recommend {
     private Integer getPointValue(Offering mainOffering, Offering offering) {
         Integer pointValue = 0;
         pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
+        pointValue += checkCharity(mainOffering.getCharity(), offering.getCharity());
         return pointValue;
     }
 
@@ -59,6 +58,14 @@ public class Recommend {
         } else if (priceDifference <= 20) {
             return 1;
         }
+        return 0;
+    }
+
+    private Integer checkCharity(Charity mainCharity, Charity otherCharity) {
+        if (mainCharity.equals(otherCharity)) {
+            return 2;
+        }
+        //TODO: if same type of charity (i.e. environmental, BLM, etc.), add 1 point
         return 0;
     }
 }
