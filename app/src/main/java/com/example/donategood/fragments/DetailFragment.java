@@ -1,5 +1,7 @@
 package com.example.donategood.fragments;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,11 @@ import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Offering;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -42,6 +49,9 @@ public class DetailFragment extends Fragment {
     private ImageView ivCharityImage;
     private ImageView ivOfferingPhoto;
     private Button btnPurchase;
+
+    private ShareButton shareButton;
+    private ShareLinkContent content;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -79,6 +89,20 @@ public class DetailFragment extends Fragment {
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
         btnPurchase = view.findViewById(R.id.btnPurchase);
         ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
+        shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
+
+        //temporary content to share for testing purposes
+        content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                .build();
+        shareButton.setShareContent(content);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareDialog.show(DetailFragment.this, content);
+            }
+        });
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
