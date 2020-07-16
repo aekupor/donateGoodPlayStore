@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.donategood.fragments.ComposeFragment;
+import com.example.donategood.fragments.DetailFragment;
 import com.example.donategood.fragments.HomeFragment;
 import com.example.donategood.fragments.ProfileFragment;
 import com.example.donategood.fragments.SearchFragment;
@@ -83,37 +84,38 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult");
-
-        ImageView ivPhotoToUpload;
-        Camera camera;
-        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
-            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
-            camera = ProfileFragment.getCamera();
-        } else {
-            ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
-            camera = ComposeFragment.getCamera();
-        }
-        File photoFile = camera.getPhotoFile();
-        Context mainContext = camera.getContext();
-
-        Bitmap image = null;
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
-            if (resultCode == RESULT_OK) {
-                image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-            } else { // Result was a failure
-                Toast.makeText(getApplicationContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-                return;
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE) {
+            ImageView ivPhotoToUpload;
+            Camera camera;
+            if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+                ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
+                camera = ProfileFragment.getCamera();
+            } else {
+                ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
+                camera = ComposeFragment.getCamera();
             }
-        } else if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
-            Uri photoUri = data.getData();
-            image = camera.loadFromUri(photoUri, mainContext);
-            photoFile = camera.createFile(mainContext, image);
-            camera.setPhotoFile(photoFile);
-        }
+            File photoFile = camera.getPhotoFile();
+            Context mainContext = camera.getContext();
 
-        ivPhotoToUpload.setImageBitmap(image);
-        ParseFile file = new ParseFile(photoFile);
-        ParseUser.getCurrentUser().put("profileImage", file);
-        ParseUser.getCurrentUser().saveInBackground();
+            Bitmap image = null;
+            if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+                if (resultCode == RESULT_OK) {
+                    image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                } else { // Result was a failure
+                    Toast.makeText(getApplicationContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } else if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
+                Uri photoUri = data.getData();
+                image = camera.loadFromUri(photoUri, mainContext);
+                photoFile = camera.createFile(mainContext, image);
+                camera.setPhotoFile(photoFile);
+            }
+
+            ivPhotoToUpload.setImageBitmap(image);
+            ParseFile file = new ParseFile(photoFile);
+            ParseUser.getCurrentUser().put("profileImage", file);
+            ParseUser.getCurrentUser().saveInBackground();
+        }
     }
 }

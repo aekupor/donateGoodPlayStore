@@ -1,6 +1,5 @@
 package com.example.donategood.fragments;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,8 +22,6 @@ import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.models.Offering;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
@@ -91,18 +88,6 @@ public class DetailFragment extends Fragment {
         ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
         shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
 
-        //temporary content to share for testing purposes
-        content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("https://developers.facebook.com"))
-                .build();
-        shareButton.setShareContent(content);
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShareDialog.show(DetailFragment.this, content);
-            }
-        });
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +133,53 @@ public class DetailFragment extends Fragment {
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
                 loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+
+                setShareButton();
+            }
+        });
+    }
+
+    private void setShareButton() {
+        //try to share button but not working for now
+        /*
+        final Bitmap[] image = {null};
+
+        Glide.with(this)
+                .asBitmap()
+                .load(offering.getImage().getUrl())
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        image[0] = resource;
+                        Log.i(TAG, "created image bitmap");
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    }
+                });
+
+
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(image[0])
+                .build();
+        content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+        */
+
+        //temporary content to share for testing purposes
+        content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                .build();
+
+        shareButton.setShareContent(content);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "share button clicked");
+                ShareDialog.show(DetailFragment.this, content);
             }
         });
     }

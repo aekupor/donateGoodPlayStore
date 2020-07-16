@@ -104,7 +104,7 @@ public class ProfileFragment extends Fragment {
 
         loadPost = new LoadPost();
         camera = new Camera();
-        
+
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if (isLoggedIn) {
