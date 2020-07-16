@@ -10,6 +10,7 @@ public class Charity extends ParseObject {
     public static final String KEY_TITLE = "title";
     public static final String KEY_WEBSITE = "website";
     public static final String KEY_IMAGE = "image";
+    public static final String KEY_GROUPING = "grouping";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -33,5 +34,13 @@ public class Charity extends ParseObject {
 
     public void setImage(ParseFile image) {
         put(KEY_IMAGE, image);
+    }
+
+    public String getGrouping() {
+        return getString(KEY_GROUPING);
+    }
+
+    public void setGrouping(String group) {
+        put(KEY_GROUPING, group);
     }
 }
