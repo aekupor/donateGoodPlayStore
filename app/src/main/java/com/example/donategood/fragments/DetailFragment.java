@@ -24,6 +24,7 @@ import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
+import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Offering;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
@@ -160,6 +161,10 @@ public class DetailFragment extends Fragment {
     }
 
     private void queryRecommendedPosts() {
+
+        Recommend recommend = new Recommend();
+        recommend.getRecommendedOfferings(offering);
+        /*
         //TODO: make algorithm to find recommended posts
         query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
             @Override
@@ -173,6 +178,8 @@ public class DetailFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+
+         */
     }
 
     private void setShareButton() {
