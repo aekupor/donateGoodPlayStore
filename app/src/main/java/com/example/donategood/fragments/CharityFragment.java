@@ -1,5 +1,6 @@
 package com.example.donategood.fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -102,6 +103,8 @@ public class CharityFragment extends Fragment {
         tvCharitySoldTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvCharitySoldTitle.setTypeface(null, Typeface.BOLD);
+                tvCharitySellingTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(true);
             }
         });
@@ -109,6 +112,8 @@ public class CharityFragment extends Fragment {
         tvCharitySellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvCharitySellingTitle.setTypeface(null, Typeface.BOLD);
+                tvCharitySoldTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(false);
             }
         });
