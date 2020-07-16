@@ -14,6 +14,9 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.LoginStatusCallback;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -22,6 +25,10 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -85,13 +92,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if (isLoggedIn) {
          //   goToMainActivity();
+            Log.i(TAG, "user is logged in");
+
+            final Long[] userId = new Long[1];
+
+            //get user name from FB
+            GraphRequest request = GraphRequest.newMeRequest(
+                    accessToken,
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            try {
+                                Log.i(TAG, "got graph response: " + object.getString("name"));
+                                userId[0] = object.getLong("id");
+                                
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name");
+            request.setParameters(parameters);
+            request.executeAsync();
+
+
         }
 
         //if user is already logged in, send to MainActivity
