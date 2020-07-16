@@ -163,11 +163,8 @@ public class DetailFragment extends Fragment {
     }
 
     private void queryRecommendedPosts() {
-
         final Recommend recommend = new Recommend();
         final Map<Offering, Integer>[] pointValues = new Map[]{new HashMap<>()};
-
-        final Map<Offering, Integer>[] sortedPointValues = new Map[]{new HashMap<>()};
 
         query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
                @Override
@@ -177,8 +174,6 @@ public class DetailFragment extends Fragment {
                        return;
                    }
                    for (Offering otherOffering : offerings) {
-                       Log.i(TAG, "Offering: " + otherOffering.getTitle());
-
                        if (otherOffering.equals(offering)) {
                            //if offering is the same, do not include as recommended offering
                            continue;
@@ -187,30 +182,15 @@ public class DetailFragment extends Fragment {
                        Integer pointValue = recommend.getPointValue(offering, otherOffering);
                        pointValues[0].put(otherOffering, pointValue);
                    }
-                   Log.i(TAG, "point values list: " + pointValues[0].toString());
-
+                   final Map<Offering, Integer>[] sortedPointValues = new Map[]{new HashMap<>()};
                    sortedPointValues[0] = recommend.sortMapByPoints(pointValues[0]);
-
                    Log.i(TAG, "sorted point values list: " + sortedPointValues[0].toString());
+
+                   adapter.clear();
+                   reccomendedOfferings.addAll(sortedPointValues[0].keySet());
+                   adapter.notifyDataSetChanged();
                }
            });
-
-        /*
-        //TODO: make algorithm to find recommended posts
-        query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
-            @Override
-            public void done(List<Offering> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting recommended posts", e);
-                    return;
-                }
-                adapter.clear();
-                reccomendedOfferings.addAll(objects);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-         */
     }
 
     private void setShareButton() {
