@@ -175,9 +175,6 @@ public class ProfileFragment extends Fragment {
         tvYouBoughtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvYouSoldTitle.setTypeface(null, Typeface.NORMAL);
-                tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
-                tvYouBoughtTitle.setTypeface(null, Typeface.BOLD);
                 queryPosts(KEY_BOUGHT);
             }
         });
@@ -185,9 +182,6 @@ public class ProfileFragment extends Fragment {
         tvYouSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvYouSoldTitle.setTypeface(null, Typeface.NORMAL);
-                tvYouSellingTitle.setTypeface(null, Typeface.BOLD);
-                tvYouBoughtTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(KEY_SELLING);
             }
         });
@@ -195,22 +189,17 @@ public class ProfileFragment extends Fragment {
         tvYouSoldTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvYouSoldTitle.setTypeface(null, Typeface.BOLD);
-                tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
-                tvYouBoughtTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(KEY_SOLD);
             }
         });
 
-        queryPosts("bought");
-        tvYouSoldTitle.setTypeface(null, Typeface.NORMAL);
-        tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
-        tvYouBoughtTitle.setTypeface(null, Typeface.BOLD);
+        queryPosts(KEY_BOUGHT);
         query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
     }
 
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
+        query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
         query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
