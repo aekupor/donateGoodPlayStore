@@ -1,6 +1,7 @@
 package com.example.donategood.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -117,6 +118,9 @@ public class OtherUserProfileFragment extends Fragment {
         tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
+                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+                tvBoughtTitle.setTypeface(null, Typeface.BOLD);
                 queryPosts(KEY_BOUGHT);
             }
         });
@@ -124,6 +128,9 @@ public class OtherUserProfileFragment extends Fragment {
         tvSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
+                tvSellingTitle.setTypeface(null, Typeface.BOLD);
+                tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(KEY_SELLING);
             }
         });
@@ -131,6 +138,9 @@ public class OtherUserProfileFragment extends Fragment {
         tvSoldTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvSoldTitle.setTypeface(null, Typeface.BOLD);
+                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+                tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
                 queryPosts(KEY_SOLD);
             }
         });
@@ -146,6 +156,9 @@ public class OtherUserProfileFragment extends Fragment {
                 loadPost.setUser(user, getContext(), tvName, ivProfileImage);
 
                 queryPosts(KEY_BOUGHT);
+                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
+                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+                tvBoughtTitle.setTypeface(null, Typeface.BOLD);
 
                 query.queryMoneyRaised(user, tvMoneyRaised);
             }
