@@ -299,6 +299,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 Log.i(TAG, "Post save was successful!");
             }
         });
+        allComments.add(comment);
+        commentAdapter.notifyDataSetChanged();
     }
 
     // Call this method to launch the edit dialog

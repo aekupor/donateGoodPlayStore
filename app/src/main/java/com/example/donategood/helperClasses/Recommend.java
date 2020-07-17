@@ -92,4 +92,6 @@ public class Recommend {
         }
         return 0;
     }
+
+    //TODO: give points for high ratings from comments
 }
