@@ -57,6 +57,7 @@ public class DetailFragment extends Fragment {
     private ImageView ivOfferingPhoto;
     private Button btnPurchase;
     private TextView tvTags;
+    private Button btnComment;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -107,6 +108,7 @@ public class DetailFragment extends Fragment {
         shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
         tvTags = view.findViewById(R.id.tvDetailTagList);
         rvRecommendedOfferings = view.findViewById(R.id.rvRecommendOfferings);
+        btnComment = view.findViewById(R.id.btnComment);
 
         reccomendedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), reccomendedOfferings);
@@ -149,6 +151,13 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 purchaseItem();
+            }
+        });
+
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "comment button clicked");
             }
         });
 
