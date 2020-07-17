@@ -185,6 +185,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
                 loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
                 tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
+                if (offering.getQuantityLeft() == 0) {
+                    btnPurchase.setVisibility(View.INVISIBLE);
+                }
 
                 setShareButton();
                 queryRecommendedPosts();
@@ -285,6 +288,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         Integer quantityLeft = offering.getQuantityLeft() - 1;
         if (quantityLeft == 0) {
             offering.setIsBought(true);
+            btnPurchase.setVisibility(View.INVISIBLE);
         }
         offering.setBoughtBy(ParseUser.getCurrentUser());
         offering.addToBoughtByArray(ParseUser.getCurrentUser());
