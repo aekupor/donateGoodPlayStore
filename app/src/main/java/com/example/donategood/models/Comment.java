@@ -27,4 +27,20 @@ public class Comment extends ParseObject {
     public Integer getRating() {
         return getInt(KEY_RATING);
     }
+
+    public void setForPost(Offering offering) {
+        put(KEY_FOR_POST, offering);
+    }
+
+    public void setByUser(ParseUser user) {
+        put(KEY_BY_USER, user);
+    }
+
+    public void setText(String text) {
+        put(KEY_TEXT, text);
+    }
+
+    public void setRating(Integer rating) {
+        put(KEY_RATING, rating);
+    }
 }

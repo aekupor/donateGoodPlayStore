@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.OfferingAdapter;
@@ -34,6 +35,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -281,8 +283,23 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     @Override
     public void onFinishEditDialog(String inputText, String rating) {
         Log.i(TAG, "got comment with text: " + inputText + " and rating: " + rating);
-    }
 
+        Comment comment = new Comment();
+        comment.setByUser(ParseUser.getCurrentUser());
+        comment.setForPost(offering);
+        comment.setText(inputText);
+        comment.setRating(Integer.parseInt(rating));
+        comment.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Post save was successful!");
+            }
+        });
+    }
 
     // Call this method to launch the edit dialog
     private void showEditDialog() {
