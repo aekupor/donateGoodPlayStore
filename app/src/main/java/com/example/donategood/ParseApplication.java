@@ -3,6 +3,7 @@ package com.example.donategood;
 import android.app.Application;
 
 import com.example.donategood.models.Charity;
+import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -24,6 +25,7 @@ public class ParseApplication extends Application {
         // Register parse models
         ParseObject.registerSubclass(Offering.class);
         ParseObject.registerSubclass(Charity.class);
+        ParseObject.registerSubclass(Comment.class);
 
         // Use for troubleshooting -- remove this line for production
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
