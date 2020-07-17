@@ -18,6 +18,7 @@ public class Offering extends ParseObject {
     public static final String KEY_TAGS = "tags";
     public static final String KEY_BOUGHT = "isBought";
     public static final String KEY_BOUGHT_BY = "boughtBy";
+    public static final String KEY_RATING = "rating";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -81,5 +82,12 @@ public class Offering extends ParseObject {
 
     public void setBoughtBy(ParseUser user) {
         put(KEY_BOUGHT_BY, user);
+    }
+
+    public Integer getRating() {
+        return getInt(KEY_RATING);
+    }
+    public void setRating(Integer rating) {
+        put(KEY_RATING, rating);
     }
 }
