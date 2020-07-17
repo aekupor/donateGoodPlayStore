@@ -278,9 +278,12 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
-        offering.setIsBought(true);
+        Integer quantityLeft = offering.getQuantityLeft() - 1;
+        if (quantityLeft == 0) {
+            offering.setIsBought(true);
+        }
         offering.setBoughtBy(ParseUser.getCurrentUser());
-        offering.setQuantityLeft(offering.getQuantityLeft() - 1);
+        offering.setQuantityLeft(quantityLeft);
         offering.saveInBackground();
         Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
     }

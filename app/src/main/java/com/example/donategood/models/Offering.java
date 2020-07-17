@@ -20,6 +20,7 @@ public class Offering extends ParseObject {
     public static final String KEY_BOUGHT_BY = "boughtBy";
     public static final String KEY_RATING = "rating";
     public static final String KEY_QUANTITY_LEFT = "quantityLeft";
+    public static final String KEY_BOUGHT_BY_ARRAY = "boughtByArray";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -97,5 +98,20 @@ public class Offering extends ParseObject {
     }
     public void setQuantityLeft(Integer quantityLeft) {
         put(KEY_QUANTITY_LEFT, quantityLeft);
+    }
+
+    public ArrayList<ParseUser> getBoughtByArray() {
+        return (ArrayList<ParseUser>) get(KEY_BOUGHT_BY_ARRAY);
+    }
+    public void addToBoughtByArray(ParseUser user) {
+        ArrayList<ParseUser> users = new ArrayList<ParseUser>();
+        ArrayList<ParseUser> boughtAlready = getBoughtByArray();
+        if (boughtAlready == null) {
+            users.add(user);
+            put(KEY_BOUGHT_BY_ARRAY, users);
+        } else {
+            boughtAlready.add(user);
+            put(KEY_BOUGHT_BY_ARRAY, boughtAlready);
+        }
     }
 }
