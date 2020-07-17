@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.donategood.models.Charity;
+import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -47,6 +48,12 @@ public class Query {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.setLimit(1);
         query.whereEqualTo("title", charityName);
+        query.findInBackground(callback);
+    }
+
+    public void queryComments(Offering offering, FindCallback<Comment> callback) {
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+        query.whereEqualTo("forPost", offering);
         query.findInBackground(callback);
     }
 

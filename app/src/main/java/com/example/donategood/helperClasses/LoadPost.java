@@ -83,7 +83,11 @@ public class LoadPost {
     }
 
     public void setUser(ParseUser user, Context context, TextView tvTitle, ImageView ivPhoto) {
-        tvTitle.setText(user.getUsername());
+        try {
+            tvTitle.setText(user.fetchIfNeeded().getUsername());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Serializable profileImage;
 
         if (user.getParseFile("profileImage") != null) {

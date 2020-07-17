@@ -172,6 +172,7 @@ public class DetailFragment extends Fragment {
 
                 setShareButton();
                 queryRecommendedPosts();
+                queryComments();
             }
         });
     }
@@ -206,6 +207,24 @@ public class DetailFragment extends Fragment {
                    adapter.notifyDataSetChanged();
                }
            });
+    }
+
+    private void queryComments() {
+        query.queryComments(offering, new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting comments", e);
+                    return;
+                }
+                if (objects.size() != 0) {
+                    commentAdapter.clear();
+                    allComments.clear();
+                    allComments.addAll(objects);
+                    commentAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void setShareButton() {
