@@ -200,12 +200,7 @@ public class ProfileFragment extends Fragment {
     protected void queryPosts(final String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
-        query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
-            @Override
-            public void done(List<Offering> objects, ParseException e) {
-
-            }
-        }, adapter, selectedOfferings, pb);
+        query.queryPosts(ParseUser.getCurrentUser(), queryType,, adapter, selectedOfferings, pb);
         /*
         query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
             @Override

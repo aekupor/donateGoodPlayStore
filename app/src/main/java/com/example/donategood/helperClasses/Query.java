@@ -72,12 +72,24 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void querySellingPostsByUser(ParseUser user, Boolean bought, FindCallback<Offering> callback) {
+    public void querySellingPostsByUser(ParseUser user, Boolean bought, final SmallOfferingAdapter adapter, final List<Offering> offeringsList, final ProgressBar pb) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);
         query.whereEqualTo("user", user);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
-        query.findInBackground(callback);
+        query.findInBackground(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                adapter.clear();
+                offeringsList.clear();
+                offeringsList.addAll(objects);
+                adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
+            }
+        });
     }
 
     public void queryPostsByCharity(Charity charity, Boolean bought, FindCallback<Offering> callback) {
@@ -143,14 +155,13 @@ public class Query {
         });
 
     }
-    public void queryPosts(ParseUser user, String queryType, FindCallback<Offering> callback, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
+    public void queryPosts(ParseUser user, String queryType, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
         if (queryType.equals(KEY_BOUGHT)) {
             queryBoughtPostsByUser(user, adapter, selectedOfferings, pb);
-            //queryAllPostsWithoutPage(callback);
         } else if (queryType.equals(KEY_SELLING)) {
-            querySellingPostsByUser(user, false, callback);
+            querySellingPostsByUser(user, false, adapter, selectedOfferings, pb);
         } else if (queryType.equals(KEY_SOLD)) {
-            querySellingPostsByUser(user, true, callback);
+            querySellingPostsByUser(user, true, adapter, selectedOfferings, pb);
         }
     }
 
