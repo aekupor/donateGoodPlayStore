@@ -156,6 +156,7 @@ public class OtherUserProfileFragment extends Fragment {
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
+        /*
         query.queryPosts(user, queryType, new FindCallback<Offering>() {
             @SuppressLint("LongLogTag")
             @Override
@@ -172,5 +173,7 @@ public class OtherUserProfileFragment extends Fragment {
                 pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
+
+         */
     }
 }

@@ -1,8 +1,11 @@
 package com.example.donategood.helperClasses;
 
 import android.graphics.Typeface;
+import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
@@ -69,14 +72,6 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryBoughtPostsByUser(ParseUser user, FindCallback<Offering> callback) {
-        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
-        query.whereEqualTo("isBought", true);
-        query.whereEqualTo("boughtBy", user);
-        query.addDescendingOrder(Offering.KEY_CREATED_AT);
-        query.findInBackground(callback);
-    }
-
     public void querySellingPostsByUser(ParseUser user, Boolean bought, FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);
@@ -119,10 +114,39 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryPosts(ParseUser user, String queryType, FindCallback<Offering> callback) {
+    public void queryBoughtPostsByUser(final ParseUser currentUser, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
+        queryAllPostsWithoutPage(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+
+                List<Offering> newOfferings = new ArrayList<>();
+                for (Offering offering : offerings) {
+                    ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+                    if (boughtUsers != null && !boughtUsers.isEmpty()) {
+                        for (Object object : boughtUsers) {
+                            ParseUser user = (ParseUser) object;
+                            if (user.getObjectId().equals(currentUser.getObjectId())) {
+                                newOfferings.add(offering);
+                            }
+                        }
+                    }
+                }
+                adapter.clear();
+                selectedOfferings.clear();
+                selectedOfferings.addAll(newOfferings);
+                adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
+            }
+        });
+
+    }
+    public void queryPosts(ParseUser user, String queryType, FindCallback<Offering> callback, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
         if (queryType.equals(KEY_BOUGHT)) {
-            //queryBoughtPostsByUser(user, callback);
-            queryAllPostsWithoutPage(callback);
+            queryBoughtPostsByUser(user, adapter, selectedOfferings, pb);
+            //queryAllPostsWithoutPage(callback);
         } else if (queryType.equals(KEY_SELLING)) {
             querySellingPostsByUser(user, false, callback);
         } else if (queryType.equals(KEY_SOLD)) {

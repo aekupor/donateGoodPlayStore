@@ -202,6 +202,13 @@ public class ProfileFragment extends Fragment {
         query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
         query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
             @Override
+            public void done(List<Offering> objects, ParseException e) {
+
+            }
+        }, adapter, selectedOfferings, pb);
+        /*
+        query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
+            @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting offerings", e);
@@ -223,7 +230,7 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 }
-                
+
                 adapter.clear();
                 selectedOfferings.clear();
                 if (queryType == KEY_BOUGHT) {
@@ -236,6 +243,8 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
+         */
     }
 
     public static Camera getCamera() {
