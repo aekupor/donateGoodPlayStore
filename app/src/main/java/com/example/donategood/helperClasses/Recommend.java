@@ -60,9 +60,17 @@ public class Recommend {
     }
 
     private Integer checkCharity(Charity mainCharity, Charity otherCharity) {
+        Charity fetchedMainCharity = null;
+        Charity fetchedOtherCharity = null;
+        try {
+            fetchedMainCharity = mainCharity.fetchIfNeeded();
+            fetchedOtherCharity = otherCharity.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (mainCharity.getObjectId().equals(otherCharity.getObjectId())) {
             return 2;
-        } else if (mainCharity.getGrouping().equals(otherCharity.getGrouping())) {
+        } else if (fetchedMainCharity.getGrouping().equals(fetchedOtherCharity.getGrouping())) {
             return 1;
         }
         return 0;
