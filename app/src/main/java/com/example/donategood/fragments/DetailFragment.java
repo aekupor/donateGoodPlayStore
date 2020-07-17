@@ -19,12 +19,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Recommend;
+import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
@@ -59,6 +61,9 @@ public class DetailFragment extends Fragment {
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
     private List<Offering> reccomendedOfferings;
+    private RecyclerView rvComments;
+    private CommentAdapter commentAdapter;
+    private List<Comment> allComments;
 
     private ShareButton shareButton;
     private ShareLinkContent content;
@@ -109,6 +114,15 @@ public class DetailFragment extends Fragment {
         rvRecommendedOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvRecommendedOfferings.setLayoutManager(linearLayoutManager);
+
+        rvComments = view.findViewById(R.id.rvComments);
+
+        allComments = new ArrayList<>();
+        commentAdapter = new CommentAdapter(getContext(), allComments);
+
+        rvComments.setAdapter(commentAdapter);
+        LinearLayoutManager linearLayoutManagerComment = new LinearLayoutManager(getContext());
+        rvComments.setLayoutManager(linearLayoutManagerComment);
 
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
