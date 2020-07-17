@@ -67,6 +67,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private RecyclerView rvComments;
     private CommentAdapter commentAdapter;
     private List<Comment> allComments;
+    private Integer numComments;
 
     private ShareButton shareButton;
     private ShareLinkContent content;
@@ -111,6 +112,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvTags = view.findViewById(R.id.tvDetailTagList);
         rvRecommendedOfferings = view.findViewById(R.id.rvRecommendOfferings);
         btnComment = view.findViewById(R.id.btnComment);
+        numComments = 0;
 
         reccomendedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), reccomendedOfferings);
@@ -234,6 +236,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                     allComments.clear();
                     allComments.addAll(objects);
                     commentAdapter.notifyDataSetChanged();
+                    numComments = objects.size();
                 }
             }
         });
@@ -301,6 +304,19 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         });
         allComments.add(comment);
         commentAdapter.notifyDataSetChanged();
+
+        //update offering rating
+        Integer offeringRating = offering.getRating();
+        if (offeringRating == 0) {
+            offering.setRating(Integer.parseInt(rating));
+        } else {
+            Log.i(TAG, "current rating: " + offeringRating.toString() + "num comments: " + numComments.toString());
+            offeringRating = (offeringRating * numComments) + Integer.parseInt(rating);
+            numComments++;
+            offeringRating = offeringRating / numComments;
+            offering.setRating(offeringRating);
+        }
+        offering.saveInBackground();
     }
 
     // Call this method to launch the edit dialog
