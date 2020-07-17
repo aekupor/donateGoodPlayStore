@@ -148,7 +148,7 @@ public class OtherUserProfileFragment extends Fragment {
 
                 queryPosts(KEY_BOUGHT);
 
-                query.queryNewMoneyRaised(user, tvMoneyRaised);
+                query.queryMoneyRaised(user, tvMoneyRaised);
             }
         });
     }

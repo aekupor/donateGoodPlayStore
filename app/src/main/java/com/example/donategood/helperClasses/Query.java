@@ -1,8 +1,6 @@
 package com.example.donategood.helperClasses;
 
-import android.annotation.SuppressLint;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.donategood.models.Charity;
@@ -13,13 +11,10 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Query {
-
 
     public static final String KEY_BOUGHT = "bought";
     public static final String KEY_SELLING = "selling";
@@ -98,36 +93,6 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryMoneyRaised(final ParseUser user, final TextView tvMoney) {
-        final Integer[] moneyRaised = {0};
-        queryMoneyBought(user, new FindCallback<Offering>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(List<Offering> offerings, ParseException e) {
-                if (e != null) {
-                    return;
-                }
-                for (Offering offering : offerings) {
-                    moneyRaised[0] += offering.getPrice();
-                }
-
-                queryMoneySold(user, new FindCallback<Offering>() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void done(List<Offering> offerings, ParseException e) {
-                        if (e != null) {
-                            return;
-                        }
-                        for (Offering offering : offerings) {
-                            moneyRaised[0] += offering.getPrice();
-                        }
-                        tvMoney.setText("$" + moneyRaised[0].toString());
-                    }
-                });
-            }
-        });
-    }
-
     public void queryCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
         final Integer[] moneyRaised = {0};
         queryAllPostsWithoutPage(new FindCallback<Offering>() {
@@ -144,28 +109,6 @@ public class Query {
                 tvMoney.setText("$" + moneyRaised[0].toString());
             }
         });
-    }
-
-    public void queryMoneyBought(ParseUser user, FindCallback<Offering> callback) {
-        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
-        query.whereEqualTo("isBought", true);
-        query.whereEqualTo("boughtBy", user);
-        query.addDescendingOrder(Offering.KEY_CREATED_AT);
-        query.findInBackground(callback);
-    }
-
-    public void queryMoneySold(ParseUser user, FindCallback<Offering> callback) {
-        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
-        query.whereEqualTo("isBought", true);
-        query.whereEqualTo("user", user);
-        query.findInBackground(callback);
-    }
-
-    public void queryMoneyCharity(Charity charity, FindCallback<Offering> callback) {
-        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
-        query.whereEqualTo("isBought", true);
-        query.whereEqualTo("charity", charity);
-        query.findInBackground(callback);
     }
 
     public void search(String searchText, FindCallback<Offering> callback) {
@@ -199,7 +142,7 @@ public class Query {
         }
     }
 
-    public void queryNewMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised) {
+    public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised) {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
 
