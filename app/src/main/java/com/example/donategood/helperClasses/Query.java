@@ -13,6 +13,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Query {
@@ -193,5 +196,32 @@ public class Query {
         } else {
             tvSold.setTypeface(null, Typeface.BOLD);
         }
+    }
+
+    public void queryNewMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised) {
+        final Integer[] moneyRaised = {0};
+        final Integer[] moneySold = {0};
+
+        queryAllPostsWithoutPage(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                for (Offering offering : objects) {
+                    ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+                    if (boughtUsers != null && !boughtUsers.isEmpty()) {
+                        for (Object object : boughtUsers) {
+                            ParseUser user = (ParseUser) object;
+                            if (user.getObjectId().equals(currentUser.getObjectId())) {
+                                moneyRaised[0] += offering.getPrice();
+                            }
+                        }
+                        if (offering.getUser().getObjectId().equals(currentUser.getObjectId())) {
+                            moneySold[0] += offering.getPrice() * boughtUsers.size();
+                        }
+                    }
+                }
+                Integer totalMoney = moneyRaised[0] + moneySold[0];
+                tvMoneyRaised.setText("$" + totalMoney.toString());
+            }
+        });
     }
 }

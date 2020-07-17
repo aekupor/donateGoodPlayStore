@@ -194,40 +194,11 @@ public class ProfileFragment extends Fragment {
         });
 
         queryPosts(KEY_BOUGHT);
-        //query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
-
         queryBoughtMoney();
     }
 
     private void queryBoughtMoney() {
-        final Integer[] moneyRaised = {0};
-        final Integer[] moneySold = {0};
-
-        query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
-            @Override
-            public void done(List<Offering> objects, ParseException e) {
-                for (Offering offering : objects) {
-                    ArrayList<Object> boughtUsers = offering.getBoughtByArray();
-                    if (boughtUsers != null && !boughtUsers.isEmpty()) {
-                        for (Object object : boughtUsers) {
-                            ParseUser user = (ParseUser) object;
-                            if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                                Log.i(TAG, "Bought offering" + offering.getTitle());
-                                moneyRaised[0] += offering.getPrice();
-                            }
-                        }
-                        if (offering.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                            Log.i(TAG, "Sold offering" + offering.getTitle());
-                            moneySold[0] += offering.getPrice() * boughtUsers.size();
-                        }
-                    }
-                }
-                Log.i(TAG, "money sold: " + moneySold[0].toString());
-                Log.i(TAG, "money bought: " + moneyRaised[0].toString());
-                Integer totalMoney = moneyRaised[0] + moneySold[0];
-                tvMoneyRaised.setText("$" + totalMoney.toString());
-            }
-        });
+        query.queryNewMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
     }
 
     protected void queryPosts(String queryType) {
