@@ -40,6 +40,12 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    public void queryAllPostsBoughtAndNot(FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
     public void queryAllCharities(FindCallback<Charity> callback) {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.findInBackground(callback);
@@ -102,7 +108,7 @@ public class Query {
 
     public void queryCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
         final Integer[] moneyRaised = {0};
-        queryAllPostsWithoutPage(new FindCallback<Offering>() {
+        queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {
@@ -127,7 +133,7 @@ public class Query {
     }
 
     public void queryBoughtPostsByUser(final ParseUser currentUser, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
-        queryAllPostsWithoutPage(new FindCallback<Offering>() {
+        queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
@@ -153,7 +159,6 @@ public class Query {
                 pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
-
     }
     public void queryPosts(ParseUser user, String queryType, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
         if (queryType.equals(KEY_BOUGHT)) {
@@ -182,7 +187,7 @@ public class Query {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
 
-        queryAllPostsWithoutPage(new FindCallback<Offering>() {
+        queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {

@@ -30,6 +30,7 @@ import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,13 +159,11 @@ public class CharityFragment extends Fragment {
                     Log.e(TAG, "Issue with getting offerings", e);
                     return;
                 }
-                if (offerings != null) {
-                    Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
-                    allOfferings.clear();
-                    allOfferings.addAll(offerings);
-                    adapter.notifyDataSetChanged();
-                    pb.setVisibility(ProgressBar.INVISIBLE);
-                }
+                Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
+                allOfferings.clear();
+                allOfferings.addAll(offerings);
+                adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
