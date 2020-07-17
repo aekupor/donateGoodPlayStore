@@ -194,7 +194,31 @@ public class ProfileFragment extends Fragment {
         });
 
         queryPosts(KEY_BOUGHT);
-        query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
+        //query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
+
+        queryBoughtMoney();
+    }
+
+    private void queryBoughtMoney() {
+        final Integer[] moneyRaised = {0};
+        query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                for (Offering offering : objects) {
+                    ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+                    if (boughtUsers != null && !boughtUsers.isEmpty()) {
+                        for (Object object : boughtUsers) {
+                            ParseUser user = (ParseUser) object;
+                            if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                                Log.i(TAG, "BOUGHT OFFERING" + offering.getTitle());
+                                moneyRaised[0] += offering.getPrice();
+                            }
+                        }
+                    }
+                }
+                tvMoneyRaised.setText("$" + moneyRaised[0].toString());
+            }
+        });
     }
 
     protected void queryPosts(String queryType) {
