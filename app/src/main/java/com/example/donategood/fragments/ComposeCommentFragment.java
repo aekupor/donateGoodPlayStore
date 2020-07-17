@@ -42,6 +42,5 @@ public class ComposeCommentFragment extends DialogFragment {
 
                 // Show soft keyboard automatically and request focus to field
                 tvCommentText.requestFocus();
-
         }
 }
