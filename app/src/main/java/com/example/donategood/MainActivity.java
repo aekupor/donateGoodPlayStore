@@ -113,9 +113,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             ivPhotoToUpload.setImageBitmap(image);
-            ParseFile file = new ParseFile(photoFile);
-            ParseUser.getCurrentUser().put("profileImage", file);
-            ParseUser.getCurrentUser().saveInBackground();
+
+            if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+                ParseFile file = new ParseFile(photoFile);
+                ParseUser.getCurrentUser().put("profileImage", file);
+                ParseUser.getCurrentUser().saveInBackground();
+            }
         }
     }
 }
