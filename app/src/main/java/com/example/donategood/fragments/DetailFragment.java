@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements ComposeCommentFragment.ComposeCommentDialogListener {
 
     public static final String TAG = "DetailFragment";
 
@@ -158,6 +158,10 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "comment button clicked");
+
+                final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                Fragment fragment = ComposeCommentFragment.newInstance();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             }
         });
 
@@ -275,5 +279,20 @@ public class DetailFragment extends Fragment {
         offering.setIsBought(true);
         offering.setBoughtBy(ParseUser.getCurrentUser());
         offering.saveInBackground();
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText, String rating) {
+        Log.i(TAG, "got comment with text: " + inputText + " and rating: " + rating);
+    }
+
+
+    // Call this method to launch the edit dialog
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        ComposeCommentFragment composeCommentFragment = (ComposeCommentFragment) ComposeCommentFragment.newInstance();
+        // SETS the target fragment for use later when sending results
+        composeCommentFragment.setTargetFragment(DetailFragment.this, 300);
+        composeCommentFragment.show(fm, "fragment_compose_comment");
     }
 }

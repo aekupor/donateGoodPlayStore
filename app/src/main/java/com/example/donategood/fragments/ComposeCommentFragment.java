@@ -21,6 +21,12 @@ public class ComposeCommentFragment extends DialogFragment {
                 // Empty constructor is required for DialogFragment
         }
 
+        // Defines the listener interface
+        public interface ComposeCommentDialogListener {
+                void onFinishEditDialog(String inputText, String inputRating);
+        }
+
+
         public static ComposeCommentFragment newInstance() {
                 ComposeCommentFragment frag = new ComposeCommentFragment();
                 Bundle args = new Bundle();
@@ -42,5 +48,12 @@ public class ComposeCommentFragment extends DialogFragment {
 
                 // Show soft keyboard automatically and request focus to field
                 tvCommentText.requestFocus();
+        }
+
+        // sends the data back to the parent fragment
+        public void sendBackResult() {
+                ComposeCommentDialogListener listener = (ComposeCommentDialogListener) getTargetFragment();
+                listener.onFinishEditDialog(tvCommentText.getText().toString(), tvCommentRating.getText().toString());
+                dismiss();
         }
 }
