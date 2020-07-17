@@ -48,8 +48,6 @@ import static android.app.Activity.RESULT_OK;
 public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
-    public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 10;
-    public static final Integer UPLOAD_PHOTO_CODE = 20;
 
     private Query query;
     private static Camera camera;
@@ -62,14 +60,14 @@ public class ComposeFragment extends Fragment {
     private EditText etTags;
     private Button btnSubmit;
     private ProgressBar pb;
+    private EditText etQuantity;
 
     private String title;
     private String price;
     private ArrayList<String> tags;
     private String charity;
+    private String quantity;
     private Spinner spinner;
-    private File photoFile;
-    public String photoFileName = "photo.jpg";
 
     public ComposeFragment() {
         //required empty public constructor
@@ -92,6 +90,7 @@ public class ComposeFragment extends Fragment {
         etTags = view.findViewById(R.id.etTags);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
+        etQuantity = view.findViewById(R.id.etQuantity);
 
         query = new Query();
         camera = new Camera();
@@ -122,6 +121,7 @@ public class ComposeFragment extends Fragment {
                 title = etTitle.getText().toString();
                 price = etPrice.getText().toString();
                 tags = editTags(etTags.getText().toString());
+                quantity = etQuantity.getText().toString();
 
                 if (title.isEmpty()) {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
@@ -160,6 +160,7 @@ public class ComposeFragment extends Fragment {
                 offering.setPrice(Integer.valueOf(price));
                 offering.setCharity(charities.get(0));
                 offering.setTags(tags);
+                offering.setQuantityLeft(Integer.valueOf(quantity));
                 offering.setUser(ParseUser.getCurrentUser());
                 offering.saveInBackground(new SaveCallback() {
                     @Override

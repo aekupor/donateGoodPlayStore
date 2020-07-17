@@ -71,6 +71,16 @@
         android:layout_toEndOf="@+id/btnSubmit"
         android:visibility="invisible" />
 
+    <EditText
+        android:id="@+id/etQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTitle"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/etPrice"
+        android:hint="quantity" />
+
 </RelativeLayout>
 
 
