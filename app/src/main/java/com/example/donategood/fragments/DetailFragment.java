@@ -60,6 +60,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Button btnPurchase;
     private Button btnComment;
     private TextView tvQuantityLeft;
+    private TextView tvCommentTitle;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -112,6 +113,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         rvRecommendedOfferings = view.findViewById(R.id.rvRecommendOfferings);
         btnComment = view.findViewById(R.id.btnComment);
         tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
+        tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
         numComments = 0;
 
         reccomendedOfferings = new ArrayList<>();
@@ -237,6 +239,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                     allComments.addAll(objects);
                     commentAdapter.notifyDataSetChanged();
                     numComments = objects.size();
+                } else {
+                    tvCommentTitle.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -311,6 +315,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         });
         allComments.add(comment);
         commentAdapter.notifyDataSetChanged();
+        tvCommentTitle.setVisibility(View.VISIBLE);
 
         //update offering rating
         Integer offeringRating = offering.getRating();
