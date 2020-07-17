@@ -3,6 +3,7 @@ package com.example.donategood.helperClasses;
 import android.util.Log;
 
 import com.example.donategood.models.Charity;
+import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class Recommend {
 
     public static final String TAG = "Recommend";
+
+    final Integer[] points = {0};
 
     public HashMap<Offering, Integer> sortMapByPoints(Map<Offering, Integer> pointValues) {
         // Create a list from elements of HashMap
@@ -42,10 +45,12 @@ public class Recommend {
 
     public Integer getPointValue(Offering mainOffering, Offering offering) {
         Integer pointValue = 0;
+        checkRating(offering);
         pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
         pointValue += checkCharity(mainOffering.getCharity(), offering.getCharity());
         pointValue += checkTags(mainOffering.getTags(), offering.getTags());
         pointValue += checkSellingUser(mainOffering.getUser(), offering.getUser());
+        pointValue += points[0];
         return pointValue;
     }
 
@@ -92,6 +97,28 @@ public class Recommend {
         }
         return 0;
     }
-
-    //TODO: give points for high ratings from comments
+    
+    private void checkRating(Offering offering) {
+        Query query = new Query();
+        final Integer[] totalRating = {0};
+        final Integer[] totalComments = {0};
+        query.queryComments(offering, new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting user comments", e);
+                    return;
+                }
+                for (Comment comment : objects) {
+                    totalRating[0] += comment.getRating();
+                    totalComments[0]++;
+                }
+                if (totalComments[0] != 0) {
+                    points[0] = totalRating[0] / totalComments[0];
+                } else {
+                    points[0] = 0;
+                }
+            }
+        });
+    }
 }
