@@ -11,7 +11,7 @@
         android:hint="write your comment here"
         android:imeOptions="actionDone"
         android:inputType="text" />
-    
+
     <RatingBar
         android:id="@+id/rbComment"
         android:layout_width="match_parent"

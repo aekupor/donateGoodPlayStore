@@ -61,6 +61,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Button btnComment;
     private TextView tvQuantityLeft;
     private TextView tvCommentTitle;
+    private TextView tvAvgRating;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -114,6 +115,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         btnComment = view.findViewById(R.id.btnComment);
         tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
         tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
+        tvAvgRating = view.findViewById(R.id.tvAvgRating);
         numComments = 0;
 
         reccomendedOfferings = new ArrayList<>();
@@ -184,6 +186,13 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
                 loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+
+                if (offering.getRating() != 0) {
+                    tvAvgRating.setText("Average Rating: " + offering.getRating());
+                } else {
+                    tvAvgRating.setText("Average Rating: n/a");
+                }
+
                 tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
                 if (offering.getQuantityLeft() == 0) {
                     btnPurchase.setVisibility(View.INVISIBLE);
