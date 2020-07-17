@@ -58,8 +58,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private ImageView ivCharityImage;
     private ImageView ivOfferingPhoto;
     private Button btnPurchase;
-    private TextView tvTags;
     private Button btnComment;
+    private TextView tvQuantityLeft;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -109,9 +109,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         btnPurchase = view.findViewById(R.id.btnPurchase);
         ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
         shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
-        tvTags = view.findViewById(R.id.tvDetailTagList);
         rvRecommendedOfferings = view.findViewById(R.id.rvRecommendOfferings);
         btnComment = view.findViewById(R.id.btnComment);
+        tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
         numComments = 0;
 
         reccomendedOfferings = new ArrayList<>();
@@ -182,7 +182,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
                 loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
-                loadPost.setTags(offering.getTags(), tvTags);
+                tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
 
                 setShareButton();
                 queryRecommendedPosts();
@@ -287,6 +287,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         offering.setQuantityLeft(quantityLeft);
         offering.saveInBackground();
         Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
+        tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
     }
 
     @Override

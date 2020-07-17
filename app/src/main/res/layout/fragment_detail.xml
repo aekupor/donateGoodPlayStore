@@ -23,9 +23,9 @@
         android:id="@+id/fbShareButtonDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailTagList"
+        android:layout_below="@+id/ivDetailCharityImage"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/btnComment" />
 
     <TextView
@@ -68,8 +68,8 @@
         android:id="@+id/btnPurchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailTagList"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ivDetailCharityImage"
+        android:layout_marginTop="15dp"
         android:text="Purchase" />
 
     <TextView
@@ -90,23 +90,14 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvDetailTagList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailCharityImage"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="20dp"
-        tools:text="BLM, cheap, test" />
-
-    <TextView
         android:id="@+id/tvRecommendOfferingsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rvComments"
         android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
-        android:text="See Other Recommended Offerings:" />
+        android:text="See Other Recommended Offerings:"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecommendOfferings"
@@ -119,18 +110,38 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComments"
         android:layout_width="match_parent"
-        android:layout_below="@id/btnPurchase"
-        android:layout_height="300dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvViewCommentsTitle"
+        android:layout_marginTop="4dp" />
 
     <Button
         android:id="@+id/btnComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailTagList"
+        android:layout_below="@+id/ivDetailCharityImage"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/btnPurchase"
         android:text="Comment" />
+
+    <TextView
+        android:id="@+id/tvQuantityLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvDetailUser"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvDetailUser"
+        tools:text="Quantity left: 2" />
+
+    <TextView
+        android:id="@+id/tvViewCommentsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnPurchase"
+        android:layout_marginTop="8dp"
+        android:text="View Comments:"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 </ScrollView>
