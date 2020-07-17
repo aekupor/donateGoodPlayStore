@@ -156,24 +156,6 @@ public class OtherUserProfileFragment extends Fragment {
     protected void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
-        /*
-        query.queryPosts(user, queryType, new FindCallback<Offering>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(List<Offering> offerings, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting offerings", e);
-                    return;
-                }
-                Log.i(TAG, "Got this number of offerings: " + offerings.size());
-                adapter.clear();
-                selectedOfferings.clear();
-                selectedOfferings.addAll(offerings);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
-            }
-        });
-
-         */
+        query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
     }
 }

@@ -200,46 +200,7 @@ public class ProfileFragment extends Fragment {
     protected void queryPosts(final String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
-        query.queryPosts(ParseUser.getCurrentUser(), queryType,, adapter, selectedOfferings, pb);
-        /*
-        query.queryPosts(ParseUser.getCurrentUser(), queryType, new FindCallback<Offering>() {
-            @Override
-            public void done(List<Offering> offerings, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting offerings", e);
-                    return;
-                }
-                Log.i(TAG, "Got this number of offerings: " + offerings.size());
-
-                List<Offering> newOfferings = new ArrayList<>();
-                if (queryType == KEY_BOUGHT) {
-                    for (Offering offering : offerings) {
-                        ArrayList<Object> boughtUsers = offering.getBoughtByArray();
-                        if (boughtUsers != null && !boughtUsers.isEmpty()) {
-                            for (Object object : boughtUsers) {
-                                ParseUser user = (ParseUser) object;
-                                if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                                    newOfferings.add(offering);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                adapter.clear();
-                selectedOfferings.clear();
-                if (queryType == KEY_BOUGHT) {
-                    selectedOfferings.addAll(newOfferings);
-                } else {
-                    selectedOfferings.addAll(offerings);
-                }
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
-
-            }
-        });
-
-         */
+        query.queryPosts(ParseUser.getCurrentUser(), queryType, adapter, selectedOfferings, pb);
     }
 
     public static Camera getCamera() {
