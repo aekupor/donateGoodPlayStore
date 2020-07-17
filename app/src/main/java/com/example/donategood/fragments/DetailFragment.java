@@ -334,12 +334,14 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         Integer offeringRating = offering.getRating();
         if (offeringRating == 0) {
             offering.setRating(Integer.parseInt(rating));
+            tvAvgRating.setText("Average Rating: " + rating);
         } else {
             Log.i(TAG, "current rating: " + offeringRating.toString() + "num comments: " + numComments.toString());
             offeringRating = (offeringRating * numComments) + Integer.parseInt(rating);
             numComments++;
             offeringRating = offeringRating / numComments;
             offering.setRating(offeringRating);
+            tvAvgRating.setText("Average Rating: " + offeringRating);
         }
         offering.saveInBackground();
     }
