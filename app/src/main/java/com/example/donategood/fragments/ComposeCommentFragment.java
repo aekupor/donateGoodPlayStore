@@ -17,7 +17,6 @@ import com.example.donategood.R;
 public class ComposeCommentFragment extends DialogFragment {
 
         private EditText tvCommentText;
-        private EditText tvCommentRating;
         private Button btnDone;
         private RatingBar ratingBar;
 
@@ -47,7 +46,6 @@ public class ComposeCommentFragment extends DialogFragment {
                 super.onViewCreated(view, savedInstanceState);
 
                 tvCommentText = (EditText) view.findViewById(R.id.etTestComment);
-                tvCommentRating = (EditText) view.findViewById(R.id.etRatingComment);
                 btnDone = view.findViewById(R.id.btnCommentDone);
                 ratingBar = (RatingBar) view.findViewById(R.id.rbComment);
 
@@ -65,7 +63,8 @@ public class ComposeCommentFragment extends DialogFragment {
         // sends the data back to the parent fragment
         public void sendBackResult() {
                 ComposeCommentDialogListener listener = (ComposeCommentDialogListener) getTargetFragment();
-                listener.onFinishEditDialog(tvCommentText.getText().toString(), tvCommentRating.getText().toString());
+                Integer rating = Math.round(ratingBar.getRating());
+                listener.onFinishEditDialog(tvCommentText.getText().toString(), rating.toString());
                 dismiss();
         }
 }
