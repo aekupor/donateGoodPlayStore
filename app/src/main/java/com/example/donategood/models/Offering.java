@@ -19,6 +19,7 @@ public class Offering extends ParseObject {
     public static final String KEY_BOUGHT = "isBought";
     public static final String KEY_BOUGHT_BY = "boughtBy";
     public static final String KEY_RATING = "rating";
+    public static final String KEY_QUANTITY_LEFT = "quantityLeft";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -89,5 +90,12 @@ public class Offering extends ParseObject {
     }
     public void setRating(Integer rating) {
         put(KEY_RATING, rating);
+    }
+
+    public Integer getQuantityLeft() {
+        return getInt(KEY_QUANTITY_LEFT);
+    }
+    public void setQuantityLeft(Integer quantityLeft) {
+        put(KEY_QUANTITY_LEFT, quantityLeft);
     }
 }
