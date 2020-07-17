@@ -128,19 +128,20 @@ public class Query {
         });
     }
 
-    public void queryCharityMoneyRaised(Charity charity, final TextView tvMoney) {
+    public void queryCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
         final Integer[] moneyRaised = {0};
-        queryMoneyCharity(charity, new FindCallback<Offering>() {
-            @SuppressLint("LongLogTag")
+        queryAllPostsWithoutPage(new FindCallback<Offering>() {
             @Override
-            public void done(List<Offering> offerings, ParseException e) {
-                if (e != null) {
-                    return;
+            public void done(List<Offering> objects, ParseException e) {
+                for (Offering offering : objects) {
+                    if (offering.getCharity().getObjectId().equals(charity.getObjectId())) {
+                        ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+                        if (boughtUsers != null && !boughtUsers.isEmpty()) {
+                            moneyRaised[0] += boughtUsers.size() * offering.getPrice();
+                        }
+                    }
                 }
-                for (Offering offering : offerings) {
-                    moneyRaised[0] += offering.getPrice();
-                }
-                tvMoney.setText(moneyRaised[0].toString());
+                tvMoney.setText("$" + moneyRaised[0].toString());
             }
         });
     }
