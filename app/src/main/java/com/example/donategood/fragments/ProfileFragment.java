@@ -194,10 +194,6 @@ public class ProfileFragment extends Fragment {
         });
 
         queryPosts(KEY_BOUGHT);
-        queryBoughtMoney();
-    }
-
-    private void queryBoughtMoney() {
         query.queryNewMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
     }
 
