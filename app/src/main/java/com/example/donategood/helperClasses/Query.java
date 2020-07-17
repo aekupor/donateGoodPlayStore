@@ -121,7 +121,8 @@ public class Query {
 
     public void queryPosts(ParseUser user, String queryType, FindCallback<Offering> callback) {
         if (queryType.equals(KEY_BOUGHT)) {
-            queryBoughtPostsByUser(user, callback);
+            //queryBoughtPostsByUser(user, callback);
+            queryAllPostsWithoutPage(callback);
         } else if (queryType.equals(KEY_SELLING)) {
             querySellingPostsByUser(user, false, callback);
         } else if (queryType.equals(KEY_SOLD)) {
