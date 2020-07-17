@@ -100,12 +100,12 @@ public class Offering extends ParseObject {
         put(KEY_QUANTITY_LEFT, quantityLeft);
     }
 
-    public ArrayList<ParseUser> getBoughtByArray() {
-        return (ArrayList<ParseUser>) get(KEY_BOUGHT_BY_ARRAY);
+    public ArrayList<Object> getBoughtByArray() {
+        return (ArrayList<Object>) get(KEY_BOUGHT_BY_ARRAY);
     }
     public void addToBoughtByArray(ParseUser user) {
         ArrayList<ParseUser> users = new ArrayList<ParseUser>();
-        ArrayList<ParseUser> boughtAlready = getBoughtByArray();
+        ArrayList<Object> boughtAlready = getBoughtByArray();
         if (boughtAlready == null) {
             users.add(user);
             put(KEY_BOUGHT_BY_ARRAY, users);
