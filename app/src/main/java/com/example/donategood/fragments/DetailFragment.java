@@ -158,10 +158,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "comment button clicked");
-
-                final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
-                Fragment fragment = ComposeCommentFragment.newInstance();
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                showEditDialog();
             }
         });
 

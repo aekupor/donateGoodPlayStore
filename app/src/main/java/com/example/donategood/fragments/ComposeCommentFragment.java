@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.donategood.R;
@@ -16,6 +17,7 @@ public class ComposeCommentFragment extends DialogFragment {
 
         private EditText tvCommentText;
         private EditText tvCommentRating;
+        private Button btnDone;
 
         public ComposeCommentFragment() {
                 // Empty constructor is required for DialogFragment
@@ -45,6 +47,14 @@ public class ComposeCommentFragment extends DialogFragment {
 
                 tvCommentText = (EditText) view.findViewById(R.id.etTestComment);
                 tvCommentRating = (EditText) view.findViewById(R.id.etRatingComment);
+                btnDone = view.findViewById(R.id.btnCommentDone);
+
+                btnDone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                sendBackResult();
+                        }
+                });
 
                 // Show soft keyboard automatically and request focus to field
                 tvCommentText.requestFocus();
