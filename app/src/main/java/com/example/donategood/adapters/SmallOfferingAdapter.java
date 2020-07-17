@@ -42,6 +42,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
         private TextView tvUser;
         private ImageView ivOfferingPhoto;
         private TextView tvBoughtBy;
+        private TextView tvQuantityLeft;
 
         private LoadPost loadPost;
 
@@ -52,6 +53,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
             tvUser = itemView.findViewById(R.id.tvUser);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
             tvBoughtBy = itemView.findViewById(R.id.tvBoughtBy);
+            tvQuantityLeft = itemView.findViewById(R.id.tvSmallQuantityLeft);
 
             loadPost = new LoadPost();
 
@@ -61,6 +63,10 @@ public class SmallOfferingAdapter extends OfferingAdapter {
         public void bind(Offering offering) {
             loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
+
+            if (offering.getQuantityLeft() != 0) {
+                tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
+            }
 
             if (context == null) {
                 return;
