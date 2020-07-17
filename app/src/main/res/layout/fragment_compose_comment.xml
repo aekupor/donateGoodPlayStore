@@ -19,6 +19,13 @@
         android:hint="rating"
         android:inputType="text" />
 
+    <RatingBar
+        android:id="@+id/rbComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize=".5" />
+
     <Button
         android:id="@+id/btnCommentDone"
         android:layout_width="match_parent"

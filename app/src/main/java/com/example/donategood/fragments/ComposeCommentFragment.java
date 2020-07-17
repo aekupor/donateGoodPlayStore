@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 import com.example.donategood.R;
 
@@ -18,6 +19,7 @@ public class ComposeCommentFragment extends DialogFragment {
         private EditText tvCommentText;
         private EditText tvCommentRating;
         private Button btnDone;
+        private RatingBar ratingBar;
 
         public ComposeCommentFragment() {
                 // Empty constructor is required for DialogFragment
@@ -27,7 +29,6 @@ public class ComposeCommentFragment extends DialogFragment {
         public interface ComposeCommentDialogListener {
                 void onFinishEditDialog(String inputText, String inputRating);
         }
-
 
         public static ComposeCommentFragment newInstance() {
                 ComposeCommentFragment frag = new ComposeCommentFragment();
@@ -48,6 +49,7 @@ public class ComposeCommentFragment extends DialogFragment {
                 tvCommentText = (EditText) view.findViewById(R.id.etTestComment);
                 tvCommentRating = (EditText) view.findViewById(R.id.etRatingComment);
                 btnDone = view.findViewById(R.id.btnCommentDone);
+                ratingBar = (RatingBar) view.findViewById(R.id.rbComment);
 
                 btnDone.setOnClickListener(new View.OnClickListener() {
                         @Override
