@@ -130,4 +130,14 @@
         android:layout_toStartOf="@+id/btnLogout"
         android:text="Edit Venmo" />
 
+    <EditText
+        android:id="@+id/etVenmo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnEditVenmo"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/btnProfileUploadPhoto"
+        android:hint="edit venmo name" />
+
 </RelativeLayout>

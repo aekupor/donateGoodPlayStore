@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,6 +65,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvYouSoldTitle;
     private ProgressBar pb;
     private Button btnEditVenmo;
+    private EditText etVenmo;
 
     private RecyclerView rvBoughtItems;
     private SmallOfferingAdapter adapter;
@@ -96,6 +98,9 @@ public class ProfileFragment extends Fragment {
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
         btnEditVenmo = view.findViewById(R.id.btnEditVenmo);
+        etVenmo = view.findViewById(R.id.etVenmo);
+
+        etVenmo.setVisibility(View.INVISIBLE);
 
         query = new Query();
         selectedOfferings = new ArrayList<>();
@@ -161,6 +166,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 camera.pickPhoto(getContext(), true);
+            }
+        });
+
+        btnEditVenmo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "edit venmo page clicked");
+                etVenmo.setVisibility(View.VISIBLE);
+
             }
         });
 
