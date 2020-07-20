@@ -117,20 +117,20 @@ public class MainActivity extends AppCompatActivity {
                     camera.setPhotoFileArray(photoFileArray);
                 }
             } else {
-
                 ImageView ivPhotoToUpload;
                 Camera camera;
-                if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+                if (isProfile(requestCode)) {
                     ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
                     camera = ProfileFragment.getCamera();
                 } else {
                     ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
                     camera = ComposeFragment.getCamera();
                 }
+
                 File photoFile = camera.getPhotoFile();
                 Context mainContext = camera.getContext();
-
                 Bitmap image = null;
+
                 if (isTakePhoto(resultCode, requestCode)) {
                     image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 } else if (isUploadPhoto(data, requestCode)) {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ivPhotoToUpload.setImageBitmap(image);
 
-                if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
+                if (isProfile(requestCode)) {
                     ParseFile file = new ParseFile(photoFile);
                     ParseUser.getCurrentUser().put("profileImage", file);
                     ParseUser.getCurrentUser().saveInBackground();
@@ -170,6 +170,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Boolean isUploadPhoto(Intent data, int requestCode) {
         if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
+            return true;
+        }
+        return false;
+    }
+
+    private Boolean isProfile(int requestCode) {
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
             return true;
         }
         return false;
