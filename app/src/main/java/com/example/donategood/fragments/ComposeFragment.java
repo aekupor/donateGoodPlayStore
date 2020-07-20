@@ -42,8 +42,6 @@ public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
 
-    public static final Integer PICK_MULTIPLE_PHOTO_CODE = 100;
-
     private Query query;
     private static Camera camera;
 
@@ -93,7 +91,7 @@ public class ComposeFragment extends Fragment {
         camera = new Camera();
 
         spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
-        setUpSpinner(view);
+        setUpSpinner();
 
         btnTakeMultiple.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +160,8 @@ public class ComposeFragment extends Fragment {
                 ArrayList<ParseFile> fileList = MainActivity.getParseFileList();
                 final Offering offering = new Offering();
 
-                if (fileList.size() != 0) {
+                if (fileList != null) {
+                    //offering has multiple images
                     Log.i(TAG, "got array of size: " + fileList.size());
 
                     ArrayList<File> photoFileArray = camera.getPhotoFileArray();
@@ -206,8 +205,10 @@ public class ComposeFragment extends Fragment {
         });
     }
 
-    private void setUpSpinner(View view) {
+    private void setUpSpinner() {
         final List<String> charitiesNames = new ArrayList<>();
+        final String KEY_NEW_CHARITY = "Create New Charity";
+
         query.queryAllCharities(new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> charities, ParseException e) {
@@ -219,6 +220,7 @@ public class ComposeFragment extends Fragment {
                 for (Charity charity : charities) {
                     charitiesNames.add(charity.getTitle());
                 }
+                charitiesNames.add(KEY_NEW_CHARITY);
 
                 // Create an ArrayAdapter for spinner
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charitiesNames);
@@ -232,6 +234,9 @@ public class ComposeFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                         charity = (String) adapterView.getItemAtPosition(pos);
+                        if (charity.equals(KEY_NEW_CHARITY)) {
+                            //TODO: create new charity
+                        }
                         Log.i(TAG, "onItemSelected with charity: " + charity);
                     }
 
