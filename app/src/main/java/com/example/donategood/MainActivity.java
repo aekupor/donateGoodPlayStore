@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static ArrayList<ParseFile> parseFileList;
 
+    private ImageView ivPhotoToUpload;
+    private Camera camera;
+    private File photoFile;
+    private Context mainContext;
+    private Bitmap image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,20 +123,8 @@ public class MainActivity extends AppCompatActivity {
                     camera.setPhotoFileArray(photoFileArray);
                 }
             } else {
-                ImageView ivPhotoToUpload;
-                Camera camera;
-                if (isProfile(requestCode)) {
-                    ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
-                    camera = ProfileFragment.getCamera();
-                } else {
-                    ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
-                    camera = ComposeFragment.getCamera();
-                }
-
-                File photoFile = camera.getPhotoFile();
-                Context mainContext = camera.getContext();
-                Bitmap image = null;
-
+                initializeVariables(requestCode);
+                
                 if (isTakePhoto(resultCode, requestCode)) {
                     image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 } else if (isUploadPhoto(data, requestCode)) {
@@ -180,5 +174,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void initializeVariables(int requestCode) {
+        if (isProfile(requestCode)) {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
+            camera = ProfileFragment.getCamera();
+        } else {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
+            camera = ComposeFragment.getCamera();
+        }
+
+        photoFile = camera.getPhotoFile();
+        mainContext = camera.getContext();
+        image = null;
     }
 }
