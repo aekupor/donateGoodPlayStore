@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private TextView tvQuantityLeft;
     private TextView tvCommentTitle;
     private TextView tvAvgRating;
+    private LinearLayout layoutImages;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -116,6 +118,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
         tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
         tvAvgRating = view.findViewById(R.id.tvAvgRating);
+        layoutImages = (LinearLayout) view.findViewById(R.id.linearImages);
+
         numComments = 0;
 
         reccomendedOfferings = new ArrayList<>();

@@ -153,5 +153,21 @@
         android:layout_toEndOf="@+id/tvViewCommentsTitle"
         tools:text="Average Rating: 4.3" />
 
+    <ScrollView
+        android:id="@+id/svImages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="227dp"
+        android:layout_marginEnd="170dp">
+
+        <LinearLayout
+            android:id="@+id/linearImages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </ScrollView>
+
 </RelativeLayout>
 </ScrollView>
