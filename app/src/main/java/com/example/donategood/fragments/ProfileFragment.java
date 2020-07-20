@@ -173,8 +173,16 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "edit venmo page clicked");
-                etVenmo.setVisibility(View.VISIBLE);
 
+                if (etVenmo.getVisibility() == View.INVISIBLE) {
+                    etVenmo.setVisibility(View.VISIBLE);
+                    btnEditVenmo.setText("Submit Venmo");
+                } else {
+                    btnEditVenmo.setText("Edit Venmo");
+                    etVenmo.setVisibility(View.INVISIBLE);
+                    ParseUser.getCurrentUser().put("venmoName", etVenmo.getText().toString());
+                    ParseUser.getCurrentUser().saveInBackground();
+                }
             }
         });
 
