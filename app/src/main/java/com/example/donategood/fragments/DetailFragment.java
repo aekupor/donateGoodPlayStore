@@ -1,5 +1,6 @@
 package com.example.donategood.fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -320,6 +321,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
+
+        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients=" + offering.getUser().getUsername() + "&amount=" + offering.getPrice().toString() + "&note=" + offering.getTitle()));
+        startActivity(implicit);
+
         Integer quantityLeft = offering.getQuantityLeft() - 1;
         if (quantityLeft == 0) {
             offering.setIsBought(true);
