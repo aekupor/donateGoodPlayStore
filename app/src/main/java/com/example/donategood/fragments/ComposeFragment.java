@@ -185,6 +185,7 @@ public class ComposeFragment extends Fragment {
 
                     offering.setImagesArray(photoParseFileArray);
                     offering.setHasMultipleImages(true);
+                    offering.setImage(photoParseFileArray.get(0));
                 } else {
                     offering.setImage(new ParseFile(camera.getPhotoFile()));
                     offering.setHasMultipleImages(false);
