@@ -176,8 +176,10 @@ public class ComposeFragment extends Fragment {
                 if (fileList.size() != 0) {
                     Log.i(TAG, "got array of size: " + fileList.size());
                     offering.setImagesArray(fileList);
+                    offering.setHasMultipleImages(true);
                 } else {
                     offering.setImage(new ParseFile(camera.getPhotoFile()));
+                    offering.setHasMultipleImages(false);
                 }
 
                 offering.setTitle(title);
@@ -194,10 +196,6 @@ public class ComposeFragment extends Fragment {
                             Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                         }
                         Log.i(TAG, "Post save was successful!");
-                        etTitle.setText("");
-                        etPrice.setText("");
-                        etTags.setText("");
-                        ivPhoto.setImageResource(0);
                         pb.setVisibility(ProgressBar.INVISIBLE);
 
                         //go to detail fragment

@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if (data.getClipData() != null) {
                     ClipData mClipData = data.getClipData();
-                    mBitmapsSelected = new ArrayList<Bitmap>();
                     parseFileList = new ArrayList<>();
                     for (int i = 0; i < mClipData.getItemCount(); i++) {
                         ClipData.Item item = mClipData.getItemAt(i);
