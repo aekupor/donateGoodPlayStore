@@ -1,6 +1,7 @@
 package com.example.donategood.fragments;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -170,9 +171,17 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "Successfully got charity");
 
                 ArrayList<Bitmap> mBitmapsSelected = MainActivity.getmBitmapsSelected();
+                ArrayList<ParseFile> fileList = new ArrayList<>();
 
                 if (mBitmapsSelected.size() != 0) {
                     Log.i(TAG, "got array of size: " + mBitmapsSelected.size());
+                    Camera camera = ComposeFragment.getCamera();
+                    Context mainContext = camera.getContext();
+                    for (Bitmap bitmap : mBitmapsSelected) {
+                        File photoFile = camera.createFile(mainContext, bitmap);
+                        ParseFile file = new ParseFile(photoFile);
+                        fileList.add(file);
+                    }
                     return;
                 }
 
