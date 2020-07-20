@@ -173,21 +173,22 @@ public class ComposeFragment extends Fragment {
                 ArrayList<Bitmap> mBitmapsSelected = MainActivity.getmBitmapsSelected();
                 ArrayList<ParseFile> fileList = new ArrayList<>();
 
+                final Offering offering = new Offering();
+
                 if (mBitmapsSelected.size() != 0) {
-                    Log.i(TAG, "got array of size: " + mBitmapsSelected.size());
-                    Camera camera = ComposeFragment.getCamera();
                     Context mainContext = camera.getContext();
                     for (Bitmap bitmap : mBitmapsSelected) {
                         File photoFile = camera.createFile(mainContext, bitmap);
                         ParseFile file = new ParseFile(photoFile);
                         fileList.add(file);
                     }
-                    return;
+                    Log.i(TAG, "got array of size: " + fileList.size());
+                    offering.setImagesArray(fileList);
+                } else {
+                    offering.setImage(new ParseFile(camera.getPhotoFile()));
                 }
 
-                final Offering offering = new Offering();
                 offering.setTitle(title);
-                offering.setImage(new ParseFile(camera.getPhotoFile()));
                 offering.setPrice(Integer.valueOf(price));
                 offering.setCharity(charities.get(0));
                 offering.setTags(tags);

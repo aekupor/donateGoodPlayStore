@@ -21,6 +21,7 @@ public class Offering extends ParseObject {
     public static final String KEY_RATING = "rating";
     public static final String KEY_QUANTITY_LEFT = "quantityLeft";
     public static final String KEY_BOUGHT_BY_ARRAY = "boughtByArray";
+    public static final String KEY_IMAGES_ARRAY = "images";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -89,6 +90,7 @@ public class Offering extends ParseObject {
     public Integer getRating() {
         return getInt(KEY_RATING);
     }
+
     public void setRating(Integer rating) {
         put(KEY_RATING, rating);
     }
@@ -96,6 +98,7 @@ public class Offering extends ParseObject {
     public Integer getQuantityLeft() {
         return getInt(KEY_QUANTITY_LEFT);
     }
+
     public void setQuantityLeft(Integer quantityLeft) {
         put(KEY_QUANTITY_LEFT, quantityLeft);
     }
@@ -103,6 +106,7 @@ public class Offering extends ParseObject {
     public ArrayList<Object> getBoughtByArray() {
         return (ArrayList<Object>) get(KEY_BOUGHT_BY_ARRAY);
     }
+
     public void addToBoughtByArray(ParseUser user) {
         ArrayList<ParseUser> users = new ArrayList<ParseUser>();
         ArrayList<Object> boughtAlready = getBoughtByArray();
@@ -113,5 +117,13 @@ public class Offering extends ParseObject {
             boughtAlready.add(user);
             put(KEY_BOUGHT_BY_ARRAY, boughtAlready);
         }
+    }
+
+    public ArrayList<ParseFile> getImagesArray() {
+        return (ArrayList<ParseFile>) get(KEY_IMAGES_ARRAY);
+    }
+
+    public void setImagesArray(ArrayList<ParseFile> images) {
+        put(KEY_IMAGES_ARRAY, images);
     }
 }
