@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult");
-        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == PICK_MULTIPLE_PHOTO_CODE) {
+        if (isPhoto(requestCode)) {
             if (requestCode == PICK_MULTIPLE_PHOTO_CODE) {
 
                 Camera camera = ComposeFragment.getCamera();
@@ -131,18 +131,16 @@ public class MainActivity extends AppCompatActivity {
                 Context mainContext = camera.getContext();
 
                 Bitmap image = null;
-                if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
-                    if (resultCode == RESULT_OK) {
-                        image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                    } else { // Result was a failure
-                        Toast.makeText(getApplicationContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                if (resultCode == RESULT_OK && (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE)) {
+                    image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 } else if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
                     Uri photoUri = data.getData();
                     image = camera.loadFromUri(photoUri, mainContext);
                     photoFile = camera.createFile(mainContext, image);
                     camera.setPhotoFile(photoFile);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Issue with picture!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 ivPhotoToUpload.setImageBitmap(image);
@@ -154,5 +152,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private Boolean isPhoto(int requestCode) {
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == PICK_MULTIPLE_PHOTO_CODE) {
+            return true;
+        }
+        return false;
     }
 }
