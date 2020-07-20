@@ -84,7 +84,7 @@
         android:id="@+id/ivDetailOfferingPhoto"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:layout_below="@+id/tvDetailUser"
+        android:layout_below="@+id/svImages"
         android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
         tools:srcCompat="@tools:sample/avatars" />
@@ -157,16 +157,16 @@
         android:id="@+id/svImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/tvQuantityLeft"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="227dp"
-        android:layout_marginEnd="170dp">
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="0dp">
 
         <LinearLayout
             android:id="@+id/linearImages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="vertical" />
     </ScrollView>
 
 </RelativeLayout>
