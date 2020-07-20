@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.NewCharityFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <EditText
+        android:id="@+id/etCharityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="charity name" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/etCharityWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="charity website" />
+
+    <Button
+        android:id="@+id/btnCharityUploadPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Profile Picture"/>
+
+    <Button
+        android:id="@+id/btnNewCharitySubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+</LinearLayout>
