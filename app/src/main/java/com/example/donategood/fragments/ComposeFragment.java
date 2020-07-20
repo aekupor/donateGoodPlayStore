@@ -175,7 +175,15 @@ public class ComposeFragment extends Fragment {
 
                 if (fileList.size() != 0) {
                     Log.i(TAG, "got array of size: " + fileList.size());
-                    offering.setImagesArray(fileList);
+
+                    ArrayList<File> photoFileArray = camera.getPhotoFileArray();
+                    ArrayList<ParseFile> photoParseFileArray = new ArrayList<>();
+
+                    for (File photo : photoFileArray) {
+                        photoParseFileArray.add(new ParseFile(photo));
+                    }
+
+                    offering.setImagesArray(photoParseFileArray);
                     offering.setHasMultipleImages(true);
                 } else {
                     offering.setImage(new ParseFile(camera.getPhotoFile()));

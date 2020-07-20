@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 Camera camera = ComposeFragment.getCamera();
                 Context mainContext = camera.getContext();
 
+                ArrayList<File> photoFileArray = new ArrayList<>();
+
                 if (data.getClipData() != null) {
                     ClipData mClipData = data.getClipData();
                     parseFileList = new ArrayList<>();
@@ -107,10 +109,12 @@ public class MainActivity extends AppCompatActivity {
                         Uri uri = item.getUri();
                         Bitmap bitmap = camera.loadFromUri(uri, mainContext);
                         File photoFile = camera.createFile(mainContext, bitmap);
+                        photoFileArray.add(photoFile);
                         ParseFile file = new ParseFile(photoFile);
                         parseFileList.add(file);
                         Log.i(TAG, "got photo number " + i);
                     }
+                    camera.setPhotoFileArray(photoFileArray);
                 }
             } else {
 

@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Camera {
     public static final String TAG = "CAMERA";
@@ -28,6 +29,7 @@ public class Camera {
     public static final Integer PICK_MULTIPLE_PHOTO_CODE = 50;
 
     public File photoFile;
+    private ArrayList<File> mainPhotoFileArray;
     public String photoFileName = "photo.jpg";
     public Context mainContext;
 
@@ -149,5 +151,13 @@ public class Camera {
 
     public Context getContext() {
         return mainContext;
+    }
+
+    public void setPhotoFileArray(ArrayList<File> photoFileArray) {
+        mainPhotoFileArray = photoFileArray;
+    }
+
+    public ArrayList<File> getPhotoFileArray() {
+        return mainPhotoFileArray;
     }
 }
