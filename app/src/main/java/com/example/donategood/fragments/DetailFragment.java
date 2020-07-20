@@ -185,7 +185,11 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
-                loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+
+                //TODO: make this work with multiple images
+                if (!offering.hasMultipleImages()) {
+                    loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+                }
 
                 if (offering.getRating() != 0) {
                     tvAvgRating.setText("Average Rating: " + offering.getRating());
@@ -260,7 +264,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     private void setShareButton() {
         content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse(offering.getImage().getUrl()))
+                //TODO: make this work with multiple images
+                //.setContentUrl(Uri.parse(offering.getImage().getUrl()))
                 .build();
 
         shareButton.setShareContent(content);

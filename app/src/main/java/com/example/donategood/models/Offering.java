@@ -22,6 +22,7 @@ public class Offering extends ParseObject {
     public static final String KEY_QUANTITY_LEFT = "quantityLeft";
     public static final String KEY_BOUGHT_BY_ARRAY = "boughtByArray";
     public static final String KEY_IMAGES_ARRAY = "images";
+    public static final String KEY_HAS_MULTIPLE_IMAGES = "hasMultipleImages";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -125,5 +126,13 @@ public class Offering extends ParseObject {
 
     public void setImagesArray(ArrayList<ParseFile> images) {
         put(KEY_IMAGES_ARRAY, images);
+    }
+
+    public Boolean hasMultipleImages() {
+        return getBoolean(KEY_HAS_MULTIPLE_IMAGES);
+    }
+
+    public void setHasMultipleImages(Boolean hasMultipleImages) {
+        put(KEY_HAS_MULTIPLE_IMAGES, hasMultipleImages);
     }
 }
