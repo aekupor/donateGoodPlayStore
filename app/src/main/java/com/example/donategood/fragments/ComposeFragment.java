@@ -61,6 +61,7 @@ public class ComposeFragment extends Fragment {
     private Button btnSubmit;
     private ProgressBar pb;
     private EditText etQuantity;
+    private Button btnTakeMultiple;
 
     private String title;
     private String price;
@@ -91,12 +92,21 @@ public class ComposeFragment extends Fragment {
         btnSubmit = view.findViewById(R.id.btnSubmit);
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
         etQuantity = view.findViewById(R.id.etQuantity);
+        btnTakeMultiple = view.findViewById(R.id.btnTakeMultiple);
 
         query = new Query();
         camera = new Camera();
 
         spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
         setUpSpinner(view);
+
+        btnTakeMultiple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnTakeMultiple onClick");
+                
+            }
+        });
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -77,9 +77,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/etTitle"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/etPrice"
         android:hint="quantity" />
+
+    <Button
+        android:id="@+id/btnTakeMultiple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPrice"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/btnTakePhoto"
+        android:text="Take Multiple" />
 
 </RelativeLayout>
 
