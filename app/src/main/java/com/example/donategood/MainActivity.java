@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
-    private static ArrayList<Bitmap> mBitmapsSelected;
+    private static ArrayList<ParseFile> parseFileList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
-    public static ArrayList<Bitmap> getmBitmapsSelected() {
-        return mBitmapsSelected;
+    public static ArrayList<ParseFile> getParseFileList() {
+        return parseFileList;
     }
 
     //called when camera is closed
@@ -99,18 +99,17 @@ public class MainActivity extends AppCompatActivity {
                 Camera camera = ComposeFragment.getCamera();
                 Context mainContext = camera.getContext();
 
-                ArrayList<Uri> mArrayUri;
-
                 if (data.getClipData() != null) {
                     ClipData mClipData = data.getClipData();
-                    mArrayUri = new ArrayList<Uri>();
                     mBitmapsSelected = new ArrayList<Bitmap>();
+                    parseFileList = new ArrayList<>();
                     for (int i = 0; i < mClipData.getItemCount(); i++) {
                         ClipData.Item item = mClipData.getItemAt(i);
                         Uri uri = item.getUri();
-                        mArrayUri.add(uri);
                         Bitmap bitmap = camera.loadFromUri(uri, mainContext);
-                        mBitmapsSelected.add(bitmap);
+                        File photoFile = camera.createFile(mainContext, bitmap);
+                        ParseFile file = new ParseFile(photoFile);
+                        parseFileList.add(file);
                         Log.i(TAG, "got photo number " + i);
                     }
                 }
