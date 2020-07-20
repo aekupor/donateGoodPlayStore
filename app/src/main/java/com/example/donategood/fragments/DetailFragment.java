@@ -1,5 +1,6 @@
 package com.example.donategood.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
@@ -35,6 +38,7 @@ import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -190,9 +194,22 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
                 loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
 
-                //TODO: make this work with multiple images
                 if (!offering.hasMultipleImages()) {
                     loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+                } else {
+                    ArrayList<ParseFile> imagesArray = offering.getImagesArray();
+                    for (ParseFile image : imagesArray) {
+
+                        ImageView ivImage = new ImageView(getContext());
+
+                        ViewTarget<ImageView, Drawable> into = Glide.with(getContext())
+                                .load(image.getUrl())
+                                .into(ivImage);
+
+                        layoutImages.addView(into.getView());
+                        Log.i(TAG, "adding view to layoutImages");
+
+                    }
                 }
 
                 if (offering.getRating() != 0) {
