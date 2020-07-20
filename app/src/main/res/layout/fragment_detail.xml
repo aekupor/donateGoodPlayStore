@@ -84,8 +84,9 @@
         android:id="@+id/ivDetailOfferingPhoto"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:layout_below="@+id/svImages"
+        android:layout_below="@+id/tvQuantityLeft"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="280dp"
         android:layout_marginTop="4dp"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -153,21 +154,22 @@
         android:layout_toEndOf="@+id/tvViewCommentsTitle"
         tools:text="Average Rating: 4.3" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/svImages"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/tvQuantityLeft"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="0dp">
+        android:layout_marginTop="4dp">
 
         <LinearLayout
             android:id="@+id/linearImages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>
 </ScrollView>
