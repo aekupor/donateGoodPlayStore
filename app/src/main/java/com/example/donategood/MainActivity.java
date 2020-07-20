@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 Context mainContext = camera.getContext();
 
                 Bitmap image = null;
-                if (resultCode == RESULT_OK && (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE)) {
+                if (isTakePhoto(resultCode, requestCode)) {
                     image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                } else if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
+                } else if (isUploadPhoto(data, requestCode)) {
                     Uri photoUri = data.getData();
                     image = camera.loadFromUri(photoUri, mainContext);
                     photoFile = camera.createFile(mainContext, image);
@@ -156,6 +156,20 @@ public class MainActivity extends AppCompatActivity {
 
     private Boolean isPhoto(int requestCode) {
         if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == PICK_MULTIPLE_PHOTO_CODE) {
+            return true;
+        }
+        return false;
+    }
+
+    private Boolean isTakePhoto(int resultCode, int requestCode) {
+        if (resultCode == RESULT_OK && (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE)) {
+            return true;
+        }
+        return false;
+    }
+
+    private Boolean isUploadPhoto(Intent data, int requestCode) {
+        if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
             return true;
         }
         return false;
