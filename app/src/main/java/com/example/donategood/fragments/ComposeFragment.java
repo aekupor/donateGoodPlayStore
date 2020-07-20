@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.donategood.MainActivity;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
@@ -43,6 +44,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -166,6 +168,13 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Successfully got charity");
+
+                ArrayList<Bitmap> mBitmapsSelected = MainActivity.getmBitmapsSelected();
+
+                if (mBitmapsSelected.size() != 0) {
+                    Log.i(TAG, "got array of size: " + mBitmapsSelected.size());
+                    return;
+                }
 
                 final Offering offering = new Offering();
                 offering.setTitle(title);

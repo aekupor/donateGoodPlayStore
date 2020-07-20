@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
+    private static ArrayList<Bitmap> mBitmapsSelected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
+    public static ArrayList<Bitmap> getmBitmapsSelected() {
+        return mBitmapsSelected;
+    }
+
     //called when camera is closed
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -94,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 Context mainContext = camera.getContext();
 
                 ArrayList<Uri> mArrayUri;
-                ArrayList<Bitmap> mBitmapsSelected;
 
                 if (data.getClipData() != null) {
                     ClipData mClipData = data.getClipData();
