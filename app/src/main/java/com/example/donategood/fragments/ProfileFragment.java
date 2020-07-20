@@ -63,6 +63,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvYouSellingTitle;
     private TextView tvYouSoldTitle;
     private ProgressBar pb;
+    private Button btnEditVenmo;
 
     private RecyclerView rvBoughtItems;
     private SmallOfferingAdapter adapter;
@@ -94,6 +95,7 @@ public class ProfileFragment extends Fragment {
         tvYouSellingTitle = view.findViewById(R.id.tvYouSellingTitle);
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
+        btnEditVenmo = view.findViewById(R.id.btnEditVenmo);
 
         query = new Query();
         selectedOfferings = new ArrayList<>();

@@ -122,4 +122,12 @@
         android:layout_toEndOf="@+id/btnProfileUploadPhoto"
         android:visibility="invisible" />
 
+    <Button
+        android:id="@+id/btnEditVenmo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_toStartOf="@+id/btnLogout"
+        android:text="Edit Venmo" />
+
 </RelativeLayout>
