@@ -322,7 +322,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
 
-        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients=" + offering.getUser().getUsername() + "&amount=" + offering.getPrice().toString() + "&note=" + offering.getTitle()));
+        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients=" + offering.getUser().get("venmoName") + "&amount=" + offering.getPrice().toString() + "&note=" + offering.getTitle()));
         startActivity(implicit);
 
         Integer quantityLeft = offering.getQuantityLeft() - 1;
