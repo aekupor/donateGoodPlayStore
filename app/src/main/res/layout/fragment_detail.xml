@@ -154,7 +154,7 @@
         android:layout_toEndOf="@+id/tvViewCommentsTitle"
         tools:text="Average Rating: 4.3" />
 
-    <androidx.core.widget.NestedScrollView
+    <HorizontalScrollView
         android:id="@+id/svImages"
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -165,11 +165,11 @@
             android:id="@+id/linearImages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </HorizontalScrollView>
 
 </RelativeLayout>
 </ScrollView>
