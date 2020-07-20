@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.example.donategood.adapters.CommentAdapter;
-import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;

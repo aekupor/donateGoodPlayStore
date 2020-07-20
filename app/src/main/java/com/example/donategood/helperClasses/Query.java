@@ -1,7 +1,6 @@
 package com.example.donategood.helperClasses;
 
 import android.graphics.Typeface;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 

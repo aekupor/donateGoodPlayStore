@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.donategood.R;
-import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;

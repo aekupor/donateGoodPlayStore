@@ -1,7 +1,6 @@
 package com.example.donategood.fragments;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.FBQuery;
@@ -33,14 +30,11 @@ import com.example.donategood.models.Offering;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

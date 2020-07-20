@@ -1,11 +1,7 @@
 package com.example.donategood.helperClasses;
 
-import android.util.Log;
-
 import com.example.donategood.models.Charity;
-import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 

@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.donategood.fragments.ComposeFragment;
-import com.example.donategood.fragments.DetailFragment;
 import com.example.donategood.fragments.HomeFragment;
 import com.example.donategood.fragments.ProfileFragment;
 import com.example.donategood.fragments.SearchFragment;
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else {
                 initializeVariables(requestCode);
-                
+
                 if (isTakePhoto(resultCode, requestCode)) {
                     image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 } else if (isUploadPhoto(data, requestCode)) {
