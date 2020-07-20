@@ -107,10 +107,7 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnTakeMultiple onClick");
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_MULTIPLE_PHOTO_CODE);
+                camera.pickMultiplePhotos(getContext());
             }
         });
 
@@ -242,25 +239,5 @@ public class ComposeFragment extends Fragment {
 
     public static Camera getCamera() {
         return camera;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ArrayList<Uri> mArrayUri;
-        ArrayList<Bitmap> mBitmapsSelected;
-
-        if (data.getClipData() != null) {
-            ClipData mClipData = data.getClipData();
-            mArrayUri = new ArrayList<Uri>();
-            mBitmapsSelected = new ArrayList<Bitmap>();
-            for (int i = 0; i < mClipData.getItemCount(); i++) {
-                ClipData.Item item = mClipData.getItemAt(i);
-                Uri uri = item.getUri();
-                mArrayUri.add(uri);
-                Bitmap bitmap = camera.loadFromUri(uri, getContext());
-                mBitmapsSelected.add(bitmap);
-                Log.i(TAG, "got photo number " + i);
-            }
-        }
     }
 }

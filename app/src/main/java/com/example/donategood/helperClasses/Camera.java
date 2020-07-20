@@ -25,6 +25,7 @@ public class Camera {
     public static final Integer UPLOAD_PHOTO_CODE = 20;
     public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE = 30;
     public static final Integer UPLOAD_PHOTO_CODE_PROFILE = 40;
+    public static final Integer PICK_MULTIPLE_PHOTO_CODE = 50;
 
     public File photoFile;
     public String photoFileName = "photo.jpg";
@@ -113,6 +114,14 @@ public class Camera {
                 ((Activity) context).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
         }
+    }
+
+    public void pickMultiplePhotos(Context context) {
+        mainContext = context;
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_MULTIPLE_PHOTO_CODE);
     }
 
     public void pickPhoto(Context context, Boolean profile) {
