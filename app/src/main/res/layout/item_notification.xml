@@ -21,4 +21,10 @@
         android:text="Approve"
         tools:layout_editor_absoluteX="108dp"
         tools:layout_editor_absoluteY="159dp" />
+
+    <Button
+        android:id="@+id/btnDenyNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deny" />
 </LinearLayout>

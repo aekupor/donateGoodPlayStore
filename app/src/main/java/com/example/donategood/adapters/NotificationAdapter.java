@@ -62,12 +62,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         private TextView tvNotification;
         private Button btnApprove;
+        private Button btnDeny;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvNotification = itemView.findViewById(R.id.tvNotificationText);
             btnApprove = itemView.findViewById(R.id.btnApproveNotification);
+            btnDeny = itemView.findViewById(R.id.btnDenyNotification);
         }
 
         public void bind(Notification notification) {

@@ -236,7 +236,6 @@ public class ProfileFragment extends Fragment {
                 notifications.clear();
 
                 if (objects != null) {
-
                     for (Notification notification : objects) {
                         if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                             //notification is for current user to approve
