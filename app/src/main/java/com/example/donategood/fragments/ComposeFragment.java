@@ -125,6 +125,21 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnSubmit onClick");
+
+                if (ParseUser.getCurrentUser().get("venmoName") == null) {
+                    Log.i(TAG, "user doesn't have venmo name");
+
+                    etVenmo.setVisibility(View.VISIBLE);
+
+                    if (etVenmo.getText().toString().isEmpty()) {
+                        Toast.makeText(getContext(), "You must add your venmo username", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ParseUser.getCurrentUser().put("venmoName", etVenmo.getText().toString());
+                        ParseUser.getCurrentUser().saveInBackground();
+                        etVenmo.setVisibility(View.INVISIBLE);
+                    }
+                }
+
                 title = etTitle.getText().toString();
                 price = etPrice.getText().toString();
                 tags = editTags(etTags.getText().toString());
