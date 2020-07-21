@@ -226,14 +226,17 @@ public class ProfileFragment extends Fragment {
         tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
         tvYouBoughtTitle.setTypeface(null, Typeface.NORMAL);
 
+        adapter.clear();
+        notifications.clear();
+        rvBoughtItems.setVisibility(View.INVISIBLE);
+        rvNotifications.setVisibility(View.VISIBLE);
+
         query.queryNotificationsForSeller(new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
                 if (e != null) {
                     return;
                 }
-                adapter.clear();
-                notifications.clear();
 
                 if (objects != null) {
                     for (Notification notification : objects) {
@@ -243,9 +246,6 @@ public class ProfileFragment extends Fragment {
                             notifications.add(notification);
                         }
                     }
-
-                    rvBoughtItems.setVisibility(View.INVISIBLE);
-                    rvNotifications.setVisibility(View.VISIBLE);
                     notificationAdapter.notifyDataSetChanged();
                 }
             }
@@ -257,11 +257,13 @@ public class ProfileFragment extends Fragment {
                 if (e != null) {
                     return;
                 }
-                adapter.clear();
-                notifications.clear();
 
                 if (objects != null) {
-                    
+                    for (Notification notification : objects) {
+                        Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
+                        notifications.add(notification);
+                    }
+                    notificationAdapter.notifyDataSetChanged();
                 }
             }
         });

@@ -221,6 +221,7 @@ public class Query {
     public void queryNotificationsForBuyer(ParseUser user, FindCallback<Notification> callback) {
         ParseQuery<Notification> query = ParseQuery.getQuery(Notification.class);
         query.whereEqualTo("byUser", user);
+        query.include("byUser");
         query.include("forUser");
         query.include("forOffering");
         query.findInBackground(callback);
