@@ -127,47 +127,7 @@ public class ProfileFragment extends Fragment {
         loadPost = new LoadPost();
         camera = new Camera();
 
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        if (isLoggedIn) {
-            //user is logged in with facebook
-            Log.i(TAG, "user is logged in with FB");
-            final Long[] userId = new Long[1];
-            final FBQuery fbQuery = new FBQuery();
-
-            //get user name from FB
-            fbQuery.getName(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-                @Override
-                public void onCompleted(JSONObject object, GraphResponse response) {
-                    try {
-                        final String name = object.getString("name");
-                        Log.i(TAG, "got graph response: " + name);
-                        userId[0] = object.getLong("id");
-
-                        //get user profile picture from FB
-                        fbQuery.getProfileImage(accessToken, userId[0], new GraphRequest.Callback() {
-                            @Override
-                            public void onCompleted(GraphResponse response) {
-                                try {
-                                    JSONObject data = response.getJSONObject().getJSONObject("data");
-                                    String url = data.getString("url");
-                                    Log.i(TAG, "got image url: " + url);
-
-                                    loadPost.setUserFromFB(name, url, getContext(), tvName, ivProfileImage);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } else {
-            //user is not logged in with FB
-            loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
-        }
+        checkFBLogin();
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,32 +194,7 @@ public class ProfileFragment extends Fragment {
         tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "notification button clicked");
-                query.queryNotifications(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
-                    @Override
-                    public void done(List<Notification> objects, ParseException e) {
-                        if (e != null) {
-                            return;
-                        }
-                        adapter.clear();
-                        notifications.clear();
-
-                        if (objects != null) {
-
-                            for (Notification notification : objects) {
-                                if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                                    //notification is for current user to approve
-                                    Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
-                                    notifications.add(notification);
-                                }
-                            }
-
-                            rvBoughtItems.setVisibility(View.INVISIBLE);
-                            rvNotifications.setVisibility(View.VISIBLE);
-                            notificationAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
+                getNotifications();
             }
         });
 
@@ -275,5 +210,78 @@ public class ProfileFragment extends Fragment {
 
     public static Camera getCamera() {
         return camera;
+    }
+
+    public void getNotifications() {
+        Log.i(TAG, "notification button clicked");
+        query.queryNotifications(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
+            @Override
+            public void done(List<Notification> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                adapter.clear();
+                notifications.clear();
+
+                if (objects != null) {
+
+                    for (Notification notification : objects) {
+                        if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            //notification is for current user to approve
+                            Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
+                            notifications.add(notification);
+                        }
+                    }
+
+                    rvBoughtItems.setVisibility(View.INVISIBLE);
+                    rvNotifications.setVisibility(View.VISIBLE);
+                    notificationAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    public void checkFBLogin() {
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if (isLoggedIn) {
+            //user is logged in with facebook
+            Log.i(TAG, "user is logged in with FB");
+            final Long[] userId = new Long[1];
+            final FBQuery fbQuery = new FBQuery();
+
+            //get user name from FB
+            fbQuery.getName(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        final String name = object.getString("name");
+                        Log.i(TAG, "got graph response: " + name);
+                        userId[0] = object.getLong("id");
+
+                        //get user profile picture from FB
+                        fbQuery.getProfileImage(accessToken, userId[0], new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                try {
+                                    JSONObject data = response.getJSONObject().getJSONObject("data");
+                                    String url = data.getString("url");
+                                    Log.i(TAG, "got image url: " + url);
+
+                                    loadPost.setUserFromFB(name, url, getContext(), tvName, ivProfileImage);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } else {
+            //user is not logged in with FB
+            loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
+        }
     }
 }
