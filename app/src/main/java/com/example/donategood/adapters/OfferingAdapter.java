@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,6 +72,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private TextView tvCharity;
         private ImageView ivOfferingPhoto;
         private ImageView ivCharityProfile;
+        private RatingBar ratingBar;
 
         private LoadPost loadPost;
 
@@ -82,6 +84,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             tvCharity = itemView.findViewById(R.id.tvCharity);
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
             ivCharityProfile = itemView.findViewById(R.id.ivCharityProfile);
+            ratingBar = itemView.findViewById(R.id.offeringRatingBar);
 
             loadPost = new LoadPost();
 

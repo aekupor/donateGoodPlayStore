@@ -24,7 +24,7 @@ public class Query {
     public static final String KEY_SOLD = "sold";
 
     public void queryAllPosts(Integer page, FindCallback<Offering> callback) {
-        Integer displayLimit = 2;
+        Integer displayLimit = 20;
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.setLimit(displayLimit);
         query.setSkip(page * displayLimit);
