@@ -293,15 +293,21 @@ public class ProfileFragment extends Fragment {
                     for (Notification notification : objects) {
                         Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
 
-                        TextView textView = new TextView(getContext());
-                        if (!notification.getUserActed()) {
-                            textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() +".");
-                        } else if (notification.getKeyApproved()) {
-                            textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() +".");
-                        } else {
-                            textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() +".");
+                        if (!notification.getUserSeen()) {
+                            TextView textView = new TextView(getContext());
+                            if (!notification.getUserActed()) {
+                                textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() + ".");
+                            } else if (notification.getKeyApproved()) {
+                                textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() + ".");
+                                notification.setUserSeen(true);
+                                notification.saveInBackground();
+                            } else {
+                                textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() + ".");
+                                notification.setUserSeen(true);
+                                notification.saveInBackground();
+                            }
+                            pendingNotifications.addView(textView);
                         }
-                        pendingNotifications.addView(textView);
                     }
                 }
             }
