@@ -68,6 +68,7 @@ public class ProfileFragment extends Fragment {
     private Button btnEditVenmo;
     private EditText etVenmo;
     private TextView tvPendingNotificationsTitle;
+    private Button btnEditFBMessenger;
 
     private RecyclerView rvBoughtItems;
     private SmallOfferingAdapter adapter;
@@ -110,6 +111,7 @@ public class ProfileFragment extends Fragment {
         etVenmo = view.findViewById(R.id.etVenmo);
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
+        btnEditFBMessenger = view.findViewById(R.id.btnEtFBMessenger);
 
         etVenmo.setVisibility(View.INVISIBLE);
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
@@ -163,6 +165,23 @@ public class ProfileFragment extends Fragment {
                     btnEditVenmo.setText("Edit Venmo");
                     etVenmo.setVisibility(View.INVISIBLE);
                     ParseUser.getCurrentUser().put("venmoName", etVenmo.getText().toString());
+                    ParseUser.getCurrentUser().saveInBackground();
+                }
+            }
+        });
+
+        btnEditFBMessenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "edit FB messenger button clicked");
+
+                if (etVenmo.getVisibility() == View.INVISIBLE) {
+                    etVenmo.setVisibility(View.VISIBLE);
+                    btnEditFBMessenger.setText("Submit FB Messenger");
+                } else {
+                    btnEditFBMessenger.setText("Edit FB Messenger");
+                    etVenmo.setVisibility(View.INVISIBLE);
+                    ParseUser.getCurrentUser().put("fbMessenger", etVenmo.getText().toString());
                     ParseUser.getCurrentUser().saveInBackground();
                 }
             }
