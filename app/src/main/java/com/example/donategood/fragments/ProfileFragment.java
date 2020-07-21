@@ -275,7 +275,13 @@ public class ProfileFragment extends Fragment {
                         Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
 
                         TextView textView = new TextView(getContext());
-                        textView.setText("offering 1");
+                        if (!notification.getUserActed()) {
+                            textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() +".");
+                        } else if (notification.getKeyApproved()) {
+                            textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() +".");
+                        } else {
+                            textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() +".");
+                        }
                         pendingNotifications.addView(textView);
                     }
                 }

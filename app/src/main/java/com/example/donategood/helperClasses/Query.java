@@ -224,6 +224,7 @@ public class Query {
         query.include("byUser");
         query.include("forUser");
         query.include("forOffering");
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
 }
