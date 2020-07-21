@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ public class OtherUserProfileFragment extends Fragment {
     private TextView tvSoldTitle;
     private TextView tvSellingTitle;
     private ProgressBar pb;
+    private Button btnChat;
 
     private String userName;
     private ParseUser user;
@@ -102,6 +104,7 @@ public class OtherUserProfileFragment extends Fragment {
         tvSellingTitle = view.findViewById(R.id.tvOtherSellingTitle);
         tvSoldTitle = view.findViewById(R.id.tvOtherSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
+        btnChat = view.findViewById(R.id.btnChat);
 
         selectedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), selectedOfferings);
