@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.models.Notification;
+import com.example.donategood.models.Offering;
 
 import java.util.List;
 
@@ -107,6 +108,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         notification.setKeyApproved(false);
                         notification.setUserActed(true);
                         notification.saveInBackground();
+
+                        Offering offering = notification.getKeyOffering();
+                        offering.setQuantityLeft(offering.getQuantityLeft() + 1);
+                        offering.removeFromBoughtByArray(notification.getKeyUser());
+                        offering.saveInBackground();
 
                         btnApprove.setVisibility(View.INVISIBLE);
                         btnDeny.setVisibility(View.INVISIBLE);

@@ -120,6 +120,25 @@ public class Offering extends ParseObject {
         }
     }
 
+    public void removeFromBoughtByArray(ParseUser user) {
+        ArrayList<Object> boughtAlready = getBoughtByArray();
+
+        if (getBoughtByArray().size() == 1) {
+            ArrayList<Object> emptyList = new ArrayList<>();
+            put(KEY_BOUGHT_BY_ARRAY, emptyList);
+            return;
+        }
+
+        for (Object boughtObject : boughtAlready) {
+            ParseUser boughtUser = (ParseUser) boughtObject;
+            if (boughtUser.getObjectId().equals(user.getObjectId())) {
+                boughtAlready.remove(boughtObject);
+                put(KEY_BOUGHT_BY_ARRAY, boughtAlready);
+                return;
+            }
+        }
+    }
+
     public ArrayList<ParseFile> getImagesArray() {
         return (ArrayList<ParseFile>) get(KEY_IMAGES_ARRAY);
     }
