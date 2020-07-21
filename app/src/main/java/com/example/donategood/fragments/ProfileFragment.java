@@ -57,6 +57,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvYouBoughtTitle;
     private TextView tvYouSellingTitle;
     private TextView tvYouSoldTitle;
+    private TextView tvNotificationsTitle;
     private ProgressBar pb;
     private Button btnEditVenmo;
     private EditText etVenmo;
@@ -90,6 +91,7 @@ public class ProfileFragment extends Fragment {
         tvYouBoughtTitle = view.findViewById(R.id.tvYouBoughtTitle);
         tvYouSellingTitle = view.findViewById(R.id.tvYouSellingTitle);
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
+        tvNotificationsTitle = view.findViewById(R.id.tvNotificationsTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
         btnEditVenmo = view.findViewById(R.id.btnEditVenmo);
         etVenmo = view.findViewById(R.id.etVenmo);
@@ -208,6 +210,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 queryPosts(KEY_SOLD);
+            }
+        });
+
+        tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "notification button clicked");
             }
         });
 

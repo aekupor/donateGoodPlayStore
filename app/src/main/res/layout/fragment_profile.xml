@@ -103,6 +103,13 @@
             android:layout_weight="1"
             android:text="Selling"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNotificationsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Notifications" />
     </LinearLayout>
 
     <View
