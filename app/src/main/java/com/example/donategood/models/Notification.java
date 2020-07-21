@@ -12,6 +12,7 @@ public class Notification extends ParseObject {
     public static final String KEY_APPROVED = "approved";
     public static final String KEY_SELLING_USER = "sellingUser";
     public static final String KEY_USER_ACTED = "userActed";
+    public static final String KEY_USER_SEEN = "userHasSeen";
 
     public ParseUser getKeyUser() {
         return getParseUser(KEY_USER);
@@ -51,5 +52,13 @@ public class Notification extends ParseObject {
 
     public void setUserActed(Boolean choosen) {
         put(KEY_USER_ACTED, choosen);
+    }
+
+    public Boolean getUserSeen() {
+        return getBoolean(KEY_USER_SEEN);
+    }
+
+    public void setUserSeen(Boolean seen) {
+        put(KEY_USER_SEEN, seen);
     }
 }

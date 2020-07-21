@@ -107,6 +107,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                         notification.setKeyApproved(false);
                         notification.setUserActed(true);
+                        notification.setUserSeen(false);
                         notification.saveInBackground();
 
                         Offering offering = notification.getKeyOffering();
