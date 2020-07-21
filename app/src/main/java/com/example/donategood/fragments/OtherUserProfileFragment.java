@@ -1,6 +1,8 @@
 package com.example.donategood.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
@@ -150,6 +153,19 @@ public class OtherUserProfileFragment extends Fragment {
                 queryPosts(KEY_BOUGHT);
 
                 query.queryMoneyRaised(user, tvMoneyRaised);
+            }
+        });
+
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnChat clicked");
+                if (user.get("fbMessenger") == null) {
+                    Toast.makeText(getContext(), "User does not have FB messenger set up", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.me/" + user.get("fbMessenger").toString()));
+                    startActivity(implicit);
+                }
             }
         });
     }
