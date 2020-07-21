@@ -83,13 +83,33 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         Notification notification = notifications.get(position);
-                        Log.i(TAG, "notification clicked for offering: " + notification.getKeyOffering().getTitle());
+                        Log.i(TAG, "approve notification clicked for offering: " + notification.getKeyOffering().getTitle());
 
                         notification.setKeyApproved(true);
                         notification.saveInBackground();
 
                         btnApprove.setVisibility(View.INVISIBLE);
+                        btnDeny.setVisibility(View.INVISIBLE);
                         tvNotification.setText(notification.getKeyUser().getUsername() + " is approved to buy "
+                                + notification.getKeyOffering().getTitle() + "!");
+                    }
+                }
+            });
+
+            btnDeny.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Notification notification = notifications.get(position);
+                        Log.i(TAG, "deny notification clicked for offering: " + notification.getKeyOffering().getTitle());
+
+                        notification.setKeyApproved(false);
+                        notification.saveInBackground();
+
+                        btnApprove.setVisibility(View.INVISIBLE);
+                        btnDeny.setVisibility(View.INVISIBLE);
+                        tvNotification.setText(notification.getKeyUser().getUsername() + " has been denied to buy "
                                 + notification.getKeyOffering().getTitle() + "!");
                     }
                 }
