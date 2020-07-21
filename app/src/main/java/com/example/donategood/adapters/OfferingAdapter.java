@@ -95,6 +95,11 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
+            if (offering.getRating() == 0) {
+                ratingBar.setVisibility(View.INVISIBLE);
+            } else {
+                ratingBar.setNumStars(offering.getRating());
+            }
         }
 
         public void onClick(View v) {
