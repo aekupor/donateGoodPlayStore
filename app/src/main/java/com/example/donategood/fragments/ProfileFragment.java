@@ -203,6 +203,10 @@ public class ProfileFragment extends Fragment {
     }
 
     protected void queryPosts(final String queryType) {
+        rvBoughtItems.setVisibility(View.VISIBLE);
+        rvNotifications.setVisibility(View.INVISIBLE);
+        notificationAdapter.clear();
+
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
         query.queryPosts(ParseUser.getCurrentUser(), queryType, adapter, selectedOfferings, pb);
