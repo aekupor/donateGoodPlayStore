@@ -29,6 +29,7 @@ public class NewCharityFragment extends Fragment {
 
     private EditText etCharityName;
     private EditText etCharityWebsite;
+    private EditText etCharityGrouping;
     private Button btnCharityPhoto;
     private Button btnSubmit;
 
@@ -55,6 +56,7 @@ public class NewCharityFragment extends Fragment {
 
         etCharityName = view.findViewById(R.id.etCharityName);
         etCharityWebsite = view.findViewById(R.id.etCharityWebsite);
+        etCharityGrouping = view.findViewById(R.id.etCharityGrouping);
         btnCharityPhoto = view.findViewById(R.id.btnCharityUploadPhoto);
         btnSubmit = view.findViewById(R.id.btnNewCharitySubmit);
 
@@ -76,6 +78,7 @@ public class NewCharityFragment extends Fragment {
                 Charity charity = new Charity();
                 charity.setTitle(etCharityName.getText().toString());
                 charity.setWebsite(etCharityWebsite.getText().toString());
+                charity.setGrouping(etCharityGrouping.getText().toString());
                 charity.setImage((new ParseFile(camera.getPhotoFile())));
                 charity.saveInBackground(new SaveCallback() {
                     @Override

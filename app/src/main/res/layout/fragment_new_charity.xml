@@ -18,6 +18,12 @@
         android:layout_height="wrap_content"
         android:hint="charity website" />
 
+    <EditText
+        android:id="@+id/etCharityGrouping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="charity grouping" />
+
     <Button
         android:id="@+id/btnCharityUploadPhoto"
         android:layout_width="wrap_content"
