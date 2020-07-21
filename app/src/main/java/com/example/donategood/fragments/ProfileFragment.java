@@ -26,10 +26,13 @@ import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
@@ -217,7 +220,16 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "notification button clicked");
-                //TODO: query notifications
+                query.queryNotifications(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
+                    @Override
+                    public void done(List<Notification> objects, ParseException e) {
+                        if (e != null) {
+                            return;
+                        }
+
+                        
+                    }
+                });
             }
         });
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
+import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -207,5 +208,14 @@ public class Query {
                 tvMoneyRaised.setText("$" + totalMoney.toString());
             }
         });
+    }
+
+    public void queryNotifications(ParseUser user, FindCallback<Notification> callback) {
+        ParseQuery<Notification> query = ParseQuery.getQuery(Notification.class);
+        query.whereEqualTo("approved", false);
+        query.whereEqualTo("sellingUser", user);
+        query.include("byUser");
+        query.include("forOffering");
+        query.findInBackground(callback);
     }
 }
