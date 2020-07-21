@@ -226,7 +226,7 @@ public class ProfileFragment extends Fragment {
         tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
         tvYouBoughtTitle.setTypeface(null, Typeface.NORMAL);
 
-        query.queryNotifications(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
+        query.queryNotificationsForSeller(new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
                 if (e != null) {
@@ -247,6 +247,21 @@ public class ProfileFragment extends Fragment {
                     rvBoughtItems.setVisibility(View.INVISIBLE);
                     rvNotifications.setVisibility(View.VISIBLE);
                     notificationAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
+            @Override
+            public void done(List<Notification> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                adapter.clear();
+                notifications.clear();
+
+                if (objects != null) {
+                    
                 }
             }
         });
