@@ -103,7 +103,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecommendOfferings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:layout_below="@+id/tvRecommendOfferingsTitle"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="4dp" />
