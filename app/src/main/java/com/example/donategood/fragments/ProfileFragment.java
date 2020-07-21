@@ -120,7 +120,7 @@ public class ProfileFragment extends Fragment {
         notifications = new ArrayList<>();
         notificationAdapter = new NotificationAdapter(getContext(), notifications);
 
-        rvNotifications.setAdapter(adapter);
+        rvNotifications.setAdapter(notificationAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         rvNotifications.setLayoutManager(linearLayoutManager2);
 
@@ -241,8 +241,11 @@ public class ProfileFragment extends Fragment {
                         if (e != null) {
                             return;
                         }
+                        adapter.clear();
+                        notifications.clear();
 
                         if (objects != null) {
+
                             for (Notification notification : objects) {
                                 if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                                     //notification is for current user to approve
@@ -250,6 +253,10 @@ public class ProfileFragment extends Fragment {
                                     notifications.add(notification);
                                 }
                             }
+
+                            rvBoughtItems.setVisibility(View.INVISIBLE);
+                            rvNotifications.setVisibility(View.VISIBLE);
+                            notificationAdapter.notifyDataSetChanged();
                         }
                     }
                 });

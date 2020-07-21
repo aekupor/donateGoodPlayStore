@@ -18,7 +18,7 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
-    public static final String TAG = "CommentAdapter";
+    public static final String TAG = "NotificationAdapter";
 
     private Context context;
     private List<Notification> notifications;
