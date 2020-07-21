@@ -33,6 +33,7 @@ import com.example.donategood.R;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
+import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
@@ -286,8 +287,11 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     private void setShareButton() {
         content = new ShareLinkContent.Builder()
-                //TODO: make this work with multiple images
-                //.setContentUrl(Uri.parse(offering.getImage().getUrl()))
+                .setContentUrl(Uri.parse(offering.getImage().getUrl()))
+                .setQuote("Check out this " + offering.getTitle() + " that I am purchasing on Donate Good!")
+                .setShareHashtag(new ShareHashtag.Builder()
+                        .setHashtag("#DonateGood")
+                        .build())
                 .build();
 
         shareButton.setShareContent(content);
