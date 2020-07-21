@@ -9,15 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
-import com.example.donategood.fragments.DetailFragment;
 import com.example.donategood.models.Notification;
-import com.example.donategood.models.Offering;
 
 import java.util.List;
 
@@ -62,7 +57,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvNotification;
         private Button btnApprove;
@@ -72,22 +67,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             tvNotification = itemView.findViewById(R.id.tvNotificationText);
             btnApprove = itemView.findViewById(R.id.btnApproveNotification);
-
-            itemView.setOnClickListener(this);
         }
 
         public void bind(Notification notification) {
             tvNotification.setText("Did " + notification.getKeyUser().getUsername() + " pay you "
                     + notification.getKeyOffering().getPrice().toString() + " for your "
                     + notification.getKeyOffering().getTitle() + " ?");
-        }
 
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Notification notification = notifications.get(position);
-                Log.i(TAG, "notification clicked for offering: " + notification.getKeyOffering().getTitle());
-            }
+            btnApprove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Notification notification = notifications.get(position);
+                        Log.i(TAG, "notification clicked for offering: " + notification.getKeyOffering().getTitle());
+                    }
+                }
+            });
         }
     }
 }
