@@ -26,7 +26,14 @@ public class Notification extends ParseObject {
 
     public void setKeyOffering(Offering offering) {
         put(KEY_OFFERING, offering);
-        put(KEY_SELLING_USER, offering.getUser());
+    }
+
+    public ParseUser getSellingUser() {
+        return getParseUser(KEY_SELLING_USER);
+    }
+
+    public void setSellingUser(ParseUser user) {
+        put(KEY_SELLING_USER, user);
     }
 
     public Boolean getKeyApproved() {

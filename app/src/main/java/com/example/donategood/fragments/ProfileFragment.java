@@ -227,7 +227,14 @@ public class ProfileFragment extends Fragment {
                             return;
                         }
 
-                        
+                        if (objects != null) {
+                            for (Notification notification : objects) {
+                                if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                                    //notification is for current user to approve
+                                    Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
+                                }
+                            }
+                        }
                     }
                 });
             }
