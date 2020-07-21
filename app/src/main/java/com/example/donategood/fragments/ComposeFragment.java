@@ -55,6 +55,7 @@ public class ComposeFragment extends Fragment {
     private ProgressBar pb;
     private EditText etQuantity;
     private Button btnTakeMultiple;
+    private EditText etVenmo;
 
     private String title;
     private String price;
@@ -86,6 +87,9 @@ public class ComposeFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
         etQuantity = view.findViewById(R.id.etQuantity);
         btnTakeMultiple = view.findViewById(R.id.btnTakeMultiple);
+        etVenmo = view.findViewById(R.id.etVenmoCompose);
+
+        etVenmo.setVisibility(View.INVISIBLE);
 
         query = new Query();
         camera = new Camera();

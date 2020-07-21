@@ -91,6 +91,16 @@
         android:layout_toEndOf="@+id/btnTakePhoto"
         android:text="Take Multiple" />
 
+    <EditText
+        android:id="@+id/etVenmoCompose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTags"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/btnSubmit"
+        android:hint="You must add your venmo username" />
+
 </RelativeLayout>
 
 
