@@ -10,12 +10,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.donategood.R;
+import com.parse.ParseFile;
 
 public class NewCharityFragment extends Fragment {
 
     public static final String TAG = "NewCharityFragment";
+
+    private EditText etCharityName;
+    private EditText etCharityWebsite;
+    private Button btnCharityPhoto;
+    private Button btnSubmit;
 
     public NewCharityFragment() {
         // Required empty public constructor
@@ -35,6 +43,25 @@ public class NewCharityFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated");
+
+        etCharityName = view.findViewById(R.id.etCharityName);
+        etCharityWebsite = view.findViewById(R.id.etCharityWebsite);
+        btnCharityPhoto = view.findViewById(R.id.btnCharityUploadPhoto);
+        btnSubmit = view.findViewById(R.id.btnNewCharitySubmit);
+
+        btnCharityPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnCharityPhoto clicked");
+                
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnSubmit clicked");
+            }
+        });
     }
 }
