@@ -27,6 +27,7 @@ public class Camera {
     public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE = 30;
     public static final Integer UPLOAD_PHOTO_CODE_PROFILE = 40;
     public static final Integer PICK_MULTIPLE_PHOTO_CODE = 50;
+    public static final Integer UPLOAD_PHOTO_CHARITY = 60;
 
     public File photoFile;
     private ArrayList<File> mainPhotoFileArray;
@@ -126,7 +127,7 @@ public class Camera {
         ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_MULTIPLE_PHOTO_CODE);
     }
 
-    public void pickPhoto(Context context, Boolean profile) {
+    public void pickPhoto(Context context, Boolean profile, Boolean charity) {
         mainContext = context;
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -135,6 +136,8 @@ public class Camera {
             // Bring up gallery to select a photo
             if (profile) {
                 ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CODE_PROFILE);
+            } else if (charity) {
+                ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CHARITY);
             } else {
                 ((Activity) context).startActivityForResult(intent, UPLOAD_PHOTO_CODE);
             }

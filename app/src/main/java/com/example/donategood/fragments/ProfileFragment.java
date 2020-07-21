@@ -159,7 +159,7 @@ public class ProfileFragment extends Fragment {
         btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                camera.pickPhoto(getContext(), true);
+                camera.pickPhoto(getContext(), true, false);
             }
         });
 

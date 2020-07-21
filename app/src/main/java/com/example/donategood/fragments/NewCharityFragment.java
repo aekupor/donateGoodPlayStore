@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.donategood.R;
+import com.example.donategood.helperClasses.Camera;
 import com.parse.ParseFile;
 
 public class NewCharityFragment extends Fragment {
@@ -24,6 +25,9 @@ public class NewCharityFragment extends Fragment {
     private EditText etCharityWebsite;
     private Button btnCharityPhoto;
     private Button btnSubmit;
+
+    private static Camera camera;
+    private ParseFile image;
 
     public NewCharityFragment() {
         // Required empty public constructor
@@ -49,11 +53,13 @@ public class NewCharityFragment extends Fragment {
         btnCharityPhoto = view.findViewById(R.id.btnCharityUploadPhoto);
         btnSubmit = view.findViewById(R.id.btnNewCharitySubmit);
 
+        camera = new Camera();
+
         btnCharityPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnCharityPhoto clicked");
-                
+                camera.pickPhoto(getContext(), false, true);
             }
         });
 
@@ -61,7 +67,13 @@ public class NewCharityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnSubmit clicked");
+                image = (new ParseFile(camera.getPhotoFile()));
+                Log.i(TAG, "image: " + image);
             }
         });
+    }
+
+    public static Camera getCamera() {
+        return camera;
     }
 }

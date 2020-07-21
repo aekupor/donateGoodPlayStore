@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.donategood.fragments.ComposeFragment;
 import com.example.donategood.fragments.HomeFragment;
+import com.example.donategood.fragments.NewCharityFragment;
 import com.example.donategood.fragments.ProfileFragment;
 import com.example.donategood.fragments.SearchFragment;
 import com.example.donategood.helperClasses.Camera;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static final Integer CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE = 30;
     public static final Integer UPLOAD_PHOTO_CODE_PROFILE = 40;
     public static final Integer PICK_MULTIPLE_PHOTO_CODE = 50;
+    public static final Integer UPLOAD_PHOTO_CHARITY = 60;
 
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -131,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
                     image = camera.loadFromUri(photoUri, mainContext);
                     photoFile = camera.createFile(mainContext, image);
                     camera.setPhotoFile(photoFile);
+
+                    if (requestCode == UPLOAD_PHOTO_CHARITY) {
+                        return;
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Issue with picture!", Toast.LENGTH_SHORT).show();
                     return;
@@ -148,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Boolean isPhoto(int requestCode) {
-        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == PICK_MULTIPLE_PHOTO_CODE) {
+        if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == PICK_MULTIPLE_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CHARITY) {
             return true;
         }
         return false;
@@ -162,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Boolean isUploadPhoto(Intent data, int requestCode) {
-        if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE)) {
+        if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CHARITY)) {
             return true;
         }
         return false;
@@ -179,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
         if (isProfile(requestCode)) {
             ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
             camera = ProfileFragment.getCamera();
+        } else if (requestCode == UPLOAD_PHOTO_CHARITY) {
+            camera = NewCharityFragment.getCamera();
         } else {
             ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
             camera = ComposeFragment.getCamera();

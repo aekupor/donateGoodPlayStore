@@ -113,7 +113,7 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnUploadPhoto onClick");
-                camera.pickPhoto(getContext(), false);
+                camera.pickPhoto(getContext(), false, false);
             }
         });
 
@@ -235,7 +235,10 @@ public class ComposeFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                         charity = (String) adapterView.getItemAtPosition(pos);
                         if (charity.equals(KEY_NEW_CHARITY)) {
-                            //TODO: create new charity
+                            //go to new charity fragment
+                            final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                            Fragment fragment = new NewCharityFragment();
+                            fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                         }
                         Log.i(TAG, "onItemSelected with charity: " + charity);
                     }
