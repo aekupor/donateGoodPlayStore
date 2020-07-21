@@ -86,6 +86,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         Log.i(TAG, "approve notification clicked for offering: " + notification.getKeyOffering().getTitle());
 
                         notification.setKeyApproved(true);
+                        notification.setUserActed(true);
                         notification.saveInBackground();
 
                         btnApprove.setVisibility(View.INVISIBLE);
@@ -105,6 +106,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         Log.i(TAG, "deny notification clicked for offering: " + notification.getKeyOffering().getTitle());
 
                         notification.setKeyApproved(false);
+                        notification.setUserActed(true);
                         notification.saveInBackground();
 
                         btnApprove.setVisibility(View.INVISIBLE);
