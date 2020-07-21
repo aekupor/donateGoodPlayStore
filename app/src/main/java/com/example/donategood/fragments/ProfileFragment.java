@@ -1,6 +1,7 @@
 package com.example.donategood.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -206,6 +207,7 @@ public class ProfileFragment extends Fragment {
         rvBoughtItems.setVisibility(View.VISIBLE);
         rvNotifications.setVisibility(View.INVISIBLE);
         notificationAdapter.clear();
+        tvNotificationsTitle.setTypeface(null, Typeface.NORMAL);
 
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
@@ -218,6 +220,12 @@ public class ProfileFragment extends Fragment {
 
     public void getNotifications() {
         Log.i(TAG, "notification button clicked");
+
+        tvNotificationsTitle.setTypeface(null, Typeface.BOLD);
+        tvYouSoldTitle.setTypeface(null, Typeface.NORMAL);
+        tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
+        tvYouBoughtTitle.setTypeface(null, Typeface.NORMAL);
+
         query.queryNotifications(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
