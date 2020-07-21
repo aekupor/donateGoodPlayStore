@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.FBQuery;
@@ -70,6 +71,10 @@ public class ProfileFragment extends Fragment {
     private List<Offering> selectedOfferings;
     private Query query;
 
+    private List<Notification> notifications;
+    private RecyclerView rvNotifications;
+    private NotificationAdapter notificationAdapter;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -91,6 +96,7 @@ public class ProfileFragment extends Fragment {
         btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
         tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
         rvBoughtItems = view.findViewById(R.id.rvBoughtItems);
+        rvNotifications = view.findViewById(R.id.rvNotifications);
         tvYouBoughtTitle = view.findViewById(R.id.tvYouBoughtTitle);
         tvYouSellingTitle = view.findViewById(R.id.tvYouSellingTitle);
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
@@ -102,12 +108,21 @@ public class ProfileFragment extends Fragment {
         etVenmo.setVisibility(View.INVISIBLE);
 
         query = new Query();
+
+        //set up adapters and recycler views
         selectedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), selectedOfferings);
 
         rvBoughtItems.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvBoughtItems.setLayoutManager(linearLayoutManager);
+
+        notifications = new ArrayList<>();
+        notificationAdapter = new NotificationAdapter(getContext(), notifications);
+
+        rvNotifications.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        rvNotifications.setLayoutManager(linearLayoutManager2);
 
         loadPost = new LoadPost();
         camera = new Camera();
@@ -232,6 +247,7 @@ public class ProfileFragment extends Fragment {
                                 if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                                     //notification is for current user to approve
                                     Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
+                                    notifications.add(notification);
                                 }
                             }
                         }
