@@ -84,7 +84,8 @@
         android:id="@+id/buttonLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnProfileUploadPhoto"
+        android:layout_below="@+id/etVenmo"
+        android:layout_marginTop="3dp"
         android:orientation="horizontal">
 
         <TextView
@@ -135,9 +136,9 @@
         android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonLinear"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="4dp"
+        android:layout_below="@+id/btnLogout"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/btnProfileUploadPhoto"
         android:visibility="invisible" />
 
@@ -145,19 +146,20 @@
         android:id="@+id/btnEditVenmo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_toStartOf="@+id/btnLogout"
+        android:layout_below="@+id/btnProfileTakePhoto"
+        android:layout_marginTop="4dp"
         android:text="Edit Venmo" />
 
     <EditText
         android:id="@+id/etVenmo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnEditVenmo"
-        android:layout_marginStart="10dp"
+        android:layout_below="@+id/btnProfileTakePhoto"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/btnProfileUploadPhoto"
-        android:hint="edit venmo name" />
+        android:layout_toEndOf="@+id/btnEtFBMessenger"
+        android:hint="edit name" />
 
     <LinearLayout
         android:id="@+id/layoutNotification"
@@ -178,5 +180,15 @@
         android:layout_marginTop="4dp"
         android:text="Pending Notifications:"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnEtFBMessenger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnProfileUploadPhoto"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/btnEditVenmo"
+        android:text="Edit FB Messenger" />
 
 </RelativeLayout>
