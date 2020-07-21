@@ -112,6 +112,8 @@ public class ProfileFragment extends Fragment {
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
 
         etVenmo.setVisibility(View.INVISIBLE);
+        tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
+        pendingNotifications.setVisibility(View.INVISIBLE);
 
         query = new Query();
 
@@ -213,6 +215,8 @@ public class ProfileFragment extends Fragment {
         rvNotifications.setVisibility(View.INVISIBLE);
         notificationAdapter.clear();
         tvNotificationsTitle.setTypeface(null, Typeface.NORMAL);
+        tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
+        pendingNotifications.setVisibility(View.INVISIBLE);
 
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
@@ -235,6 +239,9 @@ public class ProfileFragment extends Fragment {
         notifications.clear();
         rvBoughtItems.setVisibility(View.INVISIBLE);
         rvNotifications.setVisibility(View.VISIBLE);
+        tvPendingNotificationsTitle.setVisibility(View.VISIBLE);
+        pendingNotifications.setVisibility(View.VISIBLE);
+        pendingNotifications.removeAllViews();
 
         query.queryNotificationsForSeller(new FindCallback<Notification>() {
             @Override
@@ -256,7 +263,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //TODO: DISPLAY THESE DIFFERENTLY (WITHOUT BUTTONS AND AS A BUYER VIEW)
         query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
