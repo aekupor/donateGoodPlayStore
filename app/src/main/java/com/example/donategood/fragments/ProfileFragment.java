@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -66,6 +67,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar pb;
     private Button btnEditVenmo;
     private EditText etVenmo;
+    private TextView tvPendingNotificationsTitle;
 
     private RecyclerView rvBoughtItems;
     private SmallOfferingAdapter adapter;
@@ -75,6 +77,7 @@ public class ProfileFragment extends Fragment {
     private List<Notification> notifications;
     private RecyclerView rvNotifications;
     private NotificationAdapter notificationAdapter;
+    private LinearLayout pendingNotifications;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -105,6 +108,8 @@ public class ProfileFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
         btnEditVenmo = view.findViewById(R.id.btnEditVenmo);
         etVenmo = view.findViewById(R.id.etVenmo);
+        pendingNotifications = view.findViewById(R.id.layoutNotification);
+        tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
 
         etVenmo.setVisibility(View.INVISIBLE);
 
@@ -251,6 +256,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //TODO: DISPLAY THESE DIFFERENTLY (WITHOUT BUTTONS AND AS A BUYER VIEW)
         query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
@@ -261,9 +267,11 @@ public class ProfileFragment extends Fragment {
                 if (objects != null) {
                     for (Notification notification : objects) {
                         Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
-                        notifications.add(notification);
+
+                        TextView textView = new TextView(getContext());
+                        textView.setText("offering 1");
+                        pendingNotifications.addView(textView);
                     }
-                    notificationAdapter.notifyDataSetChanged();
                 }
             }
         });
