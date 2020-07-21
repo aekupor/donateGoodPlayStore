@@ -156,8 +156,10 @@
 
     <HorizontalScrollView
         android:id="@+id/svImages"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:adjustViewBounds="true"
+        android:fillViewport="true"
+        android:layout_height="320dp"
         android:layout_below="@+id/tvQuantityLeft"
         android:layout_marginTop="4dp">
 

@@ -206,6 +206,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                                 .load(image.getUrl())
                                 .into(ivImage);
 
+                        ivImage.setAdjustViewBounds(true);
                         layoutImages.addView(into.getView());
                         Log.i(TAG, "adding view to layoutImages");
 
