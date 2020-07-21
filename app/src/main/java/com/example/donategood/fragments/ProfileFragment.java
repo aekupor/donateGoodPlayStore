@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvNotificationsTitle;
     private ProgressBar pb;
     private Button btnEditVenmo;
-    private EditText etVenmo;
+    private EditText etName;
     private TextView tvPendingNotificationsTitle;
     private Button btnEditFBMessenger;
 
@@ -108,12 +108,12 @@ public class ProfileFragment extends Fragment {
         tvNotificationsTitle = view.findViewById(R.id.tvNotificationsTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
         btnEditVenmo = view.findViewById(R.id.btnEditVenmo);
-        etVenmo = view.findViewById(R.id.etVenmo);
+        etName = view.findViewById(R.id.etVenmo);
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
         btnEditFBMessenger = view.findViewById(R.id.btnEtFBMessenger);
 
-        etVenmo.setVisibility(View.INVISIBLE);
+        etName.setVisibility(View.INVISIBLE);
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         pendingNotifications.setVisibility(View.INVISIBLE);
 
@@ -158,13 +158,13 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "edit venmo page clicked");
 
-                if (etVenmo.getVisibility() == View.INVISIBLE) {
-                    etVenmo.setVisibility(View.VISIBLE);
+                if (etName.getVisibility() == View.INVISIBLE) {
+                    etName.setVisibility(View.VISIBLE);
                     btnEditVenmo.setText("Submit Venmo");
                 } else {
                     btnEditVenmo.setText("Edit Venmo");
-                    etVenmo.setVisibility(View.INVISIBLE);
-                    ParseUser.getCurrentUser().put("venmoName", etVenmo.getText().toString());
+                    etName.setVisibility(View.INVISIBLE);
+                    ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
                     ParseUser.getCurrentUser().saveInBackground();
                 }
             }
@@ -175,13 +175,13 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "edit FB messenger button clicked");
 
-                if (etVenmo.getVisibility() == View.INVISIBLE) {
-                    etVenmo.setVisibility(View.VISIBLE);
+                if (etName.getVisibility() == View.INVISIBLE) {
+                    etName.setVisibility(View.VISIBLE);
                     btnEditFBMessenger.setText("Submit FB Messenger");
                 } else {
                     btnEditFBMessenger.setText("Edit FB Messenger");
-                    etVenmo.setVisibility(View.INVISIBLE);
-                    ParseUser.getCurrentUser().put("fbMessenger", etVenmo.getText().toString());
+                    etName.setVisibility(View.INVISIBLE);
+                    ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
                     ParseUser.getCurrentUser().saveInBackground();
                 }
             }
