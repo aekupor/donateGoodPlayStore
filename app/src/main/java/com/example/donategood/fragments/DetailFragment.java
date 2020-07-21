@@ -32,6 +32,7 @@ import com.example.donategood.helperClasses.Query;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
+import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
@@ -338,8 +339,16 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         offering.addToBoughtByArray(ParseUser.getCurrentUser());
         offering.setQuantityLeft(quantityLeft);
         offering.saveInBackground();
+
         Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
         tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
+
+        Notification notification = new Notification();
+        notification.setUserActed(false);
+        notification.setKeyOffering(offering);
+        notification.setKeyUser(ParseUser.getCurrentUser());
+        notification.setSellingUser(offering.getUser());
+        notification.saveInBackground();
     }
 
     @Override
