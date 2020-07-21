@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
+import com.example.donategood.models.Charity;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.SaveCallback;
 
 public class NewCharityFragment extends Fragment {
 
@@ -27,7 +33,6 @@ public class NewCharityFragment extends Fragment {
     private Button btnSubmit;
 
     private static Camera camera;
-    private ParseFile image;
 
     public NewCharityFragment() {
         // Required empty public constructor
@@ -67,8 +72,26 @@ public class NewCharityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnSubmit clicked");
-                image = (new ParseFile(camera.getPhotoFile()));
-                Log.i(TAG, "image: " + image);
+
+                Charity charity = new Charity();
+                charity.setTitle(etCharityName.getText().toString());
+                charity.setWebsite(etCharityWebsite.getText().toString());
+                charity.setImage((new ParseFile(camera.getPhotoFile())));
+                charity.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving", e);
+                            Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.i(TAG, "Charity save was successful!");
+
+                        //go back to detail fragment
+                        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                        Fragment fragment = new ComposeFragment();
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                    }
+                });
             }
         });
     }
