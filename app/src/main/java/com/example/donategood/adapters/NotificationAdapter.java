@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,7 +73,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         public void bind(Notification notification) {
             tvNotification.setText("Did " + notification.getKeyUser().getUsername() + " pay you "
                     + notification.getKeyOffering().getPrice().toString() + " for your "
-                    + notification.getKeyOffering().getTitle() + " ?");
+                    + notification.getKeyOffering().getTitle() + "?");
 
             btnApprove.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,6 +82,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     if (position != RecyclerView.NO_POSITION) {
                         Notification notification = notifications.get(position);
                         Log.i(TAG, "notification clicked for offering: " + notification.getKeyOffering().getTitle());
+
+                        notification.setKeyApproved(true);
+                        notification.saveInBackground();
+
+                        btnApprove.setVisibility(View.INVISIBLE);
+                        tvNotification.setText(notification.getKeyUser().getUsername() + " is approved to buy "
+                                + notification.getKeyOffering().getTitle() + "!");
                     }
                 }
             });
