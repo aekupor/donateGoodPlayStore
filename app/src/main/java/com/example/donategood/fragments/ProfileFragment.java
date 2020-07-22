@@ -385,5 +385,13 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     @Override
     public void onFinishEditDialog(String inputText) {
         Log.i(TAG, "change name to: " + inputText);
+
+        if (fbEdit) {
+            ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
+        } else {
+            ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
+        }
+        ParseUser.getCurrentUser().saveInBackground();
+        Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
     }
 }
