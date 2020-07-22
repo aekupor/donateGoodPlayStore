@@ -109,6 +109,7 @@ public class SearchFragment extends Fragment {
                     Toast.makeText(getContext(), "No posts were found", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                allOfferings.clear();
                 allOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
