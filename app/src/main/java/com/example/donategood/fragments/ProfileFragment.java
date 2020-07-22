@@ -119,6 +119,14 @@ public class ProfileFragment extends Fragment {
                 Log.i(TAG, "action_upload_photo clicked");
                 camera.pickPhoto(getContext(), true, false);
                 return true;
+            case R.id.action_messenger_name:
+                Log.i(TAG, "action_messenger_name clicked");
+                changeFBName();
+                return true;
+            case R.id.action_venmo_name:
+                Log.i(TAG, "action_venmo_name clicked");
+                changeVenmoName();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -194,32 +202,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "edit venmo page clicked");
 
-                if (etName.getVisibility() == View.INVISIBLE) {
-                    etName.setVisibility(View.VISIBLE);
-                    btnEditVenmo.setText("Submit Venmo");
-                } else {
-                    btnEditVenmo.setText("Edit Venmo");
-                    etName.setVisibility(View.INVISIBLE);
-                    ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
-                    ParseUser.getCurrentUser().saveInBackground();
-                }
+
             }
         });
 
         btnEditFBMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "edit FB messenger button clicked");
 
-                if (etName.getVisibility() == View.INVISIBLE) {
-                    etName.setVisibility(View.VISIBLE);
-                    btnEditFBMessenger.setText("Submit FB Messenger");
-                } else {
-                    btnEditFBMessenger.setText("Edit FB Messenger");
-                    etName.setVisibility(View.INVISIBLE);
-                    ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
-                    ParseUser.getCurrentUser().saveInBackground();
-                }
             }
         });
 
@@ -392,6 +382,30 @@ public class ProfileFragment extends Fragment {
         } else {
             //user is not logged in with FB
             loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
+        }
+    }
+
+    private void changeFBName() {
+        if (etName.getVisibility() == View.INVISIBLE) {
+            etName.setVisibility(View.VISIBLE);
+            btnEditFBMessenger.setText("Submit FB Messenger");
+        } else {
+            btnEditFBMessenger.setText("Edit FB Messenger");
+            etName.setVisibility(View.INVISIBLE);
+            ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
+            ParseUser.getCurrentUser().saveInBackground();
+        }
+    }
+
+    private void changeVenmoName() {
+        if (etName.getVisibility() == View.INVISIBLE) {
+            etName.setVisibility(View.VISIBLE);
+            btnEditVenmo.setText("Submit Venmo");
+        } else {
+            btnEditVenmo.setText("Edit Venmo");
+            etName.setVisibility(View.INVISIBLE);
+            ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
+            ParseUser.getCurrentUser().saveInBackground();
         }
     }
 }
