@@ -148,10 +148,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnComment"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/tvViewCommentsTitle"
-        tools:text="Average Rating: 4.3" />
+        tools:text="Average Rating:" />
 
     <HorizontalScrollView
         android:id="@+id/svImages"
@@ -172,6 +172,16 @@
         </LinearLayout>
 
     </HorizontalScrollView>
+
+    <RatingBar
+        android:id="@+id/rbDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnComment"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_toEndOf="@+id/tvAvgRating" />
 
 </RelativeLayout>
 </ScrollView>
