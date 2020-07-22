@@ -89,8 +89,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonLinearOther"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="21dp"
         android:layout_toEndOf="@+id/tvOtherUserMoneyRaised"
         android:visibility="invisible" />
 
@@ -103,4 +106,14 @@
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/tvOtherUserMoneyRaised"
         android:text="Chat" />
+
+    <RatingBar
+        android:id="@+id/rbOtherUserProfile"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOtherProfileProfileName"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tvOtherUserMoneyRaised" />
 </RelativeLayout>
