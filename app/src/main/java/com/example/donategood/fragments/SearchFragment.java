@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,6 +24,7 @@ import android.widget.Toast;
 import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -59,6 +64,8 @@ public class SearchFragment extends Fragment {
         rvOfferings = view.findViewById(R.id.rvSearchOfferings);
         spPrice = (Spinner) view.findViewById(R.id.spinnerPriceSearch);
 
+        setUpSpinner();
+
         query = new Query();
         allOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), allOfferings);
@@ -97,6 +104,31 @@ public class SearchFragment extends Fragment {
                 allOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
+        });
+    }
+
+    private void setUpSpinner() {
+        final List<String> priceRanges = new ArrayList<>();
+
+        // Create an ArrayAdapter for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, priceRanges);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spPrice.setAdapter(adapter);
+
+        spPrice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Log.i(TAG, "onItemSelected");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.i(TAG, "onNothingSelected");
+            }
+
         });
     }
 }
