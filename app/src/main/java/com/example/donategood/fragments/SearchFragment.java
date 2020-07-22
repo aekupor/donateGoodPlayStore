@@ -46,6 +46,7 @@ public class SearchFragment extends Fragment {
 
     private Integer minPrice;
     private Integer maxPrice;
+    private Integer minRating;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -82,6 +83,8 @@ public class SearchFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                minRating = Math.round(ratingBar.getRating());
+
                 String searchText = etSearchText.getText().toString();
                 if (searchText.isEmpty()) {
                     Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
@@ -109,7 +112,7 @@ public class SearchFragment extends Fragment {
                 allOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
-        }, minPrice, maxPrice);
+        }, minPrice, maxPrice, minRating);
     }
 
     private void setUpSpinner() {
