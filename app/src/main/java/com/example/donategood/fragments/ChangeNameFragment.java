@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.donategood.R;
+import com.parse.ParseUser;
 
 public class ChangeNameFragment extends DialogFragment {
 
@@ -48,6 +49,12 @@ public class ChangeNameFragment extends DialogFragment {
 
         etName = view.findViewById(R.id.etName);
         btnSubmit = view.findViewById(R.id.btnChangeNameSubmit);
+
+        if (fbEdit) {
+            etName.setText(ParseUser.getCurrentUser().get("fbMessenger").toString());
+        } else {
+            etName.setText(ParseUser.getCurrentUser().get("venmoName").toString());
+        }
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
