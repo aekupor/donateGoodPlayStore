@@ -98,6 +98,14 @@ public class Query {
         });
     }
 
+    public void querySellingAndSoldPostsByUser(ParseUser user, FindCallback<Offering> callback) {
+        ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.whereEqualTo("user", user);
+        query.include("rating");
+        query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
     public void queryPostsByCharity(Charity charity, Boolean bought, FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);

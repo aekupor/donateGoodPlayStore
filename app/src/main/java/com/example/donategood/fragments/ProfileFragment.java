@@ -230,6 +230,7 @@ public class ProfileFragment extends Fragment {
 
         queryPosts(KEY_BOUGHT);
         query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
+        queryRating();
     }
 
     protected void queryPosts(final String queryType) {
@@ -359,5 +360,20 @@ public class ProfileFragment extends Fragment {
             //user is not logged in with FB
             loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
         }
+    }
+
+    private void queryRating() {
+        query.querySellingAndSoldPostsByUser(ParseUser.getCurrentUser(), new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error in querySellingAndSoldPostsByUser");
+                    return;
+                }
+                for (Offering offering : objects) {
+                    
+                }
+            }
+        });
     }
 }
