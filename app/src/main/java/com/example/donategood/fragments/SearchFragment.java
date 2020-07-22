@@ -118,6 +118,7 @@ public class SearchFragment extends Fragment {
 
     private void setUpSpinner() {
         final List<String> priceRanges = new ArrayList<>();
+        priceRanges.add("All prices");
         priceRanges.add("0 - 15");
         priceRanges.add("15 - 30");
         priceRanges.add("30 - 50");
@@ -136,7 +137,10 @@ public class SearchFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 String price = (String) adapterView.getItemAtPosition(pos);
 
-                if (price != "50+") {
+                if (price.equals("All prices")) {
+                    minPrice = 0;
+                    maxPrice = Integer.MAX_VALUE;
+                } else if (!price.equals("50+")) {
                     String[] priceArray = price.split(" - ");
                     minPrice = Integer.parseInt(priceArray[0]);
                     maxPrice = Integer.parseInt(priceArray[1]);
