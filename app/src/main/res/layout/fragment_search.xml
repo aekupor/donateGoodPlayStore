@@ -17,7 +17,8 @@
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerPriceSearch"
+        android:layout_below="@+id/tvRatingTitle"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
         android:text="Search" />
 
@@ -50,8 +51,9 @@
         android:id="@+id/tvRatingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etSearchBar"
-        android:layout_marginStart="40dp"
+        android:layout_below="@+id/tvPriceTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/spinnerPriceSearch"
         android:text="Minimum Rating:" />
@@ -61,12 +63,12 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etSearchBar"
+        android:layout_below="@+id/tvPriceTitle"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/tvRatingTitle"
+        android:isIndicator="false"
         android:numStars="5"
-        android:rating="0.0"
-        android:stepSize="0.1" />
+        android:stepSize="0.5" />
 
 </RelativeLayout>

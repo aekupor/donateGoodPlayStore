@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class SearchFragment extends Fragment {
 
     private EditText etSearchText;
     private Spinner spPrice;
+    private RatingBar ratingBar;
     private Button btnSearch;
 
     private RecyclerView rvOfferings;
@@ -63,6 +65,9 @@ public class SearchFragment extends Fragment {
         btnSearch = view.findViewById(R.id.btnSearch);
         rvOfferings = view.findViewById(R.id.rvSearchOfferings);
         spPrice = (Spinner) view.findViewById(R.id.spinnerPriceSearch);
+        ratingBar = (RatingBar) view.findViewById(R.id.rbSearchRating);
+
+        ratingBar.setEnabled(true);
 
         setUpSpinner();
 
