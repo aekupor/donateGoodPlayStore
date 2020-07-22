@@ -64,12 +64,18 @@
         tools:layout_editor_absoluteY="328dp"
         tools:text="BLM" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPurchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivDetailCharityImage"
         android:layout_marginTop="15dp"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp"
+        app:strokeColor="@color/purple"
+        app:strokeWidth="2dp"
         android:text="Purchase" />
 
     <TextView
