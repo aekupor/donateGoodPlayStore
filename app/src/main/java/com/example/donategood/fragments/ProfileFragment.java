@@ -70,8 +70,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     private TextView tvYouSoldTitle;
     private TextView tvNotificationsTitle;
     private ProgressBar pb;
-    private Button btnSubmit;
-    private EditText etName;
     private TextView tvPendingNotificationsTitle;
     private RatingBar ratingBar;
     private Boolean fbEdit;
@@ -123,13 +121,11 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
             case R.id.action_messenger_name:
                 Log.i(TAG, "action_messenger_name clicked");
                 fbEdit = true;
-                //changeName();
                 showEditDialog();
                 return true;
             case R.id.action_venmo_name:
                 Log.i(TAG, "action_venmo_name clicked");
                 fbEdit = false;
-                //changeName();
                 showEditDialog();
                 return true;
             default:
@@ -152,35 +148,14 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
         tvNotificationsTitle = view.findViewById(R.id.tvNotificationsTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
-        etName = view.findViewById(R.id.etVenmo);
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
         ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
 
-        etName.setVisibility(View.INVISIBLE);
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         pendingNotifications.setVisibility(View.INVISIBLE);
 
         query = new Query();
-
-        btnSubmit.setVisibility(View.INVISIBLE);
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (fbEdit) {
-                    ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
-                } else {
-                    ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
-                }
-                ParseUser.getCurrentUser().saveInBackground();
-                btnSubmit.setVisibility(View.INVISIBLE);
-                etName.setText("");
-                etName.setVisibility(View.INVISIBLE);
-                Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         //set up adapters and recycler views
         selectedOfferings = new ArrayList<>();
@@ -361,16 +336,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         } else {
             //user is not logged in with FB
             loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
-        }
-    }
-
-    private void changeName() {
-        etName.setVisibility(View.VISIBLE);
-        btnSubmit.setVisibility(View.VISIBLE);
-        if (fbEdit) {
-            etName.setText(ParseUser.getCurrentUser().get("fbMessenger").toString());
-        } else {
-            etName.setText(ParseUser.getCurrentUser().get("venmoName").toString());
         }
     }
 
