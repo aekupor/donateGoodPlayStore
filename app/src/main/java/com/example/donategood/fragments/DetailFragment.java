@@ -69,7 +69,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Button btnComment;
     private TextView tvQuantityLeft;
     private TextView tvCommentTitle;
-    private TextView tvAvgRating;
     private LinearLayout layoutImages;
     private RatingBar ratingBar;
 
@@ -125,7 +124,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         btnComment = view.findViewById(R.id.btnComment);
         tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
         tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
-        tvAvgRating = view.findViewById(R.id.tvAvgRating);
         layoutImages = (LinearLayout) view.findViewById(R.id.linearImages);
         ratingBar = (RatingBar) view.findViewById(R.id.rbDetail);
 
