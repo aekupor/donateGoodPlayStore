@@ -124,10 +124,12 @@ public class Query {
         });
     }
 
-    public void search(String searchText, FindCallback<Offering> callback) {
+    public void search(String searchText, FindCallback<Offering> callback, Integer min, Integer max) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereContains("title", searchText);
         query.whereEqualTo("isBought", false);
+        query.whereGreaterThanOrEqualTo("price", min);
+        query.whereLessThanOrEqualTo("price", max);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }

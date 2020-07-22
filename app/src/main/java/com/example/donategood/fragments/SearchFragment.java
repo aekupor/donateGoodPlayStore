@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
                 allOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
-        });
+        }, 0, 9);
     }
 
     private void setUpSpinner() {
