@@ -70,6 +70,7 @@ public class ProfileFragment extends Fragment {
     private EditText etName;
     private TextView tvPendingNotificationsTitle;
     private RatingBar ratingBar;
+    private Boolean fbEdit;
 
     private RecyclerView rvBoughtItems;
     private SmallOfferingAdapter adapter;
@@ -117,11 +118,13 @@ public class ProfileFragment extends Fragment {
                 return true;
             case R.id.action_messenger_name:
                 Log.i(TAG, "action_messenger_name clicked");
-                changeFBName();
+                changeName();
+                fbEdit = true;
                 return true;
             case R.id.action_venmo_name:
                 Log.i(TAG, "action_venmo_name clicked");
-                changeVenmoName();
+                changeName();
+                fbEdit = false;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -154,6 +157,23 @@ public class ProfileFragment extends Fragment {
         pendingNotifications.setVisibility(View.INVISIBLE);
 
         query = new Query();
+
+        btnSubmit.setVisibility(View.INVISIBLE);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fbEdit) {
+                    ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
+                } else {
+                    ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
+                }
+                ParseUser.getCurrentUser().saveInBackground();
+                btnSubmit.setVisibility(View.INVISIBLE);
+                etName.setText("");
+                etName.setVisibility(View.INVISIBLE);
+            }
+        });
 
         //set up adapters and recycler views
         selectedOfferings = new ArrayList<>();
@@ -337,27 +357,8 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void changeFBName() {
-        if (etName.getVisibility() == View.INVISIBLE) {
-            etName.setVisibility(View.VISIBLE);
-            btnSubmit.setVisibility(View.VISIBLE);
-        } else {
-            btnSubmit.setVisibility(View.INVISIBLE);
-            etName.setVisibility(View.INVISIBLE);
-            ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
-            ParseUser.getCurrentUser().saveInBackground();
-        }
-    }
-
-    private void changeVenmoName() {
-        if (etName.getVisibility() == View.INVISIBLE) {
-            etName.setVisibility(View.VISIBLE);
-            btnSubmit.setVisibility(View.VISIBLE);
-        } else {
-            btnSubmit.setVisibility(View.INVISIBLE);
-            etName.setVisibility(View.INVISIBLE);
-            ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
-            ParseUser.getCurrentUser().saveInBackground();
-        }
+    private void changeName() {
+        etName.setVisibility(View.VISIBLE);
+        btnSubmit.setVisibility(View.VISIBLE);
     }
 }
