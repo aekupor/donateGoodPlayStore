@@ -191,4 +191,14 @@
         android:layout_toEndOf="@+id/btnEditVenmo"
         android:text="Edit FB Messenger" />
 
+    <RatingBar
+        android:id="@+id/rbProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_toEndOf="@+id/tvProfileMoneyRaised" />
+
 </RelativeLayout>

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.NotificationAdapter;
@@ -69,6 +70,7 @@ public class ProfileFragment extends Fragment {
     private EditText etName;
     private TextView tvPendingNotificationsTitle;
     private Button btnEditFBMessenger;
+    private RatingBar ratingBar;
 
     private RecyclerView rvBoughtItems;
     private SmallOfferingAdapter adapter;
@@ -112,6 +114,7 @@ public class ProfileFragment extends Fragment {
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
         btnEditFBMessenger = view.findViewById(R.id.btnEtFBMessenger);
+        ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
 
         etName.setVisibility(View.INVISIBLE);
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
