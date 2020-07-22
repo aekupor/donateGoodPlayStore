@@ -58,9 +58,6 @@ public class ProfileFragment extends Fragment {
     private LoadPost loadPost;
     private static Camera camera;
 
-    private Button btnLogout;
-    private Button btnTakePhoto;
-    private Button btnUploadPhoto;
     private TextView tvName;
     private ImageView ivProfileImage;
     private TextView tvMoneyRaised;
@@ -137,11 +134,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        btnLogout = view.findViewById(R.id.btnLogout);
         tvName = view.findViewById(R.id.tvProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
-        btnTakePhoto = view.findViewById(R.id.btnProfileTakePhoto);
-        btnUploadPhoto = view.findViewById(R.id.btnProfileUploadPhoto);
         tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
         rvBoughtItems = view.findViewById(R.id.rvBoughtItems);
         rvNotifications = view.findViewById(R.id.rvNotifications);
@@ -182,46 +176,6 @@ public class ProfileFragment extends Fragment {
         camera = new Camera();
 
         checkFBLogin();
-
-        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                camera.launchCamera(getContext(), true);
-            }
-        });
-
-        btnUploadPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                camera.pickPhoto(getContext(), true, false);
-            }
-        });
-
-        btnEditVenmo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "edit venmo page clicked");
-
-
-            }
-        });
-
-        btnEditFBMessenger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "logout user");
-                ParseUser.logOut();
-                Intent i = new Intent(getContext(), LoginActivity.class);
-                startActivity(i);
-            }
-        });
 
         tvYouBoughtTitle.setOnClickListener(new View.OnClickListener() {
             @Override

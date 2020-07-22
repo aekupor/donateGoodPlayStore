@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="-1dp"
-        android:text="Logout" />
-
     <TextView
         android:id="@+id/tvProfileProfileName"
         android:layout_width="wrap_content"
@@ -29,24 +21,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/btnProfileTakePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfileProfileImage"
-        android:layout_marginTop="4dp"
-        android:text="Take Photo" />
-
-    <Button
-        android:id="@+id/btnProfileUploadPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfileProfileImage"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/btnProfileTakePhoto"
-        android:text="Upload Photo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBoughtItems"
@@ -136,17 +110,17 @@
         android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogout"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/btnProfileUploadPhoto"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:visibility="invisible" />
 
     <Button
         android:id="@+id/btnEditVenmo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileTakePhoto"
+        android:layout_below="@+id/ivProfileProfileImage"
         android:layout_marginTop="4dp"
         android:text="Edit Venmo" />
 
@@ -154,7 +128,7 @@
         android:id="@+id/etVenmo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileTakePhoto"
+        android:layout_below="@+id/ivProfileProfileImage"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
@@ -185,7 +159,7 @@
         android:id="@+id/btnEtFBMessenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnProfileUploadPhoto"
+        android:layout_below="@+id/ivProfileProfileImage"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/btnEditVenmo"
