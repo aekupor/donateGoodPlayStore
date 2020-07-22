@@ -81,6 +81,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
                     }
                     boughtList = boughtList + user.getUsername() + ", ";
                 }
+                boughtList = boughtList.substring(0, boughtList.length() - 2);
 
                 tvBoughtBy.setText(boughtList);
             } else {
