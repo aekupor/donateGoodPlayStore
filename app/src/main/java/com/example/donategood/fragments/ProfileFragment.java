@@ -376,7 +376,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
 
     private void showEditDialog() {
         FragmentManager fm = getFragmentManager();
-        ChangeNameFragment changeNameFragment = new ChangeNameFragment();
+        ChangeNameFragment changeNameFragment = (ChangeNameFragment) ChangeNameFragment.newInstance(fbEdit);
         // SETS the target fragment for use later when sending results
         changeNameFragment.setTargetFragment(ProfileFragment.this, 300);
         changeNameFragment.show(fm, "fragment_change_name");

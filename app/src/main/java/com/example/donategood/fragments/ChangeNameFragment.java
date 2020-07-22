@@ -18,6 +18,8 @@ public class ChangeNameFragment extends DialogFragment {
     private EditText etName;
     private Button btnSubmit;
 
+    private static Boolean fbEdit;
+
     public ChangeNameFragment() {
         // Empty constructor is required for DialogFragment
     }
@@ -25,6 +27,14 @@ public class ChangeNameFragment extends DialogFragment {
     // Defines the listener interface
     public interface ChangeNameDialogListener {
         void onFinishEditDialog(String inputText);
+    }
+
+    public static ChangeNameFragment newInstance(Boolean isFBEdit) {
+        ChangeNameFragment frag = new ChangeNameFragment();
+        Bundle args = new Bundle();
+        fbEdit = isFBEdit;
+        frag.setArguments(args);
+        return frag;
     }
 
     @Override
