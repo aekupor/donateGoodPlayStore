@@ -198,6 +198,7 @@
         android:layout_below="@+id/tvProfileProfileName"
         android:layout_marginStart="40dp"
         android:layout_marginTop="4dp"
+        android:theme="@style/RatingBar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_toEndOf="@+id/tvProfileMoneyRaised" />
 
