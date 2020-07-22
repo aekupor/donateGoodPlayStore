@@ -1,7 +1,9 @@
 package com.example.donategood.helperClasses;
 
 import android.graphics.Typeface;
+import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.donategood.adapters.SmallOfferingAdapter;
@@ -98,12 +100,33 @@ public class Query {
         });
     }
 
-    public void querySellingAndSoldPostsByUser(ParseUser user, FindCallback<Offering> callback) {
+    public void querySellingAndSoldPostsByUser(ParseUser user, final RatingBar ratingBar) {
+        final Integer[] totalRating = {0};
+        final Integer[] numPosts = {0};
+
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("user", user);
         query.include("rating");
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
-        query.findInBackground(callback);
+        query.findInBackground(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (Offering offering : objects) {
+                    if (offering.getRating() != 0) {
+                        totalRating[0] += offering.getRating();
+                        numPosts[0]++;
+                    }
+                }
+                if (numPosts[0] == 0) {
+                    ratingBar.setNumStars(0);
+                } else {
+                    ratingBar.setNumStars(totalRating[0] / numPosts[0]);
+                }
+            }
+        });
     }
 
     public void queryPostsByCharity(Charity charity, Boolean bought, FindCallback<Offering> callback) {
