@@ -68,9 +68,9 @@ public class Camera {
         return image;
     }
 
-    public File createFile(Context context, Bitmap selectedImage) {
+    public File createFile(Context context, Bitmap selectedImage, String filename) {
         //create a file to write bitmap data
-        File f = new File(context.getCacheDir(), "filename");
+        File f = new File(context.getCacheDir(), filename);
         try {
             f.createNewFile();
         } catch (IOException e) {

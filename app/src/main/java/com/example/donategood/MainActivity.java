@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
                         ClipData.Item item = mClipData.getItemAt(i);
                         Uri uri = item.getUri();
                         Bitmap bitmap = camera.loadFromUri(uri, mainContext);
-                        File photoFile = camera.createFile(mainContext, bitmap);
+                        File photoFile = camera.createFile(mainContext, bitmap, i+"");
                         photoFileArray.add(photoFile);
-                        ParseFile file = new ParseFile(photoFile);
-                        parseFileList.add(file);
+                        //ParseFile file = new ParseFile(photoFile);
+                        //parseFileList.add(file);
                         Log.i(TAG, "got photo number " + i);
                     }
                     camera.setPhotoFileArray(photoFileArray);
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (isUploadPhoto(data, requestCode)) {
                     Uri photoUri = data.getData();
                     image = camera.loadFromUri(photoUri, mainContext);
-                    photoFile = camera.createFile(mainContext, image);
+                    photoFile = camera.createFile(mainContext, image, "filename");
                     camera.setPhotoFile(photoFile);
 
                     if (requestCode == UPLOAD_PHOTO_CHARITY) {
