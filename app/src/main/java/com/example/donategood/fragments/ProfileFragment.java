@@ -107,9 +107,13 @@ public class ProfileFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_logout:
                 Log.i(TAG, "action_logout clicked");
+                ParseUser.logOut();
+                Intent i = new Intent(getContext(), LoginActivity.class);
+                startActivity(i);
                 return true;
             case R.id.action_take_photo:
                 Log.i(TAG, "action_take_photo clicked");
+                camera.launchCamera(getContext(), true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
