@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
@@ -118,13 +119,13 @@ public class ProfileFragment extends Fragment {
                 return true;
             case R.id.action_messenger_name:
                 Log.i(TAG, "action_messenger_name clicked");
-                changeName();
                 fbEdit = true;
+                changeName();
                 return true;
             case R.id.action_venmo_name:
                 Log.i(TAG, "action_venmo_name clicked");
-                changeName();
                 fbEdit = false;
+                changeName();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -172,6 +173,7 @@ public class ProfileFragment extends Fragment {
                 btnSubmit.setVisibility(View.INVISIBLE);
                 etName.setText("");
                 etName.setVisibility(View.INVISIBLE);
+                Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -360,5 +362,10 @@ public class ProfileFragment extends Fragment {
     private void changeName() {
         etName.setVisibility(View.VISIBLE);
         btnSubmit.setVisibility(View.VISIBLE);
+        if (fbEdit) {
+            etName.setText(ParseUser.getCurrentUser().get("fbMessenger").toString());
+        } else {
+            etName.setText(ParseUser.getCurrentUser().get("venmoName").toString());
+        }
     }
 }
