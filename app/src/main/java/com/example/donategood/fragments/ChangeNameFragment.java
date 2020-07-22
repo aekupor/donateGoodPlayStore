@@ -15,7 +15,7 @@ import com.example.donategood.R;
 
 public class ChangeNameFragment extends DialogFragment {
 
-    private EditText tvName;
+    private EditText etName;
     private Button btnSubmit;
 
     public ChangeNameFragment() {
@@ -35,6 +35,9 @@ public class ChangeNameFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        etName = view.findViewById(R.id.etName);
+        btnSubmit = view.findViewById(R.id.btnChangeNameSubmit);
 
     }
 
