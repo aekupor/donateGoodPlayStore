@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Comment;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.facebook.AccessToken;
@@ -42,6 +44,7 @@ import com.facebook.GraphResponse;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +52,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ChangeNameFragment.ChangeNameDialogListener {
 
     public static final String TAG = "ProfileFragment";
     public static final String KEY_BOUGHT = "bought";
@@ -120,12 +123,14 @@ public class ProfileFragment extends Fragment {
             case R.id.action_messenger_name:
                 Log.i(TAG, "action_messenger_name clicked");
                 fbEdit = true;
-                changeName();
+                //changeName();
+                showEditDialog();
                 return true;
             case R.id.action_venmo_name:
                 Log.i(TAG, "action_venmo_name clicked");
                 fbEdit = false;
-                changeName();
+                //changeName();
+                showEditDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -367,5 +372,18 @@ public class ProfileFragment extends Fragment {
         } else {
             etName.setText(ParseUser.getCurrentUser().get("venmoName").toString());
         }
+    }
+
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        ChangeNameFragment changeNameFragment = new ChangeNameFragment();
+        // SETS the target fragment for use later when sending results
+        changeNameFragment.setTargetFragment(ProfileFragment.this, 300);
+        changeNameFragment.show(fm, "fragment_change_name");
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Log.i(TAG, "change name to: " + inputText);
     }
 }
