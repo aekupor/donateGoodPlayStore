@@ -14,4 +14,9 @@
         <item name="background">@color/lightGreen</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/purple</item>
+        <item name="colorControlActivated">@color/purple</item>
+    </style>
+
 </resources>

@@ -192,6 +192,7 @@
         android:layout_below="@+id/btnComment"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+        android:theme="@style/RatingBar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_toEndOf="@+id/tvAvgRating" />
 
