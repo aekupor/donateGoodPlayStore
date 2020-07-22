@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.donategood.R;
@@ -31,6 +32,7 @@ public class SearchFragment extends Fragment {
     public static final String TAG = "SearchFragment";
 
     private EditText etSearchText;
+    private Spinner spPrice;
     private Button btnSearch;
 
     private RecyclerView rvOfferings;
@@ -55,6 +57,7 @@ public class SearchFragment extends Fragment {
         etSearchText = view.findViewById(R.id.etSearchBar);
         btnSearch = view.findViewById(R.id.btnSearch);
         rvOfferings = view.findViewById(R.id.rvSearchOfferings);
+        spPrice = (Spinner) view.findViewById(R.id.spinnerPriceSearch);
 
         query = new Query();
         allOfferings = new ArrayList<>();

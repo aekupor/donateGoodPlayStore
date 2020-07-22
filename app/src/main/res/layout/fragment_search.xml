@@ -11,15 +11,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
-        android:hint="what are you looking for?" />
+        android:hint="title" />
 
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etSearchBar"
+        android:layout_below="@+id/spinnerPriceSearch"
         android:layout_marginTop="4dp"
         android:text="Search" />
+
+    <Spinner
+        android:id="@+id/spinnerPriceSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tvPriceTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchOfferings"
@@ -28,5 +37,13 @@
         android:layout_below="@+id/btnSearch"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/tvPriceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_marginTop="4dp"
+        android:text="Price Range:" />
 
 </RelativeLayout>

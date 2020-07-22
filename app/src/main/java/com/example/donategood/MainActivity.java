@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
                         Bitmap bitmap = camera.loadFromUri(uri, mainContext);
                         File photoFile = camera.createFile(mainContext, bitmap, i+"");
                         photoFileArray.add(photoFile);
-                        //ParseFile file = new ParseFile(photoFile);
-                        //parseFileList.add(file);
+                        ParseFile file = new ParseFile(photoFile);
+                        parseFileList.add(file);
                         Log.i(TAG, "got photo number " + i);
                     }
                     camera.setPhotoFileArray(photoFileArray);
