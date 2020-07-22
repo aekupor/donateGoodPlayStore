@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +22,6 @@ import android.widget.Toast;
 import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Query;
-import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -44,6 +41,9 @@ public class SearchFragment extends Fragment {
     private SmallOfferingAdapter adapter;
     private List<Offering> allOfferings;
     private Query query;
+
+    private Integer minPrice;
+    private Integer maxPrice;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
                 allOfferings.addAll(offerings);
                 adapter.notifyDataSetChanged();
             }
-        }, 0, 9);
+        }, minPrice, maxPrice);
     }
 
     private void setUpSpinner() {
@@ -126,7 +126,16 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 String price = (String) adapterView.getItemAtPosition(pos);
-                Log.i(TAG, "onItemSelected: " + price);
+
+                if (price != "50+") {
+                    String[] priceArray = price.split(" - ");
+                    minPrice = Integer.parseInt(priceArray[0]);
+                    maxPrice = Integer.parseInt(priceArray[1]);
+                } else {
+                    minPrice = 50;
+                    maxPrice = Integer.MAX_VALUE;
+                }
+                Log.i(TAG, "price min: " + minPrice.toString() + " max: " + maxPrice.toString());
             }
 
             @Override
