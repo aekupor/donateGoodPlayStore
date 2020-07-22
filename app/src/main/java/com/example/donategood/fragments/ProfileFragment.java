@@ -105,7 +105,14 @@ public class ProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-
+            case R.id.action_logout:
+                Log.i(TAG, "action_logout clicked");
+                return true;
+            case R.id.action_take_photo:
+                Log.i(TAG, "action_take_photo clicked");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
