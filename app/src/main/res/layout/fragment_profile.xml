@@ -117,22 +117,21 @@
         android:visibility="invisible" />
 
     <Button
-        android:id="@+id/btnEditVenmo"
+        android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfileProfileImage"
-        android:layout_marginTop="4dp"
-        android:text="Edit Venmo" />
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/etVenmo"
+        android:text="Submit" />
 
     <EditText
         android:id="@+id/etVenmo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfileProfileImage"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/btnEtFBMessenger"
         android:hint="edit name" />
 
     <LinearLayout
@@ -154,16 +153,6 @@
         android:layout_marginTop="4dp"
         android:text="Pending Notifications:"
         android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnEtFBMessenger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfileProfileImage"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/btnEditVenmo"
-        android:text="Edit FB Messenger" />
 
     <RatingBar
         android:id="@+id/rbProfile"

@@ -66,10 +66,9 @@ public class ProfileFragment extends Fragment {
     private TextView tvYouSoldTitle;
     private TextView tvNotificationsTitle;
     private ProgressBar pb;
-    private Button btnEditVenmo;
+    private Button btnSubmit;
     private EditText etName;
     private TextView tvPendingNotificationsTitle;
-    private Button btnEditFBMessenger;
     private RatingBar ratingBar;
 
     private RecyclerView rvBoughtItems;
@@ -144,11 +143,10 @@ public class ProfileFragment extends Fragment {
         tvYouSoldTitle = view.findViewById(R.id.tvYouSoldTitle);
         tvNotificationsTitle = view.findViewById(R.id.tvNotificationsTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
-        btnEditVenmo = view.findViewById(R.id.btnEditVenmo);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
         etName = view.findViewById(R.id.etVenmo);
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
-        btnEditFBMessenger = view.findViewById(R.id.btnEtFBMessenger);
         ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
 
         etName.setVisibility(View.INVISIBLE);
@@ -342,9 +340,9 @@ public class ProfileFragment extends Fragment {
     private void changeFBName() {
         if (etName.getVisibility() == View.INVISIBLE) {
             etName.setVisibility(View.VISIBLE);
-            btnEditFBMessenger.setText("Submit FB Messenger");
+            btnSubmit.setVisibility(View.VISIBLE);
         } else {
-            btnEditFBMessenger.setText("Edit FB Messenger");
+            btnSubmit.setVisibility(View.INVISIBLE);
             etName.setVisibility(View.INVISIBLE);
             ParseUser.getCurrentUser().put("fbMessenger", etName.getText().toString());
             ParseUser.getCurrentUser().saveInBackground();
@@ -354,9 +352,9 @@ public class ProfileFragment extends Fragment {
     private void changeVenmoName() {
         if (etName.getVisibility() == View.INVISIBLE) {
             etName.setVisibility(View.VISIBLE);
-            btnEditVenmo.setText("Submit Venmo");
+            btnSubmit.setVisibility(View.VISIBLE);
         } else {
-            btnEditVenmo.setText("Edit Venmo");
+            btnSubmit.setVisibility(View.INVISIBLE);
             etName.setVisibility(View.INVISIBLE);
             ParseUser.getCurrentUser().put("venmoName", etName.getText().toString());
             ParseUser.getCurrentUser().saveInBackground();
