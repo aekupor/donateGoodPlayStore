@@ -363,6 +363,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void queryRating() {
+        final Integer[] totalRating = {0};
+        final Integer[] numPosts = {0};
         query.querySellingAndSoldPostsByUser(ParseUser.getCurrentUser(), new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
@@ -371,7 +373,15 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 for (Offering offering : objects) {
-                    
+                    if (offering.getRating() != 0) {
+                        totalRating[0] += offering.getRating();
+                        numPosts[0]++;
+                    }
+                }
+                if (numPosts[0] == 0) {
+                    ratingBar.setNumStars(0);
+                } else {
+                    ratingBar.setNumStars(totalRating[0] / numPosts[0]);
                 }
             }
         });
