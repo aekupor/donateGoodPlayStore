@@ -39,12 +39,18 @@ public class ChangeNameFragment extends DialogFragment {
         etName = view.findViewById(R.id.etName);
         btnSubmit = view.findViewById(R.id.btnChangeNameSubmit);
 
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendBackResult();
+            }
+        });
     }
 
     // sends the data back to the parent fragment
     public void sendBackResult() {
         ChangeNameDialogListener listener = (ChangeNameDialogListener) getTargetFragment();
-        listener.onFinishEditDialog("temp");
+        listener.onFinishEditDialog(etName.getText().toString());
         dismiss();
     }
 }
