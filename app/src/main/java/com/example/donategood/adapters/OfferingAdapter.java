@@ -114,7 +114,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
                 //go to detail fragment
                 final FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
                 Fragment fragment = DetailFragment.newInstance(offering.getObjectId());
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
             }
         }
     }

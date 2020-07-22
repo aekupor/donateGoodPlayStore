@@ -312,7 +312,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         //go to charity fragment
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
-        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack("detail").commit();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
 
     private void goToUser() {
@@ -321,7 +321,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         //go to user fragment
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText());
-        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
 
     private void purchaseItem() {
