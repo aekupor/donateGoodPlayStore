@@ -109,6 +109,10 @@ public class SearchFragment extends Fragment {
 
     private void setUpSpinner() {
         final List<String> priceRanges = new ArrayList<>();
+        priceRanges.add("0 - 15");
+        priceRanges.add("15 - 30");
+        priceRanges.add("30 - 50");
+        priceRanges.add("50+");
 
         // Create an ArrayAdapter for spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, priceRanges);
@@ -121,7 +125,8 @@ public class SearchFragment extends Fragment {
         spPrice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                Log.i(TAG, "onItemSelected");
+                String price = (String) adapterView.getItemAtPosition(pos);
+                Log.i(TAG, "onItemSelected: " + price);
             }
 
             @Override
