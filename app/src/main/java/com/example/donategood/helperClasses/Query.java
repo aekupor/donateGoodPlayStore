@@ -100,7 +100,7 @@ public class Query {
         });
     }
 
-    public void querySellingAndSoldPostsByUser(ParseUser user, final RatingBar ratingBar) {
+    public void queryUserRating(ParseUser user, final RatingBar ratingBar) {
         final Integer[] totalRating = {0};
         final Integer[] numPosts = {0};
 

@@ -230,7 +230,7 @@ public class ProfileFragment extends Fragment {
 
         queryPosts(KEY_BOUGHT);
         query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
-        query.querySellingAndSoldPostsByUser(ParseUser.getCurrentUser(), ratingBar);
+        query.queryUserRating(ParseUser.getCurrentUser(), ratingBar);
     }
 
     protected void queryPosts(final String queryType) {

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class OtherUserProfileFragment extends Fragment {
     private TextView tvSellingTitle;
     private ProgressBar pb;
     private Button btnChat;
+    private RatingBar ratingBar;
 
     private String userName;
     private ParseUser user;
@@ -108,6 +110,7 @@ public class OtherUserProfileFragment extends Fragment {
         tvSoldTitle = view.findViewById(R.id.tvOtherSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
         btnChat = view.findViewById(R.id.btnChat);
+        ratingBar = (RatingBar) view.findViewById(R.id.rbOtherUserProfile);
 
         selectedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), selectedOfferings);
@@ -153,6 +156,7 @@ public class OtherUserProfileFragment extends Fragment {
                 queryPosts(KEY_BOUGHT);
 
                 query.queryMoneyRaised(user, tvMoneyRaised);
+                query.queryUserRating(user, ratingBar);
             }
         });
 
