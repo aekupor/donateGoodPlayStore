@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private TextView tvCommentTitle;
     private TextView tvAvgRating;
     private LinearLayout layoutImages;
+    private RatingBar ratingBar;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -125,6 +127,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
         tvAvgRating = view.findViewById(R.id.tvAvgRating);
         layoutImages = (LinearLayout) view.findViewById(R.id.linearImages);
+        ratingBar = (RatingBar) view.findViewById(R.id.rbDetail);
 
         numComments = 0;
 
@@ -215,10 +218,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                     }
                 }
 
-                if (offering.getRating() != 0) {
-                    tvAvgRating.setText("Average Rating: " + offering.getRating());
+                if (offering.getRating() == 0) {
+                    ratingBar.setVisibility(View.INVISIBLE);
                 } else {
-                    tvAvgRating.setText("Average Rating: n/a");
+                    ratingBar.setNumStars(offering.getRating());
                 }
 
                 tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
@@ -378,14 +381,14 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         Integer offeringRating = offering.getRating();
         if (offeringRating == 0) {
             offering.setRating(Integer.parseInt(rating));
-            tvAvgRating.setText("Average Rating: " + rating);
+            ratingBar.setVisibility(View.INVISIBLE);
         } else {
             Log.i(TAG, "current rating: " + offeringRating.toString() + "num comments: " + numComments.toString());
             offeringRating = (offeringRating * numComments) + Integer.parseInt(rating);
             numComments++;
             offeringRating = offeringRating / numComments;
             offering.setRating(offeringRating);
-            tvAvgRating.setText("Average Rating: " + offeringRating);
+            ratingBar.setNumStars(offeringRating);
         }
         offering.saveInBackground();
     }
