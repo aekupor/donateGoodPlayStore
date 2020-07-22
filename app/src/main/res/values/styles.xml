@@ -5,13 +5,13 @@
         <item name="actionBarStyle">@style/MyActionBar</item>
         <!--To change the text styling of options menu items</item>-->
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#99B898</item>
+        <item name="colorPrimaryDark">#C06C84</item>
+        <item name="colorAccent">#355C7D</item>
     </style>
 
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="background">@color/colorAccent</item>
+        <item name="background">@color/lightGreen</item>
     </style>
 
 </resources>
