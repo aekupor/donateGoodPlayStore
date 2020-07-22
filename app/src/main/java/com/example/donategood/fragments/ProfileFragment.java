@@ -115,6 +115,10 @@ public class ProfileFragment extends Fragment {
                 Log.i(TAG, "action_take_photo clicked");
                 camera.launchCamera(getContext(), true);
                 return true;
+            case R.id.action_upload_photo:
+                Log.i(TAG, "action_upload_photo clicked");
+                camera.pickPhoto(getContext(), true, false);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

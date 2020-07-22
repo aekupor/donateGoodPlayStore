@@ -8,4 +8,8 @@
         android:id="@+id/action_take_photo"
         android:enabled="true"
         android:title="Take Photo" />
+    <item
+        android:id="@+id/action_upload_photo"
+        android:enabled="true"
+        android:title="Upload Photo" />
 </menu>
