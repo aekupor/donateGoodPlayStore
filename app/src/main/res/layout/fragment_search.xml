@@ -46,4 +46,27 @@
         android:layout_marginTop="4dp"
         android:text="Price Range:" />
 
+    <TextView
+        android:id="@+id/tvRatingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/spinnerPriceSearch"
+        android:text="Minimum Rating:" />
+
+    <RatingBar
+        android:id="@+id/rbSearchRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tvRatingTitle"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="0.1" />
+
 </RelativeLayout>
