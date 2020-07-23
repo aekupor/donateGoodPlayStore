@@ -86,6 +86,7 @@ public class ParentProfile {
     }
 
     public void queryPosts(String queryType) {
+        rvOfferings.setVisibility(View.VISIBLE);
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
         query.queryPosts(user, queryType, adapter, selectedOfferings, pb);

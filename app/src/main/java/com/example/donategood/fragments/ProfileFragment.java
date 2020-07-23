@@ -10,10 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.example.donategood.adapters.NotificationAdapter;
-import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.FBQuery;
-import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.ParentProfile;
-import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Notification;
-import com.example.donategood.models.Offering;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -51,29 +44,12 @@ import java.util.List;
 public class ProfileFragment extends Fragment implements ChangeNameFragment.ChangeNameDialogListener {
 
     public static final String TAG = "ProfileFragment";
-    public static final String KEY_BOUGHT = "bought";
-    public static final String KEY_SELLING = "selling";
-    public static final String KEY_SOLD = "sold";
 
-    private LoadPost loadPost;
     private static Camera camera;
 
-    private TextView tvName;
-    private ImageView ivProfileImage;
-    private TextView tvMoneyRaised;
-    private TextView tvYouBoughtTitle;
-    private TextView tvYouSellingTitle;
-    private TextView tvYouSoldTitle;
     private TextView tvNotificationsTitle;
-    private ProgressBar pb;
     private TextView tvPendingNotificationsTitle;
-    private RatingBar ratingBar;
     private Boolean fbEdit;
-
-    private RecyclerView rvBoughtItems;
-    private SmallOfferingAdapter adapter;
-    private List<Offering> selectedOfferings;
-    private Query query;
 
     private List<Notification> notifications;
     private RecyclerView rvNotifications;
@@ -160,6 +136,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         camera = new Camera();
 
         checkFBLogin();
+        queryPosts(parentProfile.KEY_BOUGHT);
 
         tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,16 +147,13 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     }
 
     protected void queryPosts(final String queryType) {
-        rvBoughtItems.setVisibility(View.VISIBLE);
         rvNotifications.setVisibility(View.INVISIBLE);
         notificationAdapter.clear();
         tvNotificationsTitle.setTypeface(null, Typeface.NORMAL);
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         pendingNotifications.setVisibility(View.INVISIBLE);
 
-        pb.setVisibility(ProgressBar.VISIBLE);
-        query.setBold(queryType, tvYouSoldTitle, tvYouSellingTitle, tvYouBoughtTitle);
-        query.queryPosts(ParseUser.getCurrentUser(), queryType, adapter, selectedOfferings, pb);
+        parentProfile.queryPosts(queryType);
     }
 
     public static Camera getCamera() {
@@ -190,19 +164,19 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         Log.i(TAG, "notification button clicked");
 
         tvNotificationsTitle.setTypeface(null, Typeface.BOLD);
-        tvYouSoldTitle.setTypeface(null, Typeface.NORMAL);
-        tvYouSellingTitle.setTypeface(null, Typeface.NORMAL);
-        tvYouBoughtTitle.setTypeface(null, Typeface.NORMAL);
+        parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
+        parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+        parentProfile.tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
 
-        adapter.clear();
+        parentProfile.adapter.clear();
         notifications.clear();
-        rvBoughtItems.setVisibility(View.INVISIBLE);
+        parentProfile.rvOfferings.setVisibility(View.INVISIBLE);
         rvNotifications.setVisibility(View.VISIBLE);
         tvPendingNotificationsTitle.setVisibility(View.VISIBLE);
         pendingNotifications.setVisibility(View.VISIBLE);
         pendingNotifications.removeAllViews();
 
-        query.queryNotificationsForSeller(new FindCallback<Notification>() {
+        parentProfile.query.queryNotificationsForSeller(new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
                 if (e != null) {
@@ -222,7 +196,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
             }
         });
 
-        query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
+        parentProfile.query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
                 if (e != null) {
@@ -281,7 +255,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                                     String url = data.getString("url");
                                     Log.i(TAG, "got image url: " + url);
 
-                                    loadPost.setUserFromFB(name, url, getContext(), tvName, ivProfileImage);
+                                    parentProfile.loadPost.setUserFromFB(name, url, getContext(), parentProfile.tvName, parentProfile.ivProfileImage);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -294,8 +268,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
             });
         } else {
             //user is not logged in with FB
-            //TODO
-            //loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
+            parentProfile.loadPost.setUser(ParseUser.getCurrentUser(), getContext(), parentProfile.tvName, parentProfile.ivProfileImage);
         }
     }
 

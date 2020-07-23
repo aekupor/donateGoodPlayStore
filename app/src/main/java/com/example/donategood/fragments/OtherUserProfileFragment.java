@@ -90,6 +90,7 @@ public class OtherUserProfileFragment extends Fragment {
                 parentProfile.setUser(user);
 
                 parentProfile.queryInfo(getContext());
+                parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
             }
         });
 
