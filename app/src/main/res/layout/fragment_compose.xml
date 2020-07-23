@@ -68,23 +68,34 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnTakePhoto"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/priceQuantityList"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
-        android:text="Take Photo" />
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btnTakePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Take Photo" />
 
-    <Button
-        android:id="@+id/btnUploadPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnTakePhoto"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:text="Upload Photo" />
+        <Button
+            android:id="@+id/btnUploadPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Upload Photo" />
+
+        <Button
+            android:id="@+id/btnTakeMultiple"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Take Multiple" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/ivComposePhoto"
@@ -139,15 +150,6 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/btnSubmit"
         android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/btnTakeMultiple"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnUploadPhoto"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:text="Take Multiple" />
 
     <EditText
         android:id="@+id/etVenmoCompose"
