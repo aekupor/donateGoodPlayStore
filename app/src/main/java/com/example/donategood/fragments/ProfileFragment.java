@@ -139,20 +139,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext());
 
-/*
-        tvName = view.findViewById(R.id.tvOtherProfileProfileName);
-        ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
-        tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
-        rvBoughtItems = view.findViewById(R.id.rvOtherUserSelling);
-        tvYouBoughtTitle = view.findViewById(R.id.tvOtherBoughtTitle);
-        tvYouSellingTitle = view.findViewById(R.id.tvOtherSellingTitle);
-        tvYouSoldTitle = view.findViewById(R.id.tvOtherSoldTitle);
-        pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
-        ratingBar = (RatingBar) view.findViewById(R.id.rbOtherUserProfile);
-
-
- */
-
         parentProfile.setUser(ParseUser.getCurrentUser());
         parentProfile.queryInfo(getContext());
 
@@ -164,16 +150,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         pendingNotifications.setVisibility(View.INVISIBLE);
 
-        //query = new Query();
-
-        //set up adapters and recycler views
-        //selectedOfferings = new ArrayList<>();
-       // adapter = new SmallOfferingAdapter(getContext(), selectedOfferings);
-
-        //rvBoughtItems.setAdapter(adapter);
-        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        //rvBoughtItems.setLayoutManager(linearLayoutManager);
-
         notifications = new ArrayList<>();
         notificationAdapter = new NotificationAdapter(getContext(), notifications);
 
@@ -181,34 +157,9 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         rvNotifications.setLayoutManager(linearLayoutManager2);
 
-        //loadPost = new LoadPost();
         camera = new Camera();
 
-        //checkFBLogin();
-
-        /*
-        tvYouBoughtTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                queryPosts(KEY_BOUGHT);
-            }
-        });
-
-        tvYouSellingTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                queryPosts(KEY_SELLING);
-            }
-        });
-
-        tvYouSoldTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                queryPosts(KEY_SOLD);
-            }
-        });
-
-         */
+        checkFBLogin();
 
         tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,10 +167,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 getNotifications();
             }
         });
-
-        //queryPosts(KEY_BOUGHT);
-       // query.queryMoneyRaised(ParseUser.getCurrentUser(), tvMoneyRaised);
-       // query.queryUserRating(ParseUser.getCurrentUser(), ratingBar);
     }
 
     protected void queryPosts(final String queryType) {
@@ -347,6 +294,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
             });
         } else {
             //user is not logged in with FB
+            //TODO
             //loadPost.setUser(ParseUser.getCurrentUser(), getContext(), tvName, ivProfileImage);
         }
     }
