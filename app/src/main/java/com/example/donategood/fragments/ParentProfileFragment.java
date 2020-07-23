@@ -2,7 +2,6 @@ package com.example.donategood.fragments;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -25,21 +24,20 @@ public class ParentProfileFragment {
 
     public static final String TAG = "ParentProfileFragment";
 
-    private LoadPost loadPost;
-    private Query query;
+    protected LoadPost loadPost;
+    protected Query query;
 
-    private TextView tvName;
-    private ImageView ivProfileImage;
-    private TextView tvMoneyRaised;
-    private RecyclerView rvOfferings;
-    private SmallOfferingAdapter adapter;
-    private List<Offering> selectedOfferings;
-    private TextView tvBoughtTitle;
-    private TextView tvSoldTitle;
-    private TextView tvSellingTitle;
-    private ProgressBar pb;
-    private Button btnChat;
-    private RatingBar ratingBar;
+    protected TextView tvName;
+    protected ImageView ivProfileImage;
+    protected TextView tvMoneyRaised;
+    protected RecyclerView rvOfferings;
+    protected SmallOfferingAdapter adapter;
+    protected List<Offering> selectedOfferings;
+    protected TextView tvBoughtTitle;
+    protected TextView tvSoldTitle;
+    protected TextView tvSellingTitle;
+    protected ProgressBar pb;
+    protected RatingBar ratingBar;
 
     protected void initializeVariables(View view, Context context) {
         tvName = view.findViewById(R.id.tvOtherProfileProfileName);
@@ -50,7 +48,6 @@ public class ParentProfileFragment {
         tvSellingTitle = view.findViewById(R.id.tvOtherSellingTitle);
         tvSoldTitle = view.findViewById(R.id.tvOtherSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
-        btnChat = view.findViewById(R.id.btnChat);
         ratingBar = (RatingBar) view.findViewById(R.id.rbOtherUserProfile);
 
         selectedOfferings = new ArrayList<>();

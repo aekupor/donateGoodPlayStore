@@ -101,6 +101,10 @@ public class OtherUserProfileFragment extends Fragment {
             return;
         }
 
+        ParentProfileFragment parentProfile = new ParentProfileFragment();
+        parentProfile.initializeVariables(view, getContext());
+
+
         tvName = view.findViewById(R.id.tvOtherProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
