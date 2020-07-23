@@ -118,13 +118,17 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etTagsBox"
         android:layout_marginTop="4dp"
-        android:text="Submit" />
+        android:backgroundTint="#FFFFFF"
+        android:text="Submit"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp" />
 
     <ProgressBar
         android:id="@+id/pbLoading"
