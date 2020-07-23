@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
                         ParseFile file = new ParseFile(photoFile);
                         parseFileList.add(file);
                         Log.i(TAG, "got photo number " + i);
+                        if (i == 0) {
+                            //set preview image to first image uploaded
+                            ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
+                            ivPhotoToUpload.setImageBitmap(bitmap);
+                        }
                     }
                     camera.setPhotoFileArray(photoFileArray);
                 }
