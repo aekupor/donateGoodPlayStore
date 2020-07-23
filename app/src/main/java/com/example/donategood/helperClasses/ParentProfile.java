@@ -159,7 +159,7 @@ public class ParentProfile {
                 selling = true;
             }
 
-            query.queryPostsByCharity(charity, selling, selectedOfferings, pb, adapter, tvSoldTitle, tvSellingTitle);
+            query.queryPostsByCharity(charity, selling, this);
         } else {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();

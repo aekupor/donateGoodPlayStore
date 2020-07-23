@@ -5,7 +5,6 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
@@ -129,13 +128,13 @@ public class Query {
         });
     }
 
-    public void queryPostsByCharity(Charity charity, Boolean selling, final List<Offering> selectedOfferings, final ProgressBar pb, final OfferingAdapter adapter, TextView tvSold, TextView tvSelling) {
+    public void queryPostsByCharity(Charity charity, Boolean selling, final ParentProfile parentProfile) {
         if (selling) {
-            tvSelling.setTypeface(null, Typeface.NORMAL);
-            tvSold.setTypeface(null, Typeface.BOLD);
+            parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+            parentProfile.tvSoldTitle.setTypeface(null, Typeface.BOLD);
         } else {
-            tvSelling.setTypeface(null, Typeface.BOLD);
-            tvSold.setTypeface(null, Typeface.NORMAL);
+            parentProfile.tvSellingTitle.setTypeface(null, Typeface.BOLD);
+            parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
         }
 
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
@@ -148,10 +147,10 @@ public class Query {
                 if (e != null) {
                     return;
                 }
-                selectedOfferings.clear();
-                selectedOfferings.addAll(objects);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                parentProfile.selectedOfferings.clear();
+                parentProfile.selectedOfferings.addAll(objects);
+                parentProfile.adapter.notifyDataSetChanged();
+                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
