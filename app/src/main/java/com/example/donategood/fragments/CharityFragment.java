@@ -6,24 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
-import com.example.donategood.adapters.SmallOfferingAdapter;
-import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.ParentProfile;
-import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Charity;
-import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -33,20 +26,8 @@ public class CharityFragment extends Fragment {
 
     public static final String TAG = "CharityFragment";
 
-    private Query query;
-    private LoadPost loadPost;
-    private RecyclerView rvOfferings;
-    private SmallOfferingAdapter adapter;
-    private List<Offering> allOfferings;
-
     private Charity charity;
     private String charityName;
-    private TextView tvTitle;
-    private ImageView ivProfileImage;
-    private TextView tvMoneyRaised;
-    private ProgressBar pb;
-    private TextView tvCharitySellingTitle;
-    private TextView tvCharitySoldTitle;
     private Button btnWebsite;
 
     public CharityFragment() {
@@ -93,10 +74,10 @@ public class CharityFragment extends Fragment {
             }
         });
 
+        parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
         parentProfile.query.queryCharityByName(charityName, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> objects, ParseException e) {
-                pb.setVisibility(ProgressBar.VISIBLE);
                 if (e != null) {
                     Log.e(TAG, "Error finding charity", e);
                     return;
@@ -105,9 +86,9 @@ public class CharityFragment extends Fragment {
                 parentProfile.setCharity(charity);
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
 
-                //loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
-                //query.queryCharityMoneyRaised(charity, tvMoneyRaised);
-                //pb.setVisibility(ProgressBar.INVISIBLE);
+                parentProfile.loadPost.setCharityWithCharity(parentProfile.charity, getContext(), parentProfile.tvName, parentProfile.ivProfileImage);
+                parentProfile.query.queryCharityMoneyRaised(parentProfile.charity, parentProfile.tvMoneyRaised);
+                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
                 parentProfile.queryPosts(parentProfile.KEY_SELLING);
             }
         });
