@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         setHasOptionsMenu(true);
 
         parentProfile = new ParentProfile();
-        parentProfile.initializeVariables(view, getContext(), true);
+        parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CURRENT_USER);
         parentProfile.setUser(ParseUser.getCurrentUser());
         parentProfile.queryInfo(getContext());
         parentProfile.queryPosts(parentProfile.KEY_BOUGHT);

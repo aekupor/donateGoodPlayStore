@@ -29,14 +29,19 @@ import java.util.List;
 public class ParentProfile {
 
     public static final String TAG = "ParentProfile";
+
     public static final String KEY_BOUGHT = "bought";
     public static final String KEY_SELLING = "selling";
     public static final String KEY_SOLD = "sold";
 
+    public static final String KEY_CURRENT_USER = "currentUser";
+    public static final String KEY_OTHER_USER = "otherUser";
+    public static final String KEY_CHARITY = "charity";
+
     public LoadPost loadPost;
     public Query query;
     public ParseUser user;
-    public Boolean isCurrentUser;
+    public String profileType;
 
     public TextView tvNotificationsTitle;
     public TextView tvPendingNotificationsTitle;
@@ -57,20 +62,30 @@ public class ParentProfile {
     public ProgressBar pb;
     public RatingBar ratingBar;
 
-    public void initializeVariables(View view, Context context, Boolean currentUser) {
-        isCurrentUser = currentUser;
+    public void initializeVariables(View view, Context context, String queryType) {
+        profileType = queryType;
 
         tvName = view.findViewById(R.id.tvProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
         rvOfferings = view.findViewById(R.id.rvProfileOfferings);
-        tvBoughtTitle = view.findViewById(R.id.tvProfileBoughtTitle);
         tvSellingTitle = view.findViewById(R.id.tvProfileSellingTitle);
         tvSoldTitle = view.findViewById(R.id.tvProfileSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
-        ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
 
-        if (isCurrentUser) {
+        if (profileType != KEY_CHARITY) {
+            tvBoughtTitle = view.findViewById(R.id.tvProfileBoughtTitle);
+            ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
+
+            tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    queryPosts(KEY_BOUGHT);
+                }
+            });
+        }
+
+        if (profileType == KEY_CURRENT_USER) {
             initializeNotifications(view, context);
         }
 
@@ -83,13 +98,6 @@ public class ParentProfile {
 
         loadPost = new LoadPost();
         query = new Query();
-
-        tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                queryPosts(KEY_BOUGHT);
-            }
-        });
 
         tvSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +139,7 @@ public class ParentProfile {
     }
 
     public void queryPosts(String queryType) {
-        if (isCurrentUser) {
+        if (profileType == KEY_CURRENT_USER) {
             changeVisibility();
         }
         pb.setVisibility(ProgressBar.VISIBLE);

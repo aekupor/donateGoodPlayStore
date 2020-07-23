@@ -75,7 +75,7 @@ public class OtherUserProfileFragment extends Fragment {
         }
 
         parentProfile = new ParentProfile();
-        parentProfile.initializeVariables(view, getContext(), false);
+        parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_OTHER_USER);
 
         btnChat = view.findViewById(R.id.btnChat);
 
