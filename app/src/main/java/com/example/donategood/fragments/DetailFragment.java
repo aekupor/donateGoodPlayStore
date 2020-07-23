@@ -111,6 +111,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //find all variables
         tvTitle = view.findViewById(R.id.tvDetailTitle);
         tvPrice = view.findViewById(R.id.tvDetailPrice);
         tvCharity = view.findViewById(R.id.tvDetailCharity);
@@ -125,9 +126,13 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
         layoutImages = (LinearLayout) view.findViewById(R.id.linearImages);
         ratingBar = (RatingBar) view.findViewById(R.id.rbDetail);
+        rvComments = view.findViewById(R.id.rvComments);
 
         numComments = 0;
+        loadPost = new LoadPost();
+        query = new Query();
 
+        //set up recycler view and adapter for reccomended offerings
         reccomendedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), reccomendedOfferings);
 
@@ -135,8 +140,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvRecommendedOfferings.setLayoutManager(linearLayoutManager);
 
-        rvComments = view.findViewById(R.id.rvComments);
-
+        //set up recycler view and adapter for comments
         allComments = new ArrayList<>();
         commentAdapter = new CommentAdapter(getContext(), allComments);
 
@@ -144,6 +148,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         LinearLayoutManager linearLayoutManagerComment = new LinearLayoutManager(getContext());
         rvComments.setLayoutManager(linearLayoutManagerComment);
 
+        //set onClickListeners
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,12 +185,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             }
         });
 
-        loadPost = new LoadPost();
-
-        query = new Query();
         findOffering();
     }
 
+    //finds the offering to display on detail page (offering that the user clicked on)
     private void findOffering() {
         query.findOffering(offeringId, new FindCallback<Offering>() {
             @Override
@@ -202,6 +205,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         });
     }
 
+    //sets all variables to the appropiate values
     private void loadInformation() {
         loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
         loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
@@ -223,15 +227,16 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         queryComments();
     }
 
+    //sets image of offering
     private void setImage() {
         if (!offering.hasMultipleImages()) {
+            //if offering only has one image
             loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
         } else {
+            //if offering has multiple images
             ArrayList<ParseFile> imagesArray = offering.getImagesArray();
             for (ParseFile image : imagesArray) {
-
                 ImageView ivImage = new ImageView(getContext());
-
                 ViewTarget<ImageView, Drawable> into = Glide.with(getContext())
                         .load(image.getUrl())
                         .into(ivImage);
@@ -243,10 +248,12 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         }
     }
 
+    //query recommended posts based on current offering
     private void queryRecommendedPosts() {
         final Recommend recommend = new Recommend();
         final Map<Offering, Integer>[] pointValues = new Map[]{new HashMap<>()};
 
+        //find all available posts
         query.queryAllAvailablePosts(new FindCallback<Offering>() {
                @Override
                public void done(List<Offering> offerings, ParseException e) {
@@ -260,13 +267,17 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                            continue;
                        }
 
+                       //determine point value for each offering
                        Integer pointValue = recommend.getPointValue(offering, otherOffering);
                        pointValues[0].put(otherOffering, pointValue);
                    }
+
+                   //sort map to have most recommended offerings show up at the top
                    final Map<Offering, Integer>[] sortedPointValues = new Map[]{new HashMap<>()};
                    sortedPointValues[0] = recommend.sortMapByPoints(pointValues[0]);
                    Log.i(TAG, "sorted point values list: " + sortedPointValues[0].toString());
 
+                   //update adapter with recommended offerings
                    adapter.clear();
                    reccomendedOfferings.clear();
                    reccomendedOfferings.addAll(sortedPointValues[0].keySet());
@@ -275,6 +286,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
            });
     }
 
+    //find all comments related to that post
     private void queryComments() {
         query.queryComments(offering, new FindCallback<Comment>() {
             @Override
@@ -284,18 +296,21 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                     return;
                 }
                 if (objects.size() != 0) {
+                    //if there are comments related to offering, display them
                     commentAdapter.clear();
                     allComments.clear();
                     allComments.addAll(objects);
                     commentAdapter.notifyDataSetChanged();
                     numComments = objects.size();
                 } else {
+                    //if no comments related to offering, hide comments title
                     tvCommentTitle.setVisibility(View.INVISIBLE);
                 }
             }
         });
     }
 
+    //initialize FB share button with information about offering
     private void setShareButton() {
         content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse(offering.getImage().getUrl()))
@@ -337,19 +352,22 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
 
+        //open venmo
         Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients="
                 + offering.getUser().get("venmoName") + "&amount="
                 + offering.getPrice().toString() + "&note=" + offering.getTitle()));
         startActivity(implicit);
 
+        //remove one from the quantity left
         Integer quantityLeft = offering.getQuantityLeft() - 1;
         Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
         tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
+        updateQuantityLeft(quantityLeft);
 
-        updateOffering(quantityLeft);
         createNotification();
     }
 
+    //called after user has created a comment
     @Override
     public void onFinishEditDialog(String inputText, String rating) {
         Log.i(TAG, "got comment with text: " + inputText + " and rating: " + rating);
@@ -358,15 +376,16 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         updateOfferingRating(rating);
     }
 
-    // Call this method to launch the edit dialog
+    //open ComposeCommentFragment
     private void showEditDialog() {
         FragmentManager fm = getFragmentManager();
         ComposeCommentFragment composeCommentFragment = (ComposeCommentFragment) ComposeCommentFragment.newInstance();
-        // SETS the target fragment for use later when sending results
+        //sets the target fragment for use later when sending results
         composeCommentFragment.setTargetFragment(DetailFragment.this, 300);
         composeCommentFragment.show(fm, "fragment_compose_comment");
     }
 
+    //saves comments to backend
     private void saveComment(String inputText, String rating) {
         Comment comment = new Comment();
         comment.setByUser(ParseUser.getCurrentUser());
@@ -383,11 +402,14 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 Log.i(TAG, "Post save was successful!");
             }
         });
+
+        //add comment to adapter
         allComments.add(comment);
         commentAdapter.notifyDataSetChanged();
         tvCommentTitle.setVisibility(View.VISIBLE);
     }
 
+    //update rating of offering based on rating from new comment
     private void updateOfferingRating(String rating) {
         Integer offeringRating = offering.getRating();
         if (offeringRating == 0) {
@@ -404,8 +426,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         offering.saveInBackground();
     }
 
-    private void updateOffering(Integer quantityLeft) {
+    //update quantity left of offering
+    private void updateQuantityLeft(Integer quantityLeft) {
         if (quantityLeft == 0) {
+            //determine if all quantities of the offering has been bought
             offering.setIsBought(true);
             btnPurchase.setVisibility(View.INVISIBLE);
         }
