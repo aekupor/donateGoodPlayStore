@@ -3,15 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SearchFragment">
 
-    <EditText
-        android:id="@+id/etSearchBar"
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/purple"
         android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
-        android:hint="title" />
+        android:id="@+id/etSearchBarBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="offering title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSearch"
@@ -26,7 +37,7 @@
         android:id="@+id/spinnerPriceSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etSearchBar"
+        android:layout_below="@+id/etSearchBarBox"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/tvPriceTitle" />
@@ -43,7 +54,7 @@
         android:id="@+id/tvPriceTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etSearchBar"
+        android:layout_below="@+id/etSearchBarBox"
         android:layout_marginTop="4dp"
         android:text="Price Range:" />
 
