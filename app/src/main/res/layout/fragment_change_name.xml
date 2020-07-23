@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.ChangeNameFragment">
 
@@ -11,10 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnChangeNameSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp"
         android:text="Submit" />
 
 </LinearLayout>
