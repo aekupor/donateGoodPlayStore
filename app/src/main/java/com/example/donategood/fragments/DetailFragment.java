@@ -152,21 +152,21 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToCharity();
+                goToOtherFragment("charity");
             }
         });
 
         ivCharityImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToCharity();
+                goToOtherFragment("charity");
             }
         });
 
         tvUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToUser();
+                goToOtherFragment("user");
             }
         });
 
@@ -331,21 +331,16 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         });
     }
 
-    private void goToCharity() {
-        Log.i(TAG, "go to charity");
-
-        //go to charity fragment
+    private void goToOtherFragment(String fragmentName) {
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
-        Fragment fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
-        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
-    }
-
-    private void goToUser() {
-        Log.i(TAG, "go to user");
-
-        //go to user fragment
-        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
-        Fragment fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText());
+        Fragment fragment = null;
+        if (fragmentName.equals("charity")) {
+            //go to charity fragment
+            fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
+        } else if (fragmentName.equals("user")) {
+            //go to other user profile fragment
+            fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText());
+        }
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
 
