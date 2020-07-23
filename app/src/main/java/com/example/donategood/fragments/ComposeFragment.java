@@ -96,6 +96,19 @@ public class ComposeFragment extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinnerCharity);
         setUpSpinner();
 
+        btnTakeMultiple.setVisibility(View.INVISIBLE);
+        btnUploadPhoto.setVisibility(View.INVISIBLE);
+        btnTakePhoto.setVisibility(View.INVISIBLE);
+
+        ivPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnTakeMultiple.setVisibility(View.VISIBLE);
+                btnUploadPhoto.setVisibility(View.VISIBLE);
+                btnTakePhoto.setVisibility(View.VISIBLE);
+            }
+        });
+
         btnTakeMultiple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
