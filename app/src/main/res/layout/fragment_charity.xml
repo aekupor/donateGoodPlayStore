@@ -38,31 +38,47 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="4dp" />
 
-    <LinearLayout
+    <RadioGroup
         android:id="@+id/buttonLinearCharity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvProfileMoneyRaised"
+        android:layout_below="@+id/tvProfileMoneyRaised"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileSoldTitle"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:text="Sold" />
+            android:backgroundTint="#FFFFFF"
+            android:text="Sold"
+            android:textColor="@color/purple"
+            android:textStyle="bold"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            app:strokeWidth="2dp" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileSellingTitle"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
             android:text="Selling"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textColor="@color/purple"
+            android:textStyle="bold"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            app:strokeWidth="2dp" />
+    </RadioGroup>
 
     <View
         android:id="@+id/line"
