@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donategood.R;
 import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
@@ -41,6 +42,7 @@ public class ParentProfile {
     public LoadPost loadPost;
     public Query query;
     public ParseUser user;
+    public Charity charity;
     public String profileType;
 
     public TextView tvNotificationsTitle;
@@ -139,12 +141,41 @@ public class ParentProfile {
     }
 
     public void queryPosts(String queryType) {
-        if (profileType == KEY_CURRENT_USER) {
-            changeVisibility();
-        }
         pb.setVisibility(ProgressBar.VISIBLE);
-        query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
-        query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
+
+        if (profileType == KEY_CHARITY) {
+            Boolean selling;
+            if (queryType == KEY_SELLING) {
+                selling = true;
+                tvSellingTitle.setTypeface(null, Typeface.BOLD);
+                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
+            } else {
+                selling = false;
+                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+                tvSoldTitle.setTypeface(null, Typeface.BOLD);
+            }
+
+            query.queryPostsByCharity(charity, selling, new FindCallback<Offering>() {
+                @Override
+                public void done(List<Offering> offerings, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting offerings", e);
+                        return;
+                    }
+                    Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
+                    selectedOfferings.clear();
+                    selectedOfferings.addAll(offerings);
+                    adapter.notifyDataSetChanged();
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+                }
+            });
+        } else {
+            if (profileType == KEY_CURRENT_USER) {
+                changeVisibility();
+            }
+            query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
+            query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
+        }
     }
 
     public void changeVisibility() {
@@ -166,6 +197,10 @@ public class ParentProfile {
 
     public void setUser(ParseUser parseUser) {
         user = parseUser;
+    }
+
+    public void setCharity(Charity currentCharity) {
+        charity = currentCharity;
     }
 
     public void getNotifications(final Context context) {

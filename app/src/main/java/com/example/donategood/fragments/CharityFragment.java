@@ -1,16 +1,6 @@
 package com.example.donategood.fragments;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +10,23 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
+import com.example.donategood.helperClasses.ParentProfile;
 import com.example.donategood.helperClasses.Query;
-import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CharityFragment extends Fragment {
@@ -81,40 +78,10 @@ public class CharityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvTitle = view.findViewById(R.id.tvCharityCharityTitle);
-        ivProfileImage = view.findViewById(R.id.ivCharityChairtyImage);
-        tvMoneyRaised = view.findViewById(R.id.tvCharityMoneyRaised);
-        rvOfferings = view.findViewById(R.id.rvCharitySellingOfferings);
-        pb = (ProgressBar) view.findViewById(R.id.pbCharityLoading);
-        tvCharitySellingTitle = view.findViewById(R.id.tvCharitySellingTitle);
-        tvCharitySoldTitle = view.findViewById(R.id.tvCharitySoldTitle);
+        final ParentProfile parentProfile = new ParentProfile();
+        parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CHARITY);
+
         btnWebsite = view.findViewById(R.id.btnCharityWebsite);
-
-        query = new Query();
-        allOfferings = new ArrayList<>();
-        adapter = new SmallOfferingAdapter(getContext(), allOfferings);
-
-        rvOfferings.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvOfferings.setLayoutManager(linearLayoutManager);
-
-        tvCharitySoldTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvCharitySoldTitle.setTypeface(null, Typeface.BOLD);
-                tvCharitySellingTitle.setTypeface(null, Typeface.NORMAL);
-                queryPosts(true);
-            }
-        });
-
-        tvCharitySellingTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvCharitySellingTitle.setTypeface(null, Typeface.BOLD);
-                tvCharitySoldTitle.setTypeface(null, Typeface.NORMAL);
-                queryPosts(false);
-            }
-        });
 
         btnWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +93,7 @@ public class CharityFragment extends Fragment {
             }
         });
 
-        loadPost = new LoadPost();
-        query = new Query();
-        query.queryCharityByName(charityName, new FindCallback<Charity>() {
+        parentProfile.query.queryCharityByName(charityName, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> objects, ParseException e) {
                 pb.setVisibility(ProgressBar.VISIBLE);
@@ -137,30 +102,13 @@ public class CharityFragment extends Fragment {
                     return;
                 }
                 charity = objects.get(0);
+                parentProfile.setCharity(charity);
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
 
-                loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
-                query.queryCharityMoneyRaised(charity, tvMoneyRaised);
-                pb.setVisibility(ProgressBar.INVISIBLE);
-                queryPosts(false);
-            }
-        });
-    }
-
-    private void queryPosts(Boolean bought) {
-        pb.setVisibility(ProgressBar.VISIBLE);
-        query.queryPostsByCharity(charity, bought, new FindCallback<Offering>() {
-            @Override
-            public void done(List<Offering> offerings, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting offerings", e);
-                    return;
-                }
-                Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
-                allOfferings.clear();
-                allOfferings.addAll(offerings);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                //loadPost.setCharityWithCharity(charity, getContext(), tvTitle, ivProfileImage);
+                //query.queryCharityMoneyRaised(charity, tvMoneyRaised);
+                //pb.setVisibility(ProgressBar.INVISIBLE);
+                parentProfile.queryPosts(parentProfile.KEY_SELLING);
             }
         });
     }

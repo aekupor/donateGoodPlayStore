@@ -8,29 +8,29 @@
 
 
     <TextView
-        android:id="@+id/tvCharityCharityTitle"
+        android:id="@+id/tvProfileProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Charity X" />
 
     <ImageView
-        android:id="@+id/ivCharityChairtyImage"
+        android:id="@+id/ivProfileProfileImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/tvCharityCharityTitle"
+        android:layout_below="@+id/tvProfileProfileName"
         android:layout_marginTop="4dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvCharityMoneyRaised"
+        android:id="@+id/tvProfileMoneyRaised"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivCharityChairtyImage"
+        android:layout_below="@+id/ivProfileProfileImage"
         android:layout_marginTop="4dp"
         tools:text="100" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCharitySellingOfferings"
+        android:id="@+id/rvProfileOfferings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/buttonLinearCharity"
@@ -42,11 +42,11 @@
         android:id="@+id/buttonLinearCharity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvCharityMoneyRaised"
+        android:layout_below="@id/tvProfileMoneyRaised"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvCharitySoldTitle"
+            android:id="@+id/tvProfileSoldTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -55,7 +55,7 @@
             android:text="Sold" />
 
         <TextView
-            android:id="@+id/tvCharitySellingTitle"
+            android:id="@+id/tvProfileSellingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -72,12 +72,12 @@
         android:layout_below="@id/buttonLinearCharity"/>
 
     <ProgressBar
-        android:id="@+id/pbCharityLoading"
+        android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="4dp"
-        android:layout_toEndOf="@+id/ivCharityChairtyImage"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
         android:visibility="invisible" />
 
     <Button
@@ -87,6 +87,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="144dp"
         android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/ivCharityChairtyImage"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
         android:text="See Website" />
 </RelativeLayout>
