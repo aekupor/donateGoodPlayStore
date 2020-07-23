@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,9 +29,6 @@ import java.util.List;
 public class OtherUserProfileFragment extends Fragment {
 
     public static final String TAG = "OtherUserProfileFragment";
-    public static final String KEY_BOUGHT = "bought";
-    public static final String KEY_SELLING = "selling";
-    public static final String KEY_SOLD = "sold";
 
     private ParentProfile parentProfile;
     private Button btnChat;
