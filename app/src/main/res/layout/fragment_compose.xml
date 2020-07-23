@@ -24,7 +24,9 @@
         android:id="@+id/btnTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPrice"
+        android:layout_below="@+id/etQuantity"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
         android:text="Take Photo" />
 
     <Button
@@ -32,14 +34,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnTakePhoto"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
         android:text="Upload Photo" />
 
     <ImageView
         android:id="@+id/ivComposePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/btnUploadPhoto"
+        android:layout_width="285dp"
+        android:layout_height="197dp"
+        android:layout_below="@+id/etQuantity"
+        android:layout_marginTop="10dp"
         app:srcCompat="@drawable/no_image" />
 
     <Spinner
@@ -88,10 +92,9 @@
         android:id="@+id/btnTakeMultiple"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPrice"
-        android:layout_marginStart="40dp"
+        android:layout_below="@+id/btnUploadPhoto"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/btnTakePhoto"
         android:text="Take Multiple" />
 
     <EditText
