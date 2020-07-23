@@ -4,15 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +15,21 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
-import com.example.donategood.R;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Notification;
@@ -184,6 +183,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         loadPost = new LoadPost();
 
         query = new Query();
+        findOffering();
+    }
+
+    private void findOffering() {
         query.findOffering(offeringId, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
@@ -194,44 +197,50 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 offering = objects.get(0);
                 Log.i(TAG, "got offering with title: " + offering.getTitle());
 
-                loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
-                loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
-
-                if (!offering.hasMultipleImages()) {
-                    loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
-                } else {
-                    ArrayList<ParseFile> imagesArray = offering.getImagesArray();
-                    for (ParseFile image : imagesArray) {
-
-                        ImageView ivImage = new ImageView(getContext());
-
-                        ViewTarget<ImageView, Drawable> into = Glide.with(getContext())
-                                .load(image.getUrl())
-                                .into(ivImage);
-
-                        ivImage.setAdjustViewBounds(true);
-                        layoutImages.addView(into.getView());
-                        Log.i(TAG, "adding view to layoutImages");
-
-                    }
-                }
-
-                if (offering.getRating() == 0) {
-                    ratingBar.setVisibility(View.INVISIBLE);
-                } else {
-                    ratingBar.setNumStars(offering.getRating());
-                }
-
-                tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
-                if (offering.getQuantityLeft() == 0) {
-                    btnPurchase.setVisibility(View.INVISIBLE);
-                }
-
-                setShareButton();
-                queryRecommendedPosts();
-                queryComments();
+                loadInformation();
             }
         });
+    }
+
+    private void loadInformation() {
+        loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
+        loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
+
+        if (offering.getRating() == 0) {
+            ratingBar.setVisibility(View.INVISIBLE);
+        } else {
+            ratingBar.setNumStars(offering.getRating());
+        }
+
+        tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
+        if (offering.getQuantityLeft() == 0) {
+            btnPurchase.setVisibility(View.INVISIBLE);
+        }
+
+        setImage();
+        setShareButton();
+        queryRecommendedPosts();
+        queryComments();
+    }
+
+    private void setImage() {
+        if (!offering.hasMultipleImages()) {
+            loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+        } else {
+            ArrayList<ParseFile> imagesArray = offering.getImagesArray();
+            for (ParseFile image : imagesArray) {
+
+                ImageView ivImage = new ImageView(getContext());
+
+                ViewTarget<ImageView, Drawable> into = Glide.with(getContext())
+                        .load(image.getUrl())
+                        .into(ivImage);
+
+                ivImage.setAdjustViewBounds(true);
+                layoutImages.addView(into.getView());
+                Log.i(TAG, "adding view to layoutImages");
+            }
+        }
     }
 
     private void queryRecommendedPosts() {
