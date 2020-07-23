@@ -62,7 +62,7 @@ public class ParentProfile {
     public ProgressBar pb;
     public RatingBar ratingBar;
 
-    public void initializeVariables(View view, Context context, String queryType) {
+    public void initializeVariables(View view, final Context context, final String queryType) {
         profileType = queryType;
 
         //find items on view
@@ -90,12 +90,22 @@ public class ParentProfile {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 Log.i(TAG, "tab selected at position: " + position);
-                if (position == 0) {
-                    queryPosts(KEY_BOUGHT);
-                } else if (position == 1) {
-                    queryPosts(KEY_SOLD);
-                } else if (position == 2) {
-                    queryPosts(KEY_SELLING);
+                if (profileType != KEY_CHARITY) {
+                    if (position == 0) {
+                        queryPosts(KEY_BOUGHT);
+                    } else if (position == 1) {
+                        queryPosts(KEY_SOLD);
+                    } else if (position == 2) {
+                        queryPosts(KEY_SELLING);
+                    } else {
+                        getNotifications(context);
+                    }
+                } else {
+                    if (position == 0) {
+                        queryPosts(KEY_SOLD);
+                    } else {
+                        queryPosts(KEY_SELLING);
+                    }
                 }
             }
 
