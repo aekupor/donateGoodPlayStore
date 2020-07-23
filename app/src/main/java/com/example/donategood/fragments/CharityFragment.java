@@ -75,7 +75,7 @@ public class CharityFragment extends Fragment {
         });
 
         parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
-        parentProfile.query.queryCharityByName(charityName, new FindCallback<Charity>() {
+        parentProfile.query.findCharity(charityName, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> objects, ParseException e) {
                 if (e != null) {

@@ -23,7 +23,8 @@ public class Query {
     public static final String KEY_SELLING = "selling";
     public static final String KEY_SOLD = "sold";
 
-    public void queryAllPosts(Integer page, FindCallback<Offering> callback) {
+    //query all available posts with a page limit
+    public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
         Integer displayLimit = 20;
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.setLimit(displayLimit);
@@ -33,45 +34,52 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryAllPostsWithoutPage(FindCallback<Offering> callback) {
+    //query all posts that are being sold (aka haven't been bought)
+    public void queryAllAvailablePosts(FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", false);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
 
-    public void queryAllPostsBoughtAndNot(FindCallback<Offering> callback) {
+    //query all posts, available and not available
+    public void queryAllPosts(FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
 
+    //query list of all charities
     public void queryAllCharities(FindCallback<Charity> callback) {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.findInBackground(callback);
     }
 
-    public void queryCharityByName(String charityName, FindCallback<Charity> callback) {
+    //find specific charity from its name
+    public void findCharity(String charityName, FindCallback<Charity> callback) {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.setLimit(1);
         query.whereEqualTo("title", charityName);
         query.findInBackground(callback);
     }
 
+    //find all comments relating to an offering
     public void queryComments(Offering offering, FindCallback<Comment> callback) {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
         query.whereEqualTo("forPost", offering);
         query.findInBackground(callback);
     }
 
-    public void queryUserByName(String userName, FindCallback<ParseUser> callback) {
+    //find a specific user by their name
+    public void findUser(String userName, FindCallback<ParseUser> callback) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.setLimit(1);
         query.whereEqualTo("username", userName);
         query.findInBackground(callback);
     }
 
-    public void queryOfferingById(String postId, FindCallback<Offering> callback) {
+    //find a specific offering but its id
+    public void findOffering(String postId, FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.setLimit(1);
         query.whereEqualTo("objectId", postId);
@@ -157,7 +165,7 @@ public class Query {
 
     public void queryCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
         final Integer[] moneyRaised = {0};
-        queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
+        queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {
@@ -185,7 +193,7 @@ public class Query {
     }
 
     public void queryBoughtPostsByUser(final ParentProfile parentProfile) {
-        queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
+        queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
@@ -236,7 +244,7 @@ public class Query {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
 
-        queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
+        queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {

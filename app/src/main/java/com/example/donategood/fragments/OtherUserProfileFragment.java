@@ -79,7 +79,7 @@ public class OtherUserProfileFragment extends Fragment {
 
         btnChat = view.findViewById(R.id.btnChat);
 
-        parentProfile.query.queryUserByName(userName, new FindCallback<ParseUser>() {
+        parentProfile.query.findUser(userName, new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
                 if (e != null) {

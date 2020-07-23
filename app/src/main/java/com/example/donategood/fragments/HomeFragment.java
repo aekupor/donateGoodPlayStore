@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
 
     protected void queryPosts(int page) {
         pb.setVisibility(ProgressBar.VISIBLE);
-        query.queryAllPosts(page, new FindCallback<Offering>() {
+        query.queryAllPostsByPage(page, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {

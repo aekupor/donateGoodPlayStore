@@ -184,7 +184,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         loadPost = new LoadPost();
 
         query = new Query();
-        query.queryOfferingById(offeringId, new FindCallback<Offering>() {
+        query.findOffering(offeringId, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 if (e != null) {
@@ -238,7 +238,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         final Recommend recommend = new Recommend();
         final Map<Offering, Integer>[] pointValues = new Map[]{new HashMap<>()};
 
-        query.queryAllPostsWithoutPage(new FindCallback<Offering>() {
+        query.queryAllAvailablePosts(new FindCallback<Offering>() {
                @Override
                public void done(List<Offering> offerings, ParseException e) {
                    if (e != null) {

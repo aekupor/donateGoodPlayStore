@@ -167,7 +167,7 @@ public class ComposeFragment extends Fragment {
 
     private void savePost() {
         pb.setVisibility(ProgressBar.VISIBLE);
-        query.queryCharityByName(charity, new FindCallback<Charity>() {
+        query.findCharity(charity, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> charities, ParseException e) {
                 if (e != null) {
