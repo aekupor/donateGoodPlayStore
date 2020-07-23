@@ -21,46 +21,58 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/purple"
-        android:id="@+id/etPriceBox"
+        android:id="@+id/priceQuantityList"
         android:layout_below="@+id/etTitleBox"
-        android:layout_marginTop="4dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="price">
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/purple"
+            android:id="@+id/etPriceBox"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="price">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/purple"
-        android:id="@+id/etQuantityBox"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/etPriceBox"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="quantity">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/purple"
+            android:id="@+id/etQuantityBox"
+            android:layout_weight="1"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/etPriceBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="quantity">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPriceBox"
+        android:layout_below="@+id/priceQuantityList"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:text="Take Photo" />
@@ -78,7 +90,7 @@
         android:id="@+id/ivComposePhoto"
         android:layout_width="285dp"
         android:layout_height="197dp"
-        android:layout_below="@+id/etPriceBox"
+        android:layout_below="@+id/priceQuantityList"
         android:layout_marginTop="8dp"
         app:srcCompat="@drawable/no_image" />
 
