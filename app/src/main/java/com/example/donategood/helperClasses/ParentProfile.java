@@ -1,4 +1,4 @@
-package com.example.donategood.fragments;
+package com.example.donategood.helperClasses;
 
 import android.content.Context;
 import android.view.View;
@@ -12,34 +12,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
-import com.example.donategood.helperClasses.LoadPost;
-import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ParentProfileFragment {
+public class ParentProfile {
 
-    public static final String TAG = "ParentProfileFragment";
+    public static final String TAG = "ParentProfile";
 
-    protected LoadPost loadPost;
-    protected Query query;
+    public LoadPost loadPost;
+    public Query query;
 
-    protected TextView tvName;
-    protected ImageView ivProfileImage;
-    protected TextView tvMoneyRaised;
-    protected RecyclerView rvOfferings;
-    protected SmallOfferingAdapter adapter;
-    protected List<Offering> selectedOfferings;
-    protected TextView tvBoughtTitle;
-    protected TextView tvSoldTitle;
-    protected TextView tvSellingTitle;
-    protected ProgressBar pb;
-    protected RatingBar ratingBar;
+    public TextView tvName;
+    public ImageView ivProfileImage;
+    public TextView tvMoneyRaised;
+    public RecyclerView rvOfferings;
+    public SmallOfferingAdapter adapter;
+    public List<Offering> selectedOfferings;
+    public TextView tvBoughtTitle;
+    public TextView tvSoldTitle;
+    public TextView tvSellingTitle;
+    public ProgressBar pb;
+    public RatingBar ratingBar;
 
-    protected void initializeVariables(View view, Context context) {
+    public void initializeVariables(View view, Context context) {
         tvName = view.findViewById(R.id.tvOtherProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);

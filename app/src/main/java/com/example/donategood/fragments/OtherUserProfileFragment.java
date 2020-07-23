@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.donategood.R;
+import com.example.donategood.helperClasses.ParentProfile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -33,7 +34,7 @@ public class OtherUserProfileFragment extends Fragment {
     public static final String KEY_SELLING = "selling";
     public static final String KEY_SOLD = "sold";
 
-    private ParentProfileFragment parentProfile;
+    private ParentProfile parentProfile;
     private Button btnChat;
 
     private String userName;
@@ -77,7 +78,7 @@ public class OtherUserProfileFragment extends Fragment {
             return;
         }
 
-        parentProfile = new ParentProfileFragment();
+        parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext());
 
         btnChat = view.findViewById(R.id.btnChat);
