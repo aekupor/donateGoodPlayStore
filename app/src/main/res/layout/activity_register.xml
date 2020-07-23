@@ -72,14 +72,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/btnFBRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="10dp" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegisterRegister"
         android:layout_width="wrap_content"
