@@ -1,7 +1,6 @@
 package com.example.donategood.fragments;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,52 +9,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
-import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.ParentProfile;
-import com.example.donategood.models.Notification;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProfileFragment extends Fragment implements ChangeNameFragment.ChangeNameDialogListener {
 
     public static final String TAG = "ProfileFragment";
 
     private static Camera camera;
-
-    private TextView tvNotificationsTitle;
-    private TextView tvPendingNotificationsTitle;
     private Boolean fbEdit;
-
-    private List<Notification> notifications;
-    private RecyclerView rvNotifications;
-    private NotificationAdapter notificationAdapter;
-    private LinearLayout pendingNotifications;
-
     private ParentProfile parentProfile;
 
     public ProfileFragment() {
@@ -113,119 +92,18 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         setHasOptionsMenu(true);
 
         parentProfile = new ParentProfile();
-        parentProfile.initializeVariables(view, getContext());
-
+        parentProfile.initializeVariables(view, getContext(), true);
         parentProfile.setUser(ParseUser.getCurrentUser());
         parentProfile.queryInfo(getContext());
-
-        rvNotifications = view.findViewById(R.id.rvNotifications);
-        tvNotificationsTitle = view.findViewById(R.id.tvNotificationsTitle);
-        pendingNotifications = view.findViewById(R.id.layoutNotification);
-        tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
-
-        tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
-        pendingNotifications.setVisibility(View.INVISIBLE);
-
-        notifications = new ArrayList<>();
-        notificationAdapter = new NotificationAdapter(getContext(), notifications);
-
-        rvNotifications.setAdapter(notificationAdapter);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
-        rvNotifications.setLayoutManager(linearLayoutManager2);
+        parentProfile.queryPosts(parentProfile.KEY_BOUGHT);
 
         camera = new Camera();
 
         checkFBLogin();
-        queryPosts(parentProfile.KEY_BOUGHT);
-
-        tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getNotifications();
-            }
-        });
-    }
-
-    protected void queryPosts(final String queryType) {
-        rvNotifications.setVisibility(View.INVISIBLE);
-        notificationAdapter.clear();
-        tvNotificationsTitle.setTypeface(null, Typeface.NORMAL);
-        tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
-        pendingNotifications.setVisibility(View.INVISIBLE);
-
-        parentProfile.queryPosts(queryType);
     }
 
     public static Camera getCamera() {
         return camera;
-    }
-
-    public void getNotifications() {
-        Log.i(TAG, "notification button clicked");
-
-        tvNotificationsTitle.setTypeface(null, Typeface.BOLD);
-        parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-        parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-        parentProfile.tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
-
-        parentProfile.adapter.clear();
-        notifications.clear();
-        parentProfile.rvOfferings.setVisibility(View.INVISIBLE);
-        rvNotifications.setVisibility(View.VISIBLE);
-        tvPendingNotificationsTitle.setVisibility(View.VISIBLE);
-        pendingNotifications.setVisibility(View.VISIBLE);
-        pendingNotifications.removeAllViews();
-
-        parentProfile.query.queryNotificationsForSeller(new FindCallback<Notification>() {
-            @Override
-            public void done(List<Notification> objects, ParseException e) {
-                if (e != null) {
-                    return;
-                }
-
-                if (objects != null) {
-                    for (Notification notification : objects) {
-                        if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                            //notification is for current user to approve
-                            Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
-                            notifications.add(notification);
-                        }
-                    }
-                    notificationAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        parentProfile.query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
-            @Override
-            public void done(List<Notification> objects, ParseException e) {
-                if (e != null) {
-                    return;
-                }
-
-                if (objects != null) {
-                    for (Notification notification : objects) {
-                        Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
-
-                        if (!notification.getUserSeen()) {
-                            TextView textView = new TextView(getContext());
-                            if (!notification.getUserActed()) {
-                                textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() + ".");
-                            } else if (notification.getKeyApproved()) {
-                                textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() + ".");
-                                notification.setUserSeen(true);
-                                notification.saveInBackground();
-                            } else {
-                                textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() + ".");
-                                notification.setUserSeen(true);
-                                notification.saveInBackground();
-                            }
-                            pendingNotifications.addView(textView);
-                        }
-                    }
-                }
-            }
-        });
     }
 
     public void checkFBLogin() {
