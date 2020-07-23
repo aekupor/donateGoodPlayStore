@@ -54,24 +54,32 @@
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         tools:text="100" />
 
-    <LinearLayout
+
+    <RadioGroup
         android:id="@+id/buttonLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfileMoneyRaised"
-        android:layout_marginTop="4dp"
+        android:layout_below="@id/ivProfileProfileImage"
         android:orientation="horizontal">
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileBoughtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="Bought"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            android:textSize="10dp"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileSoldTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,25 +87,50 @@
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="Sold"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            android:textSize="10dp"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileSellingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="Selling"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            android:textSize="10dp"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvNotificationsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:text="Notifications" />
-    </LinearLayout>
+            android:text="Notifications"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            android:textSize="10dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textStyle="bold" />
+    </RadioGroup>
 
     <View
         android:id="@+id/line"
