@@ -89,13 +89,17 @@ public class Query {
                 if (e != null) {
                     return;
                 }
-                parentProfile.adapter.clear();
-                parentProfile.selectedOfferings.clear();
-                parentProfile.selectedOfferings.addAll(objects);
-                parentProfile.adapter.notifyDataSetChanged();
-                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
+                updateAdapter(parentProfile, objects);
             }
         });
+    }
+
+    public void updateAdapter(ParentProfile parentProfile, List<Offering> objects) {
+        parentProfile.adapter.clear();
+        parentProfile.selectedOfferings.clear();
+        parentProfile.selectedOfferings.addAll(objects);
+        parentProfile.adapter.notifyDataSetChanged();
+        parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     public void queryUserRating(ParseUser user, final RatingBar ratingBar) {
@@ -127,7 +131,7 @@ public class Query {
         });
     }
 
-    public void queryPostsByCharity(Charity charity, Boolean selling, final ParentProfile parentProfile) {
+    public void queryPostsByCharity(Boolean selling, final ParentProfile parentProfile) {
         if (selling) {
             parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
             parentProfile.tvSoldTitle.setTypeface(null, Typeface.BOLD);
@@ -138,7 +142,7 @@ public class Query {
 
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", selling);
-        query.whereEqualTo("charity", charity);
+        query.whereEqualTo("charity", parentProfile.charity);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Offering>() {
             @Override
@@ -146,10 +150,7 @@ public class Query {
                 if (e != null) {
                     return;
                 }
-                parentProfile.selectedOfferings.clear();
-                parentProfile.selectedOfferings.addAll(objects);
-                parentProfile.adapter.notifyDataSetChanged();
-                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
+                updateAdapter(parentProfile, objects);
             }
         });
     }
@@ -203,11 +204,7 @@ public class Query {
                         }
                     }
                 }
-                parentProfile.adapter.clear();
-                parentProfile.selectedOfferings.clear();
-                parentProfile.selectedOfferings.addAll(newOfferings);
-                parentProfile.adapter.notifyDataSetChanged();
-                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
+                updateAdapter(parentProfile, newOfferings);
             }
         });
     }
