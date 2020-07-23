@@ -86,21 +86,21 @@ public class OtherUserProfileFragment extends Fragment {
         parentProfile.tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queryPosts(KEY_BOUGHT);
+                parentProfile.queryPosts(KEY_BOUGHT, user);
             }
         });
 
         parentProfile.tvSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queryPosts(KEY_SELLING);
+                parentProfile.queryPosts(KEY_SELLING, user);
             }
         });
 
         parentProfile.tvSoldTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queryPosts(KEY_SOLD);
+                parentProfile.queryPosts(KEY_SOLD, user);
             }
         });
 
@@ -112,12 +112,8 @@ public class OtherUserProfileFragment extends Fragment {
                     return;
                 }
                 user = objects.get(0);
-                parentProfile.loadPost.setUser(user, getContext(), parentProfile.tvName, parentProfile.ivProfileImage);
 
-                queryPosts(KEY_BOUGHT);
-
-                parentProfile.query.queryMoneyRaised(user, parentProfile.tvMoneyRaised);
-                parentProfile.query.queryUserRating(user, parentProfile.ratingBar);
+                parentProfile.queryInfo(user, getContext());
             }
         });
 
@@ -135,9 +131,5 @@ public class OtherUserProfileFragment extends Fragment {
         });
     }
 
-    protected void queryPosts(String queryType) {
-        parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
-        parentProfile.query.setBold(queryType, parentProfile.tvSoldTitle, parentProfile.tvSellingTitle, parentProfile.tvBoughtTitle);
-        parentProfile.query.queryPosts(user, queryType, parentProfile.adapter, parentProfile.selectedOfferings, parentProfile.pb);
-    }
+
 }

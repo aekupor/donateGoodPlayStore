@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Offering;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ import java.util.List;
 public class ParentProfile {
 
     public static final String TAG = "ParentProfile";
+    public static final String KEY_BOUGHT = "bought";
+    public static final String KEY_SELLING = "selling";
+    public static final String KEY_SOLD = "sold";
 
     public LoadPost loadPost;
     public Query query;
@@ -57,5 +61,19 @@ public class ParentProfile {
 
         loadPost = new LoadPost();
         query = new Query();
+    }
+
+    public void queryPosts(String queryType, ParseUser user) {
+        pb.setVisibility(ProgressBar.VISIBLE);
+        query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
+        query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
+    }
+
+    public void queryInfo(ParseUser user, Context context) {
+        loadPost.setUser(user, context, tvName, ivProfileImage);
+
+        queryPosts(KEY_BOUGHT, user);
+        query.queryMoneyRaised(user, tvMoneyRaised);
+        query.queryUserRating(user, ratingBar);
     }
 }
