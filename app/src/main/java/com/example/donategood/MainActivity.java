@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeVariables(int requestCode) {
         if (isProfile(requestCode)) {
-            ivPhotoToUpload = (ImageView) findViewById(R.id.ivOtherProfileProfileImage);
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
             camera = ProfileFragment.getCamera();
         } else if (requestCode == UPLOAD_PHOTO_CHARITY) {
             camera = NewCharityFragment.getCamera();

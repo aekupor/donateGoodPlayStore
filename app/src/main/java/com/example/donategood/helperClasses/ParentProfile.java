@@ -60,15 +60,15 @@ public class ParentProfile {
     public void initializeVariables(View view, Context context, Boolean currentUser) {
         isCurrentUser = currentUser;
 
-        tvName = view.findViewById(R.id.tvOtherProfileProfileName);
-        ivProfileImage = view.findViewById(R.id.ivOtherProfileProfileImage);
-        tvMoneyRaised = view.findViewById(R.id.tvOtherUserMoneyRaised);
-        rvOfferings = view.findViewById(R.id.rvOtherUserSelling);
-        tvBoughtTitle = view.findViewById(R.id.tvOtherBoughtTitle);
-        tvSellingTitle = view.findViewById(R.id.tvOtherSellingTitle);
-        tvSoldTitle = view.findViewById(R.id.tvOtherSoldTitle);
-        pb = (ProgressBar) view.findViewById(R.id.pbOtherProfileLoading);
-        ratingBar = (RatingBar) view.findViewById(R.id.rbOtherUserProfile);
+        tvName = view.findViewById(R.id.tvProfileProfileName);
+        ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
+        tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
+        rvOfferings = view.findViewById(R.id.rvProfileOfferings);
+        tvBoughtTitle = view.findViewById(R.id.tvProfileBoughtTitle);
+        tvSellingTitle = view.findViewById(R.id.tvProfileSellingTitle);
+        tvSoldTitle = view.findViewById(R.id.tvProfileSoldTitle);
+        pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
+        ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
 
         if (isCurrentUser) {
             initializeNotifications(view, context);

@@ -9,21 +9,21 @@
 
 
     <TextView
-        android:id="@+id/tvOtherProfileProfileName"
+        android:id="@+id/tvProfileProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Ashlee" />
 
     <ImageView
-        android:id="@+id/ivOtherProfileProfileImage"
+        android:id="@+id/ivProfileProfileImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/tvOtherProfileProfileName"
+        android:layout_below="@+id/tvProfileProfileName"
         android:layout_marginTop="4dp"
         tools:src="@tools:sample/avatars" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvOtherUserSelling"
+        android:id="@+id/rvProfileOfferings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/buttonLinearOther"
@@ -32,24 +32,24 @@
         android:layout_marginTop="4dp" />
 
     <TextView
-        android:id="@+id/tvOtherUserMoneyRaised"
+        android:id="@+id/tvProfileMoneyRaised"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivOtherProfileProfileImage"
+        android:layout_alignTop="@+id/ivProfileProfileImage"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/ivOtherProfileProfileImage"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
         tools:text="100" />
 
     <LinearLayout
         android:id="@+id/buttonLinearOther"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivOtherProfileProfileImage"
+        android:layout_below="@id/ivProfileProfileImage"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvOtherBoughtTitle"
+            android:id="@+id/tvProfileBoughtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -58,7 +58,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvOtherSoldTitle"
+            android:id="@+id/tvProfileSoldTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -68,7 +68,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvOtherSellingTitle"
+            android:id="@+id/tvProfileSellingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -85,7 +85,7 @@
         android:layout_below="@id/buttonLinearOther"/>
 
     <ProgressBar
-        android:id="@+id/pbOtherProfileLoading"
+        android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonLinearOther"
@@ -94,7 +94,7 @@
         android:layout_marginStart="97dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="21dp"
-        android:layout_toEndOf="@+id/tvOtherUserMoneyRaised"
+        android:layout_toEndOf="@+id/tvProfileMoneyRaised"
         android:visibility="invisible" />
 
     <Button
@@ -104,17 +104,17 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="180dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/tvOtherUserMoneyRaised"
+        android:layout_toEndOf="@+id/tvProfileMoneyRaised"
         android:text="Chat" />
 
     <RatingBar
-        android:id="@+id/rbOtherUserProfile"
+        android:id="@+id/rbProfile"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvOtherProfileProfileName"
+        android:layout_below="@+id/tvProfileProfileName"
         android:layout_marginStart="4dp"
         android:theme="@style/RatingBar"
         android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/tvOtherUserMoneyRaised" />
+        android:layout_toEndOf="@+id/tvProfileMoneyRaised" />
 </RelativeLayout>
