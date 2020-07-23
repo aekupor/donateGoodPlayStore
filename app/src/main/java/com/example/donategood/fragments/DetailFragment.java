@@ -337,28 +337,17 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private void purchaseItem() {
         Log.i(TAG, "purchase item");
 
-        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients=" + offering.getUser().get("venmoName") + "&amount=" + offering.getPrice().toString() + "&note=" + offering.getTitle()));
+        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients="
+                + offering.getUser().get("venmoName") + "&amount="
+                + offering.getPrice().toString() + "&note=" + offering.getTitle()));
         startActivity(implicit);
 
         Integer quantityLeft = offering.getQuantityLeft() - 1;
-        if (quantityLeft == 0) {
-            offering.setIsBought(true);
-            btnPurchase.setVisibility(View.INVISIBLE);
-        }
-        offering.setBoughtBy(ParseUser.getCurrentUser());
-        offering.addToBoughtByArray(ParseUser.getCurrentUser());
-        offering.setQuantityLeft(quantityLeft);
-        offering.saveInBackground();
-
         Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
         tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
 
-        Notification notification = new Notification();
-        notification.setUserActed(false);
-        notification.setKeyOffering(offering);
-        notification.setKeyUser(ParseUser.getCurrentUser());
-        notification.setSellingUser(offering.getUser());
-        notification.saveInBackground();
+        updateOffering(quantityLeft);
+        createNotification();
     }
 
     @Override
@@ -366,7 +355,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         Log.i(TAG, "got comment with text: " + inputText + " and rating: " + rating);
 
         saveComment(inputText, rating);
-        updateOfferingRating(rating)
+        updateOfferingRating(rating);
     }
 
     // Call this method to launch the edit dialog
@@ -413,5 +402,25 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             ratingBar.setNumStars(offeringRating);
         }
         offering.saveInBackground();
+    }
+
+    private void updateOffering(Integer quantityLeft) {
+        if (quantityLeft == 0) {
+            offering.setIsBought(true);
+            btnPurchase.setVisibility(View.INVISIBLE);
+        }
+        offering.setBoughtBy(ParseUser.getCurrentUser());
+        offering.addToBoughtByArray(ParseUser.getCurrentUser());
+        offering.setQuantityLeft(quantityLeft);
+        offering.saveInBackground();
+    }
+
+    private void createNotification() {
+        Notification notification = new Notification();
+        notification.setUserActed(false);
+        notification.setKeyOffering(offering);
+        notification.setKeyUser(ParseUser.getCurrentUser());
+        notification.setSellingUser(offering.getUser());
+        notification.saveInBackground();
     }
 }
