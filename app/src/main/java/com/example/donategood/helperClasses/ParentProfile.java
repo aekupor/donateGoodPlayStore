@@ -19,6 +19,7 @@ import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -87,6 +88,27 @@ public class ParentProfile {
         loadPost = new LoadPost();
         query = new Query();
 
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Log.i(TAG, "tab selected at position: " + position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        /*
         //set "sold" and "selling" tabs and their onClickListeners
         tvSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +141,8 @@ public class ParentProfile {
         if (profileType == KEY_CURRENT_USER) {
             initializeNotifications(view, context);
         }
+
+         */
     }
 
     public void initializeNotifications(View view, final Context context) {
@@ -164,7 +188,7 @@ public class ParentProfile {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();
             }
-            query.queryPosts(queryType, this);
+           // query.queryPosts(queryType, this);
         }
     }
 
@@ -180,10 +204,10 @@ public class ParentProfile {
 
     //set information for current or other user profile
     public void queryInfo(Context context) {
-        loadPost.setUser(user, context, tvName, ivProfileImage);
-        queryPosts(KEY_BOUGHT);
-        query.queryMoneyRaised(user, tvMoneyRaised);
-        query.setUserRating(user, ratingBar);
+        //loadPost.setUser(user, context, tvName, ivProfileImage);
+       // queryPosts(KEY_BOUGHT);
+       // query.queryMoneyRaised(user, tvMoneyRaised);
+       // query.setUserRating(user, ratingBar);
     }
 
     //set information for charity
