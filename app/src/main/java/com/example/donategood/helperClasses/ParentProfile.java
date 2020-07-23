@@ -164,7 +164,6 @@ public class ParentProfile {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();
             }
-            query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
             query.queryPosts(queryType, this);
         }
     }

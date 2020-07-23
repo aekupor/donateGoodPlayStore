@@ -209,6 +209,7 @@ public class Query {
         });
     }
     public void queryPosts(String queryType, ParentProfile parentProfile) {
+        setBold(queryType, parentProfile);
         if (queryType.equals(KEY_BOUGHT)) {
             queryBoughtPostsByUser(parentProfile);
         } else if (queryType.equals(KEY_SELLING)) {
@@ -218,16 +219,16 @@ public class Query {
         }
     }
 
-    public void setBold(String queryType, TextView tvSold, TextView tvSelling, TextView tvBought) {
-        tvSold.setTypeface(null, Typeface.NORMAL);
-        tvSelling.setTypeface(null, Typeface.NORMAL);
-        tvBought.setTypeface(null, Typeface.NORMAL);
+    public void setBold(String queryType, ParentProfile parentProfile) {
+        parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
+        parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
+        parentProfile.tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
         if (queryType.equals(KEY_BOUGHT)) {
-            tvBought.setTypeface(null, Typeface.BOLD);
+            parentProfile.tvBoughtTitle.setTypeface(null, Typeface.BOLD);
         } else if (queryType.equals(KEY_SELLING)) {
-            tvSelling.setTypeface(null, Typeface.BOLD);
+            parentProfile.tvSellingTitle.setTypeface(null, Typeface.BOLD);
         } else {
-            tvSold.setTypeface(null, Typeface.BOLD);
+            parentProfile.tvSoldTitle.setTypeface(null, Typeface.BOLD);
         }
     }
 
