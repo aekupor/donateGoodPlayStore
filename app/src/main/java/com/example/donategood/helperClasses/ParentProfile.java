@@ -28,6 +28,7 @@ public class ParentProfile {
 
     public LoadPost loadPost;
     public Query query;
+    public ParseUser user;
 
     public TextView tvName;
     public ImageView ivProfileImage;
@@ -61,19 +62,45 @@ public class ParentProfile {
 
         loadPost = new LoadPost();
         query = new Query();
+
+        tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(KEY_BOUGHT);
+            }
+        });
+
+        tvSellingTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(KEY_SELLING);
+            }
+        });
+
+        tvSoldTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryPosts(KEY_SOLD);
+            }
+        });
+
     }
 
-    public void queryPosts(String queryType, ParseUser user) {
+    public void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
         query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
         query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
     }
 
-    public void queryInfo(ParseUser user, Context context) {
+    public void queryInfo(Context context) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
 
-        queryPosts(KEY_BOUGHT, user);
+        queryPosts(KEY_BOUGHT);
         query.queryMoneyRaised(user, tvMoneyRaised);
         query.queryUserRating(user, ratingBar);
+    }
+
+    public void setUser(ParseUser parseUser) {
+        user = parseUser;
     }
 }

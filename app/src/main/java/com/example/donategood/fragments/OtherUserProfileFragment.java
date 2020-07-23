@@ -83,27 +83,6 @@ public class OtherUserProfileFragment extends Fragment {
 
         btnChat = view.findViewById(R.id.btnChat);
 
-        parentProfile.tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parentProfile.queryPosts(KEY_BOUGHT, user);
-            }
-        });
-
-        parentProfile.tvSellingTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parentProfile.queryPosts(KEY_SELLING, user);
-            }
-        });
-
-        parentProfile.tvSoldTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parentProfile.queryPosts(KEY_SOLD, user);
-            }
-        });
-
         parentProfile.query.queryUserByName(userName, new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
@@ -112,8 +91,9 @@ public class OtherUserProfileFragment extends Fragment {
                     return;
                 }
                 user = objects.get(0);
+                parentProfile.setUser(user);
 
-                parentProfile.queryInfo(user, getContext());
+                parentProfile.queryInfo(getContext());
             }
         });
 
