@@ -59,9 +59,6 @@ public class ParentProfile {
     public RecyclerView rvOfferings;
     public SmallOfferingAdapter adapter;
     public List<Offering> selectedOfferings;
-    public TextView tvBoughtTitle;
-    public TextView tvSoldTitle;
-    public TextView tvSellingTitle;
     public ProgressBar pb;
     public RatingBar ratingBar;
 
@@ -73,8 +70,6 @@ public class ParentProfile {
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
         rvOfferings = view.findViewById(R.id.rvProfileOfferings);
-        tvSellingTitle = view.findViewById(R.id.tvProfileSellingTitle);
-        tvSoldTitle = view.findViewById(R.id.tvProfileSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
 
         //initialize adapter and recycler view
@@ -95,6 +90,13 @@ public class ParentProfile {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 Log.i(TAG, "tab selected at position: " + position);
+                if (position == 0) {
+                    queryPosts(KEY_BOUGHT);
+                } else if (position == 1) {
+                    queryPosts(KEY_SOLD);
+                } else if (position == 2) {
+                    queryPosts(KEY_SELLING);
+                }
             }
 
             @Override
@@ -108,41 +110,15 @@ public class ParentProfile {
             }
         });
 
-        /*
-        //set "sold" and "selling" tabs and their onClickListeners
-        tvSellingTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                queryPosts(KEY_SELLING);
-            }
-        });
-
-        tvSoldTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                queryPosts(KEY_SOLD);
-            }
-        });
-
-        //only user profile and other user profile has a "bought" tab
+        //only user profile and other user profile has a rating bar
         if (profileType != KEY_CHARITY) {
-            tvBoughtTitle = view.findViewById(R.id.tvProfileBoughtTitle);
             ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
-
-            tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    queryPosts(KEY_BOUGHT);
-                }
-            });
         }
 
         //only the current user has a "notifications" tab
         if (profileType == KEY_CURRENT_USER) {
             initializeNotifications(view, context);
         }
-
-         */
     }
 
     public void initializeNotifications(View view, final Context context) {
@@ -188,7 +164,7 @@ public class ParentProfile {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();
             }
-           // query.queryPosts(queryType, this);
+           query.queryPosts(queryType, this);
         }
     }
 
@@ -204,10 +180,10 @@ public class ParentProfile {
 
     //set information for current or other user profile
     public void queryInfo(Context context) {
-        //loadPost.setUser(user, context, tvName, ivProfileImage);
-       // queryPosts(KEY_BOUGHT);
-       // query.queryMoneyRaised(user, tvMoneyRaised);
-       // query.setUserRating(user, ratingBar);
+        loadPost.setUser(user, context, tvName, ivProfileImage);
+        queryPosts(KEY_BOUGHT);
+        query.queryMoneyRaised(user, tvMoneyRaised);
+        query.setUserRating(user, ratingBar);
     }
 
     //set information for charity
@@ -229,12 +205,6 @@ public class ParentProfile {
     //query and set notifications for current user
     public void getNotifications(final Context context) {
         Log.i(TAG, "notification button clicked");
-
-        //change bolding of titles
-        tvNotificationsTitle.setTypeface(null, Typeface.BOLD);
-        tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-        tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-        tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
 
         //clear adapter and set notifications tab as visible
         adapter.clear();

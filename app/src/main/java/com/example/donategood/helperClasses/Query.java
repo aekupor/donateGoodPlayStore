@@ -1,6 +1,5 @@
 package com.example.donategood.helperClasses;
 
-import android.graphics.Typeface;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -144,14 +143,6 @@ public class Query {
 
     //find a charity's sold and sellings
     public void setCharityPosts(Boolean selling, final ParentProfile parentProfile) {
-        if (selling) {
-            parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-            parentProfile.tvSoldTitle.setTypeface(null, Typeface.BOLD);
-        } else {
-            parentProfile.tvSellingTitle.setTypeface(null, Typeface.BOLD);
-            parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-        }
-
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", selling);
         query.whereEqualTo("charity", parentProfile.charity);
@@ -226,27 +217,12 @@ public class Query {
 
     //calls methods needed based on queryType
     public void queryPosts(String queryType, ParentProfile parentProfile) {
-        setBold(queryType, parentProfile);
         if (queryType.equals(KEY_BOUGHT)) {
             queryPostsUserBought(parentProfile);
         } else if (queryType.equals(KEY_SELLING)) {
             queryPostsUserIsSelling(false, parentProfile);
         } else if (queryType.equals(KEY_SOLD)) {
            queryPostsUserIsSelling(true, parentProfile);
-        }
-    }
-
-    //sets text bold based on queryType
-    public void setBold(String queryType, ParentProfile parentProfile) {
-        parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
-        parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-        parentProfile.tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
-        if (queryType.equals(KEY_BOUGHT)) {
-            parentProfile.tvBoughtTitle.setTypeface(null, Typeface.BOLD);
-        } else if (queryType.equals(KEY_SELLING)) {
-            parentProfile.tvSellingTitle.setTypeface(null, Typeface.BOLD);
-        } else {
-            parentProfile.tvSoldTitle.setTypeface(null, Typeface.BOLD);
         }
     }
 
