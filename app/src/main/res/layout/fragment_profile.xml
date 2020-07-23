@@ -55,14 +55,14 @@
         tools:text="100" />
 
 
-    <RadioGroup
-        android:id="@+id/buttonLinear"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivProfileProfileImage"
         android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tvProfileBoughtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,16 +70,9 @@
             android:layout_weight="1"
             android:text="Bought"
             android:textColor="@color/purple"
-            android:theme="@style/Theme.MaterialComponents"
-            app:cornerRadius="5dp"
-            app:strokeColor="@color/purple"
-            android:backgroundTint="#FFFFFF"
-            android:textSize="10dp"
-            app:strokeWidth="2dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tvProfileSoldTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,16 +81,9 @@
             android:layout_weight="1"
             android:text="Sold"
             android:textColor="@color/purple"
-            android:theme="@style/Theme.MaterialComponents"
-            app:cornerRadius="5dp"
-            app:strokeColor="@color/purple"
-            android:backgroundTint="#FFFFFF"
-            android:textSize="10dp"
-            app:strokeWidth="2dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tvProfileSellingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,16 +91,9 @@
             android:layout_weight="1"
             android:text="Selling"
             android:textColor="@color/purple"
-            android:theme="@style/Theme.MaterialComponents"
-            app:cornerRadius="5dp"
-            app:strokeColor="@color/purple"
-            android:backgroundTint="#FFFFFF"
-            android:textSize="10dp"
-            app:strokeWidth="2dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tvNotificationsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,22 +101,16 @@
             android:layout_weight="1"
             android:text="Notifications"
             android:textColor="@color/purple"
-            android:theme="@style/Theme.MaterialComponents"
-            app:cornerRadius="5dp"
-            android:textSize="10dp"
-            app:strokeColor="@color/purple"
-            android:backgroundTint="#FFFFFF"
-            app:strokeWidth="2dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
-    </RadioGroup>
+
+    </com.google.android.material.tabs.TabLayout>
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@id/buttonLinear"/>
+        android:layout_below="@id/tabLayout"/>
 
     <ProgressBar
         android:id="@+id/pbProfileLoading"
