@@ -5,7 +5,6 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Notification;
@@ -79,10 +78,10 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void querySellingPostsByUser(ParseUser user, Boolean bought, final SmallOfferingAdapter adapter, final List<Offering> offeringsList, final ProgressBar pb) {
+    public void querySellingPostsByUser(Boolean bought, final ParentProfile parentProfile) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);
-        query.whereEqualTo("user", user);
+        query.whereEqualTo("user", parentProfile.user);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Offering>() {
             @Override
@@ -90,11 +89,11 @@ public class Query {
                 if (e != null) {
                     return;
                 }
-                adapter.clear();
-                offeringsList.clear();
-                offeringsList.addAll(objects);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                parentProfile.adapter.clear();
+                parentProfile.selectedOfferings.clear();
+                parentProfile.selectedOfferings.addAll(objects);
+                parentProfile.adapter.notifyDataSetChanged();
+                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
@@ -216,9 +215,9 @@ public class Query {
         if (queryType.equals(KEY_BOUGHT)) {
             queryBoughtPostsByUser(parentProfile);
         } else if (queryType.equals(KEY_SELLING)) {
-            //querySellingPostsByUser(parentProfile.user, false, parentProfile);
+            querySellingPostsByUser(false, parentProfile);
         } else if (queryType.equals(KEY_SOLD)) {
-           // querySellingPostsByUser(parentProfile.user, true, parentProfile);
+           querySellingPostsByUser(true, parentProfile);
         }
     }
 
