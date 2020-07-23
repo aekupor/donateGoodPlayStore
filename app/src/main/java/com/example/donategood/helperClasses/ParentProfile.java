@@ -155,15 +155,11 @@ public class ParentProfile {
             Boolean selling;
             if (queryType == KEY_SELLING) {
                 selling = false;
-                tvSellingTitle.setTypeface(null, Typeface.BOLD);
-                tvSoldTitle.setTypeface(null, Typeface.NORMAL);
             } else {
                 selling = true;
-                tvSellingTitle.setTypeface(null, Typeface.NORMAL);
-                tvSoldTitle.setTypeface(null, Typeface.BOLD);
             }
 
-            query.queryPostsByCharity(charity, selling, selectedOfferings, pb, adapter);
+            query.queryPostsByCharity(charity, selling, selectedOfferings, pb, adapter, tvSoldTitle, tvSellingTitle);
         } else {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();

@@ -129,9 +129,17 @@ public class Query {
         });
     }
 
-    public void queryPostsByCharity(Charity charity, Boolean bought, final List<Offering> selectedOfferings, final ProgressBar pb, final OfferingAdapter adapter) {
+    public void queryPostsByCharity(Charity charity, Boolean selling, final List<Offering> selectedOfferings, final ProgressBar pb, final OfferingAdapter adapter, TextView tvSold, TextView tvSelling) {
+        if (selling) {
+            tvSelling.setTypeface(null, Typeface.NORMAL);
+            tvSold.setTypeface(null, Typeface.BOLD);
+        } else {
+            tvSelling.setTypeface(null, Typeface.BOLD);
+            tvSold.setTypeface(null, Typeface.NORMAL);
+        }
+
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
-        query.whereEqualTo("isBought", bought);
+        query.whereEqualTo("isBought", selling);
         query.whereEqualTo("charity", charity);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Offering>() {
