@@ -1,7 +1,6 @@
 package com.example.donategood.helperClasses;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,7 +45,6 @@ public class ParentProfile {
     public Charity charity;
     public String profileType;
 
-    public TextView tvNotificationsTitle;
     public TextView tvPendingNotificationsTitle;
     public List<Notification> notifications;
     public RecyclerView rvNotifications;
@@ -133,7 +131,6 @@ public class ParentProfile {
 
     public void initializeNotifications(View view, final Context context) {
         rvNotifications = view.findViewById(R.id.rvNotifications);
-        tvNotificationsTitle = view.findViewById(R.id.tvNotificationsTitle);
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
 
@@ -148,14 +145,6 @@ public class ParentProfile {
         rvNotifications.setAdapter(notificationAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(context);
         rvNotifications.setLayoutManager(linearLayoutManager2);
-
-        //set "notification" onClickListener
-        tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getNotifications(context);
-            }
-        });
     }
 
     public void queryPosts(String queryType) {
@@ -183,7 +172,6 @@ public class ParentProfile {
         rvOfferings.setVisibility(View.VISIBLE);
         rvNotifications.setVisibility(View.INVISIBLE);
         notificationAdapter.clear();
-        tvNotificationsTitle.setTypeface(null, Typeface.NORMAL);
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         pendingNotifications.setVisibility(View.INVISIBLE);
     }
