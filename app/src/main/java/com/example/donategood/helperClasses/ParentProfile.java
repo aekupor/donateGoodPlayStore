@@ -165,7 +165,7 @@ public class ParentProfile {
                 hideNotificationsTab();
             }
             query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
-            query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
+            query.queryPosts(queryType, this);
         }
     }
 

@@ -184,7 +184,7 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryBoughtPostsByUser(final ParseUser currentUser, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
+    public void queryBoughtPostsByUser(final ParentProfile parentProfile) {
         queryAllPostsBoughtAndNot(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -198,27 +198,27 @@ public class Query {
                     if (boughtUsers != null && !boughtUsers.isEmpty()) {
                         for (Object object : boughtUsers) {
                             ParseUser user = (ParseUser) object;
-                            if (user.getObjectId().equals(currentUser.getObjectId())) {
+                            if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 newOfferings.add(offering);
                             }
                         }
                     }
                 }
-                adapter.clear();
-                selectedOfferings.clear();
-                selectedOfferings.addAll(newOfferings);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                parentProfile.adapter.clear();
+                parentProfile.selectedOfferings.clear();
+                parentProfile.selectedOfferings.addAll(newOfferings);
+                parentProfile.adapter.notifyDataSetChanged();
+                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
-    public void queryPosts(ParseUser user, String queryType, final SmallOfferingAdapter adapter, final List<Offering> selectedOfferings, final ProgressBar pb) {
+    public void queryPosts(String queryType, ParentProfile parentProfile) {
         if (queryType.equals(KEY_BOUGHT)) {
-            queryBoughtPostsByUser(user, adapter, selectedOfferings, pb);
+            queryBoughtPostsByUser(parentProfile);
         } else if (queryType.equals(KEY_SELLING)) {
-            querySellingPostsByUser(user, false, adapter, selectedOfferings, pb);
+            //querySellingPostsByUser(parentProfile.user, false, parentProfile);
         } else if (queryType.equals(KEY_SOLD)) {
-            querySellingPostsByUser(user, true, adapter, selectedOfferings, pb);
+           // querySellingPostsByUser(parentProfile.user, true, parentProfile);
         }
     }
 
