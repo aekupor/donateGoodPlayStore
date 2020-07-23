@@ -75,26 +75,39 @@
         android:layout_below="@+id/priceQuantityList"
         android:layout_marginTop="8dp"
         android:orientation="vertical">
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTakePhoto"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Take Photo" />
+            android:text="Take Photo"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUploadPhoto"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Upload Photo" />
+            android:text="Upload Photo"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTakeMultiple"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Take Multiple" />
+            android:text="Take Multiple"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp" />
     </LinearLayout>
 
     <ImageView
