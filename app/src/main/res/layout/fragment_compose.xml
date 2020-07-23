@@ -6,25 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ComposeFragment">
 
-    <EditText
-        android:id="@+id/etTitle"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="title of offering" />
+        app:boxStrokeColor="@color/purple"
+        android:id="@+id/etTitleBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="title">
 
-    <EditText
-        android:id="@+id/etPrice"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etTitle"
+        app:boxStrokeColor="@color/purple"
+        android:id="@+id/etPriceBox"
+        android:layout_below="@+id/etTitleBox"
         android:layout_marginTop="4dp"
-        android:hint="price" />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="price">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/purple"
+        android:id="@+id/etQuantityBox"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/etPriceBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="quantity">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etQuantity"
+        android:layout_below="@+id/etPriceBox"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:text="Take Photo" />
@@ -42,8 +78,8 @@
         android:id="@+id/ivComposePhoto"
         android:layout_width="285dp"
         android:layout_height="197dp"
-        android:layout_below="@+id/etQuantity"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/etPriceBox"
+        android:layout_marginTop="8dp"
         app:srcCompat="@drawable/no_image" />
 
     <Spinner
@@ -77,16 +113,6 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/btnSubmit"
         android:visibility="invisible" />
-
-    <EditText
-        android:id="@+id/etQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etTitle"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/etPrice"
-        android:hint="quantity" />
 
     <Button
         android:id="@+id/btnTakeMultiple"
