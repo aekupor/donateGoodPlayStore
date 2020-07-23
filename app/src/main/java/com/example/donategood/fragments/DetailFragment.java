@@ -365,6 +365,20 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     public void onFinishEditDialog(String inputText, String rating) {
         Log.i(TAG, "got comment with text: " + inputText + " and rating: " + rating);
 
+        saveComment(inputText, rating);
+        updateOfferingRating(rating)
+    }
+
+    // Call this method to launch the edit dialog
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        ComposeCommentFragment composeCommentFragment = (ComposeCommentFragment) ComposeCommentFragment.newInstance();
+        // SETS the target fragment for use later when sending results
+        composeCommentFragment.setTargetFragment(DetailFragment.this, 300);
+        composeCommentFragment.show(fm, "fragment_compose_comment");
+    }
+
+    private void saveComment(String inputText, String rating) {
         Comment comment = new Comment();
         comment.setByUser(ParseUser.getCurrentUser());
         comment.setForPost(offering);
@@ -383,8 +397,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         allComments.add(comment);
         commentAdapter.notifyDataSetChanged();
         tvCommentTitle.setVisibility(View.VISIBLE);
+    }
 
-        //update offering rating
+    private void updateOfferingRating(String rating) {
         Integer offeringRating = offering.getRating();
         if (offeringRating == 0) {
             offering.setRating(Integer.parseInt(rating));
@@ -398,14 +413,5 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             ratingBar.setNumStars(offeringRating);
         }
         offering.saveInBackground();
-    }
-
-    // Call this method to launch the edit dialog
-    private void showEditDialog() {
-        FragmentManager fm = getFragmentManager();
-        ComposeCommentFragment composeCommentFragment = (ComposeCommentFragment) ComposeCommentFragment.newInstance();
-        // SETS the target fragment for use later when sending results
-        composeCommentFragment.setTargetFragment(DetailFragment.this, 300);
-        composeCommentFragment.show(fm, "fragment_compose_comment");
     }
 }
