@@ -100,19 +100,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivComposePhoto" />
 
-    <EditText
-        android:id="@+id/etTags"
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerCharity"
+        app:boxStrokeColor="@color/purple"
+        android:id="@+id/etTagsBox"
         android:layout_marginTop="4dp"
-        android:hint="tags" />
+        android:layout_below="@+id/spinnerCharity"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="tags">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etTags"
+        android:layout_below="@+id/etTagsBox"
         android:layout_marginTop="4dp"
         android:text="Submit" />
 
@@ -139,7 +149,7 @@
         android:id="@+id/etVenmoCompose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etTags"
+        android:layout_below="@+id/etTagsBox"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/btnSubmit"
