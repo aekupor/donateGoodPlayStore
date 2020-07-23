@@ -111,9 +111,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick register button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                registerUser(username, password);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -128,29 +128,6 @@ public class LoginActivity extends AppCompatActivity {
                     //TODO: better error handling to tell user what is wrong
                     Log.e(TAG, "Issue with login", e);
                     Toast.makeText(LoginActivity.this, "Issue with login!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //navigate to the main activity if the user has signed in properly
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                goToMainActivity();
-            }
-        });
-    }
-
-    private void registerUser(String username, String password) {
-        Log.i(TAG, "attempting to register user " + username);
-
-        // Create the ParseUser
-        ParseUser user = new ParseUser();
-        // Set core properties
-        user.setUsername(username);
-        user.setPassword(password);
-        // Invoke signUpInBackground
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with registration", e);
-                    Toast.makeText(LoginActivity.this, "Issue with registering!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //navigate to the main activity if the user has signed in properly
