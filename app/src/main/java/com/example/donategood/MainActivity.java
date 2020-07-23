@@ -1,11 +1,5 @@
 package com.example.donategood;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +11,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.donategood.fragments.ComposeFragment;
 import com.example.donategood.fragments.HomeFragment;
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeVariables(int requestCode) {
         if (isProfile(requestCode)) {
-            ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivOtherProfileProfileImage);
             camera = ProfileFragment.getCamera();
         } else if (requestCode == UPLOAD_PHOTO_CHARITY) {
             camera = NewCharityFragment.getCamera();

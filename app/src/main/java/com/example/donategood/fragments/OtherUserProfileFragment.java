@@ -106,6 +106,4 @@ public class OtherUserProfileFragment extends Fragment {
             }
         });
     }
-
-
 }

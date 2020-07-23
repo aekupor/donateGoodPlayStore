@@ -83,7 +83,6 @@ public class ParentProfile {
                 queryPosts(KEY_SOLD);
             }
         });
-
     }
 
     public void queryPosts(String queryType) {
