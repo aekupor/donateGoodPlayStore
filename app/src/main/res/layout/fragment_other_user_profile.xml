@@ -26,7 +26,7 @@
         android:id="@+id/rvProfileOfferings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/buttonLinearOther"
+        android:layout_below="@+id/toggleButton"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="4dp" />
@@ -41,23 +41,30 @@
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         tools:text="100" />
 
-    <LinearLayout
-        android:id="@+id/buttonLinearOther"
+    <RadioGroup
+        android:id="@+id/toggleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivProfileProfileImage"
         android:orientation="horizontal">
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileBoughtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="Bought"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileSoldTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,30 +72,44 @@
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="Sold"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvProfileSellingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="Selling"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            android:backgroundTint="#FFFFFF"
+            app:strokeWidth="2dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textStyle="bold" />
-    </LinearLayout>
+    </RadioGroup>
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@id/buttonLinearOther"/>
+        android:layout_below="@id/toggleButton"/>
 
     <ProgressBar
         android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonLinearOther"
+        android:layout_above="@+id/toggleButton"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="97dp"
