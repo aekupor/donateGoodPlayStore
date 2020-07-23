@@ -1,11 +1,11 @@
 package com.example.donategood.helperClasses;
 
 import android.graphics.Typeface;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
@@ -129,12 +129,23 @@ public class Query {
         });
     }
 
-    public void queryPostsByCharity(Charity charity, Boolean bought, FindCallback<Offering> callback) {
+    public void queryPostsByCharity(Charity charity, Boolean bought, final List<Offering> selectedOfferings, final ProgressBar pb, final OfferingAdapter adapter) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);
         query.whereEqualTo("charity", charity);
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
-        query.findInBackground(callback);
+        query.findInBackground(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                selectedOfferings.clear();
+                selectedOfferings.addAll(objects);
+                adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
+            }
+        });
     }
 
     public void queryCharityMoneyRaised(final Charity charity, final TextView tvMoney) {

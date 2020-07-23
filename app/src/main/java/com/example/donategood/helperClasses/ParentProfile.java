@@ -163,20 +163,7 @@ public class ParentProfile {
                 tvSoldTitle.setTypeface(null, Typeface.BOLD);
             }
 
-            query.queryPostsByCharity(charity, selling, new FindCallback<Offering>() {
-                @Override
-                public void done(List<Offering> offerings, ParseException e) {
-                    if (e != null) {
-                        Log.e(TAG, "Issue with getting offerings", e);
-                        return;
-                    }
-                    Log.i(TAG, "Successfully received this number of offerings: " + offerings.size());
-                    selectedOfferings.clear();
-                    selectedOfferings.addAll(offerings);
-                    adapter.notifyDataSetChanged();
-                    pb.setVisibility(ProgressBar.INVISIBLE);
-                }
-            });
+            query.queryPostsByCharity(charity, selling, selectedOfferings, pb, adapter);
         } else {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();
