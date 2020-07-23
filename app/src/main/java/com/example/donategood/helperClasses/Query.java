@@ -86,7 +86,8 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void querySellingPostsByUser(Boolean bought, final ParentProfile parentProfile) {
+    //finds posts that a user is selling
+    public void queryPostsUserIsSelling(Boolean bought, final ParentProfile parentProfile) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);
         query.whereEqualTo("user", parentProfile.user);
@@ -102,6 +103,7 @@ public class Query {
         });
     }
 
+    //update adapter with list of offerings
     public void updateAdapter(ParentProfile parentProfile, List<Offering> objects) {
         parentProfile.adapter.clear();
         parentProfile.selectedOfferings.clear();
@@ -110,7 +112,8 @@ public class Query {
         parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
-    public void queryUserRating(ParseUser user, final RatingBar ratingBar) {
+    //determine and set user rating
+    public void setUserRating(ParseUser user, final RatingBar ratingBar) {
         final Integer[] totalRating = {0};
         final Integer[] numPosts = {0};
 
@@ -139,7 +142,8 @@ public class Query {
         });
     }
 
-    public void queryPostsByCharity(Boolean selling, final ParentProfile parentProfile) {
+    //find a charity's sold and sellings
+    public void setCharityPosts(Boolean selling, final ParentProfile parentProfile) {
         if (selling) {
             parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
             parentProfile.tvSoldTitle.setTypeface(null, Typeface.BOLD);
@@ -163,7 +167,8 @@ public class Query {
         });
     }
 
-    public void queryCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
+    //determines amount of money raised for a charity
+    public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
         final Integer[] moneyRaised = {0};
         queryAllPosts(new FindCallback<Offering>() {
             @Override
@@ -181,6 +186,7 @@ public class Query {
         });
     }
 
+    //search for posts based on parameters
     public void search(String searchText, FindCallback<Offering> callback, Integer minPrice, Integer maxPrice, Integer minRating) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereContains("title", searchText);
@@ -192,7 +198,8 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public void queryBoughtPostsByUser(final ParentProfile parentProfile) {
+    //find posts that a specific user has bought
+    public void queryPostsUserBought(final ParentProfile parentProfile) {
         queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -216,17 +223,20 @@ public class Query {
             }
         });
     }
+
+    //calls methods needed based on queryType
     public void queryPosts(String queryType, ParentProfile parentProfile) {
         setBold(queryType, parentProfile);
         if (queryType.equals(KEY_BOUGHT)) {
-            queryBoughtPostsByUser(parentProfile);
+            queryPostsUserBought(parentProfile);
         } else if (queryType.equals(KEY_SELLING)) {
-            querySellingPostsByUser(false, parentProfile);
+            queryPostsUserIsSelling(false, parentProfile);
         } else if (queryType.equals(KEY_SOLD)) {
-           querySellingPostsByUser(true, parentProfile);
+           queryPostsUserIsSelling(true, parentProfile);
         }
     }
 
+    //sets text bold based on queryType
     public void setBold(String queryType, ParentProfile parentProfile) {
         parentProfile.tvSoldTitle.setTypeface(null, Typeface.NORMAL);
         parentProfile.tvSellingTitle.setTypeface(null, Typeface.NORMAL);
@@ -240,6 +250,7 @@ public class Query {
         }
     }
 
+    //find money raised for a specified user
     public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised) {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
@@ -267,6 +278,7 @@ public class Query {
         });
     }
 
+    //finds all notifications where the seller hasn't yet acted
     public void queryNotificationsForSeller(FindCallback<Notification> callback) {
         ParseQuery<Notification> query = ParseQuery.getQuery(Notification.class);
         query.whereEqualTo("userActed", false);
@@ -275,6 +287,7 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    //finds all notifications for the specified buying user
     public void queryNotificationsForBuyer(ParseUser user, FindCallback<Notification> callback) {
         ParseQuery<Notification> query = ParseQuery.getQuery(Notification.class);
         query.whereEqualTo("byUser", user);

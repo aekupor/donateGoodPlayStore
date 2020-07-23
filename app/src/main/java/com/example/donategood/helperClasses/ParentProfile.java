@@ -159,7 +159,7 @@ public class ParentProfile {
                 selling = true;
             }
 
-            query.queryPostsByCharity(selling, this);
+            query.setCharityPosts(selling, this);
         } else {
             if (profileType == KEY_CURRENT_USER) {
                 hideNotificationsTab();
@@ -183,13 +183,13 @@ public class ParentProfile {
         loadPost.setUser(user, context, tvName, ivProfileImage);
         queryPosts(KEY_BOUGHT);
         query.queryMoneyRaised(user, tvMoneyRaised);
-        query.queryUserRating(user, ratingBar);
+        query.setUserRating(user, ratingBar);
     }
 
     //set information for charity
     public void queryCharityInfo(Context context) {
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
-        query.queryCharityMoneyRaised(charity, tvMoneyRaised);
+        query.findCharityMoneyRaised(charity, tvMoneyRaised);
         pb.setVisibility(ProgressBar.INVISIBLE);
         queryPosts(KEY_SELLING);
     }
