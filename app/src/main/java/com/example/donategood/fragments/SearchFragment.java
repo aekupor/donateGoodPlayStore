@@ -1,13 +1,6 @@
 package com.example.donategood.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +12,12 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
@@ -136,19 +135,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 String price = (String) adapterView.getItemAtPosition(pos);
-
-                if (price.equals("All prices")) {
-                    minPrice = 0;
-                    maxPrice = Integer.MAX_VALUE;
-                } else if (!price.equals("50+")) {
-                    String[] priceArray = price.split(" - ");
-                    minPrice = Integer.parseInt(priceArray[0]);
-                    maxPrice = Integer.parseInt(priceArray[1]);
-                } else {
-                    minPrice = 50;
-                    maxPrice = Integer.MAX_VALUE;
-                }
-                Log.i(TAG, "price min: " + minPrice.toString() + " max: " + maxPrice.toString());
+                determinePriceRange(price);
             }
 
             @Override
@@ -157,5 +144,20 @@ public class SearchFragment extends Fragment {
             }
 
         });
+    }
+
+    private void determinePriceRange(String price) {
+        if (price.equals("All prices")) {
+            minPrice = 0;
+            maxPrice = Integer.MAX_VALUE;
+        } else if (!price.equals("50+")) {
+            String[] priceArray = price.split(" - ");
+            minPrice = Integer.parseInt(priceArray[0]);
+            maxPrice = Integer.parseInt(priceArray[1]);
+        } else {
+            minPrice = 50;
+            maxPrice = Integer.MAX_VALUE;
+        }
+        Log.i(TAG, "price min: " + minPrice.toString() + " max: " + maxPrice.toString());
     }
 }
