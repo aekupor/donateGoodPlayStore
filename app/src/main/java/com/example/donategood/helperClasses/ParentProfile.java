@@ -146,11 +146,11 @@ public class ParentProfile {
         if (profileType == KEY_CHARITY) {
             Boolean selling;
             if (queryType == KEY_SELLING) {
-                selling = true;
+                selling = false;
                 tvSellingTitle.setTypeface(null, Typeface.BOLD);
                 tvSoldTitle.setTypeface(null, Typeface.NORMAL);
             } else {
-                selling = false;
+                selling = true;
                 tvSellingTitle.setTypeface(null, Typeface.NORMAL);
                 tvSoldTitle.setTypeface(null, Typeface.BOLD);
             }
@@ -189,10 +189,16 @@ public class ParentProfile {
 
     public void queryInfo(Context context) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
-
         queryPosts(KEY_BOUGHT);
         query.queryMoneyRaised(user, tvMoneyRaised);
         query.queryUserRating(user, ratingBar);
+    }
+
+    public void queryCharityInfo(Context context) {
+        loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
+        query.queryCharityMoneyRaised(charity, tvMoneyRaised);
+        pb.setVisibility(ProgressBar.INVISIBLE);
+        queryPosts(KEY_SELLING);
     }
 
     public void setUser(ParseUser parseUser) {

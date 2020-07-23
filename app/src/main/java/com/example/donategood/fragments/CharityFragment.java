@@ -86,10 +86,7 @@ public class CharityFragment extends Fragment {
                 parentProfile.setCharity(charity);
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
 
-                parentProfile.loadPost.setCharityWithCharity(parentProfile.charity, getContext(), parentProfile.tvName, parentProfile.ivProfileImage);
-                parentProfile.query.queryCharityMoneyRaised(parentProfile.charity, parentProfile.tvMoneyRaised);
-                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
-                parentProfile.queryPosts(parentProfile.KEY_SELLING);
+                parentProfile.queryCharityInfo(getContext());
             }
         });
     }
