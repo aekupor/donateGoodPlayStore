@@ -67,6 +67,7 @@ public class ParentProfile {
     public void initializeVariables(View view, Context context, String queryType) {
         profileType = queryType;
 
+        //find items on view
         tvName = view.findViewById(R.id.tvProfileProfileName);
         ivProfileImage = view.findViewById(R.id.ivProfileProfileImage);
         tvMoneyRaised = view.findViewById(R.id.tvProfileMoneyRaised);
@@ -75,22 +76,7 @@ public class ParentProfile {
         tvSoldTitle = view.findViewById(R.id.tvProfileSoldTitle);
         pb = (ProgressBar) view.findViewById(R.id.pbProfileLoading);
 
-        if (profileType != KEY_CHARITY) {
-            tvBoughtTitle = view.findViewById(R.id.tvProfileBoughtTitle);
-            ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
-
-            tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    queryPosts(KEY_BOUGHT);
-                }
-            });
-        }
-
-        if (profileType == KEY_CURRENT_USER) {
-            initializeNotifications(view, context);
-        }
-
+        //initialize adapter and recycler view
         selectedOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(context, selectedOfferings);
 
@@ -101,6 +87,7 @@ public class ParentProfile {
         loadPost = new LoadPost();
         query = new Query();
 
+        //set "sold" and "selling" tabs and their onClickListeners
         tvSellingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +101,24 @@ public class ParentProfile {
                 queryPosts(KEY_SOLD);
             }
         });
+
+        //only user profile and other user profile has a "bought" tab
+        if (profileType != KEY_CHARITY) {
+            tvBoughtTitle = view.findViewById(R.id.tvProfileBoughtTitle);
+            ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
+
+            tvBoughtTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    queryPosts(KEY_BOUGHT);
+                }
+            });
+        }
+
+        //only the current user has a "notifications" tab
+        if (profileType == KEY_CURRENT_USER) {
+            initializeNotifications(view, context);
+        }
     }
 
     public void initializeNotifications(View view, final Context context) {
@@ -122,9 +127,11 @@ public class ParentProfile {
         pendingNotifications = view.findViewById(R.id.layoutNotification);
         tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
 
+        //make notifications invisible until user clicks on "notification" tab
         tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         pendingNotifications.setVisibility(View.INVISIBLE);
 
+        //initialize adapter and recycler view
         notifications = new ArrayList<>();
         notificationAdapter = new NotificationAdapter(context, notifications);
 
@@ -132,6 +139,7 @@ public class ParentProfile {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(context);
         rvNotifications.setLayoutManager(linearLayoutManager2);
 
+        //set "notification" onClickListener
         tvNotificationsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,14 +179,15 @@ public class ParentProfile {
             });
         } else {
             if (profileType == KEY_CURRENT_USER) {
-                changeVisibility();
+                hideNotificationsTab();
             }
             query.setBold(queryType, tvSoldTitle, tvSellingTitle, tvBoughtTitle);
             query.queryPosts(user, queryType, adapter, selectedOfferings, pb);
         }
     }
 
-    public void changeVisibility() {
+    //make notifications tab invisible
+    public void hideNotificationsTab() {
         rvOfferings.setVisibility(View.VISIBLE);
         rvNotifications.setVisibility(View.INVISIBLE);
         notificationAdapter.clear();
@@ -187,6 +196,7 @@ public class ParentProfile {
         pendingNotifications.setVisibility(View.INVISIBLE);
     }
 
+    //set information for current or other user profile
     public void queryInfo(Context context) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
         queryPosts(KEY_BOUGHT);
@@ -194,6 +204,7 @@ public class ParentProfile {
         query.queryUserRating(user, ratingBar);
     }
 
+    //set information for charity
     public void queryCharityInfo(Context context) {
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
         query.queryCharityMoneyRaised(charity, tvMoneyRaised);
@@ -209,14 +220,17 @@ public class ParentProfile {
         charity = currentCharity;
     }
 
+    //query and set notifications for current user
     public void getNotifications(final Context context) {
         Log.i(TAG, "notification button clicked");
 
+        //change bolding of titles
         tvNotificationsTitle.setTypeface(null, Typeface.BOLD);
         tvSoldTitle.setTypeface(null, Typeface.NORMAL);
         tvSellingTitle.setTypeface(null, Typeface.NORMAL);
         tvBoughtTitle.setTypeface(null, Typeface.NORMAL);
 
+        //clear adapter and set notifications tab as visible
         adapter.clear();
         notifications.clear();
         rvOfferings.setVisibility(View.INVISIBLE);
@@ -225,6 +239,7 @@ public class ParentProfile {
         pendingNotifications.setVisibility(View.VISIBLE);
         pendingNotifications.removeAllViews();
 
+        //query notifications for offerings that the current user is selling
         query.queryNotificationsForSeller(new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
@@ -245,6 +260,7 @@ public class ParentProfile {
             }
         });
 
+        //query notifications for offering that the current user is attempting to buy
         query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
             @Override
             public void done(List<Notification> objects, ParseException e) {
@@ -256,15 +272,19 @@ public class ParentProfile {
                     for (Notification notification : objects) {
                         Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
 
+                        //if user hasn't seen the notification yet, then display
                         if (!notification.getUserSeen()) {
                             TextView textView = new TextView(context);
                             if (!notification.getUserActed()) {
+                                //notification is still pending on seller approval
                                 textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() + ".");
                             } else if (notification.getKeyApproved()) {
+                                //attempt to buy has been approved by seller
                                 textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() + ".");
                                 notification.setUserSeen(true);
                                 notification.saveInBackground();
                             } else {
+                                //attempt to buy has been denied by seller
                                 textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() + ".");
                                 notification.setUserSeen(true);
                                 notification.saveInBackground();
