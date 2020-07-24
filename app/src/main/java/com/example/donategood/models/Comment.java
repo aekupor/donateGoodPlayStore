@@ -11,6 +11,7 @@ public class Comment extends ParseObject {
     public static final String KEY_BY_USER = "byUser";
     public static final String KEY_TEXT = "commentText";
     public static final String KEY_RATING = "rating";
+    public static final String KEY_VERIFIED = "verified";
 
     public String getForPost() {
         return getString(KEY_FOR_POST);
@@ -42,5 +43,13 @@ public class Comment extends ParseObject {
 
     public void setRating(Integer rating) {
         put(KEY_RATING, rating);
+    }
+
+    public Boolean getVerified() {
+        return getBoolean(KEY_VERIFIED);
+    }
+
+    public void setVerified(Boolean verified) {
+        put(KEY_VERIFIED, verified);
     }
 }

@@ -65,6 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView tvDescription;
         ImageView ivProfileImage;
         RatingBar rbRating;
+        ImageView ivVerified;
 
         LoadPost loadPost;
 
@@ -75,6 +76,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             tvDescription = itemView.findViewById(R.id.tvTextComment);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImageComment);
             rbRating = itemView.findViewById(R.id.tvRatingComment);
+            ivVerified = itemView.findViewById(R.id.ivVerified);
 
             loadPost = new LoadPost();
 
