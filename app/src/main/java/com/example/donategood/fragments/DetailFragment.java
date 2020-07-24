@@ -382,6 +382,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         // First let's define the intent to trigger when notification is selected
 // Start out by creating a normal intent (in this case to open an activity)
         Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtra("goToFragment", "profileNotifications");
 // Next, let's turn this into a PendingIntent using
 //   public static PendingIntent getActivity(Context context, int requestCode,
 //       Intent intent, int flags)
