@@ -19,7 +19,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Query {
 
@@ -230,9 +237,11 @@ public class Query {
     }
 
     //find money raised for a specified user
-    public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised, final ImageView ivLevelIcon, final Context context) {
+    public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised, final ImageView ivLevelIcon, final Context context, final ImageView ivCharityIcon) {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
+
+        final HashMap<Charity, Integer> moneyRaisedByCharity = new HashMap<>();
 
         queryAllPosts(new FindCallback<Offering>() {
             @Override
@@ -244,10 +253,22 @@ public class Query {
                             ParseUser user = (ParseUser) object;
                             if (user.getObjectId().equals(currentUser.getObjectId())) {
                                 moneyRaised[0] += offering.getPrice();
+                                Charity charity = offering.getCharity();
+                                if (moneyRaisedByCharity.containsKey(charity)) {
+                                    moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice());
+                                } else {
+                                    moneyRaisedByCharity.put(charity, offering.getPrice());
+                                }
                             }
                         }
                         if (offering.getUser().getObjectId().equals(currentUser.getObjectId())) {
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
+                            Charity charity = offering.getCharity();
+                            if (moneyRaisedByCharity.containsKey(charity)) {
+                                moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice() * boughtUsers.size());
+                            } else {
+                                moneyRaisedByCharity.put(charity, offering.getPrice() * boughtUsers.size());
+                            }
                         }
                     }
                 }
@@ -278,8 +299,42 @@ public class Query {
                             .circleCrop()
                             .into(ivLevelIcon);
                 }
+
+                HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
+                Set<Charity> charities = sortedMap.keySet();
+                for (Charity charity : charities) {
+                    Charity fetchedCharity = null;
+                    try {
+                        fetchedCharity = charity.fetchIfNeeded();
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    Glide.with(context)
+                            .load(fetchedCharity.getImage().getUrl())
+                            .into(ivCharityIcon);
+                    return;
+                }
             }
         });
+    }
+
+    public HashMap<Charity, Integer> sortMapByPoints(Map<Charity, Integer> pointValues) {
+        // Create a list from elements of HashMap
+        List<Map.Entry<Charity, Integer> > list = new LinkedList<Map.Entry<Charity, Integer> >(pointValues.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<Charity, Integer>>() {
+            public int compare(Map.Entry<Charity, Integer> o1, Map.Entry<Charity, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<Charity, Integer> temp = new LinkedHashMap<Charity, Integer>();
+        for (Map.Entry<Charity, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 
     //finds all notifications where the seller hasn't yet acted
