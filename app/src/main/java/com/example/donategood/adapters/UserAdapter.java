@@ -9,9 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
+import com.example.donategood.fragments.OtherUserProfileFragment;
 import com.example.donategood.helperClasses.LoadPost;
 import com.parse.ParseUser;
 
@@ -85,10 +89,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             int position = getAdapterPosition();
             // make sure the position is valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION) {
-                // get the post at the position
                 ParseUser user = users.get(position);
-
                 Log.i(TAG, "user clicked: " + user.getUsername());
+
+                //go to that user's profile fragment
+                final FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                Fragment fragment = OtherUserProfileFragment.newInstance(user.getUsername());
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
             }
         }
     }
