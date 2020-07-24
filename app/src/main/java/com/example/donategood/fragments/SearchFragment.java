@@ -210,9 +210,14 @@ public class SearchFragment extends Fragment {
                 if (e != null) {
                     return;
                 }
-                for (ParseUser user : objects) {
-                    Log.i(TAG, "found user: " + user.getUsername());
+                if (objects.size() == 0) {
+                    Log.i(TAG, "No users found");
+                    Toast.makeText(getContext(), "No users were found", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                allUsers.clear();
+                allUsers.addAll(objects);
+                userAdapter.notifyDataSetChanged();
             }
         });
     }
