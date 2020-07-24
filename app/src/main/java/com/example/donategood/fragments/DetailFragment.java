@@ -356,7 +356,12 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients="
                 + offering.getUser().get("venmoName") + "&amount="
                 + offering.getPrice().toString() + "&note=" + offering.getTitle()));
-        startActivity(implicit);
+
+        if (implicit.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivity(implicit);
+        } else {
+            Toast.makeText(getContext(), "You must have venmo installed", Toast.LENGTH_SHORT).show();
+        }
 
         //remove one from the quantity left
         Integer quantityLeft = offering.getQuantityLeft() - 1;
