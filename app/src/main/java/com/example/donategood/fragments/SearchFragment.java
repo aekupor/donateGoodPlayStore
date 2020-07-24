@@ -59,18 +59,10 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        etSearchText = view.findViewById(R.id.etSearchBar);
-        btnSearch = view.findViewById(R.id.btnSearch);
-        rvOfferings = view.findViewById(R.id.rvSearchOfferings);
-        spPrice = (Spinner) view.findViewById(R.id.spinnerPriceSearch);
-        ratingBar = (RatingBar) view.findViewById(R.id.rbSearchRating);
-
-        ratingBar.setEnabled(true);
-
-        setUpSpinner();
+        initializeSearchByOffering(view);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.searchTabLayout);
 
@@ -80,6 +72,7 @@ public class SearchFragment extends Fragment {
                 int position = tab.getPosition();
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
+                    initializeSearchByOffering(view);
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
                 } else {
@@ -97,6 +90,18 @@ public class SearchFragment extends Fragment {
 
             }
         });
+    }
+
+    private void initializeSearchByOffering(View view) {
+        etSearchText = view.findViewById(R.id.etSearchBar);
+        btnSearch = view.findViewById(R.id.btnSearch);
+        rvOfferings = view.findViewById(R.id.rvSearchOfferings);
+        spPrice = (Spinner) view.findViewById(R.id.spinnerPriceSearch);
+        ratingBar = (RatingBar) view.findViewById(R.id.rbSearchRating);
+
+        ratingBar.setEnabled(true);
+
+        setUpPriceSpinner();
 
         query = new Query();
         allOfferings = new ArrayList<>();
@@ -142,7 +147,7 @@ public class SearchFragment extends Fragment {
         }, minPrice, maxPrice, minRating);
     }
 
-    private void setUpSpinner() {
+    private void setUpPriceSpinner() {
         final List<String> priceRanges = new ArrayList<>();
         priceRanges.add("All prices");
         priceRanges.add("0 - 15");
