@@ -254,16 +254,27 @@ public class Query {
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 tvMoneyRaised.setText("$" + totalMoney.toString());
 
+                int iconImage = -1;
+
+                if (totalMoney < 100) {
+                    iconImage = R.drawable.level_one;
+                } else if (totalMoney < 200){
+                    iconImage = R.drawable.level_two;
+                } else if (totalMoney < 300){
+                    iconImage = R.drawable.level_three;
+                } else if (totalMoney < 400){
+                    iconImage = R.drawable.level_four;
+                } else if (totalMoney < 500){
+                    iconImage = R.drawable.level_five;
+                } else {
+                    iconImage = R.drawable.crown;
+                }
+
                 if (totalMoney < 25) {
                     ivLevelIcon.setVisibility(View.INVISIBLE);
-                } else if (totalMoney < 100) {
-                    Glide.with(context)
-                            .load(R.drawable.level_one)
-                            .circleCrop()
-                            .into(ivLevelIcon);
                 } else {
                     Glide.with(context)
-                            .load(R.drawable.level_two)
+                            .load(iconImage)
                             .circleCrop()
                             .into(ivLevelIcon);
                 }
