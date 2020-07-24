@@ -1,6 +1,12 @@
 package com.example.donategood;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
@@ -16,6 +22,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ParseApplication extends Application {
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -48,5 +55,13 @@ public class ParseApplication extends Application {
                 .clientKey("donateGoodMasterKeySecret")  // set explicitly unless clientKey is explicitly configured on Parse server
                 .clientBuilder(builder)
                 .server("https://donate-good.herokuapp.com/parse/").build());
+
+        // Configure the notification channel
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel("donateGood", "Notification Channel", importance);
+        channel.setDescription("Reminders");
+        // Register the channel with the notifications manager
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.createNotificationChannel(channel);
     }
 }
