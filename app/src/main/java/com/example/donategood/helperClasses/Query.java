@@ -178,7 +178,7 @@ public class Query {
     }
 
     //search for posts based on parameters
-    public void search(String searchText, FindCallback<Offering> callback, Integer minPrice, Integer maxPrice, Integer minRating) {
+    public void searchForOffering(String searchText, FindCallback<Offering> callback, Integer minPrice, Integer maxPrice, Integer minRating) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereContains("title", searchText);
         query.whereEqualTo("isBought", false);
@@ -271,6 +271,12 @@ public class Query {
         query.include("forUser");
         query.include("forOffering");
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
+    public void searchForUser(String searchName, FindCallback<ParseUser> callback) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereMatches("username", searchName);
         query.findInBackground(callback);
     }
 }

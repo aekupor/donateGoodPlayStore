@@ -27,6 +27,7 @@ import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,7 +172,7 @@ public class SearchFragment extends Fragment {
 
     private void querySearchForOffering(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
-        query.search(searchText, new FindCallback<Offering>() {
+        query.searchForOffering(searchText, new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
                 if (e != null) {
@@ -192,16 +193,17 @@ public class SearchFragment extends Fragment {
 
     private void querySearchForUser(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
-        /*query.searchForUser(searchText, new FindCallback<Offering>() {
+        query.searchForUser(searchText, new FindCallback<ParseUser>() {
             @Override
-            public void done(List<Offering> offerings, ParseException e) {
+            public void done(List<ParseUser> objects, ParseException e) {
                 if (e != null) {
                     return;
                 }
+                for (ParseUser user : objects) {
+                    Log.i(TAG, "found user: " + user.getUsername());
+                }
             }
         });
-        
-         */
     }
 
     private void setUpPriceSpinner() {
