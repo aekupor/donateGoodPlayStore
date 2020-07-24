@@ -241,9 +241,25 @@ public class SearchFragment extends Fragment {
             }
         });
     }
-    
+
     private void querySearchForCharity(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
+        query.findCharity(searchText, new FindCallback<Charity>() {
+            @Override
+            public void done(List<Charity> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                if (objects.size() == 0) {
+                    Log.i(TAG, "No charities found");
+                    Toast.makeText(getContext(), "No charities were found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                allCharities.clear();
+                allCharities.addAll(objects);
+                charityAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void setUpPriceSpinner() {
