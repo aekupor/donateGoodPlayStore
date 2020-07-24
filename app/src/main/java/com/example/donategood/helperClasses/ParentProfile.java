@@ -60,6 +60,7 @@ public class ParentProfile {
     public ProgressBar pb;
     public RatingBar ratingBar;
     public ImageView ivLevelIcon;
+    public ImageView ivCharityIcon;
 
     public void initializeVariables(View view, final Context context, final String queryType) {
         profileType = queryType;
@@ -123,6 +124,7 @@ public class ParentProfile {
         if (profileType != KEY_CHARITY) {
             ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
             ivLevelIcon = view.findViewById(R.id.ivLevelIcon);
+            ivCharityIcon = view.findViewById(R.id.ivCharityIcon);
         }
 
         //only the current user has a "notifications" tab
