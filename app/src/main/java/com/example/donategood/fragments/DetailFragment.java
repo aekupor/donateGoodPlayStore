@@ -393,10 +393,20 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     //saves comments to backend
     private void saveComment(String inputText, String rating) {
+        //check if user writing the comment is verified or not
+        Boolean verified = false;
+        ArrayList<Object> boughtByArray = offering.getBoughtByArray();
+        for (Object object : boughtByArray) {
+            if (((ParseUser) object).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                verified = true;
+            }
+        }
+
         Comment comment = new Comment();
         comment.setByUser(ParseUser.getCurrentUser());
         comment.setForPost(offering);
         comment.setText(inputText);
+        comment.setVerified(verified);
         comment.setRating(Integer.parseInt(rating));
         comment.saveInBackground(new SaveCallback() {
             @Override
