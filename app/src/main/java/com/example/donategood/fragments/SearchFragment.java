@@ -24,6 +24,7 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.adapters.UserAdapter;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
@@ -44,13 +45,17 @@ public class SearchFragment extends Fragment {
     private TextView tvPriceTitle;
     private TextView tvRatingTitle;
 
+    private Query query;
     private RecyclerView rvOfferings;
+
     private SmallOfferingAdapter adapter;
     private List<Offering> allOfferings;
-    private Query query;
 
     private UserAdapter userAdapter;
     private List<ParseUser> allUsers;
+
+    private CharityAdapter charityAdapter;
+    private List<Charity> allCharities;
 
     private Integer minPrice;
     private Integer maxPrice;
@@ -79,7 +84,7 @@ public class SearchFragment extends Fragment {
                 int position = tab.getPosition();
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
-                    setVisbilityForOfferingSearch();
+                    setVisibilityForOfferingSearch();
                     setSubmitButtonForOfferingSearch();
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
@@ -133,13 +138,30 @@ public class SearchFragment extends Fragment {
         adapter.clear();
         allUsers.clear();
         userAdapter.clear();
+        allCharities.clear();
+        charityAdapter.clear();
     }
 
-    private void setVisibilityForUserSearch() {
+    private void makeAllInvisible() {
         spPrice.setVisibility(View.INVISIBLE);
         ratingBar.setVisibility(View.INVISIBLE);
         tvRatingTitle.setVisibility(View.INVISIBLE);
         tvPriceTitle.setVisibility(View.INVISIBLE);
+    }
+
+    private void setVisibilityForCharitySearch() {
+        makeAllInvisible();
+
+        etSearchText.setHint("charity name");
+        etSearchText.setText("");
+
+        clearAdapters();
+
+        rvOfferings.setAdapter(charityAdapter);
+    }
+
+    private void setVisibilityForUserSearch() {
+        makeAllInvisible();
 
         etSearchText.setHint("user name");
         etSearchText.setText("");
@@ -149,7 +171,7 @@ public class SearchFragment extends Fragment {
         rvOfferings.setAdapter(userAdapter);
     }
 
-    private void setVisbilityForOfferingSearch() {
+    private void setVisibilityForOfferingSearch() {
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
         tvRatingTitle.setVisibility(View.VISIBLE);
