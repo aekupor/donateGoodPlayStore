@@ -37,6 +37,9 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     public static final String TAG = "SearchFragment";
+    private static final String KEY_CHARITY = "charity";
+    private static final String KEY_USER = "user";
+    private static final String KEY_OFFERING = "offering";
 
     private EditText etSearchText;
     private Spinner spPrice;
@@ -85,13 +88,15 @@ public class SearchFragment extends Fragment {
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
                     setVisibilityForOfferingSearch();
-                    setSubmitButtonForOfferingSearch();
+                    setSubmitButton(KEY_OFFERING);
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
+                    setVisibilityForCharitySearch();
+                    setSubmitButton(KEY_CHARITY);
                 } else {
                     Log.i(TAG, "search by user clicked");
                     setVisibilityForUserSearch();
-                    setSubmitButtonForUserSearch();
+                    setSubmitButton(KEY_USER);
                 }
             }
 
@@ -103,7 +108,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void setSubmitButtonForUserSearch() {
+    private void setSubmitButton(final String searchType) {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,23 +116,14 @@ public class SearchFragment extends Fragment {
                 if (searchText.isEmpty()) {
                     Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    querySearchForUser(searchText);
-                }
-            }
-        });
-    }
+                    if (searchType == KEY_CHARITY) {
 
-    private void setSubmitButtonForOfferingSearch() {
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                minRating = Math.round(ratingBar.getRating());
-
-                String searchText = etSearchText.getText().toString();
-                if (searchText.isEmpty()) {
-                    Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
-                } else {
-                    querySearchForOffering(searchText);
+                    } else if (searchType == KEY_USER) {
+                        querySearchForUser(searchText);
+                    } else {
+                        minRating = Math.round(ratingBar.getRating());
+                        querySearchForOffering(searchText);
+                    }
                 }
             }
         });
@@ -209,7 +205,7 @@ public class SearchFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
 
-        setSubmitButtonForOfferingSearch();
+        setSubmitButton(KEY_OFFERING);
     }
 
     private void querySearchForOffering(String searchText) {
