@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -62,21 +63,21 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeSearchByOffering(view);
+        initializeVariables(view);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.searchTabLayout);
-
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
-                    initializeSearchByOffering(view);
+                    searchByOffering();
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
                 } else {
                     Log.i(TAG, "search by user clicked");
+                    searchByUser();
                 }
             }
 
@@ -92,7 +93,19 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void initializeSearchByOffering(View view) {
+    private void searchByUser() {
+        spPrice.setVisibility(View.INVISIBLE);
+        ratingBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void searchByOffering() {
+        allOfferings.clear();
+        adapter.clear();
+        spPrice.setVisibility(View.VISIBLE);
+        ratingBar.setVisibility(View.VISIBLE);
+    }
+
+    private void initializeVariables(View view) {
         etSearchText = view.findViewById(R.id.etSearchBar);
         btnSearch = view.findViewById(R.id.btnSearch);
         rvOfferings = view.findViewById(R.id.rvSearchOfferings);
