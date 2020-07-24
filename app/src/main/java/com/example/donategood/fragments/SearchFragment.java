@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
+import com.example.donategood.adapters.CharityAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.adapters.UserAdapter;
 import com.example.donategood.helperClasses.Query;
@@ -117,7 +118,7 @@ public class SearchFragment extends Fragment {
                     Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
                     if (searchType == KEY_CHARITY) {
-
+                        querySearchForCharity(searchText);
                     } else if (searchType == KEY_USER) {
                         querySearchForUser(searchText);
                     } else {
@@ -190,6 +191,8 @@ public class SearchFragment extends Fragment {
         adapter = new SmallOfferingAdapter(getContext(), allOfferings);
         allUsers = new ArrayList<>();
         userAdapter = new UserAdapter(getContext(), allUsers);
+        allCharities = new ArrayList<>();
+        charityAdapter = new CharityAdapter(getContext(), allCharities);
 
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -237,6 +240,10 @@ public class SearchFragment extends Fragment {
                 userAdapter.notifyDataSetChanged();
             }
         });
+    }
+    
+    private void querySearchForCharity(String searchText) {
+        Log.i(TAG, "Search for: " + searchText);
     }
 
     private void setUpPriceSpinner() {
