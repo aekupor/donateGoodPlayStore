@@ -9,9 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
+import com.example.donategood.fragments.CharityFragment;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.models.Charity;
 
@@ -85,10 +89,13 @@ public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.ViewHold
             int position = getAdapterPosition();
             // make sure the position is valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION) {
-                // get the post at the position
                 Charity charity = charities.get(position);
-
                 Log.i(TAG, "charity clicked: " + charity.getTitle());
+
+                //go to that charities's profile fragment
+                final FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                Fragment fragment = CharityFragment.newInstance(charity.getTitle());
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
             }
         }
     }
