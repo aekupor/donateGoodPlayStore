@@ -33,6 +33,7 @@ public class Query {
     public static final String KEY_BOUGHT = "bought";
     public static final String KEY_SELLING = "selling";
     public static final String KEY_SOLD = "sold";
+    private List<Offering> savedBoughtPostsForUser;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -201,6 +202,9 @@ public class Query {
 
     //find posts that a specific user has bought
     public void queryPostsUserBought(final ParentProfile parentProfile) {
+        if (savedBoughtPostsForUser != null) {
+            updateAdapter(parentProfile, savedBoughtPostsForUser);
+        }
         queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> offerings, ParseException e) {
@@ -220,6 +224,7 @@ public class Query {
                         }
                     }
                 }
+                savedBoughtPostsForUser = offerings;
                 updateAdapter(parentProfile, newOfferings);
             }
         });
