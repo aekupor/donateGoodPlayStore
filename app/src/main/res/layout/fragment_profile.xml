@@ -157,8 +157,17 @@
         android:id="@+id/ivLevelIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/tvProfileProfileName"
+        android:src="@drawable/level_one" />
+
+    <ImageView
+        android:id="@+id/ivCharityIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/ivLevelIcon"
         android:src="@drawable/level_one" />
 
 </RelativeLayout>
