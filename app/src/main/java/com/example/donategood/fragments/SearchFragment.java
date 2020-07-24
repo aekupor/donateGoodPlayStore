@@ -80,6 +80,7 @@ public class SearchFragment extends Fragment {
                 } else {
                     Log.i(TAG, "search by user clicked");
                     setVisibilityForUserSearch();
+                    setSubmitButtonForUserSearch();
                 }
             }
 
@@ -91,6 +92,36 @@ public class SearchFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+    }
+
+    private void setSubmitButtonForUserSearch() {
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchText = etSearchText.getText().toString();
+                if (searchText.isEmpty()) {
+                    Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    querySearchForUser(searchText);
+                }
+            }
+        });
+    }
+
+    private void setSubmitButtonForOfferingSearch() {
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                minRating = Math.round(ratingBar.getRating());
+
+                String searchText = etSearchText.getText().toString();
+                if (searchText.isEmpty()) {
+                    Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    querySearchForOffering(searchText);
+                }
             }
         });
     }
@@ -135,22 +166,10 @@ public class SearchFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvOfferings.setLayoutManager(linearLayoutManager);
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                minRating = Math.round(ratingBar.getRating());
-
-                String searchText = etSearchText.getText().toString();
-                if (searchText.isEmpty()) {
-                    Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
-                } else {
-                    querySearch(searchText);
-                }
-            }
-        });
+        setSubmitButtonForOfferingSearch();
     }
 
-    private void querySearch(String searchText) {
+    private void querySearchForOffering(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
         query.search(searchText, new FindCallback<Offering>() {
             @Override
@@ -169,6 +188,20 @@ public class SearchFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }, minPrice, maxPrice, minRating);
+    }
+
+    private void querySearchForUser(String searchText) {
+        Log.i(TAG, "Search for: " + searchText);
+        /*query.searchForUser(searchText, new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+            }
+        });
+        
+         */
     }
 
     private void setUpPriceSpinner() {
