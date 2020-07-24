@@ -58,7 +58,7 @@ public class ParseApplication extends Application {
 
         // Configure the notification channel
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel("donateGood", "Notification Channel", importance);
+        NotificationChannel channel = new NotificationChannel("donateGoodChannel", "Notification Channel", importance);
         channel.setDescription("Reminders");
         // Register the channel with the notifications manager
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

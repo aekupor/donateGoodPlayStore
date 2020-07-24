@@ -1,5 +1,7 @@
 package com.example.donategood.fragments;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -358,6 +361,18 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
         tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
         updateQuantityLeft(quantityLeft);
+
+        //send local notification
+        NotificationCompat.Builder mBuilder =
+                // Builder class for devices targeting API 26+ requires a channel ID
+                new NotificationCompat.Builder(getContext(), "donateGoodChannel")
+                        .setSmallIcon(R.drawable.ic_baseline_person_outline_24)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+
+        NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(10, mBuilder.build());
+        
 
         createNotification();
     }
