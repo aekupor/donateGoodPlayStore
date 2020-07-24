@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
+import com.example.donategood.adapters.UserAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
@@ -47,6 +48,9 @@ public class SearchFragment extends Fragment {
     private SmallOfferingAdapter adapter;
     private List<Offering> allOfferings;
     private Query query;
+
+    private UserAdapter userAdapter;
+    private List<ParseUser> allUsers;
 
     private Integer minPrice;
     private Integer maxPrice;
@@ -133,6 +137,13 @@ public class SearchFragment extends Fragment {
         tvRatingTitle.setVisibility(View.INVISIBLE);
         tvPriceTitle.setVisibility(View.INVISIBLE);
         etSearchText.setHint("user name");
+
+        allUsers = new ArrayList<>();
+        userAdapter = new UserAdapter(getContext(), allUsers);
+
+        rvOfferings.setAdapter(userAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvOfferings.setLayoutManager(linearLayoutManager);
     }
 
     private void setVisbilityForOfferingSearch() {
