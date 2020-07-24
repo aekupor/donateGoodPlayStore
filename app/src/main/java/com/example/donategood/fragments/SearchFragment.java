@@ -23,6 +23,7 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -70,6 +71,32 @@ public class SearchFragment extends Fragment {
         ratingBar.setEnabled(true);
 
         setUpSpinner();
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.searchTabLayout);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                if (position == 0) {
+                    Log.i(TAG, "search by offering clicked");
+                } else if (position == 1) {
+                    Log.i(TAG, "search by charity clicked");
+                } else {
+                    Log.i(TAG, "search by user clicked");
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         query = new Query();
         allOfferings = new ArrayList<>();
