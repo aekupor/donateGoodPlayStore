@@ -6,13 +6,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SearchFragment">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/searchTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tvSearchOffering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="Offering"
+            android:textColor="@color/purple"
+            android:textStyle="bold" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tvSearchCharity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="Charity"
+            android:textColor="@color/purple"
+            android:textStyle="bold" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tvSearchUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="User"
+            android:textColor="@color/purple"
+            android:textStyle="bold" />
+
+    </com.google.android.material.tabs.TabLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:boxStrokeColor="@color/purple"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"
+        android:layout_below="@+id/searchTabLayout"
         android:id="@+id/etSearchBarBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="offering title">
