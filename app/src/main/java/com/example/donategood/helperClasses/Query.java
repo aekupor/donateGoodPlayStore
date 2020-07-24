@@ -36,6 +36,8 @@ public class Query {
     private List<Offering> savedBoughtPostsForUser;
     private List<Offering> savedSellingPostsForUser;
     private List<Offering> savedSoldPostsForUser;
+    private List<Offering> savedSellingPostsForCharity;
+    private List<Offering> savedSoldPostsForCharity;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -168,7 +170,14 @@ public class Query {
     }
 
     //find a charity's sold and sellings
-    public void setCharityPosts(Boolean selling, final ParentProfile parentProfile) {
+    public void setCharityPosts(final Boolean selling, final ParentProfile parentProfile) {
+        if (selling && savedSellingPostsForCharity != null) {
+            updateAdapter(parentProfile, savedSellingPostsForCharity);
+            return;
+        } else if (!selling && savedSoldPostsForCharity != null) {
+            updateAdapter(parentProfile, savedSoldPostsForCharity);
+            return;
+        }
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", selling);
         query.whereEqualTo("charity", parentProfile.charity);
@@ -178,6 +187,11 @@ public class Query {
             public void done(List<Offering> objects, ParseException e) {
                 if (e != null) {
                     return;
+                }
+                if (!selling) {
+                    savedSoldPostsForCharity = objects;
+                } else {
+                    savedSellingPostsForCharity = objects;
                 }
                 updateAdapter(parentProfile, objects);
             }
