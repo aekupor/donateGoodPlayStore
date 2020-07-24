@@ -153,4 +153,12 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_toEndOf="@+id/tvProfileMoneyRaised" />
 
+    <ImageView
+        android:id="@+id/ivLevelIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/tvProfileProfileName"
+        android:src="@drawable/level_one" />
+
 </RelativeLayout>

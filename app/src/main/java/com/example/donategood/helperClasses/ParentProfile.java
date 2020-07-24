@@ -59,6 +59,7 @@ public class ParentProfile {
     public List<Offering> selectedOfferings;
     public ProgressBar pb;
     public RatingBar ratingBar;
+    public ImageView ivLevelIcon;
 
     public void initializeVariables(View view, final Context context, final String queryType) {
         profileType = queryType;
@@ -118,9 +119,10 @@ public class ParentProfile {
             }
         });
 
-        //only user profile and other user profile has a rating bar
+        //only user profile and other user profile has a rating bar and level icon
         if (profileType != KEY_CHARITY) {
             ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
+            ivLevelIcon = view.findViewById(R.id.ivLevelIcon);
         }
 
         //only the current user has a "notifications" tab

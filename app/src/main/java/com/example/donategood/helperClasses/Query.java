@@ -57,7 +57,6 @@ public class Query {
     //find specific charity from its name
     public void findCharity(String charityName, FindCallback<Charity> callback) {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
-        query.setLimit(1);
         query.whereEqualTo("title", charityName);
         query.findInBackground(callback);
     }
