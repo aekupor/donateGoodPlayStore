@@ -73,6 +73,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         private ImageView ivOfferingPhoto;
         private ImageView ivCharityProfile;
         private RatingBar ratingBar;
+        private ImageView ivUserProfile;
 
         private LoadPost loadPost;
 
@@ -85,6 +86,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
             ivOfferingPhoto = itemView.findViewById(R.id.ivOfferingPhoto);
             ivCharityProfile = itemView.findViewById(R.id.ivCharityProfile);
             ratingBar = itemView.findViewById(R.id.offeringRatingBar);
+            ivUserProfile = itemView.findViewById(R.id.ivCardUserImage);
 
             loadPost = new LoadPost();
 
@@ -93,6 +95,7 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
 
         public void bind(Offering offering) {
             loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
+            loadPost.setUser(offering.getUser(), context, tvUser, ivUserProfile);
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
             if (offering.getRating() == 0) {
