@@ -87,6 +87,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             loadPost.setUser(comment.getByUser(), context, tvUsername, ivProfileImage);
             tvDescription.setText(comment.getText());
             rbRating.setNumStars(comment.getRating());
+            if (!comment.getVerified()) {
+                ivVerified.setVisibility(View.INVISIBLE);
+            }
         }
 
         public void onClick(View v) {
