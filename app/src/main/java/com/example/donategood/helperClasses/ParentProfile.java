@@ -182,7 +182,7 @@ public class ParentProfile {
     public void queryInfo(Context context) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
         queryPosts(KEY_BOUGHT);
-        query.queryMoneyRaised(user, tvMoneyRaised);
+        query.queryMoneyRaised(user, tvMoneyRaised, ivLevelIcon, context);
         query.setUserRating(user, ratingBar);
     }
 

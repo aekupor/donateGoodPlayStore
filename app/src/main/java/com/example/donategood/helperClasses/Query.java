@@ -1,9 +1,14 @@
 package com.example.donategood.helperClasses;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Notification;
@@ -225,7 +230,7 @@ public class Query {
     }
 
     //find money raised for a specified user
-    public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised) {
+    public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised, final ImageView ivLevelIcon, final Context context) {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
 
@@ -248,6 +253,20 @@ public class Query {
                 }
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 tvMoneyRaised.setText("$" + totalMoney.toString());
+
+                if (totalMoney < 25) {
+                    ivLevelIcon.setVisibility(View.INVISIBLE);
+                } else if (totalMoney < 100) {
+                    Glide.with(context)
+                            .load(R.drawable.level_one)
+                            .circleCrop()
+                            .into(ivLevelIcon);
+                } else {
+                    Glide.with(context)
+                            .load(R.drawable.level_two)
+                            .circleCrop()
+                            .into(ivLevelIcon);
+                }
             }
         });
     }
