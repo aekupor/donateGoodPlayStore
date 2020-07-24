@@ -1,6 +1,7 @@
 package com.example.donategood.fragments;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.example.donategood.MainActivity;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
@@ -363,6 +365,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         updateQuantityLeft(quantityLeft);
 
         //send local notification
+        /*
         NotificationCompat.Builder mBuilder =
                 // Builder class for devices targeting API 26+ requires a channel ID
                 new NotificationCompat.Builder(getContext(), "donateGoodChannel")
@@ -372,7 +375,30 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
         NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(10, mBuilder.build());
-        
+
+         */
+
+
+        // First let's define the intent to trigger when notification is selected
+// Start out by creating a normal intent (in this case to open an activity)
+        Intent intent = new Intent(getContext(), MainActivity.class);
+// Next, let's turn this into a PendingIntent using
+//   public static PendingIntent getActivity(Context context, int requestCode,
+//       Intent intent, int flags)
+        int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+        PendingIntent pIntent = PendingIntent.getActivity(getContext(), requestID, intent, flags);
+// Now we can attach the pendingIntent to a new notification using setContentIntent
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(getContext(), "donateGoodChannel")
+                .setSmallIcon(R.drawable.ic_baseline_person_outline_24)
+                .setContentTitle("My notification")
+                .setContentText("Hello World!")
+                .setContentIntent(pIntent)
+                .setAutoCancel(true); // Hides the notification after its been selected
+// Get the notification manager system service
+        NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+        mNotificationManager.notify(0, noti.build());
 
         createNotification();
     }
