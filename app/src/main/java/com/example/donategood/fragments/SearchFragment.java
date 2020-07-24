@@ -39,6 +39,8 @@ public class SearchFragment extends Fragment {
     private Spinner spPrice;
     private RatingBar ratingBar;
     private Button btnSearch;
+    private TextView tvPriceTitle;
+    private TextView tvRatingTitle;
 
     private RecyclerView rvOfferings;
     private SmallOfferingAdapter adapter;
@@ -96,6 +98,8 @@ public class SearchFragment extends Fragment {
     private void searchByUser() {
         spPrice.setVisibility(View.INVISIBLE);
         ratingBar.setVisibility(View.INVISIBLE);
+        tvRatingTitle.setVisibility(View.INVISIBLE);
+        tvPriceTitle.setVisibility(View.INVISIBLE);
     }
 
     private void searchByOffering() {
@@ -103,6 +107,8 @@ public class SearchFragment extends Fragment {
         adapter.clear();
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
+        tvRatingTitle.setVisibility(View.VISIBLE);
+        tvPriceTitle.setVisibility(View.VISIBLE);
     }
 
     private void initializeVariables(View view) {
@@ -111,6 +117,8 @@ public class SearchFragment extends Fragment {
         rvOfferings = view.findViewById(R.id.rvSearchOfferings);
         spPrice = (Spinner) view.findViewById(R.id.spinnerPriceSearch);
         ratingBar = (RatingBar) view.findViewById(R.id.rbSearchRating);
+        tvPriceTitle = view.findViewById(R.id.tvPriceTitle);
+        tvRatingTitle = view.findViewById(R.id.tvRatingTitle);
 
         ratingBar.setEnabled(true);
 
