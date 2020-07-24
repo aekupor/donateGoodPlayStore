@@ -11,7 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/ivOfferingPhoto"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -44,8 +44,7 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="50dp"
         android:layout_toEndOf="@+id/ivOfferingPhoto"
-        android:textColor="#000000"
-        tools:text="ashlee" />
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/tvBoughtBy"
@@ -63,10 +62,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivOfferingPhoto"
         android:textColor="#000000"
         tools:text="Quantity Left: 2" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/ivOfferingPhoto"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/darker_gray" />
 
 </RelativeLayout>

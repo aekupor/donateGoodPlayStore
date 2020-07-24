@@ -59,6 +59,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
         public void bind(Offering offering) {
             loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
+            tvUser.setVisibility(View.INVISIBLE);
 
             if (offering.getQuantityLeft() != 0) {
                 tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
