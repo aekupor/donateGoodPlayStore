@@ -87,15 +87,15 @@ public class SearchFragment extends Fragment {
                 int position = tab.getPosition();
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
-                    setVisibilityForOfferingSearch();
+                    setVariablesForSearch(KEY_OFFERING);
                     setSubmitButton(KEY_OFFERING);
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
-                    setVisibilityForCharitySearch();
+                    setVariablesForSearch(KEY_CHARITY);
                     setSubmitButton(KEY_CHARITY);
                 } else {
                     Log.i(TAG, "search by user clicked");
-                    setVisibilityForUserSearch();
+                    setVariablesForSearch(KEY_USER);
                     setSubmitButton(KEY_USER);
                 }
             }
@@ -145,40 +145,30 @@ public class SearchFragment extends Fragment {
         tvPriceTitle.setVisibility(View.INVISIBLE);
     }
 
-    private void setVisibilityForCharitySearch() {
-        makeAllInvisible();
-
-        etSearchText.setHint("charity name");
-        etSearchText.setText("");
-
-        clearAdapters();
-
-        rvOfferings.setAdapter(charityAdapter);
-    }
-
-    private void setVisibilityForUserSearch() {
-        makeAllInvisible();
-
-        etSearchText.setHint("user name");
-        etSearchText.setText("");
-
-        clearAdapters();
-
-        rvOfferings.setAdapter(userAdapter);
-    }
-
-    private void setVisibilityForOfferingSearch() {
+    private void makeAllVisible() {
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
         tvRatingTitle.setVisibility(View.VISIBLE);
         tvPriceTitle.setVisibility(View.VISIBLE);
+    }
 
-        etSearchText.setHint("offering title");
+    private void setVariablesForSearch(String searchType) {
+        clearAdapters();
         etSearchText.setText("");
 
-        clearAdapters();
-
-        rvOfferings.setAdapter(adapter);
+        if (searchType == KEY_CHARITY) {
+            makeAllInvisible();
+            etSearchText.setHint("charity name");
+            rvOfferings.setAdapter(charityAdapter);
+        } else if (searchType == KEY_USER) {
+            makeAllInvisible();
+            etSearchText.setHint("user name");
+            rvOfferings.setAdapter(userAdapter);
+        } else {
+            makeAllVisible();
+            etSearchText.setHint("offering title");
+            rvOfferings.setAdapter(adapter);
+        }
     }
 
     private void initializeVariables(View view) {
