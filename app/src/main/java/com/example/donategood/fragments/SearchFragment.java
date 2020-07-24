@@ -91,14 +91,10 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
     }
 
@@ -132,6 +128,13 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    private void clearAdapters() {
+        allOfferings.clear();
+        adapter.clear();
+        allUsers.clear();
+        userAdapter.clear();
+    }
+
     private void setVisibilityForUserSearch() {
         spPrice.setVisibility(View.INVISIBLE);
         ratingBar.setVisibility(View.INVISIBLE);
@@ -141,21 +144,12 @@ public class SearchFragment extends Fragment {
         etSearchText.setHint("user name");
         etSearchText.setText("");
 
-        allOfferings.clear();
-        adapter.clear();
-
-        allUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), allUsers);
+        clearAdapters();
 
         rvOfferings.setAdapter(userAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvOfferings.setLayoutManager(linearLayoutManager);
     }
 
     private void setVisbilityForOfferingSearch() {
-        allUsers.clear();
-        userAdapter.clear();
-
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
         tvRatingTitle.setVisibility(View.VISIBLE);
@@ -163,6 +157,10 @@ public class SearchFragment extends Fragment {
 
         etSearchText.setHint("offering title");
         etSearchText.setText("");
+
+        clearAdapters();
+
+        rvOfferings.setAdapter(adapter);
     }
 
     private void initializeVariables(View view) {
@@ -182,6 +180,8 @@ public class SearchFragment extends Fragment {
         query = new Query();
         allOfferings = new ArrayList<>();
         adapter = new SmallOfferingAdapter(getContext(), allOfferings);
+        allUsers = new ArrayList<>();
+        userAdapter = new UserAdapter(getContext(), allUsers);
 
         rvOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
