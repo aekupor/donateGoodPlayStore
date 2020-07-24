@@ -51,7 +51,8 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivProfileProfileImage"
+        android:layout_below="@+id/btnCharityWebsite"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <com.google.android.material.tabs.TabItem

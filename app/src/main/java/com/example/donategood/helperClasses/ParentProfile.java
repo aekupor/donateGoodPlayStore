@@ -193,7 +193,7 @@ public class ParentProfile {
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
         query.findCharityMoneyRaised(charity, tvMoneyRaised);
         pb.setVisibility(ProgressBar.INVISIBLE);
-        queryPosts(KEY_SELLING);
+        queryPosts(KEY_SOLD);
     }
 
     public void setUser(ParseUser parseUser) {
