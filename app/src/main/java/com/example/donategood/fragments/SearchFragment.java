@@ -80,6 +80,7 @@ public class SearchFragment extends Fragment {
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
                     setVisbilityForOfferingSearch();
+                    setSubmitButtonForOfferingSearch();
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
                 } else {
@@ -136,7 +137,12 @@ public class SearchFragment extends Fragment {
         ratingBar.setVisibility(View.INVISIBLE);
         tvRatingTitle.setVisibility(View.INVISIBLE);
         tvPriceTitle.setVisibility(View.INVISIBLE);
+
         etSearchText.setHint("user name");
+        etSearchText.setText("");
+
+        allOfferings.clear();
+        adapter.clear();
 
         allUsers = new ArrayList<>();
         userAdapter = new UserAdapter(getContext(), allUsers);
@@ -147,13 +153,16 @@ public class SearchFragment extends Fragment {
     }
 
     private void setVisbilityForOfferingSearch() {
-        allOfferings.clear();
-        adapter.clear();
+        allUsers.clear();
+        userAdapter.clear();
+
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
         tvRatingTitle.setVisibility(View.VISIBLE);
         tvPriceTitle.setVisibility(View.VISIBLE);
+
         etSearchText.setHint("offering title");
+        etSearchText.setText("");
     }
 
     private void initializeVariables(View view) {
