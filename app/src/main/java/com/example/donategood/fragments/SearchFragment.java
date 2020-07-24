@@ -193,7 +193,7 @@ public class SearchFragment extends Fragment {
 
     private void querySearchForUser(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
-        query.searchForUser(searchText, new FindCallback<ParseUser>() {
+        query.findUser(searchText, new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
                 if (e != null) {

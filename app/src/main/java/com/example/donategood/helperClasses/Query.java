@@ -72,7 +72,6 @@ public class Query {
     //find a specific user by their name
     public void findUser(String userName, FindCallback<ParseUser> callback) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.setLimit(1);
         query.whereEqualTo("username", userName);
         query.findInBackground(callback);
     }
@@ -271,12 +270,6 @@ public class Query {
         query.include("forUser");
         query.include("forOffering");
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
-        query.findInBackground(callback);
-    }
-
-    public void searchForUser(String searchName, FindCallback<ParseUser> callback) {
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereMatches("username", searchName);
         query.findInBackground(callback);
     }
 }
