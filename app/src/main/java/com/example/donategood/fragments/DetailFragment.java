@@ -364,44 +364,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
         updateQuantityLeft(quantityLeft);
 
-        //send local notification
-        /*
-        NotificationCompat.Builder mBuilder =
-                // Builder class for devices targeting API 26+ requires a channel ID
-                new NotificationCompat.Builder(getContext(), "donateGoodChannel")
-                        .setSmallIcon(R.drawable.ic_baseline_person_outline_24)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-
-        NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(10, mBuilder.build());
-
-         */
-
-
-        // First let's define the intent to trigger when notification is selected
-// Start out by creating a normal intent (in this case to open an activity)
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra("goToFragment", "profileNotifications");
-// Next, let's turn this into a PendingIntent using
-//   public static PendingIntent getActivity(Context context, int requestCode,
-//       Intent intent, int flags)
-        int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-        int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
-        PendingIntent pIntent = PendingIntent.getActivity(getContext(), requestID, intent, flags);
-// Now we can attach the pendingIntent to a new notification using setContentIntent
-        NotificationCompat.Builder noti = new NotificationCompat.Builder(getContext(), "donateGoodChannel")
-                .setSmallIcon(R.drawable.ic_baseline_person_outline_24)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
-                .setContentIntent(pIntent)
-                .setAutoCancel(true); // Hides the notification after its been selected
-// Get the notification manager system service
-        NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-// mId allows you to update the notification later on.
-        mNotificationManager.notify(0, noti.build());
-
-        createNotification();
+        //sendLocalNotification();
+        createNotification(); //creates notification on the "notifications" tab within the app
     }
 
     //called after user has created a comment
@@ -483,5 +447,27 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         notification.setKeyUser(ParseUser.getCurrentUser());
         notification.setSellingUser(offering.getUser());
         notification.saveInBackground();
+    }
+
+    private void sendLocalNotification() {
+        //send local notification
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtra("goToFragment", "profileNotifications");
+
+        //create pending intent
+        int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+        PendingIntent pIntent = PendingIntent.getActivity(getContext(), requestID, intent, flags);
+
+        //attach the pendingIntent to a new notification using setContentIntent
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(getContext(), "donateGoodChannel")
+                .setSmallIcon(R.drawable.ic_baseline_person_outline_24)
+                .setContentTitle("My notification")
+                .setContentText("Hello World!")
+                .setContentIntent(pIntent)
+                .setAutoCancel(true); // Hides the notification after its been selected
+
+        NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, noti.build());
     }
 }
