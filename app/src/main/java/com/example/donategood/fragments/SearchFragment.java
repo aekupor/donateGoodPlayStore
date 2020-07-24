@@ -74,12 +74,12 @@ public class SearchFragment extends Fragment {
                 int position = tab.getPosition();
                 if (position == 0) {
                     Log.i(TAG, "search by offering clicked");
-                    searchByOffering();
+                    setVisbilityForOfferingSearch();
                 } else if (position == 1) {
                     Log.i(TAG, "search by charity clicked");
                 } else {
                     Log.i(TAG, "search by user clicked");
-                    searchByUser();
+                    setVisibilityForUserSearch();
                 }
             }
 
@@ -95,20 +95,22 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void searchByUser() {
+    private void setVisibilityForUserSearch() {
         spPrice.setVisibility(View.INVISIBLE);
         ratingBar.setVisibility(View.INVISIBLE);
         tvRatingTitle.setVisibility(View.INVISIBLE);
         tvPriceTitle.setVisibility(View.INVISIBLE);
+        etSearchText.setHint("user name");
     }
 
-    private void searchByOffering() {
+    private void setVisbilityForOfferingSearch() {
         allOfferings.clear();
         adapter.clear();
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
         tvRatingTitle.setVisibility(View.VISIBLE);
         tvPriceTitle.setVisibility(View.VISIBLE);
+        etSearchText.setHint("offering title");
     }
 
     private void initializeVariables(View view) {
@@ -121,6 +123,7 @@ public class SearchFragment extends Fragment {
         tvRatingTitle = view.findViewById(R.id.tvRatingTitle);
 
         ratingBar.setEnabled(true);
+        etSearchText.setHint("offering title");
 
         setUpPriceSpinner();
 

@@ -53,8 +53,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/searchTabLayout"
         android:id="@+id/etSearchBarBox"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="offering title">
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearchBar"
