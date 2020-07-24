@@ -38,11 +38,20 @@
     <RatingBar
         android:id="@+id/tvRatingComment"
         style="@style/Widget.AppCompat.RatingBar.Small"
-        android:theme="@style/RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@+id/tvUsernameComment"
+        android:layout_marginStart="40dp"
+        android:layout_toEndOf="@+id/ivVerified"
         android:numStars="5"
-        android:stepSize=".5" />
+        android:stepSize=".5"
+        android:theme="@style/RatingBar" />
+
+    <ImageView
+        android:id="@+id/ivVerified"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/tvUsernameComment"
+        app:srcCompat="@drawable/comment_verified" />
 </RelativeLayout>
