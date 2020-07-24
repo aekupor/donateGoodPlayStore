@@ -11,22 +11,31 @@
         android:id="@+id/tvProfileProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
         tools:text="Charity X" />
 
     <ImageView
         android:id="@+id/ivProfileProfileImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/tvProfileProfileName"
-        android:layout_marginTop="4dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvProfileMoneyRaised"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfileProfileImage"
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        android:textSize="18sp"
         tools:text="100" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -78,18 +87,26 @@
         android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
         android:layout_marginBottom="4dp"
-        android:layout_toEndOf="@+id/ivProfileProfileImage"
         android:visibility="invisible" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCharityWebsite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/ivProfileProfileImage"
-        android:text="See Website" />
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="View Website"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp"
+        app:strokeColor="@color/purple"
+        app:strokeWidth="2dp" />
 </RelativeLayout>
