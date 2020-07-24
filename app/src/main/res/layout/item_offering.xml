@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view = "http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width = "match_parent"
@@ -33,7 +34,7 @@
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/offeringRatingBar"
+        android:layout_below="@+id/ivOfferingPhoto"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
@@ -44,7 +45,7 @@
         android:id="@+id/ivOfferingPhoto"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:layout_below="@+id/tvTitle"
+        android:layout_below="@+id/tvUser"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         tools:srcCompat="@tools:sample/avatars" />
@@ -53,7 +54,7 @@
         android:id="@+id/tvCharity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/offeringRatingBar"
+        android:layout_below="@id/ivOfferingPhoto"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_toEndOf="@+id/ivCharityProfile"
@@ -64,31 +65,41 @@
         android:id="@+id/ivCharityProfile"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/offeringRatingBar"
+        android:layout_below="@+id/ivOfferingPhoto"
         android:layout_marginTop="20dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <RatingBar
         android:id="@+id/offeringRatingBar"
         style="?android:attr/ratingBarStyleSmall"
-        android:theme="@style/RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivOfferingPhoto"
+        android:layout_below="@+id/tvTitle"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/tvUser"
         android:numStars="5"
         android:rating="0.0"
-        android:stepSize="0.1" />
+        android:stepSize="0.1"
+        android:theme="@style/RatingBar" />
 
     <TextView
         android:id="@+id/tvUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivOfferingPhoto"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivCardUserImage"
         tools:text="ashlee" />
 
+    <ImageView
+        android:id="@+id/ivCardUserImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginTop="4dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
 </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
