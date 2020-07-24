@@ -34,6 +34,8 @@ public class Query {
     public static final String KEY_SELLING = "selling";
     public static final String KEY_SOLD = "sold";
     private List<Offering> savedBoughtPostsForUser;
+    private List<Offering> savedSellingPostsForUser;
+    private List<Offering> savedSoldPostsForUser;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -97,7 +99,14 @@ public class Query {
     }
 
     //finds posts that a user is selling
-    public void queryPostsUserIsSelling(Boolean bought, final ParentProfile parentProfile) {
+    public void queryPostsUserIsSelling(final Boolean bought, final ParentProfile parentProfile) {
+        if (!bought && savedSellingPostsForUser != null) {
+            updateAdapter(parentProfile, savedSellingPostsForUser);
+            return;
+        } else if (bought && savedSoldPostsForUser != null) {
+            updateAdapter(parentProfile, savedSoldPostsForUser);
+            return;
+        }
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
         query.whereEqualTo("isBought", bought);
         query.whereEqualTo("user", parentProfile.user);
@@ -108,6 +117,12 @@ public class Query {
                 if (e != null) {
                     return;
                 }
+                if (bought) {
+                    savedSoldPostsForUser = objects;
+                } else {
+                    savedSellingPostsForUser = objects;
+                }
+
                 updateAdapter(parentProfile, objects);
             }
         });
@@ -204,6 +219,7 @@ public class Query {
     public void queryPostsUserBought(final ParentProfile parentProfile) {
         if (savedBoughtPostsForUser != null) {
             updateAdapter(parentProfile, savedBoughtPostsForUser);
+            return;
         }
         queryAllPosts(new FindCallback<Offering>() {
             @Override
