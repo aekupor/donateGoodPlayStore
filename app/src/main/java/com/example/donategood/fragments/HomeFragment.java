@@ -18,6 +18,7 @@ import com.example.donategood.EndlessRecyclerViewScrollListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
@@ -140,27 +141,46 @@ public class HomeFragment extends Fragment {
         pb.setVisibility(ProgressBar.VISIBLE);
         ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(final List<ParseObject> objects, ParseException e) {
+            public void done(final List<ParseObject> followingUsers, ParseException e) {
                 if (e != null) {
                     return;
                 }
-                query.queryAllPosts(new FindCallback<Offering>() {
+                ParseUser.getCurrentUser().getRelation("followingCharity").getQuery().findInBackground(new FindCallback<ParseObject>() {
                     @Override
-                    public void done(List<Offering> offerings, ParseException e) {
-                        for (Offering offering : offerings) {
-                            for (ParseObject object : objects) {
-                                ParseUser followingUser = (ParseUser) object;
-                                if (offering.getUser().getObjectId().equals(followingUser.getObjectId())) {
-                                    listFollowingOfferings.add(offering);
+                    public void done(final List<ParseObject> followingCharities, ParseException e) {
+                        query.queryAllPosts(new FindCallback<Offering>() {
+                            @Override
+                            public void done(List<Offering> offerings, ParseException e) {
+                                for (Offering offering : offerings) {
+                                    Boolean added = false;
+                                    //find offerings by user that user follows
+                                    for (ParseObject object : followingUsers) {
+                                        ParseUser followingUser = (ParseUser) object;
+                                        if (offering.getUser().getObjectId().equals(followingUser.getObjectId())) {
+                                            listFollowingOfferings.add(offering);
+                                            added = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!added) {
+                                        //find offering by charity that user follows
+                                        for (ParseObject object : followingCharities) {
+                                            Charity followingCharity = (Charity) object;
+                                            if (offering.getCharity().getObjectId().equals(followingCharity.getObjectId())) {
+                                                listFollowingOfferings.add(offering);
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
+                                allOfferings.clear();
+                                adapter.clear();
+                                allOfferings.addAll(listFollowingOfferings);
+                                swipeContainer.setRefreshing(false);
+                                adapter.notifyDataSetChanged();
+                                pb.setVisibility(ProgressBar.INVISIBLE);
                             }
-                        }
-                        allOfferings.clear();
-                        adapter.clear();
-                        allOfferings.addAll(listFollowingOfferings);
-                        swipeContainer.setRefreshing(false);
-                        adapter.notifyDataSetChanged();
-                        pb.setVisibility(ProgressBar.INVISIBLE);
+                        });
                     }
                 });
             }
