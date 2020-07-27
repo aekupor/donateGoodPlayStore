@@ -44,11 +44,17 @@ public class OtherUserProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static OtherUserProfileFragment newInstance(String userName) {
+    public static OtherUserProfileFragment newInstance(String userName, Bundle bundle) {
         OtherUserProfileFragment fragment = new OtherUserProfileFragment();
         Bundle args = new Bundle();
         args.putString("userName", userName);
         fragment.setArguments(args);
+
+        //Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            ParseUser user = bundle.getParcelable("user");
+            Log.i(TAG, "got user: " + user.getUsername());
+        }
         return fragment;
     }
 
@@ -69,7 +75,6 @@ public class OtherUserProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //if user clicked on is signed in user
         if (userName.equals(ParseUser.getCurrentUser().getUsername())) {
             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();

@@ -344,8 +344,15 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
         } else if (fragmentName.equals("user")) {
             //go to other user profile fragment
-            fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText());
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("user", offering.getUser());
+            //fragment.setArguments(bundle);
+            fragment = OtherUserProfileFragment.newInstance((String) tvUser.getText(), bundle);
+
+
         }
+
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
 
