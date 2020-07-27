@@ -122,6 +122,17 @@ public class OtherUserProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "follow clicked");
+                if (following) {
+                    ParseUser.getCurrentUser().getRelation("following").remove(user);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
+                    Toast.makeText(getContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
+                } else {
+                    ParseUser.getCurrentUser().getRelation("following").add(user);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                    Toast.makeText(getContext(), "Following", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
