@@ -150,12 +150,19 @@ public class HomeFragment extends Fragment {
                 pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
-
-
-
     }
 
     protected void queryPosts(int page) {
+        if (!listAllOfferings.isEmpty()) {
+            //if already queried for all posts once
+            allOfferings.clear();
+            adapter.clear();
+            allOfferings.addAll(listAllOfferings);
+            swipeContainer.setRefreshing(false);
+            adapter.notifyDataSetChanged();
+            return;
+        }
+
         pb.setVisibility(ProgressBar.VISIBLE);
         query.queryAllPostsByPage(page, new FindCallback<Offering>() {
             @Override
