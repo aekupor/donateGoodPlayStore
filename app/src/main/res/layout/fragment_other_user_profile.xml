@@ -137,4 +137,14 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/ivLevelIcon"
         android:src="@drawable/level_one" />
+
+    <ImageView
+        android:id="@+id/ivFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileMoneyRaised"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:src="@drawable/ic_baseline_person_add_24" />
 </RelativeLayout>
