@@ -173,10 +173,9 @@ public class ParentProfile {
         });
     }
 
-    //check is current user is already following this user
+    //check is current user is already following this user/charity
     public void checkIfFollowing() {
         pb.setVisibility(ProgressBar.VISIBLE);
-
         if (profileType == KEY_CHARITY) {
             ParseUser.getCurrentUser().getRelation("followingCharity").getQuery().findInBackground(new FindCallback<ParseObject>() {
                 @Override
@@ -187,17 +186,13 @@ public class ParentProfile {
                     for (ParseObject followingObject : objects) {
                         Charity followingCharity = (Charity) followingObject;
                         if (followingCharity.getObjectId().equals(charity.getObjectId())) {
-                            following = true;
-                            ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
-                            pb.setVisibility(ProgressBar.INVISIBLE);
+                            setIsFollowing();
                             return;
                         }
                     }
-                    pb.setVisibility(ProgressBar.INVISIBLE);
                 }
             });
         } else {
-            pb.setVisibility(ProgressBar.VISIBLE);
             ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
@@ -207,16 +202,20 @@ public class ParentProfile {
                     for (ParseObject followingObject : objects) {
                         ParseUser followingUser = (ParseUser) followingObject;
                         if (followingUser.getObjectId().equals(user.getObjectId())) {
-                            following = true;
-                            ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
-                            pb.setVisibility(ProgressBar.INVISIBLE);
+                            setIsFollowing();
                             return;
                         }
                     }
-                    pb.setVisibility(ProgressBar.INVISIBLE);
                 }
             });
         }
+        pb.setVisibility(ProgressBar.INVISIBLE);
+    }
+
+    private void setIsFollowing() {
+        following = true;
+        ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     public void initializeNotifications(View view, final Context context) {
