@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -61,6 +63,8 @@ public class ParentProfile {
     public RatingBar ratingBar;
     public ImageView ivLevelIcon;
     public ImageView ivCharityIcon;
+    public ImageView ivFollow;
+    public Boolean following;
 
     public void initializeVariables(View view, final Context context, final String queryType) {
         profileType = queryType;
@@ -130,6 +134,87 @@ public class ParentProfile {
         //only the current user has a "notifications" tab
         if (profileType == KEY_CURRENT_USER) {
             initializeNotifications(view, context);
+        } else {
+            //only other users and charities have a "follow" option
+            initializeFollow(view, context);
+        }
+    }
+
+    private void initializeFollow(View view, final Context context) {
+        following = false;
+        ivFollow = view.findViewById(R.id.ivFollow);
+        ivFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "follow clicked");
+                if (following) {
+                    if (profileType == KEY_CHARITY) {
+                        ParseUser.getCurrentUser().getRelation("followingCharity").remove(charity);
+                    } else {
+                        ParseUser.getCurrentUser().getRelation("following").remove(charity);
+                    }
+                    ParseUser.getCurrentUser().saveInBackground();
+                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
+                    Toast.makeText(context, "Unfollowed", Toast.LENGTH_SHORT).show();
+                    following = false;
+                } else {
+                    if (profileType == KEY_CHARITY) {
+                        ParseUser.getCurrentUser().getRelation("followingCharity").add(charity);
+                    } else {
+                        ParseUser.getCurrentUser().getRelation("following").add(charity);
+                    }
+                    ParseUser.getCurrentUser().saveInBackground();
+                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                    Toast.makeText(context, "Following", Toast.LENGTH_SHORT).show();
+                    following = true;
+                }
+            }
+        });
+    }
+
+    //check is current user is already following this user
+    public void checkIfFollowing() {
+        pb.setVisibility(ProgressBar.VISIBLE);
+
+        if (profileType == KEY_CHARITY) {
+            ParseUser.getCurrentUser().getRelation("followingCharity").getQuery().findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if (e != null) {
+                        return;
+                    }
+                    for (ParseObject followingObject : objects) {
+                        Charity followingCharity = (Charity) followingObject;
+                        if (followingCharity.getObjectId().equals(charity.getObjectId())) {
+                            following = true;
+                            ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                            pb.setVisibility(ProgressBar.INVISIBLE);
+                            return;
+                        }
+                    }
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+                }
+            });
+        } else {
+            pb.setVisibility(ProgressBar.VISIBLE);
+            ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if (e != null) {
+                        return;
+                    }
+                    for (ParseObject followingObject : objects) {
+                        ParseUser followingUser = (ParseUser) followingObject;
+                        if (followingUser.getObjectId().equals(user.getObjectId())) {
+                            following = true;
+                            ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                            pb.setVisibility(ProgressBar.INVISIBLE);
+                            return;
+                        }
+                    }
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+                }
+            });
         }
     }
 
