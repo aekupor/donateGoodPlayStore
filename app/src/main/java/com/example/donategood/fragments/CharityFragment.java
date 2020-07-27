@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.example.donategood.helperClasses.ParentProfile;
 import com.example.donategood.models.Charity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -29,6 +32,9 @@ public class CharityFragment extends Fragment {
     private Charity charity;
     private String charityName;
     private Button btnWebsite;
+    private ParentProfile parentProfile;
+    private Boolean following;
+    private ImageView ivFollow;
 
     public CharityFragment() {
         // Required empty public constructor
@@ -59,9 +65,10 @@ public class CharityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final ParentProfile parentProfile = new ParentProfile();
+        parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CHARITY);
 
+        ivFollow = view.findViewById(R.id.ivFollowCharity);
         btnWebsite = view.findViewById(R.id.btnCharityWebsite);
 
         btnWebsite.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +90,34 @@ public class CharityFragment extends Fragment {
                     return;
                 }
                 charity = objects.get(0);
-                parentProfile.setCharity(charity);
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
 
+                parentProfile.setCharity(charity);
                 parentProfile.queryCharityInfo(getContext());
+                checkIfFollowing();
+            }
+        });
+    }
+
+    //check is current user is already following this user
+    public void checkIfFollowing() {
+        parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
+        ParseUser.getCurrentUser().getRelation("followingCharity").getQuery().findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (ParseObject followingObject : objects) {
+                    Charity followingCharity = (Charity) followingObject;
+                    if (followingCharity.getObjectId().equals(charity.getObjectId())) {
+                        following = true;
+                        ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                        parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
+                        return;
+                    }
+                }
+                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
