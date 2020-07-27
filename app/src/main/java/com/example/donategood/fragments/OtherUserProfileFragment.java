@@ -36,8 +36,6 @@ public class OtherUserProfileFragment extends Fragment {
     private Button btnChat;
     private ImageView ivFollow;
     private Boolean following;
-
-    private String userName;
     private ParseUser user;
 
     public OtherUserProfileFragment() {
@@ -73,9 +71,7 @@ public class OtherUserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //if user clicked on is signed in user
-
-       /*
-        if (userName.equals(ParseUser.getCurrentUser().getUsername())) {
+        if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
             Fragment fragment = new ProfileFragment();
             fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
@@ -89,23 +85,11 @@ public class OtherUserProfileFragment extends Fragment {
         ivFollow = view.findViewById(R.id.ivFollow);
         following = false;
 
-        parentProfile.query.findUser(userName, new FindCallback<ParseUser>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void done(List<ParseUser> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting user profile", e);
-                    return;
-                }
-                user = objects.get(0);
-                parentProfile.setUser(user);
+        parentProfile.setUser(user);
+        parentProfile.queryInfo(getContext());
+        parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
 
-                parentProfile.queryInfo(getContext());
-                parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
-
-                checkIfFollowing();
-            }
-        });
+        checkIfFollowing();
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
@@ -139,8 +123,6 @@ public class OtherUserProfileFragment extends Fragment {
                 }
             }
         });
-
-        */
     }
 
     //check is current user is already following this user
