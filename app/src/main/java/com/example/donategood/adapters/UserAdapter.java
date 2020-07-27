@@ -1,6 +1,7 @@
 package com.example.donategood.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,7 +95,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
                 //go to that user's profile fragment
                 final FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                Fragment fragment = OtherUserProfileFragment.newInstance(user.getUsername());
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", user);
+
+                Fragment fragment = OtherUserProfileFragment.newInstance(bundle);
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
             }
         }

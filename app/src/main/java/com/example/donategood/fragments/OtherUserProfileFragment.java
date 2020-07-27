@@ -44,16 +44,14 @@ public class OtherUserProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static OtherUserProfileFragment newInstance(String userName, Bundle bundle) {
+    public static OtherUserProfileFragment newInstance(Bundle bundle) {
         OtherUserProfileFragment fragment = new OtherUserProfileFragment();
-        Bundle args = new Bundle();
-        args.putString("userName", userName);
-        fragment.setArguments(args);
-
-        //Bundle bundle = this.getArguments();
         if (bundle != null) {
+            Bundle args = new Bundle();
             ParseUser user = bundle.getParcelable("user");
             Log.i(TAG, "got user: " + user.getUsername());
+            args.putParcelable("user", user);
+            fragment.setArguments(args);
         }
         return fragment;
     }
@@ -62,8 +60,7 @@ public class OtherUserProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userName = getArguments().getString("userName", "");
-        Log.i(TAG, "userName: " + userName);
+        user = getArguments().getParcelable("user");
     }
 
     @Override
@@ -76,6 +73,8 @@ public class OtherUserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //if user clicked on is signed in user
+
+       /*
         if (userName.equals(ParseUser.getCurrentUser().getUsername())) {
             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
             Fragment fragment = new ProfileFragment();
@@ -140,6 +139,8 @@ public class OtherUserProfileFragment extends Fragment {
                 }
             }
         });
+
+        */
     }
 
     //check is current user is already following this user
