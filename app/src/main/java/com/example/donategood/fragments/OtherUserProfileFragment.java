@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,12 +19,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.ParentProfile;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 public class OtherUserProfileFragment extends Fragment {
 
@@ -34,8 +27,6 @@ public class OtherUserProfileFragment extends Fragment {
 
     private ParentProfile parentProfile;
     private Button btnChat;
-    private ImageView ivFollow;
-    private Boolean following;
     private ParseUser user;
 
     public OtherUserProfileFragment() {
@@ -82,14 +73,10 @@ public class OtherUserProfileFragment extends Fragment {
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_OTHER_USER);
 
         btnChat = view.findViewById(R.id.btnChat);
-        ivFollow = view.findViewById(R.id.ivFollow);
-        following = false;
 
         parentProfile.setUser(user);
         parentProfile.queryInfo(getContext());
         parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
-
-        checkIfFollowing();
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
@@ -102,48 +89,6 @@ public class OtherUserProfileFragment extends Fragment {
                     Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.me/" + user.get("fbMessenger").toString()));
                     startActivity(implicit);
                 }
-            }
-        });
-
-        ivFollow.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "follow clicked");
-                if (following) {
-                    ParseUser.getCurrentUser().getRelation("following").remove(user);
-                    ParseUser.getCurrentUser().saveInBackground();
-                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
-                    Toast.makeText(getContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
-                } else {
-                    ParseUser.getCurrentUser().getRelation("following").add(user);
-                    ParseUser.getCurrentUser().saveInBackground();
-                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
-                    Toast.makeText(getContext(), "Following", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    //check is current user is already following this user
-    public void checkIfFollowing() {
-        parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
-        ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e != null) {
-                    return;
-                }
-                for (ParseObject followingObject : objects) {
-                    ParseUser followingUser = (ParseUser) followingObject;
-                    if (followingUser.getObjectId().equals(user.getObjectId())) {
-                        following = true;
-                        ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
-                        parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
-                        return;
-                    }
-                }
-                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }

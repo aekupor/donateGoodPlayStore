@@ -143,6 +143,7 @@ public class ParentProfile {
     private void initializeFollow(View view, final Context context) {
         following = false;
         ivFollow = view.findViewById(R.id.ivFollow);
+        checkIfFollowing();
         ivFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +152,7 @@ public class ParentProfile {
                     if (profileType == KEY_CHARITY) {
                         ParseUser.getCurrentUser().getRelation("followingCharity").remove(charity);
                     } else {
-                        ParseUser.getCurrentUser().getRelation("following").remove(charity);
+                        ParseUser.getCurrentUser().getRelation("following").remove(user);
                     }
                     ParseUser.getCurrentUser().saveInBackground();
                     ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
@@ -161,7 +162,7 @@ public class ParentProfile {
                     if (profileType == KEY_CHARITY) {
                         ParseUser.getCurrentUser().getRelation("followingCharity").add(charity);
                     } else {
-                        ParseUser.getCurrentUser().getRelation("following").add(charity);
+                        ParseUser.getCurrentUser().getRelation("following").add(user);
                     }
                     ParseUser.getCurrentUser().saveInBackground();
                     ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
