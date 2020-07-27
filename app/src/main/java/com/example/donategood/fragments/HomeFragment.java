@@ -92,8 +92,6 @@ public class HomeFragment extends Fragment {
                 queryPosts(page);
             }
         };
-        // Adds the scroll listener to RecyclerView
-        rvOfferings.addOnScrollListener(scrollListener);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.homeTabLayout);
 
@@ -104,8 +102,12 @@ public class HomeFragment extends Fragment {
                 Log.i(TAG, "tab selected at position: " + position);
                 if (position == 0) {
                     queryPosts(0);
+                    rvOfferings.addOnScrollListener(scrollListener);
+                    swipeContainer.setEnabled(true);
                 } else {
                     queryPostsFollowing();
+                    rvOfferings.removeOnScrollListener(scrollListener);
+                    swipeContainer.setEnabled(false);
                 }
             }
 
@@ -138,24 +140,29 @@ public class HomeFragment extends Fragment {
         pb.setVisibility(ProgressBar.VISIBLE);
         ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> objects, ParseException e) {
+            public void done(final List<ParseObject> objects, ParseException e) {
                 if (e != null) {
                     return;
                 }
-                for (Offering offering : listAllOfferings) {
-                    for (ParseObject object : objects) {
-                        ParseUser followingUser = (ParseUser) object;
-                        if (offering.getUser().getObjectId().equals(followingUser.getObjectId())) {
-                            listFollowingOfferings.add(offering);
+                query.queryAllPosts(new FindCallback<Offering>() {
+                    @Override
+                    public void done(List<Offering> offerings, ParseException e) {
+                        for (Offering offering : offerings) {
+                            for (ParseObject object : objects) {
+                                ParseUser followingUser = (ParseUser) object;
+                                if (offering.getUser().getObjectId().equals(followingUser.getObjectId())) {
+                                    listFollowingOfferings.add(offering);
+                                }
+                            }
                         }
+                        allOfferings.clear();
+                        adapter.clear();
+                        allOfferings.addAll(listFollowingOfferings);
+                        swipeContainer.setRefreshing(false);
+                        adapter.notifyDataSetChanged();
+                        pb.setVisibility(ProgressBar.INVISIBLE);
                     }
-                }
-                allOfferings.clear();
-                adapter.clear();
-                allOfferings.addAll(listFollowingOfferings);
-                swipeContainer.setRefreshing(false);
-                adapter.notifyDataSetChanged();
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                });
             }
         });
     }
