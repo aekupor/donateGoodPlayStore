@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
+import com.example.donategood.models.Message;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.facebook.FacebookSdk;
@@ -35,6 +36,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Charity.class);
         ParseObject.registerSubclass(Comment.class);
         ParseObject.registerSubclass(Notification.class);
+        ParseObject.registerSubclass(Message.class);
 
         // Use for troubleshooting -- remove this line for production
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
