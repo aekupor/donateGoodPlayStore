@@ -84,7 +84,7 @@ public class Recommend {
         return points;
     }
 
-    private Integer checkSellingUser(ParseUser mainUser, ParseUser otherUser) {
+    private Integer checkSellingUser(ParseUser mainUser, final ParseUser otherUser) {
         if (mainUser.getObjectId().equals(otherUser.getObjectId())) {
             return 2;
         }

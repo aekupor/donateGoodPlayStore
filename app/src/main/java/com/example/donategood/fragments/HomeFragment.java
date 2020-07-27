@@ -1,6 +1,11 @@
 package com.example.donategood.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,17 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
 import com.example.donategood.EndlessRecyclerViewScrollListener;
-import com.example.donategood.models.Offering;
+import com.example.donategood.R;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.helperClasses.Query;
-import com.example.donategood.R;
+import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
