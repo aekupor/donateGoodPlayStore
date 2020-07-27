@@ -125,9 +125,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void queryPostsFollowing() {
-        pb.setVisibility(ProgressBar.VISIBLE);
-        Log.i(TAG, "find posts of following users");
+        if (!listFollowingOfferings.isEmpty()) {
+            //if already queried for following posts once
+            allOfferings.clear();
+            adapter.clear();
+            allOfferings.addAll(listFollowingOfferings);
+            swipeContainer.setRefreshing(false);
+            adapter.notifyDataSetChanged();
+            return;
+        }
 
+        pb.setVisibility(ProgressBar.VISIBLE);
         ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
