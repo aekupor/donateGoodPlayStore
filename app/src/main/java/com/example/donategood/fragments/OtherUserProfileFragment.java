@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -127,6 +128,7 @@ public class OtherUserProfileFragment extends Fragment {
 
     //check is current user is already following this user
     public void checkIfFollowing() {
+        parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
         ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -138,9 +140,11 @@ public class OtherUserProfileFragment extends Fragment {
                     if (followingUser.getObjectId().equals(user.getObjectId())) {
                         following = true;
                         ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                        parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
                         return;
                     }
                 }
+                parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
