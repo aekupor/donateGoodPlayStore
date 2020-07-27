@@ -1,6 +1,7 @@
 package com.example.donategood;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +42,19 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         setupMessagePosting();
+        myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
+
+    // Create a handler which can run code periodically
+    static final int POLL_INTERVAL = 1000; // milliseconds
+    Handler myHandler = new android.os.Handler();
+    Runnable mRefreshMessagesRunnable = new Runnable() {
+        @Override
+        public void run() {
+            refreshMessages();
+            myHandler.postDelayed(this, POLL_INTERVAL);
+        }
+    };
 
     // Setup button event handler which posts the entered message to Parse
     void setupMessagePosting() {
