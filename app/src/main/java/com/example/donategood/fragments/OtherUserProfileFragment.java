@@ -101,6 +101,7 @@ public class OtherUserProfileFragment extends Fragment {
                 checkIfFollowing();
             }
         });
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
             @Override
@@ -136,7 +137,7 @@ public class OtherUserProfileFragment extends Fragment {
                     ParseUser followingUser = (ParseUser) followingObject;
                     if (followingUser.getObjectId().equals(user.getObjectId())) {
                         following = true;
-                        Log.i(TAG, "FOLLOWING");
+                        ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
                         return;
                     }
                 }
