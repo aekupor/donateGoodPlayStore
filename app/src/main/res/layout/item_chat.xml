@@ -15,29 +15,66 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:lines="1"
-        android:orientation="vertical" >
+        android:orientation="horizontal"
+        android:layout_weight="1" >
 
-        <TextView
-            android:id="@+id/tvChatUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:lines="1"
-            android:textSize="18sp"
-            tools:text="ashlee" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tvBody"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/tvChatUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="1"
+                android:textSize="18sp"
+                tools:text="ashlee" />
+
+            <TextView
+                android:id="@+id/tvBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="1"
+                tools:text="this is my chat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:lines="1"
-            tools:text="this is my chat" />
+            android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/tvChatUserRight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="1"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                tools:text="ashlee" />
+
+            <TextView
+                android:id="@+id/tvBodyRight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="1"
+                android:textAlignment="textEnd"
+                tools:text="this is my chat" />
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <ImageView
         android:id="@+id/ivProfileMe"
