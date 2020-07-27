@@ -2,14 +2,12 @@ package com.example.donategood.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,9 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.donategood.ChatActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.ParentProfile;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 public class OtherUserProfileFragment extends Fragment {
 
@@ -83,12 +84,18 @@ public class OtherUserProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnChat clicked");
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("user", Parcels.wrap(user));
+                startActivity(intent);
+
+                /*
                 if (user.get("fbMessenger") == null) {
                     Toast.makeText(getContext(), "User does not have FB messenger set up", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.me/" + user.get("fbMessenger").toString()));
                     startActivity(implicit);
                 }
+                 */
             }
         });
     }

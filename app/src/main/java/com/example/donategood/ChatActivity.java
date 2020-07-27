@@ -19,6 +19,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,9 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        ParseUser otherUser = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        Log.i(TAG, "got chat with: " + otherUser.getUsername());
 
         setupMessagePosting();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
