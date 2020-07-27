@@ -22,10 +22,10 @@ import com.example.donategood.R;
 import com.example.donategood.helperClasses.ParentProfile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.List;
-
 
 public class OtherUserProfileFragment extends Fragment {
 
@@ -34,6 +34,7 @@ public class OtherUserProfileFragment extends Fragment {
     private ParentProfile parentProfile;
     private Button btnChat;
     private ImageView ivFollow;
+    private Boolean following;
 
     private String userName;
     private ParseUser user;
@@ -81,8 +82,10 @@ public class OtherUserProfileFragment extends Fragment {
 
         btnChat = view.findViewById(R.id.btnChat);
         ivFollow = view.findViewById(R.id.ivFollow);
+        following = false;
 
         parentProfile.query.findUser(userName, new FindCallback<ParseUser>() {
+            @SuppressLint("LongLogTag")
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
                 if (e != null) {
@@ -94,10 +97,12 @@ public class OtherUserProfileFragment extends Fragment {
 
                 parentProfile.queryInfo(getContext());
                 parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
+
+                checkIfFollowing();
             }
         });
-
         btnChat.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnChat clicked");
@@ -111,9 +116,30 @@ public class OtherUserProfileFragment extends Fragment {
         });
 
         ivFollow.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "follow clicked");
+            }
+        });
+    }
+
+    //check is current user is already following this user
+    public void checkIfFollowing() {
+        ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (ParseObject followingObject : objects) {
+                    ParseUser followingUser = (ParseUser) followingObject;
+                    if (followingUser.getObjectId().equals(user.getObjectId())) {
+                        following = true;
+                        Log.i(TAG, "FOLLOWING");
+                        return;
+                    }
+                }
             }
         });
     }
