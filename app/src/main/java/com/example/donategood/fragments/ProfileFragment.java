@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.donategood.ChatActivity;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
@@ -74,6 +75,11 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 Log.i(TAG, "action_venmo_name clicked");
                 fbEdit = false;
                 showEditDialog();
+                return true;
+            case R.id.action_chat:
+                Log.i(TAG, "action_chat clicked");
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
