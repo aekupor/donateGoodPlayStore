@@ -92,6 +92,13 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    //find a specific user by their id
+    public void findUserById(String id, FindCallback<ParseUser> callback) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", id);
+        query.findInBackground(callback);
+    }
+
     //find a specific offering but its id
     public void findOffering(String postId, FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
