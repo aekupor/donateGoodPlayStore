@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
                 Message message = new Message();
                 message.setBody(data);
                 message.setUserId(ParseUser.getCurrentUser().getObjectId());
-                //TODO: set room id
+                message.setRoomID(roomId);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -117,8 +117,7 @@ public class ChatActivity extends AppCompatActivity {
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        //TODO: determine room id and query for it
-        query.whereEqualTo("roomId", "1");
+        query.whereEqualTo("roomId", roomId);
 
         // get the latest 50 messages, order will show up newest to oldest of this group
         query.orderByDescending("createdAt");
