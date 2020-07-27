@@ -1,7 +1,6 @@
 package com.example.donategood.adapters;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +49,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (isMe) {
             holder.imageMe.setVisibility(View.VISIBLE);
             holder.imageOther.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-
-            holder.loadPost.setUser(ParseUser.getCurrentUser(), mContext, holder.username, holder.imageMe);
+            holder.bodyRight.setText(message.getBody());
+            holder.loadPost.setUser(ParseUser.getCurrentUser(), mContext, holder.usernameRight, holder.imageMe);
         } else {
             holder.imageOther.setVisibility(View.VISIBLE);
             holder.imageMe.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            holder.body.setText(message.getBody());
 
             holder.query.findUserById(message.getUserId(), new FindCallback<ParseUser>() {
                 @Override
@@ -69,7 +67,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             });
         }
 
-        holder.body.setText(message.getBody());
+
     }
 
     @Override
@@ -82,6 +80,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         ImageView imageMe;
         TextView body;
         TextView username;
+        TextView bodyRight;
+        TextView usernameRight;
         LoadPost loadPost;
         Query query;
 
@@ -91,10 +91,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             loadPost = new LoadPost();
             query = new Query();
 
-            imageOther = (ImageView)itemView.findViewById(R.id.ivProfileOther);
-            imageMe = (ImageView)itemView.findViewById(R.id.ivProfileMe);
-            body = (TextView)itemView.findViewById(R.id.tvBody);
+            imageOther = itemView.findViewById(R.id.ivProfileOther);
+            imageMe = itemView.findViewById(R.id.ivProfileMe);
+            body = itemView.findViewById(R.id.tvBody);
             username = itemView.findViewById(R.id.tvChatUser);
+            bodyRight = itemView.findViewById(R.id.tvBodyRight);
+            usernameRight = itemView.findViewById(R.id.tvChatUserRight);
         }
     }
 }
