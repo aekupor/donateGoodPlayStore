@@ -1,5 +1,6 @@
 package com.example.donategood.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,6 +72,7 @@ public class CharityFragment extends Fragment {
 
         ivFollow = view.findViewById(R.id.ivFollowCharity);
         btnWebsite = view.findViewById(R.id.btnCharityWebsite);
+        following = false;
 
         btnWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +98,25 @@ public class CharityFragment extends Fragment {
                 parentProfile.setCharity(charity);
                 parentProfile.queryCharityInfo(getContext());
                 checkIfFollowing();
+            }
+        });
+
+        ivFollow.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "follow clicked");
+                if (following) {
+                    ParseUser.getCurrentUser().getRelation("followingCharity").remove(charity);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
+                    Toast.makeText(getContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
+                } else {
+                    ParseUser.getCurrentUser().getRelation("followingCharity").add(charity);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
+                    Toast.makeText(getContext(), "Following", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
