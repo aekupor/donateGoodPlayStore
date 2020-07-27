@@ -19,6 +19,7 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.OfferingAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Offering;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -87,7 +88,37 @@ public class HomeFragment extends Fragment {
         // Adds the scroll listener to RecyclerView
         rvOfferings.addOnScrollListener(scrollListener);
 
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.homeTabLayout);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Log.i(TAG, "tab selected at position: " + position);
+                if (position == 0) {
+                    queryPosts(0);
+                } else {
+                    queryPostsFollowing();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
         queryPosts(0);
+    }
+
+    private void queryPostsFollowing() {
+        Log.i(TAG, "find posts of following users");
     }
 
     protected void queryPosts(int page) {
