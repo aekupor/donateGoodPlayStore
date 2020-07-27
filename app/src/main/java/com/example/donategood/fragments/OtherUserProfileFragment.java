@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class OtherUserProfileFragment extends Fragment {
 
     private ParentProfile parentProfile;
     private Button btnChat;
+    private ImageView ivFollow;
 
     private String userName;
     private ParseUser user;
@@ -78,6 +80,7 @@ public class OtherUserProfileFragment extends Fragment {
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_OTHER_USER);
 
         btnChat = view.findViewById(R.id.btnChat);
+        ivFollow = view.findViewById(R.id.ivFollow);
 
         parentProfile.query.findUser(userName, new FindCallback<ParseUser>() {
             @Override
@@ -104,6 +107,13 @@ public class OtherUserProfileFragment extends Fragment {
                     Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.me/" + user.get("fbMessenger").toString()));
                     startActivity(implicit);
                 }
+            }
+        });
+
+        ivFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "follow clicked");
             }
         });
     }
