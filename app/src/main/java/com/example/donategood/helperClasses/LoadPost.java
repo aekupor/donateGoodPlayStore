@@ -13,7 +13,6 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class LoadPost {
 
@@ -54,20 +53,6 @@ public class LoadPost {
             Glide.with(context)
                     .load(image.getUrl())
                     .into(ivOfferingPhoto);
-        }
-    }
-
-    public void setTags(ArrayList<String> tags, TextView tvTagList) {
-        if (tags != null) {
-            String tagList = "";
-            for (String tag : tags) {
-                if (tagList == "") {
-                    tagList = tag;
-                } else {
-                    tagList += ", " + tag;
-                }
-            }
-            tvTagList.setText(tagList);
         }
     }
 
