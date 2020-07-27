@@ -7,6 +7,7 @@ import com.parse.ParseObject;
 public class Message extends ParseObject {
     public static final String USER_ID_KEY = "userId";
     public static final String BODY_KEY = "body";
+    public static final String ROOM_ID_KEY = "roomId";
 
     public String getUserId() {
         return getString(USER_ID_KEY);
@@ -22,5 +23,13 @@ public class Message extends ParseObject {
 
     public void setBody(String body) {
         put(BODY_KEY, body);
+    }
+
+    public String getRoomId() {
+        return getString(ROOM_ID_KEY);
+    }
+
+    public void setRoomID(String roomId) {
+        put(ROOM_ID_KEY, roomId);
     }
 }

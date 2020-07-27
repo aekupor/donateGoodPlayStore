@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,8 +24,6 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
     static final String TAG = "ChatActivity";
-    static final String USER_ID_KEY = "userId";
-    static final String BODY_KEY = "body";
     static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     EditText etMessage;
@@ -68,7 +65,7 @@ public class ChatActivity extends AppCompatActivity {
         mAdapter = new ChatAdapter(ChatActivity.this, userId, mMessages);
         rvChat.setAdapter(mAdapter);
 
-        // associate the LayoutManager with the RecylcerView
+        // associate the LayoutManager with the RecyclerView
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         linearLayoutManager.setReverseLayout(true);
         rvChat.setLayoutManager(linearLayoutManager);
@@ -81,12 +78,11 @@ public class ChatActivity extends AppCompatActivity {
                 Message message = new Message();
                 message.setBody(data);
                 message.setUserId(ParseUser.getCurrentUser().getObjectId());
+                //TODO: set room id
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if(e == null) {
-                            Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
-                                    Toast.LENGTH_SHORT).show();
                             refreshMessages();
                         } else {
                             Log.e(TAG, "Failed to save message", e);
@@ -104,6 +100,8 @@ public class ChatActivity extends AppCompatActivity {
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        //TODO: determine room id and query for it
+        query.whereEqualTo("roomId", "1");
 
         // get the latest 50 messages, order will show up newest to oldest of this group
         query.orderByDescending("createdAt");
