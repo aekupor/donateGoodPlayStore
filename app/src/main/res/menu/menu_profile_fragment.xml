@@ -20,9 +20,4 @@
         android:id="@+id/action_venmo_name"
         android:enabled="true"
         android:title="Change Venmo Username" />
-
-    <item
-        android:id="@+id/action_chat"
-        android:enabled="true"
-        android:title="Chat" />
 </menu>
