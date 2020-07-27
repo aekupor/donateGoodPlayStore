@@ -22,6 +22,8 @@ import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvOfferings;
     private OfferingAdapter adapter;
     private List<Offering> allOfferings;
+    private List<Offering> listAllOfferings;
+    private List<Offering> listFollowingOfferings;
+
     private Query query;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -58,6 +63,8 @@ public class HomeFragment extends Fragment {
 
         query = new Query();
         allOfferings = new ArrayList<>();
+        listAllOfferings = new ArrayList<>();
+        listFollowingOfferings = new ArrayList<>();
         adapter = new OfferingAdapter(getContext(), allOfferings);
 
         rvOfferings.setAdapter(adapter);
@@ -118,7 +125,34 @@ public class HomeFragment extends Fragment {
     }
 
     private void queryPostsFollowing() {
+        pb.setVisibility(ProgressBar.VISIBLE);
         Log.i(TAG, "find posts of following users");
+
+        ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (Offering offering : listAllOfferings) {
+                    for (ParseObject object : objects) {
+                        ParseUser followingUser = (ParseUser) object;
+                        if (offering.getUser().getObjectId().equals(followingUser.getObjectId())) {
+                            listFollowingOfferings.add(offering);
+                        }
+                    }
+                }
+                allOfferings.clear();
+                adapter.clear();
+                allOfferings.addAll(listFollowingOfferings);
+                swipeContainer.setRefreshing(false);
+                adapter.notifyDataSetChanged();
+                pb.setVisibility(ProgressBar.INVISIBLE);
+            }
+        });
+
+
+
     }
 
     protected void queryPosts(int page) {
@@ -130,9 +164,9 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG, "Issue with getting offerings", e);
                     return;
                 }
-                for (Offering offering : offerings) {
-                    Log.i(TAG, "Offering: " + offering.getTitle());
-                }
+                listAllOfferings = offerings;
+                allOfferings.clear();
+                adapter.clear();
                 allOfferings.addAll(offerings);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();
