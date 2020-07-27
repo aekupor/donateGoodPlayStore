@@ -25,24 +25,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-    static final String TAG = "ChatActivity";
-    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final String TAG = "ChatActivity";
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
-    EditText etMessage;
-    Button btSend;
-    RecyclerView rvChat;
-    ArrayList<Message> mMessages;
-    ChatAdapter mAdapter;
-    boolean mFirstLoad;
+    private EditText etMessage;
+    private Button btSend;
+    private RecyclerView rvChat;
+    private ArrayList<Message> mMessages;
+    private ChatAdapter mAdapter;
+    private boolean mFirstLoad;
+    private ParseUser otherUser;
+    private String roomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        ParseUser otherUser = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        otherUser = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Log.i(TAG, "got chat with: " + otherUser.getUsername());
 
+        findRoomId();
         setupMessagePosting();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
@@ -58,8 +61,17 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
 
+    private void findRoomId() {
+        Integer compare = otherUser.getObjectId().compareTo(ParseUser.getCurrentUser().getObjectId());
+        if (compare < 0) {
+            roomId = otherUser.getObjectId() + ParseUser.getCurrentUser().getObjectId();
+        } else {
+            roomId = ParseUser.getCurrentUser().getObjectId() + otherUser.getObjectId();
+        }
+    }
+
     // Setup button event handler which posts the entered message to Parse
-    void setupMessagePosting() {
+    private void setupMessagePosting() {
         // Find the text field and button
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
@@ -100,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     // Query messages from Parse so we can load them into the chat adapter
-    void refreshMessages() {
+    private void refreshMessages() {
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
