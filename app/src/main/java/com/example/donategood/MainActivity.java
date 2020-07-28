@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.donategood.fragments.ChatListFragment;
 import com.example.donategood.fragments.ComposeFragment;
 import com.example.donategood.fragments.HomeFragment;
 import com.example.donategood.fragments.NewCharityFragment;
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_search:
                         Log.i(TAG, "search button clicked");
                         fragment = new SearchFragment();
+                        break;
+                    case R.id.action_chat:
+                        Log.i(TAG, "chat button clicked");
+                        fragment = new ChatListFragment();
                         break;
                     default:
                         //home button clicked
