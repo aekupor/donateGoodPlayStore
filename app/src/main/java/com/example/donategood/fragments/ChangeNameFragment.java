@@ -1,15 +1,14 @@
 package com.example.donategood.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.donategood.R;
 import com.parse.ParseUser;
@@ -19,7 +18,7 @@ public class ChangeNameFragment extends DialogFragment {
     private EditText etName;
     private Button btnSubmit;
 
-    private static Boolean fbEdit;
+    private static Boolean bioEdit;
 
     public ChangeNameFragment() {
         // Empty constructor is required for DialogFragment
@@ -30,10 +29,10 @@ public class ChangeNameFragment extends DialogFragment {
         void onFinishEditDialog(String inputText);
     }
 
-    public static ChangeNameFragment newInstance(Boolean isFBEdit) {
+    public static ChangeNameFragment newInstance(Boolean isBioEdit) {
         ChangeNameFragment frag = new ChangeNameFragment();
         Bundle args = new Bundle();
-        fbEdit = isFBEdit;
+        bioEdit = isBioEdit;
         frag.setArguments(args);
         return frag;
     }
@@ -50,8 +49,10 @@ public class ChangeNameFragment extends DialogFragment {
         etName = view.findViewById(R.id.etName);
         btnSubmit = view.findViewById(R.id.btnChangeNameSubmit);
 
-        if (fbEdit) {
-            etName.setText(ParseUser.getCurrentUser().get("fbMessenger").toString());
+        if (bioEdit) {
+            if (ParseUser.getCurrentUser().get("bio") != null) {
+                etName.setText(ParseUser.getCurrentUser().get("bio").toString());
+            }
         } else {
             etName.setText(ParseUser.getCurrentUser().get("venmoName").toString());
         }

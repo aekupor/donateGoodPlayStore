@@ -28,7 +28,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     public static final String TAG = "ProfileFragment";
 
     private static Camera camera;
-    private Boolean fbEdit;
+    private Boolean bioEdit;
     private ParentProfile parentProfile;
 
     public ProfileFragment() {
@@ -67,12 +67,12 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 return true;
             case R.id.action_messenger_name:
                 Log.i(TAG, "action_messenger_name clicked");
-                fbEdit = true;
+                bioEdit = true;
                 showEditDialog();
                 return true;
             case R.id.action_venmo_name:
                 Log.i(TAG, "action_venmo_name clicked");
-                fbEdit = false;
+                bioEdit = false;
                 showEditDialog();
                 return true;
             default:
@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
 
     private void showEditDialog() {
         FragmentManager fm = getFragmentManager();
-        ChangeNameFragment changeNameFragment = (ChangeNameFragment) ChangeNameFragment.newInstance(fbEdit);
+        ChangeNameFragment changeNameFragment = (ChangeNameFragment) ChangeNameFragment.newInstance(bioEdit);
         // SETS the target fragment for use later when sending results
         changeNameFragment.setTargetFragment(ProfileFragment.this, 300);
         changeNameFragment.show(fm, "fragment_change_name");
@@ -113,8 +113,8 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     public void onFinishEditDialog(String inputText) {
         Log.i(TAG, "change name to: " + inputText);
 
-        if (fbEdit) {
-            ParseUser.getCurrentUser().put("fbMessenger", inputText);
+        if (bioEdit) {
+            ParseUser.getCurrentUser().put("bio", inputText);
         } else {
             ParseUser.getCurrentUser().put("venmoName", inputText);
         }

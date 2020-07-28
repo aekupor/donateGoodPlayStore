@@ -110,7 +110,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                             Log.e(TAG, "issue getting users");
                             return;
                         }
-                        
+
                         //go to that user's chat
                         Intent intent = new Intent(context, ChatActivity.class);
                         intent.putExtra("user", Parcels.wrap(objects.get(0)));

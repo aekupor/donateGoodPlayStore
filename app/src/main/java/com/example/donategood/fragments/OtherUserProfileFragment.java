@@ -87,15 +87,6 @@ public class OtherUserProfileFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ChatActivity.class);
                 intent.putExtra("user", Parcels.wrap(user));
                 startActivity(intent);
-
-                /*
-                if (user.get("fbMessenger") == null) {
-                    Toast.makeText(getContext(), "User does not have FB messenger set up", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.me/" + user.get("fbMessenger").toString()));
-                    startActivity(implicit);
-                }
-                 */
             }
         });
     }
