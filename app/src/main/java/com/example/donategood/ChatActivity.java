@@ -64,9 +64,9 @@ public class ChatActivity extends AppCompatActivity {
     private void findRoomId() {
         Integer compare = otherUser.getObjectId().compareTo(ParseUser.getCurrentUser().getObjectId());
         if (compare < 0) {
-            roomId = otherUser.getObjectId() + ParseUser.getCurrentUser().getObjectId();
+            roomId = otherUser.getObjectId() + " " + ParseUser.getCurrentUser().getObjectId();
         } else {
-            roomId = ParseUser.getCurrentUser().getObjectId() + otherUser.getObjectId();
+            roomId = ParseUser.getCurrentUser().getObjectId() + " " + otherUser.getObjectId();
         }
     }
 

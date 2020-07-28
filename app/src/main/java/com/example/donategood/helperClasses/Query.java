@@ -409,4 +409,10 @@ public class Query {
         query.orderByDescending("createdAt");
         query.findInBackground(callback);
     }
+
+    public void queryAllChats(FindCallback<Message> callback) {
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.orderByDescending("createdAt");
+        query.findInBackground(callback);
+    }
 }

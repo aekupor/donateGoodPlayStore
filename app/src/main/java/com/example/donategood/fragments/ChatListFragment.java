@@ -15,9 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donategood.R;
 import com.example.donategood.adapters.ChatListAdapter;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Message;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatListFragment extends Fragment {
 
@@ -25,7 +29,7 @@ public class ChatListFragment extends Fragment {
     
     private ChatListAdapter adapter;
     private RecyclerView rvChatPreview;
-    private ArrayList<ParseUser> users;
+    private ArrayList<String> userIdList;
     private Query query;
 
     public ChatListFragment() {
@@ -57,6 +61,22 @@ public class ChatListFragment extends Fragment {
     }
 
     private void findChatUsers() {
-
+        query.queryAllChats(new FindCallback<Message>() {
+            @Override
+            public void done(List<Message> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "error getting messages");
+                    return;
+                }
+                for (Message message : objects) {
+                    String[] userIds = message.getRoomId().split(" ");
+                    if (userIds[0].equals(ParseUser.getCurrentUser().getObjectId())) {
+                        userIdList.add(userIds[1]);
+                    } else if (userIds[1].equals(ParseUser.getCurrentUser().getObjectId())) {
+                        userIdList.add(userIds[0]);
+                    }
+                }
+            }
+        });
     }
 }
