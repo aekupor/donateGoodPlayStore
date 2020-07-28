@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         fbLoginButton = (LoginButton) findViewById(R.id.btnFBLogin);
         fbLoginButton.setReadPermissions(Arrays.asList(EMAIL));
 
-        // Callback registration
+        // FB callback registration
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick register button");
+                //go to RegisterActivity
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser(String username, String password) {
         Log.i(TAG, "attempting to login user " + username);
 
+        //login user in the background
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {

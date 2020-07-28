@@ -61,6 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
 
+    //determines the roomId based on the users in the room and their ids
     private void findRoomId() {
         Integer compare = otherUser.getObjectId().compareTo(ParseUser.getCurrentUser().getObjectId());
         if (compare < 0) {
@@ -112,6 +113,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    //refresh messages and check for new messages
     private void refreshMessages() {
         query.queryAllChatsByRoomId(roomId, new FindCallback<Message>() {
             @Override
