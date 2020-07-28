@@ -1,8 +1,5 @@
 package com.example.donategood.fragments;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -21,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
-import com.example.donategood.MainActivity;
 import com.example.donategood.OnSwipeTouchListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
@@ -391,8 +386,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
         updateQuantityLeft(quantityLeft);
 
-        //sendLocalNotification();
-        createNotification(); //creates notification on the "notifications" tab within the app
+        //creates notification on the "notifications" tab within the app
+        createNotification();
     }
 
     //called after user has created a comment
@@ -484,27 +479,5 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         notification.setKeyUser(ParseUser.getCurrentUser());
         notification.setSellingUser(offering.getUser());
         notification.saveInBackground();
-    }
-
-    private void sendLocalNotification() {
-        //send local notification
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra("goToFragment", "profileNotifications");
-
-        //create pending intent
-        int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-        int flags = PendingIntent.FLAG_CANCEL_CURRENT;
-        PendingIntent pIntent = PendingIntent.getActivity(getContext(), requestID, intent, flags);
-
-        //attach the pendingIntent to a new notification using setContentIntent
-        NotificationCompat.Builder noti = new NotificationCompat.Builder(getContext(), "donateGoodChannel")
-                .setSmallIcon(R.drawable.ic_baseline_person_outline_24)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
-                .setContentIntent(pIntent)
-                .setAutoCancel(true); // Hides the notification after its been selected
-
-        NotificationManager mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(0, noti.build());
     }
 }
