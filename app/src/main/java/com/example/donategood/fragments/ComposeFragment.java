@@ -55,6 +55,7 @@ public class ComposeFragment extends Fragment {
     private EditText etQuantity;
     private Button btnTakeMultiple;
     private EditText etVenmo;
+    private EditText etDescription;
 
     private String title;
     private String price;
@@ -87,6 +88,7 @@ public class ComposeFragment extends Fragment {
         etQuantity = view.findViewById(R.id.etQuantity);
         btnTakeMultiple = view.findViewById(R.id.btnTakeMultiple);
         etVenmo = view.findViewById(R.id.etVenmoCompose);
+        etDescription = view.findViewById(R.id.etDescription);
 
         etVenmo.setVisibility(View.INVISIBLE);
 
@@ -158,13 +160,12 @@ public class ComposeFragment extends Fragment {
                 quantity = etQuantity.getText().toString();
 
                 if (title.isEmpty()) {
-                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
-                    return;
+                    Toast.makeText(getContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
                 } else if (price.isEmpty()) {
                     Toast.makeText(getContext(), "Price cannot be empty", Toast.LENGTH_SHORT).show();
-                    return;
+                } else {
+                    savePost();
                 }
-                savePost();
             }
         });
     }
@@ -210,6 +211,9 @@ public class ComposeFragment extends Fragment {
                     offering.setHasMultipleImages(false);
                 }
 
+                if (etDescription.getText() != null) {
+                    offering.setDescription(etDescription.getText().toString());
+                }
                 offering.setTitle(title);
                 offering.setPrice(Integer.valueOf(price));
                 offering.setCharity(charities.get(0));
