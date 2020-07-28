@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.LoadPost;
+import com.example.donategood.helperClasses.Query;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -22,11 +25,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     public static final String TAG = "UserAdapter";
 
     private Context context;
-    private List<ParseUser> users;
+    private List<String> userIds;
 
-    public ChatListAdapter(Context context, List<ParseUser> users) {
+    public ChatListAdapter(Context context, List<String> users) {
         this.context = context;
-        this.users = users;
+        this.userIds = users;
     }
 
     @NonNull
@@ -38,22 +41,22 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ParseUser user = users.get(position);
-        holder.bind(user);
+        String userId = userIds.get(position);
+        holder.bind(userId);
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return userIds.size();
     }
 
     public void clear() {
-        users.clear();
+        userIds.clear();
         notifyDataSetChanged();
     }
 
-    public void addAll(List<ParseUser> list) {
-        users.addAll(list);
+    public void addAll(List<String> list) {
+        userIds.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -63,6 +66,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         ImageView ivProfileImage;
 
         LoadPost loadPost;
+        Query query;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,19 +75,29 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             ivProfileImage = itemView.findViewById(R.id.ivUserProfileImage);
 
             loadPost = new LoadPost();
+            query = new Query();
 
             itemView.setOnClickListener(this);
         }
 
-        public void bind(ParseUser user) {
-            loadPost.setUser(user, context, tvUsername, ivProfileImage);
+        public void bind(String userId) {
+            query.findUserById(userId, new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> objects, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "issue getting users");
+                        return;
+                    }
+                    loadPost.setUser(objects.get(0), context, tvUsername, ivProfileImage);
+                }
+            });
         }
 
         public void onClick(View v) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                ParseUser user = users.get(position);
-                Log.i(TAG, "user clicked: " + user.getUsername());
+                String userId = userIds.get(position);
+                Log.i(TAG, "user clicked with id: " + userId);
 
                 //go to that user's chat
 

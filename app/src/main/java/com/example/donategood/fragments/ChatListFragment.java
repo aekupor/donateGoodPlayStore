@@ -50,8 +50,8 @@ public class ChatListFragment extends Fragment {
 
         query = new Query();
         rvChatPreview = view.findViewById(R.id.rvChatPreview);
-        users = new ArrayList<>();
-        adapter = new ChatListAdapter(getContext(), users);
+        userIdList = new ArrayList<>();
+        adapter = new ChatListAdapter(getContext(), userIdList);
 
         rvChatPreview.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -76,6 +76,7 @@ public class ChatListFragment extends Fragment {
                         userIdList.add(userIds[0]);
                     }
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
