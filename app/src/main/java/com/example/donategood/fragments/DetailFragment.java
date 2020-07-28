@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.example.donategood.MainActivity;
+import com.example.donategood.OnSwipeTouchListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
@@ -116,6 +117,16 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+            @Override
+            public void onSwipeRight() {
+                Log.i(TAG, "onSwipeRight, going to home fragment");
+                final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                Fragment fragment = new HomeFragment();
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).replace(R.id.flContainer, fragment).commit();
+            }
+        });
 
         //find all variables
         tvTitle = view.findViewById(R.id.tvDetailTitle);
