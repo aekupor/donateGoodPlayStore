@@ -30,6 +30,6 @@ public class ChatListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i(TAG, "onViewCreated chat list fr
+        Log.i(TAG, "onViewCreated chat list fragment");
     }
 }
