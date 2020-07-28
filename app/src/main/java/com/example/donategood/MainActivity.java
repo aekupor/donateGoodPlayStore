@@ -95,18 +95,6 @@ public class MainActivity extends AppCompatActivity {
         });
         //set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_home);
-
-        //when notification is clicked on
-        String goToFragment = getIntent().getStringExtra("goToFragment");
-        if (goToFragment != null) {
-            if (goToFragment.equals("profileNotifications")) {
-                Fragment profileFragment = new ProfileFragment();
-                fragmentManager.beginTransaction().replace(R.id.flContainer, profileFragment).commit();
-            }
-        } else {
-            Fragment homeFragment = new HomeFragment();
-            fragmentManager.beginTransaction().replace(R.id.flContainer, homeFragment).commit();
-        }
     }
 
     public static ArrayList<ParseFile> getParseFileList() {
