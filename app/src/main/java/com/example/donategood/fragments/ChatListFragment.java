@@ -21,6 +21,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChatListFragment extends Fragment {
@@ -70,11 +71,15 @@ public class ChatListFragment extends Fragment {
                     return;
                 }
                 for (Message message : objects) {
-                    String[] userIds = message.getRoomId().split(" ");
-                    if (userIds[0].equals(ParseUser.getCurrentUser().getObjectId())) {
-                        userIdList.add(userIds[1]);
-                    } else if (userIds[1].equals(ParseUser.getCurrentUser().getObjectId())) {
-                        userIdList.add(userIds[0]);
+                    List<String> userIds = new ArrayList<String>(Arrays.asList(message.getRoomId().split(" ")));
+                    if (userIds.get(0).equals(ParseUser.getCurrentUser().getObjectId())) {
+                        if (!userIdList.contains(userIds.get(1))) {
+                            userIdList.add(userIds.get(1));
+                        }
+                    } else if (userIds.get(1).equals(ParseUser.getCurrentUser().getObjectId())) {
+                        if (!userIdList.contains(userIds.get(0))) {
+                            userIdList.add(userIds.get(0));
+                        }
                     }
                 }
                 adapter.notifyDataSetChanged();
