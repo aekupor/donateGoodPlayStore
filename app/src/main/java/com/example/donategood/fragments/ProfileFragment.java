@@ -65,8 +65,8 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 Log.i(TAG, "action_upload_photo clicked");
                 camera.pickPhoto(getContext(), true, false);
                 return true;
-            case R.id.action_messenger_name:
-                Log.i(TAG, "action_messenger_name clicked");
+            case R.id.action_edit_bio:
+                Log.i(TAG, "action_edit_bio clicked");
                 bioEdit = true;
                 showEditDialog();
                 return true;
