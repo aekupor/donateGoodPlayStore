@@ -75,6 +75,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private TextView tvCommentTitle;
     private LinearLayout layoutImages;
     private RatingBar ratingBar;
+    private TextView tvDescription;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -132,6 +133,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         layoutImages = (LinearLayout) view.findViewById(R.id.linearImages);
         ratingBar = (RatingBar) view.findViewById(R.id.rbDetail);
         rvComments = view.findViewById(R.id.rvComments);
+        tvDescription = view.findViewById(R.id.tvDetailDescription);
 
         numComments = 0;
         loadPost = new LoadPost();
@@ -219,6 +221,12 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             ratingBar.setVisibility(View.INVISIBLE);
         } else {
             ratingBar.setNumStars(offering.getRating());
+        }
+
+        if (offering.getDescription() == null) {
+            tvDescription.setVisibility(View.INVISIBLE);
+        } else {
+            tvDescription.setText(offering.getDescription());
         }
 
         tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
