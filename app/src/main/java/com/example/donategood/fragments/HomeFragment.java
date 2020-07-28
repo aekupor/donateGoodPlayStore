@@ -123,7 +123,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         queryPosts(0);
     }
 
