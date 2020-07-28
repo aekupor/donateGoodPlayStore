@@ -242,6 +242,18 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             btnPurchase.setVisibility(View.INVISIBLE);
         }
 
+        if (offering.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "edit button clicked");
+                    goToOtherFragment("compose");
+                }
+            });
+        } else {
+            btnEdit.setVisibility(View.INVISIBLE);
+        }
+
         setImage();
         setShareButton();
         queryRecommendedPosts();
@@ -363,6 +375,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             Bundle bundle = new Bundle();
             bundle.putParcelable("user", offering.getUser());
             fragment = OtherUserProfileFragment.newInstance(bundle);
+        } else if (fragmentName.equals("compose")) {
+            // go to compose fragment to edit the offering
+            fragment = new ComposeFragment();
         }
 
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
