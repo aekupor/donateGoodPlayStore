@@ -65,6 +65,7 @@ public class ComposeFragment extends Fragment {
     private String quantity;
     private Spinner spinner;
     private Offering editOffering;
+    private ArrayAdapter<String> spinnerAdapter;
 
     public ComposeFragment() {
         //required empty public constructor
@@ -193,11 +194,6 @@ public class ComposeFragment extends Fragment {
                 }
             }
         });
-
-        //if offering is already created and just needs to be edited
-        if (editOffering != null) {
-            preFillFields();
-        }
     }
 
     //pre-fill fields of offering that is to be edited
@@ -206,6 +202,10 @@ public class ComposeFragment extends Fragment {
         etPrice.setText(Integer.toString(editOffering.getPrice()));
         etQuantity.setText(Integer.toString(editOffering.getQuantityLeft()));
         etDescription.setText(editOffering.getDescription());
+
+        //set charity spinner value
+        int spinnerPosition = spinnerAdapter.getPosition(editOffering.getCharity().getTitle());
+        spinner.setSelection(spinnerPosition);
 
         //make tags prettier
         StringBuilder listWithCommas = new StringBuilder("");
@@ -328,12 +328,18 @@ public class ComposeFragment extends Fragment {
                 charitiesNames.add(KEY_NEW_CHARITY);
 
                 // Create an ArrayAdapter for spinner
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charitiesNames);
+                spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, charitiesNames);
 
                 // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 // Apply the adapter to the spinner
-                spinner.setAdapter(adapter);
+                spinner.setAdapter(spinnerAdapter);
+
+                //must wait to pre-fill fields until spinnerAdapter is already intialized
+                //if offering is already created and just needs to be edited
+                if (editOffering != null) {
+                    preFillFields();
+                }
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
