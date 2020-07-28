@@ -18,6 +18,7 @@ public class Recommend {
 
     public static final String TAG = "Recommend";
 
+    //sorts map with the largest number of points first
     public HashMap<Offering, Integer> sortMapByPoints(Map<Offering, Integer> pointValues) {
         // Create a list from elements of HashMap
         List<Map.Entry<Offering, Integer> > list = new LinkedList<Map.Entry<Offering, Integer> >(pointValues.entrySet());
@@ -37,6 +38,7 @@ public class Recommend {
         return temp;
     }
 
+    //returns the number of points for the corresponding offering
     public Integer getPointValue(Offering mainOffering, Offering offering) {
         Integer pointValue = 0;
         pointValue += checkPrice(mainOffering.getPrice(), offering.getPrice());
@@ -50,8 +52,10 @@ public class Recommend {
     private Integer checkPrice(Integer mainPrice, Integer otherPrice) {
         Integer priceDifference = Math.abs(mainPrice - otherPrice);
         if (priceDifference <= 5) {
+            //if price difference between is less than $5
             return 2;
         } else if (priceDifference <= 20) {
+            //if price difference between is less than $20
             return 1;
         }
         return 0;
@@ -67,8 +71,10 @@ public class Recommend {
             e.printStackTrace();
         }
         if (mainCharity.getObjectId().equals(otherCharity.getObjectId())) {
+            //if same charity
             return 2;
         } else if (fetchedMainCharity.getGrouping().equals(fetchedOtherCharity.getGrouping())) {
+            //if charity just in same grouping
             return 1;
         }
         return 0;
@@ -78,6 +84,7 @@ public class Recommend {
         Integer points = 0;
         for (String tag : mainTags) {
             if (otherTags.contains(tag)) {
+                //add one point per same tag
                 points++;
             }
         }
@@ -86,6 +93,7 @@ public class Recommend {
 
     private Integer checkSellingUser(ParseUser mainUser, final ParseUser otherUser) {
         if (mainUser.getObjectId().equals(otherUser.getObjectId())) {
+            //if selling user is the same
             return 2;
         }
         return 0;

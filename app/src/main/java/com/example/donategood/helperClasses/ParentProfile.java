@@ -87,6 +87,7 @@ public class ParentProfile {
         loadPost = new LoadPost();
         query = new Query();
 
+        //initialize tab layout
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
@@ -140,6 +141,8 @@ public class ParentProfile {
         }
     }
 
+    //initialize variables relating to follow
+    //ProfileFragment does not have follow since user is current signed in use
     private void initializeFollow(View view, final Context context) {
         following = false;
         ivFollow = view.findViewById(R.id.ivFollow);
@@ -149,6 +152,7 @@ public class ParentProfile {
             public void onClick(View view) {
                 Log.i(TAG, "follow clicked");
                 if (following) {
+                    //if user is already following, onClick unfollows
                     if (profileType == KEY_CHARITY) {
                         ParseUser.getCurrentUser().getRelation("followingCharity").remove(charity);
                     } else {
@@ -159,6 +163,7 @@ public class ParentProfile {
                     Toast.makeText(context, "Unfollowed", Toast.LENGTH_SHORT).show();
                     following = false;
                 } else {
+                    //if user is not already following, onClick follows
                     if (profileType == KEY_CHARITY) {
                         ParseUser.getCurrentUser().getRelation("followingCharity").add(charity);
                     } else {
@@ -177,6 +182,7 @@ public class ParentProfile {
     public void checkIfFollowing() {
         pb.setVisibility(ProgressBar.VISIBLE);
         if (profileType == KEY_CHARITY) {
+            //check if following charity
             ParseUser.getCurrentUser().getRelation("followingCharity").getQuery().findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
@@ -193,6 +199,7 @@ public class ParentProfile {
                 }
             });
         } else {
+            //check if following user
             ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
@@ -212,12 +219,14 @@ public class ParentProfile {
         pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
+    //if user is following that charity/user, set appropiate variables
     private void setIsFollowing() {
         following = true;
         ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
         pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
+    //initialize notifications and related variables
     public void initializeNotifications(View view, final Context context) {
         rvNotifications = view.findViewById(R.id.rvNotifications);
         pendingNotifications = view.findViewById(R.id.layoutNotification);
@@ -236,6 +245,7 @@ public class ParentProfile {
         rvNotifications.setLayoutManager(linearLayoutManager2);
     }
 
+    //call correct query depending on queryType
     public void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
 

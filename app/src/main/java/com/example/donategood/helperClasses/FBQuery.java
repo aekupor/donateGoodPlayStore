@@ -16,6 +16,7 @@ public class FBQuery {
 
     public static final String TAG = "FBQuery";
 
+    //get name of signed in user
     public void getName(AccessToken accessToken, GraphRequest.GraphJSONObjectCallback graphJSONObjectCallback) {
         GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,
@@ -25,9 +26,9 @@ public class FBQuery {
         parameters.putString("fields", "id,name");
         request.setParameters(parameters);
         request.executeAsync();
-
     }
 
+    //get profile image of signed in user
     public void getProfileImage(AccessToken accessToken, Long userId, GraphRequest.Callback callback) {
         GraphRequest photoRequest = GraphRequest.newGraphPathRequest(
                 accessToken,
@@ -37,6 +38,7 @@ public class FBQuery {
         photoRequest.executeAsync();
     }
 
+    //check if user is logged in; if they are, load their profile image and name
     public void checkFBLogin(final ParentProfile parentProfile, final Context context) {
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();

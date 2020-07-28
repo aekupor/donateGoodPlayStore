@@ -50,6 +50,7 @@ public class Camera {
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
+    //takes in a Uri and returns a corresponding Bitmap
     public Bitmap loadFromUri(Uri photoUri, Context context) {
         Bitmap image = null;
         try {
@@ -68,6 +69,7 @@ public class Camera {
         return image;
     }
 
+    //takes in a Bitmap and returns a corresponding File
     public File createFile(Context context, Bitmap selectedImage, String filename) {
         //create a file to write bitmap data
         File f = new File(context.getCacheDir(), filename);
@@ -98,6 +100,7 @@ public class Camera {
         return f;
     }
 
+    //opens camera to take photo
     public void launchCamera(Context context, Boolean profile) {
         mainContext = context;
         // create Intent to take a picture and return control to the calling application
@@ -119,6 +122,7 @@ public class Camera {
         }
     }
 
+    //create intent to upload multiple photos
     public void pickMultiplePhotos(Context context) {
         mainContext = context;
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -127,6 +131,7 @@ public class Camera {
         ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_MULTIPLE_PHOTO_CODE);
     }
 
+    //opens photo to select/upload one photo
     public void pickPhoto(Context context, Boolean profile, Boolean charity) {
         mainContext = context;
         // Create intent for picking a photo from the gallery
@@ -144,6 +149,7 @@ public class Camera {
         }
     }
 
+    //get and set variables for use in other classes
     public File getPhotoFile() {
         return photoFile;
     }

@@ -295,6 +295,7 @@ public class Query {
                         for (Object object : boughtUsers) {
                             ParseUser user = (ParseUser) object;
                             if (user.getObjectId().equals(currentUser.getObjectId())) {
+                                //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
                                 Charity charity = offering.getCharity();
                                 if (moneyRaisedByCharity.containsKey(charity)) {
@@ -305,6 +306,7 @@ public class Query {
                             }
                         }
                         if (offering.getUser().getObjectId().equals(currentUser.getObjectId())) {
+                            //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
                             Charity charity = offering.getCharity();
                             if (moneyRaisedByCharity.containsKey(charity)) {
@@ -315,11 +317,12 @@ public class Query {
                         }
                     }
                 }
+                //find and set total money raised
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 tvMoneyRaised.setText("$" + totalMoney.toString());
 
+                //determine the level of the user based on the amount of money raised + sold
                 int iconImage = -1;
-
                 if (totalMoney < 100) {
                     iconImage = R.drawable.level_one;
                 } else if (totalMoney < 200){
@@ -334,6 +337,7 @@ public class Query {
                     iconImage = R.drawable.crown;
                 }
 
+                //set icon based on level
                 if (totalMoney < 25) {
                     ivLevelIcon.setVisibility(View.INVISIBLE);
                 } else {
@@ -343,6 +347,7 @@ public class Query {
                             .into(ivLevelIcon);
                 }
 
+                //sort map
                 HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
                 Set<Charity> charities = sortedMap.keySet();
                 for (Charity charity : charities) {
@@ -352,6 +357,7 @@ public class Query {
                     } catch (ParseException ex) {
                         ex.printStackTrace();
                     }
+                    //set charity icon with profile image of charity with most money raised
                     Glide.with(context)
                             .load(fetchedCharity.getImage().getUrl())
                             .into(ivCharityIcon);
@@ -361,6 +367,7 @@ public class Query {
         });
     }
 
+    //sorts map with the largest number of points first
     public HashMap<Charity, Integer> sortMapByPoints(Map<Charity, Integer> pointValues) {
         // Create a list from elements of HashMap
         List<Map.Entry<Charity, Integer> > list = new LinkedList<Map.Entry<Charity, Integer> >(pointValues.entrySet());
@@ -400,6 +407,7 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    //query chats with the specified roomId
     public void queryAllChatsByRoomId(String roomId, FindCallback<Message> callback) {
         final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
@@ -410,6 +418,7 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    //query all chats
     public void queryAllChats(FindCallback<Message> callback) {
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         query.orderByDescending("createdAt");

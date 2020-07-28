@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 public class LoadPost {
 
+    //set charity name and image from an offering
     public void setCharity(Offering offering, Context context, TextView tvCharity, ImageView ivCharityProfile) {
         if (offering.getCharity() != null) {
             try {
@@ -36,6 +37,7 @@ public class LoadPost {
         }
     }
 
+    //set charity name and image from a charity
     public void setCharityWithCharity(Charity charity, Context context, TextView tvCharity, ImageView ivCharityProfile) {
             tvCharity.setText(charity.getTitle());
             ivCharityProfile.setImageDrawable(null);
@@ -47,6 +49,7 @@ public class LoadPost {
             }
     }
 
+    //sets image for an offering from a ParseFile into specified ImageView
     public void setPostImage(ParseFile image, Context context, ImageView ivOfferingPhoto) {
         ivOfferingPhoto.setImageDrawable(null);
         if (image != null) {
@@ -56,6 +59,7 @@ public class LoadPost {
         }
     }
 
+    //sets the title, price, and selling user name of an offering from the specified offering
     public void setTitlePriceUser(Offering offering, TextView tvTitle, TextView tvPrice, TextView tvUser) {
         tvTitle.setText(offering.getTitle());
         tvPrice.setText("$" + Integer.toString(offering.getPrice()));
@@ -66,6 +70,7 @@ public class LoadPost {
         }
     }
 
+    //sets the name and photo of a user from the specified ParseUser
     public void setUser(ParseUser user, Context context, TextView tvTitle, ImageView ivPhoto) {
         try {
             tvTitle.setText(user.fetchIfNeeded().getUsername());
@@ -86,6 +91,7 @@ public class LoadPost {
                 .into(ivPhoto);
     }
 
+    //sets the name and photo of a user from their name and url of their FB picture
     public void setUserFromFB(String name, String url, Context context, TextView tvTitle, ImageView ivPhoto) {
         tvTitle.setText(name);
         Glide.with(context)
