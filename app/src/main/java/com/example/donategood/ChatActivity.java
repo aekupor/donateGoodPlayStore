@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.adapters.ChatAdapter;
+import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Message;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -26,7 +26,6 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     private EditText etMessage;
     private Button btSend;
@@ -36,6 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     private boolean mFirstLoad;
     private ParseUser otherUser;
     private String roomId;
+    private Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
         rvChat = (RecyclerView) findViewById(R.id.rvChat);
         mMessages = new ArrayList<>();
         mFirstLoad = true;
+        query = new Query();
         final String userId = ParseUser.getCurrentUser().getObjectId();
         mAdapter = new ChatAdapter(ChatActivity.this, userId, mMessages);
         rvChat.setAdapter(mAdapter);
@@ -111,24 +112,14 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    // Query messages from Parse so we can load them into the chat adapter
     private void refreshMessages() {
-        // Construct query to execute
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-        // Configure limit and sort order
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.whereEqualTo("roomId", roomId);
-
-        // get the latest 50 messages, order will show up newest to oldest of this group
-        query.orderByDescending("createdAt");
-        // Execute query to fetch all messages from Parse asynchronously
-        // This is equivalent to a SELECT query with SQL
-        query.findInBackground(new FindCallback<Message>() {
-            public void done(List<Message> messages, ParseException e) {
+        query.queryAllChatsByRoomId(roomId, new FindCallback<Message>() {
+            @Override
+            public void done(List<Message> objects, ParseException e) {
                 if (e == null) {
                     mMessages.clear();
-                    mMessages.addAll(messages);
-                    mAdapter.notifyDataSetChanged(); // update adapter
+                    mMessages.addAll(objects);
+                    mAdapter.notifyDataSetChanged();
                     // Scroll to the bottom of the list on initial load
                     if (mFirstLoad) {
                         rvChat.scrollToPosition(0);

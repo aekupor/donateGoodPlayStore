@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Comment;
+import com.example.donategood.models.Message;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
@@ -396,6 +397,16 @@ public class Query {
         query.include("forUser");
         query.include("forOffering");
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
+    public void queryAllChatsByRoomId(String roomId, FindCallback<Message> callback) {
+        final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        query.whereEqualTo("roomId", roomId);
+        query.orderByDescending("createdAt");
         query.findInBackground(callback);
     }
 }

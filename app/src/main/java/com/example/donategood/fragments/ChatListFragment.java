@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.ChatListAdapter;
+import com.example.donategood.helperClasses.Query;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ChatListFragment extends Fragment {
     private ChatListAdapter adapter;
     private RecyclerView rvChatPreview;
     private ArrayList<ParseUser> users;
+    private Query query;
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -41,7 +43,8 @@ public class ChatListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Log.i(TAG, "onViewCreated chat list fragment");
-        
+
+        query = new Query();
         rvChatPreview = view.findViewById(R.id.rvChatPreview);
         users = new ArrayList<>();
         adapter = new ChatListAdapter(getContext(), users);
@@ -54,5 +57,6 @@ public class ChatListFragment extends Fragment {
     }
 
     private void findChatUsers() {
+
     }
 }
