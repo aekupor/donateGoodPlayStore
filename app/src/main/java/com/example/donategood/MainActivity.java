@@ -106,8 +106,11 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult");
+
+        //check if the activity result is from taking/choosing a photo
         if (isPhoto(requestCode)) {
             if (requestCode == PICK_MULTIPLE_PHOTO_CODE) {
+                //user has requested to upload multiple photos
 
                 Camera camera = ComposeFragment.getCamera();
                 Context mainContext = camera.getContext();
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     ClipData mClipData = data.getClipData();
                     parseFileList = new ArrayList<>();
                     for (int i = 0; i < mClipData.getItemCount(); i++) {
+                        //for each photo, load it into a ParseFile and add to parseFileList
                         ClipData.Item item = mClipData.getItemAt(i);
                         Uri uri = item.getUri();
                         Bitmap bitmap = camera.loadFromUri(uri, mainContext);
@@ -138,24 +142,30 @@ public class MainActivity extends AppCompatActivity {
                 initializeVariables(requestCode);
 
                 if (isTakePhoto(resultCode, requestCode)) {
+                    //if user took photo
                     image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 } else if (isUploadPhoto(data, requestCode)) {
+                    //if user uploaded photo
                     Uri photoUri = data.getData();
                     image = camera.loadFromUri(photoUri, mainContext);
                     photoFile = camera.createFile(mainContext, image, "filename");
                     camera.setPhotoFile(photoFile);
 
                     if (requestCode == UPLOAD_PHOTO_CHARITY) {
+                        //do not set ivPhotoToUpload or save in user background
                         return;
                     }
                 } else {
+                    //if error
                     Toast.makeText(getApplicationContext(), "Issue with picture!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                //set ivPhotoToUpload to proper image
                 ivPhotoToUpload.setImageBitmap(image);
 
                 if (isProfile(requestCode)) {
+                    //if is setting profile picture, save in background
                     ParseFile file = new ParseFile(photoFile);
                     ParseUser.getCurrentUser().put("profileImage", file);
                     ParseUser.getCurrentUser().saveInBackground();
@@ -164,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //returns true if the user took or uploaded photo(s)
     private Boolean isPhoto(int requestCode) {
         if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == PICK_MULTIPLE_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CHARITY) {
             return true;
@@ -171,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    //return true if user took the photo from the camera
     private Boolean isTakePhoto(int resultCode, int requestCode) {
         if (resultCode == RESULT_OK && (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE)) {
             return true;
@@ -178,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    //return true if user uploaded the photo from photos
     private Boolean isUploadPhoto(Intent data, int requestCode) {
         if ((data != null) && (requestCode == UPLOAD_PHOTO_CODE || requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == UPLOAD_PHOTO_CHARITY)) {
             return true;
@@ -185,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    //return true if user took or uploaded the photo for their profile picture
     private Boolean isProfile(int requestCode) {
         if (requestCode == UPLOAD_PHOTO_CODE_PROFILE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_PROFILE) {
             return true;
@@ -192,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    //initializes variables for photo respones
     private void initializeVariables(int requestCode) {
         if (isProfile(requestCode)) {
             ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);

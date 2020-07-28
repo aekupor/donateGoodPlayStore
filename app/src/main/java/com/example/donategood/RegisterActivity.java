@@ -44,10 +44,13 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
 
                 if (!confirmPassword.equals(password)) {
+                    //if passwords do not match
                     Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 } else if (username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
+                    //if required fields are empty
                     Toast.makeText(RegisterActivity.this, "Field cannot be empty!", Toast.LENGTH_SHORT).show();
                 } else if (!email.contains(".") || !email.contains("@")) {
+                    //if email is not proper email
                     Toast.makeText(RegisterActivity.this, "Email is not valid", Toast.LENGTH_SHORT).show();
                 } else {
                     registerUser(username, password, email);
