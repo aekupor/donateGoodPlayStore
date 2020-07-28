@@ -50,16 +50,19 @@ public class ChangeNameFragment extends DialogFragment {
         btnSubmit = view.findViewById(R.id.btnChangeNameSubmit);
 
         if (bioEdit) {
+            //if editing the user's bio
             if (ParseUser.getCurrentUser().get("bio") != null) {
                 etName.setText(ParseUser.getCurrentUser().get("bio").toString());
             }
         } else {
+            //if editing the user's venmo username
             etName.setText(ParseUser.getCurrentUser().get("venmoName").toString());
         }
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //when submit is clicked, take user back to ProfileFragment
                 sendBackResult();
             }
         });

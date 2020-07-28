@@ -60,6 +60,7 @@ public class ChatListFragment extends Fragment {
         findChatUsers();
     }
 
+    //find users that the current user has chatted with previously
     private void findChatUsers() {
         query.queryAllChats(new FindCallback<Message>() {
             @Override

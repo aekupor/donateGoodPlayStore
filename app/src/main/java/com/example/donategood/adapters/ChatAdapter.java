@@ -47,15 +47,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         final boolean isMe = message.getUserId() != null && message.getUserId().equals(mUserId);
 
         if (isMe) {
+            //if chat is from current user
             holder.imageMe.setVisibility(View.VISIBLE);
             holder.imageOther.setVisibility(View.GONE);
             holder.bodyRight.setText(message.getBody());
             holder.loadPost.setUser(ParseUser.getCurrentUser(), mContext, holder.usernameRight, holder.imageMe);
         } else {
+            //if chat is from other user
             holder.imageOther.setVisibility(View.VISIBLE);
             holder.imageMe.setVisibility(View.GONE);
             holder.body.setText(message.getBody());
 
+            //have to query to find other user
             holder.query.findUserById(message.getUserId(), new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> objects, ParseException e) {

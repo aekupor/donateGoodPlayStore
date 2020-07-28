@@ -76,6 +76,8 @@ public class CharityFragment extends Fragment {
         });
 
         parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
+
+        //query to find charity
         parentProfile.query.findCharity(charityName, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> objects, ParseException e) {
@@ -86,6 +88,7 @@ public class CharityFragment extends Fragment {
                 charity = objects.get(0);
                 Log.i(TAG, "Successfully got charity with title: " + charity.getTitle());
 
+                //set info about charity
                 parentProfile.setCharity(charity);
                 parentProfile.queryCharityInfo(getContext());
                 parentProfile.checkIfFollowing();

@@ -73,6 +73,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
 
         public void bind(Notification notification) {
+            //sets text for seller of offering to either approve or deny purchase
+
             tvNotification.setText("Did " + notification.getKeyUser().getUsername() + " pay you "
                     + notification.getKeyOffering().getPrice().toString() + " for your "
                     + notification.getKeyOffering().getTitle() + "?");

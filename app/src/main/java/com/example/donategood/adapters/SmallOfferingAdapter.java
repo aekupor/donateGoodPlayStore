@@ -72,6 +72,7 @@ public class SmallOfferingAdapter extends OfferingAdapter {
             String boughtList = "Bought by: ";
             ArrayList<Object> boughtUsers = offering.getBoughtByArray();
 
+            //OfferingAdapter does not include bought by list
             if (boughtUsers != null && !boughtUsers.isEmpty()) {
                 for (Object object : boughtUsers) {
                     ParseUser user = (ParseUser) object;
