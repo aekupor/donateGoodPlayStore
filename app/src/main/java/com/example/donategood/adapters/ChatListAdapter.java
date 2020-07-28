@@ -1,6 +1,7 @@
 package com.example.donategood.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.donategood.ChatActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -71,8 +75,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvUsername = itemView.findViewById(R.id.tvUserUsername);
-            ivProfileImage = itemView.findViewById(R.id.ivUserProfileImage);
+            tvUsername = itemView.findViewById(R.id.tvOtherPersonChatName);
+            ivProfileImage = itemView.findViewById(R.id.ivChatOtherPersonProfile);
 
             loadPost = new LoadPost();
             query = new Query();
@@ -99,8 +103,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 String userId = userIds.get(position);
                 Log.i(TAG, "user clicked with id: " + userId);
 
-                //go to that user's chat
-
+                query.findUserById(userId, new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "issue getting users");
+                            return;
+                        }
+                        
+                        //go to that user's chat
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        intent.putExtra("user", Parcels.wrap(objects.get(0)));
+                        context.startActivity(intent);
+                    }
+                });
             }
         }
     }
