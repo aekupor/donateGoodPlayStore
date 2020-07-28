@@ -243,6 +243,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         }
 
         if (offering.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            //only show edit button if selling user of offering is the current signed in user
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -377,7 +378,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             fragment = OtherUserProfileFragment.newInstance(bundle);
         } else if (fragmentName.equals("compose")) {
             // go to compose fragment to edit the offering
-            fragment = new ComposeFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("offering", offering);
+            fragment = ComposeFragment.newInstance(bundle);
         }
 
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();

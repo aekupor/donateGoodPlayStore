@@ -63,9 +63,28 @@ public class ComposeFragment extends Fragment {
     private String charity;
     private String quantity;
     private Spinner spinner;
+    private Offering editOffering;
 
     public ComposeFragment() {
         //required empty public constructor
+    }
+
+    public static ComposeFragment newInstance(Bundle bundle) {
+        ComposeFragment fragment = new ComposeFragment();
+        if (bundle != null) {
+            Bundle args = new Bundle();
+            Offering offering = bundle.getParcelable("offering");
+            Log.i(TAG, "got offering: " + offering.getTitle());
+            args.putParcelable("offering", offering);
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        editOffering = getArguments().getParcelable("offering");
     }
 
     @Override
