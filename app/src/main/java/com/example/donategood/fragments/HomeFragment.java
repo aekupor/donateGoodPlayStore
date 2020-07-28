@@ -102,10 +102,12 @@ public class HomeFragment extends Fragment {
                 int position = tab.getPosition();
                 Log.i(TAG, "tab selected at position: " + position);
                 if (position == 0) {
+                    //view all offerings selected
                     queryPosts(0);
                     rvOfferings.addOnScrollListener(scrollListener);
                     swipeContainer.setEnabled(true);
                 } else {
+                    //view following offerings selected
                     queryPostsFollowing();
                     rvOfferings.removeOnScrollListener(scrollListener);
                     swipeContainer.setEnabled(false);
@@ -162,7 +164,7 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
                                     if (!added) {
-                                        //find offering by charity that user follows
+                                        //find offering by charity that user follows (if selling user isn't already being followed)
                                         for (ParseObject object : followingCharities) {
                                             Charity followingCharity = (Charity) object;
                                             if (offering.getCharity().getObjectId().equals(followingCharity.getObjectId())) {
@@ -172,6 +174,8 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
                                 }
+
+                                //add following offerings to adapter and RV
                                 allOfferings.clear();
                                 adapter.clear();
                                 allOfferings.addAll(listFollowingOfferings);
@@ -205,6 +209,7 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG, "Issue with getting offerings", e);
                     return;
                 }
+                //add following offerings to adapter and RV
                 listAllOfferings = offerings;
                 allOfferings.clear();
                 adapter.clear();

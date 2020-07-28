@@ -105,6 +105,7 @@ public class ComposeFragment extends Fragment {
         ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //when photo is clicked, show buttons to take photos
                 btnTakeMultiple.setVisibility(View.VISIBLE);
                 btnUploadPhoto.setVisibility(View.VISIBLE);
                 btnTakePhoto.setVisibility(View.VISIBLE);
@@ -143,6 +144,7 @@ public class ComposeFragment extends Fragment {
                 if (ParseUser.getCurrentUser().get("venmoName") == null) {
                     Log.i(TAG, "user doesn't have venmo name");
 
+                    //if user doesn't have a venmo username stored, make them enter one and save to Parse
                     etVenmo.setVisibility(View.VISIBLE);
 
                     if (etVenmo.getText().toString().isEmpty()) {
@@ -159,10 +161,11 @@ public class ComposeFragment extends Fragment {
                 tags = editTags(etTags.getText().toString());
                 quantity = etQuantity.getText().toString();
 
+                //make sure required field aren't empty
                 if (title.isEmpty()) {
                     Toast.makeText(getContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
-                } else if (price.isEmpty()) {
-                    Toast.makeText(getContext(), "Price cannot be empty", Toast.LENGTH_SHORT).show();
+                } else if (price.isEmpty() || quantity.isEmpty()) {
+                    Toast.makeText(getContext(), "Price and quantity cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
                     savePost();
                 }
@@ -170,6 +173,7 @@ public class ComposeFragment extends Fragment {
         });
     }
 
+    //create ArrayList<String> of tags the user has entered
     private ArrayList<String> editTags(String tags) {
         String[] tagArray = tags.split(", ");
         ArrayList<String> tagList = new ArrayList<>();
@@ -180,6 +184,7 @@ public class ComposeFragment extends Fragment {
 
     private void savePost() {
         pb.setVisibility(ProgressBar.VISIBLE);
+        //query to find the charity that the user selected from the spinner
         query.findCharity(charity, new FindCallback<Charity>() {
             @Override
             public void done(List<Charity> charities, ParseException e) {
@@ -192,8 +197,9 @@ public class ComposeFragment extends Fragment {
                 ArrayList<ParseFile> fileList = MainActivity.getParseFileList();
                 final Offering offering = new Offering();
 
+                //set all elements of the offering
                 if (fileList != null) {
-                    //offering has multiple images
+                    //offering has multiple images; save all images to backend
                     Log.i(TAG, "got array of size: " + fileList.size());
 
                     ArrayList<File> photoFileArray = camera.getPhotoFileArray();
@@ -207,11 +213,13 @@ public class ComposeFragment extends Fragment {
                     offering.setHasMultipleImages(true);
                     offering.setImage(photoParseFileArray.get(0));
                 } else {
+                    //offering has one image
                     offering.setImage(new ParseFile(camera.getPhotoFile()));
                     offering.setHasMultipleImages(false);
                 }
 
                 if (etDescription.getText() != null) {
+                    //if user entered a description, save to backend
                     offering.setDescription(etDescription.getText().toString());
                 }
                 offering.setTitle(title);
@@ -220,6 +228,8 @@ public class ComposeFragment extends Fragment {
                 offering.setTags(tags);
                 offering.setQuantityLeft(Integer.valueOf(quantity));
                 offering.setUser(ParseUser.getCurrentUser());
+
+                //save offering to backend
                 offering.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -240,6 +250,7 @@ public class ComposeFragment extends Fragment {
         });
     }
 
+    //initialize the spinner
     private void setUpSpinner() {
         final List<String> charitiesNames = new ArrayList<>();
         final String KEY_NEW_CHARITY = "Create New Charity";
@@ -251,10 +262,12 @@ public class ComposeFragment extends Fragment {
                     Log.e(TAG, "Error getting charities", e);
                 }
                 Log.i(TAG, "Successfully got charities");
+
                 //populate charitiesNames with all names of charities in database
                 for (Charity charity : charities) {
                     charitiesNames.add(charity.getTitle());
                 }
+                //add option to create a new charity
                 charitiesNames.add(KEY_NEW_CHARITY);
 
                 // Create an ArrayAdapter for spinner
@@ -270,7 +283,7 @@ public class ComposeFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                         charity = (String) adapterView.getItemAtPosition(pos);
                         if (charity.equals(KEY_NEW_CHARITY)) {
-                            //go to new charity fragment
+                            //if user clicks to create a new charity, go to new charity fragment
                             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
                             Fragment fragment = new NewCharityFragment();
                             fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

@@ -472,6 +472,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         offering.saveInBackground();
     }
 
+    //when user purchases an item, creates a notification for the seller to approve
     private void createNotification() {
         Notification notification = new Notification();
         notification.setUserActed(false);

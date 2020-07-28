@@ -85,6 +85,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
+        //set variables and info via parentProfile methods
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CURRENT_USER);
         parentProfile.setUser(ParseUser.getCurrentUser());
@@ -102,6 +103,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     }
 
     private void showEditDialog() {
+        //open edit venmo username/edit bio dialog
         FragmentManager fm = getFragmentManager();
         ChangeNameFragment changeNameFragment = (ChangeNameFragment) ChangeNameFragment.newInstance(bioEdit);
         // SETS the target fragment for use later when sending results
@@ -113,6 +115,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     public void onFinishEditDialog(String inputText) {
         Log.i(TAG, "change name to: " + inputText);
 
+        //save changes to bio or venmo username to backend
         if (bioEdit) {
             ParseUser.getCurrentUser().put("bio", inputText);
         } else {

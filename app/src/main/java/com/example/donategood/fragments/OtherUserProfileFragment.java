@@ -62,7 +62,7 @@ public class OtherUserProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //if user clicked on is signed in user
+        //if user clicked on is signed in user, go to ProfileFragment
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
             Fragment fragment = new ProfileFragment();
@@ -70,20 +70,22 @@ public class OtherUserProfileFragment extends Fragment {
             return;
         }
 
+        //set variables and info via parentProfile methods
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_OTHER_USER);
-
-        btnChat = view.findViewById(R.id.btnChat);
-
         parentProfile.setUser(user);
         parentProfile.queryInfo(getContext());
         parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
+
+        //only other user's have a chat button
+        btnChat = view.findViewById(R.id.btnChat);
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnChat clicked");
+                //open up chat
                 Intent intent = new Intent(getContext(), ChatActivity.class);
                 intent.putExtra("user", Parcels.wrap(user));
                 startActivity(intent);

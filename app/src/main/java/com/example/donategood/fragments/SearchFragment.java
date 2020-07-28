@@ -87,14 +87,17 @@ public class SearchFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
+                    //search by offering
                     Log.i(TAG, "search by offering clicked");
                     setVariablesForSearch(KEY_OFFERING);
                     setSubmitButton(KEY_OFFERING);
                 } else if (position == 1) {
+                    //search by charity
                     Log.i(TAG, "search by charity clicked");
                     setVariablesForSearch(KEY_CHARITY);
                     setSubmitButton(KEY_CHARITY);
                 } else {
+                    //search by user
                     Log.i(TAG, "search by user clicked");
                     setVariablesForSearch(KEY_USER);
                     setSubmitButton(KEY_USER);
@@ -115,8 +118,10 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 String searchText = etSearchText.getText().toString();
                 if (searchText.isEmpty()) {
+                    //search text is required
                     Toast.makeText(getContext(), "Search cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
+                    //determine which type of search to perform based on tab selected
                     if (searchType == KEY_CHARITY) {
                         querySearchForCharity(searchText);
                     } else if (searchType == KEY_USER) {
@@ -130,6 +135,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    //clears all RVs and adapters
     private void clearAdapters() {
         allOfferings.clear();
         adapter.clear();
@@ -139,6 +145,7 @@ public class SearchFragment extends Fragment {
         charityAdapter.clear();
     }
 
+    //make additional fields only for offering search invisible
     private void makeAllInvisible() {
         spPrice.setVisibility(View.INVISIBLE);
         ratingBar.setVisibility(View.INVISIBLE);
@@ -146,6 +153,7 @@ public class SearchFragment extends Fragment {
         tvPriceTitle.setVisibility(View.INVISIBLE);
     }
 
+    //make additional fields only for offering search visible
     private void makeAllVisible() {
         spPrice.setVisibility(View.VISIBLE);
         ratingBar.setVisibility(View.VISIBLE);
@@ -153,6 +161,7 @@ public class SearchFragment extends Fragment {
         tvPriceTitle.setVisibility(View.VISIBLE);
     }
 
+    //set RV and etSearchText appropiately based on type of search
     private void setVariablesForSearch(String searchType) {
         clearAdapters();
         etSearchText.setText("");
@@ -172,6 +181,7 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    //initialize all variables for search
     private void initializeVariables(View view) {
         etSearchText = view.findViewById(R.id.etSearchBar);
         btnSearch = view.findViewById(R.id.btnSearch);
@@ -201,6 +211,7 @@ public class SearchFragment extends Fragment {
         setSubmitButton(KEY_OFFERING);
     }
 
+    //perform search for offering
     private void querySearchForOffering(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
         query.searchForOffering(searchText, new FindCallback<Offering>() {
@@ -222,6 +233,7 @@ public class SearchFragment extends Fragment {
         }, minPrice, maxPrice, minRating);
     }
 
+    //perform search for users
     private void querySearchForUser(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
         query.findUser(searchText, new FindCallback<ParseUser>() {
@@ -242,6 +254,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    //perform search for charities
     private void querySearchForCharity(String searchText) {
         Log.i(TAG, "Search for: " + searchText);
         query.findCharity(searchText, new FindCallback<Charity>() {
@@ -262,6 +275,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    //initialize price spinner
     private void setUpPriceSpinner() {
         final List<String> priceRanges = new ArrayList<>();
         priceRanges.add("All prices");
@@ -293,6 +307,7 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    //based on what price was selected from price spinner, set min and maxPrice
     private void determinePriceRange(String price) {
         if (price.equals("All prices")) {
             minPrice = 0;

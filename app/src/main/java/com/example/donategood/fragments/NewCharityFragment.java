@@ -1,13 +1,6 @@
 package com.example.donategood.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
@@ -75,6 +74,7 @@ public class NewCharityFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "btnSubmit clicked");
 
+                //create new Charity and save in background
                 Charity charity = new Charity();
                 charity.setTitle(etCharityName.getText().toString());
                 charity.setWebsite(etCharityWebsite.getText().toString());
