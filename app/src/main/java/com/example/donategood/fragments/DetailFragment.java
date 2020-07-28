@@ -124,7 +124,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 Log.i(TAG, "onSwipeRight, going to home fragment");
                 final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
                 Fragment fragment = new HomeFragment();
-                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right).replace(R.id.flContainer, fragment).commit();
             }
         });
 
