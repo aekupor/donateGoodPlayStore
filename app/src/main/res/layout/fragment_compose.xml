@@ -21,11 +21,28 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etDescriptionBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTitleBox"
+        android:layout_marginTop="0dp"
+        android:hint="description"
+        app:boxStrokeColor="@color/purple">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/priceQuantityList"
-        android:layout_below="@+id/etTitleBox"
+        android:layout_below="@+id/etDescriptionBox"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
