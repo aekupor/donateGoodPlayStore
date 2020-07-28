@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.example.donategood.MainActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
@@ -84,7 +85,9 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        editOffering = getArguments().getParcelable("offering");
+        if (getArguments() != null) {
+            editOffering = getArguments().getParcelable("offering");
+        }
     }
 
     @Override
@@ -190,6 +193,32 @@ public class ComposeFragment extends Fragment {
                 }
             }
         });
+
+        //if offering is already created and just needs to be edited
+        if (editOffering != null) {
+            preFillFields();
+        }
+    }
+
+    //pre-fill fields of offering that is to be edited
+    public void preFillFields() {
+        etTitle.setText(editOffering.getTitle());
+        etPrice.setText(Integer.toString(editOffering.getPrice()));
+        etQuantity.setText(Integer.toString(editOffering.getQuantityLeft()));
+        etDescription.setText(editOffering.getDescription());
+
+        //make tags prettier
+        StringBuilder listWithCommas = new StringBuilder("");
+        for (String tag : editOffering.getTags()){
+            listWithCommas.append(tag).append(", ");
+        }
+        String strList = listWithCommas.toString();
+        etTags.setText(strList);
+
+        //load image
+        Glide.with(getContext())
+                .load(editOffering.getImage().getUrl())
+                .into(ivPhoto);
     }
 
     //create ArrayList<String> of tags the user has entered
@@ -214,27 +243,36 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "Successfully got charity");
 
                 ArrayList<ParseFile> fileList = MainActivity.getParseFileList();
-                final Offering offering = new Offering();
+
+                final Offering offering;
+                if (editOffering != null) {
+                     offering = editOffering;
+                } else {
+                     offering = new Offering();
+                }
 
                 //set all elements of the offering
-                if (fileList != null) {
-                    //offering has multiple images; save all images to backend
-                    Log.i(TAG, "got array of size: " + fileList.size());
+                if (editOffering == null) {
+                    //only set images for a new offering
+                    if (fileList != null) {
+                        //offering has multiple images; save all images to backend
+                        Log.i(TAG, "got array of size: " + fileList.size());
 
-                    ArrayList<File> photoFileArray = camera.getPhotoFileArray();
-                    ArrayList<ParseFile> photoParseFileArray = new ArrayList<>();
+                        ArrayList<File> photoFileArray = camera.getPhotoFileArray();
+                        ArrayList<ParseFile> photoParseFileArray = new ArrayList<>();
 
-                    for (File photo : photoFileArray) {
-                        photoParseFileArray.add(new ParseFile(photo));
+                        for (File photo : photoFileArray) {
+                            photoParseFileArray.add(new ParseFile(photo));
+                        }
+
+                        offering.setImagesArray(photoParseFileArray);
+                        offering.setHasMultipleImages(true);
+                        offering.setImage(photoParseFileArray.get(0));
+                    } else {
+                        //offering has one image
+                        offering.setImage(new ParseFile(camera.getPhotoFile()));
+                        offering.setHasMultipleImages(false);
                     }
-
-                    offering.setImagesArray(photoParseFileArray);
-                    offering.setHasMultipleImages(true);
-                    offering.setImage(photoParseFileArray.get(0));
-                } else {
-                    //offering has one image
-                    offering.setImage(new ParseFile(camera.getPhotoFile()));
-                    offering.setHasMultipleImages(false);
                 }
 
                 if (etDescription.getText() != null) {
