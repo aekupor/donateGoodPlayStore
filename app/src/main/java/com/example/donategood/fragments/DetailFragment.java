@@ -72,6 +72,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private LinearLayout layoutImages;
     private RatingBar ratingBar;
     private TextView tvDescription;
+    private Button btnEdit;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -140,6 +141,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         ratingBar = (RatingBar) view.findViewById(R.id.rbDetail);
         rvComments = view.findViewById(R.id.rvComments);
         tvDescription = view.findViewById(R.id.tvDetailDescription);
+        btnEdit = view.findViewById(R.id.btnEditOffering);
 
         numComments = 0;
         loadPost = new LoadPost();
