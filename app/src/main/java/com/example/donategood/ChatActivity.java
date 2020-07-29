@@ -119,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void done(List<Message> objects, ParseException e) {
                 if (e == null) {
+                    mAdapter.clear();
                     mMessages.clear();
                     mMessages.addAll(objects);
                     mAdapter.notifyDataSetChanged();

@@ -23,11 +23,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private List<Message> mMessages;
     private Context mContext;
     private String mUserId;
+    private ParseUser savedUser;
 
     public ChatAdapter(Context context, String userId, List<Message> messages) {
         mMessages = messages;
         this.mUserId = userId;
         mContext = context;
+    }
+
+    public void clear() {
+        mMessages.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -44,30 +50,49 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Message message = mMessages.get(position);
 
-        final boolean isMe = message.getUserId() != null && message.getUserId().equals(mUserId);
+        boolean isMe = false;
+        if (message.getUserId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            isMe = true;
+        }
+        //final boolean isMe = message.getUserId() != null && message.getUserId().equals(mUserId);
 
         if (isMe) {
             //if chat is from current user
             holder.imageMe.setVisibility(View.VISIBLE);
-            holder.imageOther.setVisibility(View.GONE);
+            holder.imageOther.setVisibility(View.INVISIBLE);
+            holder.username.setVisibility(View.INVISIBLE);
+            holder.body.setVisibility(View.INVISIBLE);
+            holder.imageMe.setVisibility(View.VISIBLE);
+            holder.usernameRight.setVisibility(View.VISIBLE);
+            holder.bodyRight.setVisibility(View.VISIBLE);
             holder.bodyRight.setText(message.getBody());
             holder.loadPost.setUser(ParseUser.getCurrentUser(), mContext, holder.usernameRight, holder.imageMe);
         } else {
             //if chat is from other user
             holder.imageOther.setVisibility(View.VISIBLE);
-            holder.imageMe.setVisibility(View.GONE);
+            holder.imageMe.setVisibility(View.INVISIBLE);
+            holder.usernameRight.setVisibility(View.INVISIBLE);
+            holder.bodyRight.setVisibility(View.INVISIBLE);
+            holder.imageOther.setVisibility(View.VISIBLE);
+            holder.username.setVisibility(View.VISIBLE);
+            holder.body.setVisibility(View.VISIBLE);
             holder.body.setText(message.getBody());
 
-            //have to query to find other user
-            holder.query.findUserById(message.getUserId(), new FindCallback<ParseUser>() {
-                @Override
-                public void done(List<ParseUser> objects, ParseException e) {
-                    if (e != null) {
-                        return;
+            if (savedUser != null && message.getUserId().equals(savedUser.getObjectId())) {
+                holder.loadPost.setUser(savedUser, mContext, holder.username, holder.imageOther);
+            } else {
+                //have to query to find other user
+                holder.query.findUserById(message.getUserId(), new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e != null) {
+                            return;
+                        }
+                        savedUser = objects.get(0);
+                        holder.loadPost.setUser(objects.get(0), mContext, holder.username, holder.imageOther);
                     }
-                    holder.loadPost.setUser(objects.get(0), mContext, holder.username, holder.imageOther);
-                }
-            });
+                });
+            }
         }
     }
 
