@@ -16,6 +16,7 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.ChatListAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Message;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -32,6 +33,7 @@ public class ChatListFragment extends Fragment {
     private RecyclerView rvChatPreview;
     private ArrayList<String> userIdList;
     private Query query;
+    private FloatingActionButton btnNewChat;
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -49,14 +51,23 @@ public class ChatListFragment extends Fragment {
 
         Log.i(TAG, "onViewCreated chat list fragment");
 
-        query = new Query();
         rvChatPreview = view.findViewById(R.id.rvChatPreview);
+        btnNewChat = view.findViewById(R.id.fabNewChat);
+
+        query = new Query();
         userIdList = new ArrayList<>();
         adapter = new ChatListAdapter(getContext(), userIdList);
 
         rvChatPreview.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvChatPreview.setLayoutManager(linearLayoutManager);
+
+        btnNewChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnNewChat clicked");
+            }
+        });
         
         findChatUsers();
     }

@@ -30,5 +30,6 @@
         android:layout_marginBottom="105dp"
         android:backgroundTint="@color/lightGreen"
         android:src="@drawable/ic_baseline_add_24"
+        android:id="@+id/fabNewChat"
         app:fabSize="normal" />
 </RelativeLayout>
