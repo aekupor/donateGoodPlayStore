@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         Fragment fragment = new AnalyticsFragment();
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
-    
+
      */
 
     private void showEditDialog() {
