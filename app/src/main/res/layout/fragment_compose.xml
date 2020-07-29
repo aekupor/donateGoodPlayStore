@@ -184,15 +184,25 @@
         android:layout_toEndOf="@+id/btnSubmit"
         android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/etVenmoCompose"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/purple"
+        android:id="@+id/etVenmoComposeBox"
         android:layout_below="@+id/etTagsBox"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/btnSubmit"
-        android:hint="You must add your venmo username" />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Add venmo username">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etVenmoCompose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvCharityDropDownTitle"
