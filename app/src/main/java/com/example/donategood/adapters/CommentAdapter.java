@@ -90,7 +90,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             loadPost.setUser(comment.getByUser(), context, tvUsername, ivProfileImage);
             tvDescription.setText(comment.getText());
             rbRating.setNumStars(comment.getRating());
-            
+
             ParseUser postAuthor = null;
             try {
                 Offering offering = comment.getForPost().fetchIfNeeded();

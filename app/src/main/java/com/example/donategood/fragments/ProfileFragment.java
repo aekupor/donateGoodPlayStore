@@ -75,6 +75,10 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 bioEdit = false;
                 showEditDialog();
                 return true;
+            case R.id.action_analytics:
+                Log.i(TAG, "action_analytics clicked");
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

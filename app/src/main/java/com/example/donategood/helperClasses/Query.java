@@ -39,6 +39,7 @@ public class Query {
     private List<Offering> savedSoldPostsForUser;
     private List<Offering> savedSellingPostsForCharity;
     private List<Offering> savedSoldPostsForCharity;
+    public  HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -349,6 +350,7 @@ public class Query {
 
                 //sort map
                 HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
+                sortedMapMoneyRaisedByCharity = sortedMap;
                 Set<Charity> charities = sortedMap.keySet();
                 for (Charity charity : charities) {
                     Charity fetchedCharity = null;
