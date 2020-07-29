@@ -7,6 +7,16 @@
     tools:context=".fragments.ProfileFragment">
 
     <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileMoneyRaised"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        tools:text="this is my bio" />
+
+    <TextView
         android:id="@+id/tvProfileProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +69,8 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivProfileProfileImage"
+        android:layout_below="@+id/tvBio"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal">
 
         <com.google.android.material.tabs.TabItem

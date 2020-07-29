@@ -45,7 +45,8 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivProfileProfileImage"
+        android:layout_below="@+id/tvBio"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal">
 
         <com.google.android.material.tabs.TabItem
@@ -147,4 +148,14 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         android:src="@drawable/ic_baseline_person_add_24" />
+
+    <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivFollow"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        tools:text="this is my bio" />
 </RelativeLayout>
