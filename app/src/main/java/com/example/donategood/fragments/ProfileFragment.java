@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -77,7 +78,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 return true;
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
-
+                openAnalytics();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -104,6 +105,13 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
 
     public static Camera getCamera() {
         return camera;
+    }
+
+    private void openAnalytics() {
+        //open analytics fragment
+        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+        Fragment fragment = new AnalyticsFragment();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
 
     private void showEditDialog() {
