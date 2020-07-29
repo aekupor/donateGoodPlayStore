@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 analytics = "";
                 for (Map.Entry mapElement : moneyByCharity.entrySet()) {
                     //set analytics string to be equal to the items of moneyByCharity
-                    analytics += " " + mapElement.toString();
+                    analytics += mapElement.toString() + "; ";
                 }
                 openAnalyticsDialog();
                 return true;

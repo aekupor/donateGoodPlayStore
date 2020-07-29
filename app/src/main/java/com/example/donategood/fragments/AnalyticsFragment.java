@@ -47,6 +47,11 @@ public class AnalyticsFragment extends DialogFragment {
 
         tvAnalytics = view.findViewById(R.id.tvAnalytics);
 
-        tvAnalytics.setText(analytics);
+        String[] charityAndMoney = analytics.split("; ");
+        for (String str : charityAndMoney) {
+            String[] splitCharityAndMoney = str.split("=");
+            tvAnalytics.setText(tvAnalytics.getText() + "You raised $" + splitCharityAndMoney[1] + " for " + splitCharityAndMoney[0] + ".\n");
+        }
+        tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
     }
 }
