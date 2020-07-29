@@ -32,4 +32,11 @@
         android:src="@drawable/ic_baseline_add_24"
         android:id="@+id/fabNewChat"
         app:fabSize="normal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUsers"
+        android:layout_width="match_parent"
+        android:layout_height="296dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="1dp" />
 </RelativeLayout>

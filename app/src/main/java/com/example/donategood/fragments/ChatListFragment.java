@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.ChatListAdapter;
+import com.example.donategood.adapters.UserAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Message;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,6 +35,10 @@ public class ChatListFragment extends Fragment {
     private ArrayList<String> userIdList;
     private Query query;
     private FloatingActionButton btnNewChat;
+
+    private UserAdapter userAdapter;
+    private List<ParseUser> allUsers;
+    private RecyclerView rvUsers;
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -62,19 +67,34 @@ public class ChatListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvChatPreview.setLayoutManager(linearLayoutManager);
 
+        allUsers = new ArrayList<>();
+        userAdapter = new UserAdapter(getContext(), allUsers);
+        rvUsers = view.findViewById(R.id.rvUsers);
+
+        rvUsers.setAdapter(userAdapter);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        rvUsers.setLayoutManager(linearLayoutManager2);
+
+        query.findAllUsers(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "error getting all users");
+                }
+                allUsers.clear();
+                allUsers.addAll(objects);
+                userAdapter.notifyDataSetChanged();
+            }
+        });
+
+        rvUsers.setVisibility(View.INVISIBLE);
+
         btnNewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnNewChat clicked");
-                query.findAllUsers(new FindCallback<ParseUser>() {
-                    @Override
-                    public void done(List<ParseUser> objects, ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "error getting all users");
-                        }
-                        
-                    }
-                });
+                rvUsers.setVisibility(View.VISIBLE);
+
             }
         });
         
