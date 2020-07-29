@@ -27,6 +27,7 @@ import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
+import com.google.android.material.textfield.TextInputLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -57,6 +58,7 @@ public class ComposeFragment extends Fragment {
     private Button btnTakeMultiple;
     private EditText etVenmo;
     private EditText etDescription;
+    private TextInputLayout etVenmoBox;
 
     private String title;
     private String price;
@@ -111,8 +113,10 @@ public class ComposeFragment extends Fragment {
         etQuantity = view.findViewById(R.id.etQuantity);
         btnTakeMultiple = view.findViewById(R.id.btnTakeMultiple);
         etVenmo = view.findViewById(R.id.etVenmoCompose);
+        etVenmoBox = view.findViewById(R.id.etVenmoComposeBox);
         etDescription = view.findViewById(R.id.etDescription);
 
+        etVenmoBox.setVisibility(View.INVISIBLE);
         etVenmo.setVisibility(View.INVISIBLE);
 
         query = new Query();
@@ -169,6 +173,7 @@ public class ComposeFragment extends Fragment {
 
                     //if user doesn't have a venmo username stored, make them enter one and save to Parse
                     etVenmo.setVisibility(View.VISIBLE);
+                    etVenmoBox.setVisibility(View.VISIBLE);
 
                     if (etVenmo.getText().toString().isEmpty()) {
                         Toast.makeText(getContext(), "You must add your venmo username", Toast.LENGTH_SHORT).show();
