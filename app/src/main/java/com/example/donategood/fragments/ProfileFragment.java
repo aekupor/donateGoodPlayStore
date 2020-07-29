@@ -21,7 +21,12 @@ import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.ParentProfile;
+import com.example.donategood.models.Charity;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileFragment extends Fragment implements ChangeNameFragment.ChangeNameDialogListener {
 
@@ -75,7 +80,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 bioEdit = false;
                 showEditDialog();
                 return true;
-                /*
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
                 HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity = parentProfile.query.getSortedMapMoneyRaisedByCharity();
@@ -91,10 +95,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
 
                     Log.i(TAG, charity.getTitle() + " : " + value);
                 }
-                // openAnalytics();
                 return true;
-
-                 */
             default:
                 return super.onOptionsItemSelected(item);
         }

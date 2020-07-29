@@ -20,4 +20,8 @@
         android:id="@+id/action_upload_photo"
         android:enabled="true"
         android:title="Upload Profile Photo" />
+    <item
+        android:id="@+id/action_analytics"
+        android:enabled="true"
+        android:title="View Analytics" />
 </menu>
