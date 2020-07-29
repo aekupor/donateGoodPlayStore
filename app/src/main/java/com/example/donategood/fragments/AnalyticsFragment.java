@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ public class AnalyticsFragment extends DialogFragment {
     public static final String TAG = "AnalyticsFragment";
 
     private String analytics;
+    private TextView tvAnalytics;
 
     public static AnalyticsFragment newInstance(String analytics) {
         AnalyticsFragment fragment = new AnalyticsFragment();
@@ -43,5 +45,8 @@ public class AnalyticsFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tvAnalytics = view.findViewById(R.id.tvAnalytics);
+
+        tvAnalytics.setText(analytics);
     }
 }
