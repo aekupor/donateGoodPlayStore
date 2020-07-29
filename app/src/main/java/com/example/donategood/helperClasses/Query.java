@@ -40,6 +40,7 @@ public class Query {
     private List<Offering> savedSellingPostsForCharity;
     private List<Offering> savedSoldPostsForCharity;
     public  HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity;
+    public HashMap<String, Integer> savedCombinedMap;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -77,6 +78,7 @@ public class Query {
     public void findCharity(String charityName, FindCallback<Charity> callback) {
         ParseQuery<Charity> query = ParseQuery.getQuery(Charity.class);
         query.whereEqualTo("title", charityName);
+        query.include("image");
         query.findInBackground(callback);
     }
 
@@ -304,7 +306,12 @@ public class Query {
                             if (user.getObjectId().equals(currentUser.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
-                                Charity charity = offering.getCharity();
+                                Charity charity = null;
+                                try {
+                                    charity = offering.getCharity().fetchIfNeeded();
+                                } catch (ParseException ex) {
+                                    ex.printStackTrace();
+                                }
                                 if (moneyRaisedByCharity.containsKey(charity)) {
                                     moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice());
                                 } else {
@@ -357,18 +364,39 @@ public class Query {
                 //sort map
                 HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
                 sortedMapMoneyRaisedByCharity = sortedMap;
-                Set<Charity> charities = sortedMap.keySet();
-                for (Charity charity : charities) {
-                    Charity fetchedCharity = null;
+
+                //make map that has only one entry by charity (add up all the prices)
+                HashMap<String, Integer> consolidateMapByCharity = new HashMap<>();
+                for (Map.Entry mapElement : sortedMapMoneyRaisedByCharity.entrySet()) {
+                    Charity key = (Charity) mapElement.getKey();
+                    Charity charity = null;
                     try {
-                        fetchedCharity = charity.fetchIfNeeded();
-                    } catch (ParseException ex) {
-                        ex.printStackTrace();
+                        charity = key.fetchIfNeeded();
+                    } catch (ParseException e2) {
+                        e2.printStackTrace();
                     }
-                    //set charity icon with profile image of charity with most money raised
-                    Glide.with(context)
-                            .load(fetchedCharity.getImage().getUrl())
-                            .into(ivCharityIcon);
+                    int value = (int)mapElement.getValue();
+
+                    if (consolidateMapByCharity.containsKey(charity.getTitle())) {
+                        consolidateMapByCharity.put(charity.getTitle(), consolidateMapByCharity.get(charity.getTitle()) + value);
+                    } else {
+                        consolidateMapByCharity.put(charity.getTitle(), value);
+                    }
+                    savedCombinedMap = consolidateMapByCharity;
+                }
+
+                Set<String> charities = consolidateMapByCharity.keySet();
+                for (String charity : charities) {
+                    findCharity(charity, new FindCallback<Charity>() {
+                        @Override
+                        public void done(List<Charity> objects, ParseException e) {
+                            //set charity icon with profile image of charity with most money raised
+                            Glide.with(context)
+                                    .load(objects.get(0).getImage().getUrl())
+                                    .into(ivCharityIcon);
+                            return;
+                        }
+                    });
                     return;
                 }
             }
@@ -436,5 +464,9 @@ public class Query {
     //return HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity
     public HashMap<Charity, Integer> getSortedMapMoneyRaisedByCharity() {
         return sortedMapMoneyRaisedByCharity;
+    }
+
+    public HashMap<String, Integer> getCombinedMap() {
+        return savedCombinedMap;
     }
 }

@@ -21,8 +21,6 @@ import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
 import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.ParentProfile;
-import com.example.donategood.models.Charity;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.HashMap;
@@ -82,18 +80,10 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 return true;
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
-                HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity = parentProfile.query.getSortedMapMoneyRaisedByCharity();
-                for (Map.Entry mapElement : sortedMapMoneyRaisedByCharity.entrySet()) {
-                    Charity key = (Charity) mapElement.getKey();
-                    Charity charity = null;
-                    try {
-                        charity = key.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                HashMap<String, Integer> moneyByCharity = parentProfile.query.getCombinedMap();
+                for (Map.Entry mapElement : moneyByCharity.entrySet()) {
                     int value = (int)mapElement.getValue();
-
-                    Log.i(TAG, charity.getTitle() + " : " + value);
+                    Log.i(TAG, mapElement + " : " + value);
                 }
                 return true;
             default:
