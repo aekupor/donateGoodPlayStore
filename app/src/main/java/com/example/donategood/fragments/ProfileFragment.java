@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -76,10 +75,26 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 bioEdit = false;
                 showEditDialog();
                 return true;
+                /*
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
-                openAnalytics();
+                HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity = parentProfile.query.getSortedMapMoneyRaisedByCharity();
+                for (Map.Entry mapElement : sortedMapMoneyRaisedByCharity.entrySet()) {
+                    Charity key = (Charity) mapElement.getKey();
+                    Charity charity = null;
+                    try {
+                        charity = key.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int value = (int)mapElement.getValue();
+
+                    Log.i(TAG, charity.getTitle() + " : " + value);
+                }
+                // openAnalytics();
                 return true;
+
+                 */
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -107,12 +122,15 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         return camera;
     }
 
+    /*
     private void openAnalytics() {
         //open analytics fragment
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = new AnalyticsFragment();
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
+    
+     */
 
     private void showEditDialog() {
         //open edit venmo username/edit bio dialog

@@ -13,10 +13,6 @@
         android:enabled="true"
         android:title="Edit Venmo Username" />
     <item
-        android:id="@+id/action_analytics"
-        android:enabled="true"
-        android:title="View Analytics" />
-    <item
         android:id="@+id/action_take_photo"
         android:enabled="true"
         android:title="Take Profile Photo" />

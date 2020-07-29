@@ -426,4 +426,9 @@ public class Query {
         query.orderByDescending("createdAt");
         query.findInBackground(callback);
     }
+
+    //return HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity
+    public HashMap<Charity, Integer> getSortedMapMoneyRaisedByCharity() {
+        return sortedMapMoneyRaisedByCharity;
+    }
 }
