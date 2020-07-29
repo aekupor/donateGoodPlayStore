@@ -139,7 +139,10 @@
         android:id="@+id/spinnerCharity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivComposePhoto" />
+        android:layout_below="@+id/ivComposePhoto"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvCharityDropDownTitle" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -190,6 +193,14 @@
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/btnSubmit"
         android:hint="You must add your venmo username" />
+
+    <TextView
+        android:id="@+id/tvCharityDropDownTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivComposePhoto"
+        android:layout_marginTop="4dp"
+        android:text="Choose Charity:" />
 
 </RelativeLayout>
 
