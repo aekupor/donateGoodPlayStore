@@ -36,7 +36,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsers"
         android:layout_width="match_parent"
-        android:layout_height="296dp"
+        android:layout_height="221dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp" />
+
+    <TextView
+        android:id="@+id/tvViewAllUsersTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rvUsers"
+        android:layout_marginBottom="0dp"
+        android:text="Chat with:"
+        android:textColor="#040404"
+        android:textStyle="bold" />
 </RelativeLayout>

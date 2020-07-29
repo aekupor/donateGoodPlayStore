@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class ChatListFragment extends Fragment {
     private ArrayList<String> userIdList;
     private Query query;
     private FloatingActionButton btnNewChat;
+    private TextView tvChatWithTitle;
 
     private UserAdapter userAdapter;
     private List<ParseUser> allUsers;
@@ -58,6 +60,7 @@ public class ChatListFragment extends Fragment {
 
         rvChatPreview = view.findViewById(R.id.rvChatPreview);
         btnNewChat = view.findViewById(R.id.fabNewChat);
+        tvChatWithTitle = view.findViewById(R.id.tvViewAllUsersTitle);
 
         query = new Query();
         userIdList = new ArrayList<>();
@@ -75,6 +78,7 @@ public class ChatListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         rvUsers.setLayoutManager(linearLayoutManager2);
 
+        //find all users on app
         query.findAllUsers(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
@@ -88,13 +92,14 @@ public class ChatListFragment extends Fragment {
         });
 
         rvUsers.setVisibility(View.INVISIBLE);
+        tvChatWithTitle.setVisibility(View.INVISIBLE);
 
         btnNewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnNewChat clicked");
                 rvUsers.setVisibility(View.VISIBLE);
-
+                tvChatWithTitle.setVisibility(View.VISIBLE);
             }
         });
         
