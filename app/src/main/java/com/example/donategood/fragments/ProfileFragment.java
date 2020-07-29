@@ -33,6 +33,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     private static Camera camera;
     private Boolean bioEdit;
     private ParentProfile parentProfile;
+    private String analytics;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -81,10 +82,12 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
                 HashMap<String, Integer> moneyByCharity = parentProfile.query.getCombinedMap();
+                analytics = "";
                 for (Map.Entry mapElement : moneyByCharity.entrySet()) {
-                    int value = (int)mapElement.getValue();
-                    Log.i(TAG, mapElement + " : " + value);
+                    //set analytics string to be equal to the items of moneyByCharity
+                    analytics += " " + mapElement.toString();
                 }
+                openAnalyticsDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -113,15 +116,14 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         return camera;
     }
 
-    /*
-    private void openAnalytics() {
-        //open analytics fragment
-        final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
-        Fragment fragment = new AnalyticsFragment();
-        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
+    private void openAnalyticsDialog() {
+        //open analytics dialog
+        FragmentManager fm = getFragmentManager();
+        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(analytics);
+        // SETS the target fragment for use later when sending results
+        fragment.setTargetFragment(ProfileFragment.this, 200);
+        fragment.show(fm, "fragment_analytics");
     }
-
-     */
 
     private void showEditDialog() {
         //open edit venmo username/edit bio dialog
