@@ -66,6 +66,15 @@ public class ChatListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnNewChat clicked");
+                query.findAllUsers(new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "error getting all users");
+                        }
+                        
+                    }
+                });
             }
         });
         

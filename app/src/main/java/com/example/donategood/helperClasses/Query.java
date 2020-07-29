@@ -87,6 +87,12 @@ public class Query {
         query.findInBackground(callback);
     }
 
+    //find all users
+    public void findAllUsers(FindCallback<ParseUser> callback) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.findInBackground(callback);
+    }
+
     //find a specific user by their name
     public void findUser(String userName, FindCallback<ParseUser> callback) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
