@@ -65,6 +65,7 @@ public class ParentProfile {
     public ImageView ivCharityIcon;
     public ImageView ivFollow;
     public Boolean following;
+    public TextView tvBio;
 
     public void initializeVariables(View view, final Context context, final String queryType) {
         profileType = queryType;
@@ -125,11 +126,12 @@ public class ParentProfile {
             }
         });
 
-        //only user profile and other user profile has a rating bar and level icon
+        //only user profile and other user profile has a rating bar, level icons, and bio
         if (profileType != KEY_CHARITY) {
             ratingBar = (RatingBar) view.findViewById(R.id.rbProfile);
             ivLevelIcon = view.findViewById(R.id.ivLevelIcon);
             ivCharityIcon = view.findViewById(R.id.ivCharityIcon);
+            tvBio = view.findViewById(R.id.tvBio);
         }
 
         //only the current user has a "notifications" tab
@@ -260,9 +262,14 @@ public class ParentProfile {
             query.setCharityPosts(selling, this);
         } else {
             if (profileType == KEY_CURRENT_USER) {
+                //if is current user, hide the notification tab since not on that tab
                 hideNotificationsTab();
             }
-           query.queryPosts(queryType, this);
+            query.queryPosts(queryType, this);
+            if (user.get("bio") != null) {
+                //set bio if user has one
+                tvBio.setText(user.get("bio").toString());
+            }
         }
     }
 
