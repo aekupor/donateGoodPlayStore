@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.models.Comment;
+import com.example.donategood.models.Offering;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -88,7 +90,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             loadPost.setUser(comment.getByUser(), context, tvUsername, ivProfileImage);
             tvDescription.setText(comment.getText());
             rbRating.setNumStars(comment.getRating());
-            if (comment.getByUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            
+            ParseUser postAuthor = null;
+            try {
+                Offering offering = comment.getForPost().fetchIfNeeded();
+                postAuthor = offering.getUser().fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (postAuthor.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                 ivVerified.setImageResource(R.drawable.seller_icon);
             } else if (!comment.getVerified()) {
                 ivVerified.setVisibility(View.INVISIBLE);

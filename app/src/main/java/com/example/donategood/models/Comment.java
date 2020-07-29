@@ -13,8 +13,8 @@ public class Comment extends ParseObject {
     public static final String KEY_RATING = "rating";
     public static final String KEY_VERIFIED = "verified";
 
-    public String getForPost() {
-        return getString(KEY_FOR_POST);
+    public Offering getForPost() {
+        return (Offering) get(KEY_FOR_POST);
     }
 
     public ParseUser getByUser() {
