@@ -118,6 +118,10 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         //save changes to bio or venmo username to backend
         if (bioEdit) {
             ParseUser.getCurrentUser().put("bio", inputText);
+            if (ParseUser.getCurrentUser().get("bio") != null) {
+                //set bio if user has one
+                parentProfile.tvBio.setText(ParseUser.getCurrentUser().get("bio").toString());
+            }
         } else {
             ParseUser.getCurrentUser().put("venmoName", inputText);
         }
