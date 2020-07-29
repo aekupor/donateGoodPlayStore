@@ -433,9 +433,11 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         //check if user writing the comment is verified or not
         Boolean verified = false;
         ArrayList<Object> boughtByArray = offering.getBoughtByArray();
-        for (Object object : boughtByArray) {
-            if (((ParseUser) object).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                verified = true;
+        if (boughtByArray != null) {
+            for (Object object : boughtByArray) {
+                if (((ParseUser) object).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                    verified = true;
+                }
             }
         }
 
