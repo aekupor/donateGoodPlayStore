@@ -77,20 +77,6 @@ public class ChatListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         rvUsers.setLayoutManager(linearLayoutManager2);
 
-        //find all users on app
-        query.findAllUsers(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "error getting all users");
-                }
-                for (ParseUser user : objects) {
-                    allUsers.add(user.getObjectId());
-                }
-                userAdapter.notifyDataSetChanged();
-            }
-        });
-
         rvUsers.setVisibility(View.INVISIBLE);
         tvChatWithTitle.setVisibility(View.INVISIBLE);
 
@@ -117,6 +103,7 @@ public class ChatListFragment extends Fragment {
                 }
                 for (Message message : objects) {
                     List<String> userIds = new ArrayList<String>(Arrays.asList(message.getRoomId().split(" ")));
+                    //add other user's id to userIdList
                     if (userIds.get(0).equals(ParseUser.getCurrentUser().getObjectId())) {
                         if (!userIdList.contains(userIds.get(1))) {
                             userIdList.add(userIds.get(1));
@@ -128,6 +115,23 @@ public class ChatListFragment extends Fragment {
                     }
                 }
                 adapter.notifyDataSetChanged();
+
+                //find all users on app
+                query.findAllUsers(new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "error getting all users");
+                        }
+                        for (ParseUser user : objects) {
+                            if (!user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId()) && !userIdList.contains(user.getObjectId())) {
+                                //only add user to noChatYetUserList if user is not the current user and is not already in chatUserList
+                                allUsers.add(user.getObjectId());
+                            }
+                        }
+                        userAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
