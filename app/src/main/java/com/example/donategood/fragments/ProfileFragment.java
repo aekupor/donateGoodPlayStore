@@ -78,7 +78,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 return true;
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
-                openAnalyticsDialog(parentProfile.getAnalytics());
+                parentProfile.openAnalyticsDialog(ProfileFragment.this, getFragmentManager());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -105,15 +105,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
 
     public static Camera getCamera() {
         return camera;
-    }
-
-    private void openAnalyticsDialog(String analyticsString) {
-        //open analytics dialog
-        FragmentManager fm = getFragmentManager();
-        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(analyticsString);
-        // SETS the target fragment for use later when sending results
-        fragment.setTargetFragment(ProfileFragment.this, 200);
-        fragment.show(fm, "fragment_analytics");
     }
 
     private void showEditDialog() {

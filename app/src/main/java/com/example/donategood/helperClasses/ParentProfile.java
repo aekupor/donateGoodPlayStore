@@ -10,12 +10,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
+import com.example.donategood.fragments.AnalyticsFragment;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
@@ -392,5 +395,14 @@ public class ParentProfile {
             analytics += mapElement.toString() + "; ";
         }
         return analytics;
+    }
+
+    public void openAnalyticsDialog(Fragment currentFragment, FragmentManager fmManager) {
+        //open analytics dialog
+        FragmentManager fm = fmManager;
+        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(getAnalytics());
+        // SETS the target fragment for use later when sending results
+        fragment.setTargetFragment(currentFragment, 200);
+        fragment.show(fm, "fragment_analytics");
     }
 }
