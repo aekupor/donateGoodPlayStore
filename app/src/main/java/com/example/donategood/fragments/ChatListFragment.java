@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donategood.R;
 import com.example.donategood.adapters.ChatListAdapter;
-import com.example.donategood.adapters.UserAdapter;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.models.Message;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,8 +37,8 @@ public class ChatListFragment extends Fragment {
     private FloatingActionButton btnNewChat;
     private TextView tvChatWithTitle;
 
-    private UserAdapter userAdapter;
-    private List<ParseUser> allUsers;
+    private ChatListAdapter userAdapter;
+    private ArrayList<String> allUsers;
     private RecyclerView rvUsers;
 
     public ChatListFragment() {
@@ -71,7 +70,7 @@ public class ChatListFragment extends Fragment {
         rvChatPreview.setLayoutManager(linearLayoutManager);
 
         allUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), allUsers);
+        userAdapter = new ChatListAdapter(getContext(), allUsers);
         rvUsers = view.findViewById(R.id.rvUsers);
 
         rvUsers.setAdapter(userAdapter);
@@ -85,8 +84,9 @@ public class ChatListFragment extends Fragment {
                 if (e != null) {
                     Log.e(TAG, "error getting all users");
                 }
-                allUsers.clear();
-                allUsers.addAll(objects);
+                for (ParseUser user : objects) {
+                    allUsers.add(user.getObjectId());
+                }
                 userAdapter.notifyDataSetChanged();
             }
         });
