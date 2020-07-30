@@ -1,7 +1,6 @@
 package com.example.donategood.fragments;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,8 +22,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.example.donategood.OnSwipeTouchListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
@@ -41,7 +38,6 @@ import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -255,31 +251,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             btnEdit.setVisibility(View.INVISIBLE);
         }
 
-        setImage();
+        loadPost.setMultipleImages(offering, getContext(), ivOfferingPhoto, layoutImages);
         setShareButton();
         queryRecommendedPosts();
         queryComments();
-    }
-
-    //sets image of offering
-    private void setImage() {
-        if (!offering.hasMultipleImages()) {
-            //if offering only has one image
-            loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
-        } else {
-            //if offering has multiple images
-            ArrayList<ParseFile> imagesArray = offering.getImagesArray();
-            for (ParseFile image : imagesArray) {
-                ImageView ivImage = new ImageView(getContext());
-                ViewTarget<ImageView, Drawable> into = Glide.with(getContext())
-                        .load(image.getUrl())
-                        .into(ivImage);
-
-                ivImage.setAdjustViewBounds(true);
-                layoutImages.addView(into.getView());
-                Log.i(TAG, "adding view to layoutImages");
-            }
-        }
     }
 
     //query recommended posts based on current offering
