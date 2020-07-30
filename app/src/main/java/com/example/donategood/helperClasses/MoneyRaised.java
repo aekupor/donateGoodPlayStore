@@ -14,7 +14,11 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,7 +79,7 @@ public class MoneyRaised {
                     }
                 }
 
-                HashMap<String, Integer> sortedMap = query.sortMapByPointsByUser(consolidateMapByUser);
+                HashMap<String, Integer> sortedMap = sortMapByPointsByUser(consolidateMapByUser);
                 query.moneyRaisedForCharityByPerson = sortedMap;
                 pb.setVisibility(View.INVISIBLE);
             }
@@ -158,7 +162,7 @@ public class MoneyRaised {
                 }
 
                 //sort map
-                HashMap<Charity, Integer> sortedMap = query.sortMapByPoints(moneyRaisedByCharity);
+                HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
                 query.sortedMapMoneyRaisedByCharity = sortedMap;
 
                 //make map that has only one entry by charity (add up all the prices)
@@ -198,5 +202,45 @@ public class MoneyRaised {
                 }
             }
         });
+    }
+
+    //sorts map with the largest number of points first
+    public HashMap<Charity, Integer> sortMapByPoints(Map<Charity, Integer> pointValues) {
+        // Create a list from elements of HashMap
+        List<Map.Entry<Charity, Integer> > list = new LinkedList<Map.Entry<Charity, Integer> >(pointValues.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<Charity, Integer>>() {
+            public int compare(Map.Entry<Charity, Integer> o1, Map.Entry<Charity, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<Charity, Integer> temp = new LinkedHashMap<Charity, Integer>();
+        for (Map.Entry<Charity, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
+    }
+
+    //sorts map with the largest number of points first
+    public HashMap<String, Integer> sortMapByPointsByUser(Map<String, Integer> pointValues) {
+        // Create a list from elements of HashMap
+        List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(pointValues.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 }

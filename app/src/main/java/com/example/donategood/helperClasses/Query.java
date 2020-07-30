@@ -14,13 +14,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class Query {
 
@@ -263,46 +258,6 @@ public class Query {
         } else if (queryType.equals(KEY_SOLD)) {
            queryPostsUserIsSelling(true, parentProfile);
         }
-    }
-
-    //sorts map with the largest number of points first
-    public HashMap<Charity, Integer> sortMapByPoints(Map<Charity, Integer> pointValues) {
-        // Create a list from elements of HashMap
-        List<Map.Entry<Charity, Integer> > list = new LinkedList<Map.Entry<Charity, Integer> >(pointValues.entrySet());
-
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<Charity, Integer>>() {
-            public int compare(Map.Entry<Charity, Integer> o1, Map.Entry<Charity, Integer> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<Charity, Integer> temp = new LinkedHashMap<Charity, Integer>();
-        for (Map.Entry<Charity, Integer> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
-        }
-        return temp;
-    }
-
-    //sorts map with the largest number of points first
-    public HashMap<String, Integer> sortMapByPointsByUser(Map<String, Integer> pointValues) {
-        // Create a list from elements of HashMap
-        List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(pointValues.entrySet());
-
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
-        for (Map.Entry<String, Integer> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
-        }
-        return temp;
     }
 
     //finds all notifications where the seller hasn't yet acted
