@@ -23,9 +23,6 @@ import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.ParentProfile;
 import com.parse.ParseUser;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ProfileFragment extends Fragment implements ChangeNameFragment.ChangeNameDialogListener {
 
     public static final String TAG = "ProfileFragment";
@@ -81,13 +78,8 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 return true;
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
-                HashMap<String, Integer> moneyByCharity = parentProfile.query.getCombinedMap();
-                analytics = "";
-                for (Map.Entry mapElement : moneyByCharity.entrySet()) {
-                    //set analytics string to be equal to the items of moneyByCharity
-                    analytics += mapElement.toString() + "; ";
-                }
-                openAnalyticsDialog();
+
+                openAnalyticsDialog(parentProfile.getAnalytics());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -116,10 +108,10 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         return camera;
     }
 
-    private void openAnalyticsDialog() {
+    private void openAnalyticsDialog(String analyticsString) {
         //open analytics dialog
         FragmentManager fm = getFragmentManager();
-        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(analytics);
+        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(analyticsString);
         // SETS the target fragment for use later when sending results
         fragment.setTargetFragment(ProfileFragment.this, 200);
         fragment.show(fm, "fragment_analytics");

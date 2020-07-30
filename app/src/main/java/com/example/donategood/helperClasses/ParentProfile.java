@@ -26,7 +26,9 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ParentProfile {
@@ -375,5 +377,15 @@ public class ParentProfile {
                 }
             }
         });
+    }
+
+    public String getAnalytics() {
+        HashMap<String, Integer> moneyByCharity = query.getCombinedMap();
+        String analytics = "";
+        for (Map.Entry mapElement : moneyByCharity.entrySet()) {
+            //set analytics string to be equal to the items of moneyByCharity
+            analytics += mapElement.toString() + "; ";
+        }
+        return analytics;
     }
 }
