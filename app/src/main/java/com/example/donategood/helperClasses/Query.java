@@ -2,8 +2,6 @@ package com.example.donategood.helperClasses;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -155,7 +153,7 @@ public class Query {
         parentProfile.selectedOfferings.clear();
         parentProfile.selectedOfferings.addAll(objects);
         parentProfile.adapter.notifyDataSetChanged();
-        parentProfile.pb.setVisibility(ProgressBar.INVISIBLE);
+        parentProfile.pb.setVisibility(View.INVISIBLE);
     }
 
     //determine and set user rating
@@ -330,8 +328,10 @@ public class Query {
         }
     }
 
-    //find money raised for a specified user
-    public void queryMoneyRaised(final ParseUser currentUser, final TextView tvMoneyRaised, final ImageView ivLevelIcon, final Context context, final ImageView ivCharityIcon) {
+    //find money raised by a specified user
+    public void queryMoneyRaised(final ParentProfile parentProfile, final Context context) {
+        parentProfile.pb.setVisibility(View.VISIBLE);
+
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
 
@@ -345,7 +345,7 @@ public class Query {
                     if (boughtUsers != null && !boughtUsers.isEmpty()) {
                         for (Object object : boughtUsers) {
                             ParseUser user = (ParseUser) object;
-                            if (user.getObjectId().equals(currentUser.getObjectId())) {
+                            if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
                                 Charity charity = null;
@@ -361,7 +361,7 @@ public class Query {
                                 }
                             }
                         }
-                        if (offering.getUser().getObjectId().equals(currentUser.getObjectId())) {
+                        if (offering.getUser().getObjectId().equals(parentProfile.user.getObjectId())) {
                             //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
                             Charity charity = offering.getCharity();
@@ -375,7 +375,7 @@ public class Query {
                 }
                 //find and set total money raised
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
-                tvMoneyRaised.setText("$" + totalMoney.toString());
+                parentProfile.tvMoneyRaised.setText("$" + totalMoney.toString());
 
                 //determine the level of the user based on the amount of money raised + sold
                 int iconImage = -1;
@@ -395,12 +395,12 @@ public class Query {
 
                 //set icon based on level
                 if (totalMoney < 25) {
-                    ivLevelIcon.setVisibility(View.INVISIBLE);
+                    parentProfile.ivLevelIcon.setVisibility(View.INVISIBLE);
                 } else {
                     Glide.with(context)
                             .load(iconImage)
                             .circleCrop()
-                            .into(ivLevelIcon);
+                            .into(parentProfile.ivLevelIcon);
                 }
 
                 //sort map
@@ -435,7 +435,8 @@ public class Query {
                             //set charity icon with profile image of charity with most money raised
                             Glide.with(context)
                                     .load(objects.get(0).getImage().getUrl())
-                                    .into(ivCharityIcon);
+                                    .into(parentProfile.ivCharityIcon);
+                            parentProfile.pb.setVisibility(View.INVISIBLE);
                             return;
                         }
                     });

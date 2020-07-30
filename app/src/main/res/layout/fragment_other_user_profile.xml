@@ -95,6 +95,7 @@
         android:layout_above="@+id/tabLayout"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:indeterminate="true"
         android:layout_marginStart="97dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="21dp"

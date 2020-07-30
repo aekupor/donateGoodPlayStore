@@ -290,8 +290,8 @@ public class ParentProfile {
     //set information for current or other user profile
     public void queryInfo(Context context) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
+        query.queryMoneyRaised(this, context);
         queryPosts(KEY_BOUGHT);
-        query.queryMoneyRaised(user, tvMoneyRaised, ivLevelIcon, context, ivCharityIcon);
         query.setUserRating(user, ratingBar);
     }
 
