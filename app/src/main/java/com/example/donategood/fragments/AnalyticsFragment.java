@@ -12,6 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.donategood.R;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+
+import java.util.ArrayList;
 
 public class AnalyticsFragment extends DialogFragment {
 
@@ -61,5 +66,35 @@ public class AnalyticsFragment extends DialogFragment {
         }
 
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
+
+        graphTesting();
+    }
+
+    public void graphTesting() {
+        BarEntry beCarbs = new BarEntry(1, 3);
+        BarEntry beProtein = new BarEntry(2, 4);
+        BarEntry beFat = new BarEntry(3, 5);
+
+        ArrayList carbSet = new ArrayList();
+        carbSet.add(beCarbs);
+
+        ArrayList proteinSet = new ArrayList();
+        proteinSet.add(beProtein);
+
+        ArrayList fatSet = new ArrayList();
+        fatSet.add(beFat);
+
+        BarDataSet carbDataSet = new BarDataSet(carbSet, "Carbs");
+        BarDataSet proteinDataSet = new BarDataSet(proteinSet, "Protein");
+        BarDataSet fatDataSet = new BarDataSet(fatSet, "Fat");
+
+        ArrayList dataSets = new ArrayList();
+        dataSets.add(carbDataSet);
+        dataSets.add(proteinDataSet);
+        dataSets.add(fatDataSet);
+
+        BarData data = new BarData(dataSets);
+
+        
     }
 }
