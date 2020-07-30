@@ -41,7 +41,7 @@ public class Query {
     private List<Offering> savedSoldPostsForCharity;
     public  HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity;
     public HashMap<String, Integer> savedCombinedMap;
-    public HashMap<ParseUser, Integer> moneyRaisedForCharityByPerson;
+    public HashMap<String, Integer> moneyRaisedForCharityByPerson;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -249,10 +249,27 @@ public class Query {
                 }
                 tvMoney.setText("$" + moneyRaised[0].toString());
 
-                //sort map
-                HashMap<ParseUser, Integer> sortedMap = sortMapByPointsByUser(moneyRaisedByPerson);
-                moneyRaisedForCharityByPerson = sortedMap;
+                //make map that has only one entry by user (add up all the prices)
+                HashMap<String, Integer> consolidateMapByUser = new HashMap<>();
+                for (Map.Entry mapElement : moneyRaisedByPerson.entrySet()) {
+                    ParseUser key = (ParseUser) mapElement.getKey();
+                    ParseUser user = null;
+                    try {
+                        user = key.fetchIfNeeded();
+                    } catch (ParseException e2) {
+                        e2.printStackTrace();
+                    }
+                    int value = (int)mapElement.getValue();
 
+                    if (consolidateMapByUser.containsKey(user.getUsername())) {
+                        consolidateMapByUser.put(user.getUsername(), consolidateMapByUser.get(user.getUsername()) + value);
+                    } else {
+                        consolidateMapByUser.put(user.getUsername(), value);
+                    }
+                }
+
+                HashMap<String, Integer> sortedMap = sortMapByPointsByUser(consolidateMapByUser);
+                moneyRaisedForCharityByPerson = sortedMap;
             }
         });
     }
@@ -447,20 +464,20 @@ public class Query {
     }
 
     //sorts map with the largest number of points first
-    public HashMap<ParseUser, Integer> sortMapByPointsByUser(Map<ParseUser, Integer> pointValues) {
+    public HashMap<String, Integer> sortMapByPointsByUser(Map<String, Integer> pointValues) {
         // Create a list from elements of HashMap
-        List<Map.Entry<ParseUser, Integer> > list = new LinkedList<Map.Entry<ParseUser, Integer> >(pointValues.entrySet());
+        List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(pointValues.entrySet());
 
         // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<ParseUser, Integer>>() {
-            public int compare(Map.Entry<ParseUser, Integer> o1, Map.Entry<ParseUser, Integer> o2) {
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
                 return (o2.getValue()).compareTo(o1.getValue());
             }
         });
 
         // put data from sorted list to hashmap
-        HashMap<ParseUser, Integer> temp = new LinkedHashMap<ParseUser, Integer>();
-        for (Map.Entry<ParseUser, Integer> aa : list) {
+        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> aa : list) {
             temp.put(aa.getKey(), aa.getValue());
         }
         return temp;
@@ -511,5 +528,9 @@ public class Query {
 
     public HashMap<String, Integer> getCombinedMap() {
         return savedCombinedMap;
+    }
+
+    public HashMap<String, Integer> getMoneyRaisedForCharityByPerson() {
+        return moneyRaisedForCharityByPerson;
     }
 }
