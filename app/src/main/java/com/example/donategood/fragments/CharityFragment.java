@@ -100,7 +100,6 @@ public class CharityFragment extends Fragment {
                 //set info about charity
                 parentProfile.setCharity(charity);
                 parentProfile.queryCharityInfo(getContext(), view);
-                parentProfile.checkIfFollowing();
             }
         });
     }

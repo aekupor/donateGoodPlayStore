@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,9 +22,6 @@ import com.example.donategood.models.Charity;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.google.android.material.tabs.TabLayout;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -53,6 +49,7 @@ public class ParentProfile {
     public String profileType;
     public NotificationLoader notificationClass;
     public MoneyRaised moneyRaised;
+    public Follow follow;
 
     public TextView tvPendingNotificationsTitle;
     public List<Notification> notifications;
@@ -96,6 +93,7 @@ public class ParentProfile {
         query = new Query();
         notificationClass = new NotificationLoader();
         moneyRaised = new MoneyRaised();
+        follow = new Follow();
 
         //initialize tab layout
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
@@ -148,93 +146,8 @@ public class ParentProfile {
             notificationClass.initializeNotifications(view, context, ParentProfile.this);
         } else {
             //only other users and charities have a "follow" option
-            initializeFollow(view, context);
+            follow.initializeFollow(view, context, this);
         }
-    }
-
-    //initialize variables relating to follow
-    //ProfileFragment does not have follow since user is current signed in use
-    private void initializeFollow(View view, final Context context) {
-        following = false;
-        ivFollow = view.findViewById(R.id.ivFollow);
-        checkIfFollowing();
-        ivFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "follow clicked");
-                if (following) {
-                    //if user is already following, onClick unfollows
-                    if (profileType == KEY_CHARITY) {
-                        ParseUser.getCurrentUser().getRelation("followingCharity").remove(charity);
-                    } else {
-                        ParseUser.getCurrentUser().getRelation("following").remove(user);
-                    }
-                    ParseUser.getCurrentUser().saveInBackground();
-                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
-                    Toast.makeText(context, "Unfollowed", Toast.LENGTH_SHORT).show();
-                    following = false;
-                } else {
-                    //if user is not already following, onClick follows
-                    if (profileType == KEY_CHARITY) {
-                        ParseUser.getCurrentUser().getRelation("followingCharity").add(charity);
-                    } else {
-                        ParseUser.getCurrentUser().getRelation("following").add(user);
-                    }
-                    ParseUser.getCurrentUser().saveInBackground();
-                    ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
-                    Toast.makeText(context, "Following", Toast.LENGTH_SHORT).show();
-                    following = true;
-                }
-            }
-        });
-    }
-
-    //check is current user is already following this user/charity
-    public void checkIfFollowing() {
-        pb.setVisibility(ProgressBar.VISIBLE);
-        if (profileType == KEY_CHARITY) {
-            //check if following charity
-            ParseUser.getCurrentUser().getRelation("followingCharity").getQuery().findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> objects, ParseException e) {
-                    if (e != null) {
-                        return;
-                    }
-                    for (ParseObject followingObject : objects) {
-                        Charity followingCharity = (Charity) followingObject;
-                        if (followingCharity != null && charity != null) {
-                            if (followingCharity.getObjectId().equals(charity.getObjectId())) {
-                                setIsFollowing();
-                                return;
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            //check if following user
-            ParseUser.getCurrentUser().getRelation("following").getQuery().findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> objects, ParseException e) {
-                    if (e != null) {
-                        return;
-                    }
-                    for (ParseObject followingObject : objects) {
-                        ParseUser followingUser = (ParseUser) followingObject;
-                        if (followingUser.getObjectId().equals(user.getObjectId())) {
-                            setIsFollowing();
-                            return;
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    //if user is following that charity/user, set appropiate variables
-    private void setIsFollowing() {
-        following = true;
-        ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
     }
 
     //call correct query depending on queryType
@@ -270,7 +183,7 @@ public class ParentProfile {
         queryPosts(KEY_BOUGHT);
         query.setUserRating(user, ratingBar);
         if (profileType != KEY_CURRENT_USER) {
-            initializeFollow(view, context);
+            follow.initializeFollow(view, context, this);
         }
     }
 
@@ -279,7 +192,8 @@ public class ParentProfile {
         pb.setVisibility(View.VISIBLE);
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
         moneyRaised.findCharityMoneyRaised(charity, tvMoneyRaised, pb, query);
-        initializeFollow(view, context);
+        follow.initializeFollow(view, context, this);
+        follow.checkIfFollowing(this);
         queryPosts(KEY_SOLD);
     }
 
