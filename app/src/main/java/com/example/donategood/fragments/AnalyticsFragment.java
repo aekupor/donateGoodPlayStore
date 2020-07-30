@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.donategood.R;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -25,6 +26,7 @@ public class AnalyticsFragment extends DialogFragment {
     private String analytics;
     private TextView tvAnalytics;
     private Boolean forCharityFragment;
+    private BarChart chart;
 
     public static AnalyticsFragment newInstance(String analytics, Boolean charityFragment) {
         AnalyticsFragment fragment = new AnalyticsFragment();
@@ -67,6 +69,8 @@ public class AnalyticsFragment extends DialogFragment {
 
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
 
+
+        chart = (BarChart) view.findViewById(R.id.chart);
         graphTesting();
     }
 
@@ -94,7 +98,7 @@ public class AnalyticsFragment extends DialogFragment {
         dataSets.add(fatDataSet);
 
         BarData data = new BarData(dataSets);
-
-        
+        chart.setData(data);
+        chart.invalidate(); // refresh
     }
 }
