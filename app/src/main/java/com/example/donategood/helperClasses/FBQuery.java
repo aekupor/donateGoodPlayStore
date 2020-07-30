@@ -1,12 +1,20 @@
 package com.example.donategood.helperClasses;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.example.donategood.fragments.DetailFragment;
+import com.example.donategood.models.Offering;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
@@ -81,5 +89,27 @@ public class FBQuery {
             //user is not logged in with FB
             parentProfile.loadPost.setUser(ParseUser.getCurrentUser(), context, parentProfile.tvName, parentProfile.ivProfileImage);
         }
+    }
+
+    //initialize FB share button with information about offering
+    public void setShareButton(ShareButton shareButton, Offering offering, final DetailFragment detailFragment) {
+        final ShareLinkContent content;
+        content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse(offering.getImage().getUrl()))
+                .setQuote("Check out this " + offering.getTitle() + " that I am purchasing on Donate Good!")
+                .setShareHashtag(new ShareHashtag.Builder()
+                        .setHashtag("#DonateGood")
+                        .build())
+                .build();
+
+        shareButton.setShareContent(content);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "share button clicked");
+                ShareDialog.show(detailFragment, content);
+            }
+        });
     }
 }

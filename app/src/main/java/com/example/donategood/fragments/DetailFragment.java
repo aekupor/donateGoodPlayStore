@@ -27,6 +27,7 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.CommentLoader;
+import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.NotificationLoader;
 import com.example.donategood.helperClasses.Purchase;
@@ -34,10 +35,7 @@ import com.example.donategood.helperClasses.Query;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
-import com.facebook.share.model.ShareHashtag;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
-import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -57,6 +55,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Recommend recommend;
     private CommentLoader commentLoader;
     private Purchase purchase;
+    private FBQuery fbQuery;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -82,7 +81,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     public Integer numComments;
 
     private ShareButton shareButton;
-    private ShareLinkContent content;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -149,6 +147,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         recommend = new Recommend();
         commentLoader = new CommentLoader();
         purchase = new Purchase();
+        fbQuery = new FBQuery();
 
         //set up recycler view and adapter for reccomended offerings
         reccomendedOfferings = new ArrayList<>();
@@ -259,30 +258,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         }
 
         loadPost.setMultipleImages(offering, getContext(), ivOfferingPhoto, layoutImages);
-        setShareButton();
+        fbQuery.setShareButton(shareButton, offering, this);
         recommend.queryRecommendedPosts(query, offering, adapter, reccomendedOfferings);
         commentLoader.queryComments(this);
-    }
-
-    //initialize FB share button with information about offering
-    private void setShareButton() {
-        content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse(offering.getImage().getUrl()))
-                .setQuote("Check out this " + offering.getTitle() + " that I am purchasing on Donate Good!")
-                .setShareHashtag(new ShareHashtag.Builder()
-                        .setHashtag("#DonateGood")
-                        .build())
-                .build();
-
-        shareButton.setShareContent(content);
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "share button clicked");
-                ShareDialog.show(DetailFragment.this, content);
-            }
-        });
     }
 
     private void goToOtherFragment(String fragmentName) {
