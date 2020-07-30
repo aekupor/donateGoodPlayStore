@@ -29,6 +29,7 @@ import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.CommentLoader;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.NotificationLoader;
+import com.example.donategood.helperClasses.Purchase;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
@@ -55,6 +56,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private NotificationLoader notificationLoader;
     private Recommend recommend;
     private CommentLoader commentLoader;
+    private Purchase purchase;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -146,6 +148,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         notificationLoader = new NotificationLoader();
         recommend = new Recommend();
         commentLoader = new CommentLoader();
+        purchase = new Purchase();
 
         //set up recycler view and adapter for reccomended offerings
         reccomendedOfferings = new ArrayList<>();
@@ -303,30 +306,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }
 
-    private void purchaseItem() {
-        Log.i(TAG, "purchase item");
-
-        //open venmo
-        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients="
-                + offering.getUser().get("venmoName") + "&amount="
-                + offering.getPrice().toString() + "&note=" + offering.getTitle()));
-
-        if (implicit.resolveActivity(getContext().getPackageManager()) != null) {
-            startActivity(implicit);
-        } else {
-            Toast.makeText(getContext(), "You must have venmo installed", Toast.LENGTH_SHORT).show();
-        }
-
-        //remove one from the quantity left
-        Integer quantityLeft = offering.getQuantityLeft() - 1;
-        Toast.makeText(getContext(), "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
-        tvQuantityLeft.setText("Quantity Left: " + quantityLeft.toString());
-        updateQuantityLeft(quantityLeft);
-
-        //creates notification on the "notifications" tab within the app
-        notificationLoader.createNotification(offering);
-    }
-
     //called after user has created a comment
     @Override
     public void onFinishEditDialog(String inputText, String rating) {
@@ -337,7 +316,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         commentAdapter.notifyDataSetChanged();
         tvCommentTitle.setVisibility(View.VISIBLE);
 
-        updateOfferingRating(rating);
+        purchase.updateOfferingRating(rating, offering, ratingBar, numComments);
     }
 
     //open ComposeCommentFragment
@@ -349,33 +328,18 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         composeCommentFragment.show(fm, "fragment_compose_comment");
     }
 
-    //update rating of offering based on rating from new comment
-    private void updateOfferingRating(String rating) {
-        Integer offeringRating = offering.getRating();
-        if (offeringRating == 0) {
-            offering.setRating(Integer.parseInt(rating));
-            ratingBar.setVisibility(View.INVISIBLE);
-        } else {
-            Log.i(TAG, "current rating: " + offeringRating.toString() + "num comments: " + numComments.toString());
-            offeringRating = (offeringRating * numComments) + Integer.parseInt(rating);
-            numComments++;
-            offeringRating = offeringRating / numComments;
-            offering.setRating(offeringRating);
-            ratingBar.setNumStars(offeringRating);
-        }
-        offering.saveInBackground();
-    }
+    private void purchaseItem() {
+        //open venmo
+        Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("venmo://paycharge?txn=pay&recipients="
+                + offering.getUser().get("venmoName") + "&amount="
+                + offering.getPrice().toString() + "&note=" + offering.getTitle()));
 
-    //update quantity left of offering
-    private void updateQuantityLeft(Integer quantityLeft) {
-        if (quantityLeft == 0) {
-            //determine if all quantities of the offering has been bought
-            offering.setIsBought(true);
-            btnPurchase.setVisibility(View.INVISIBLE);
+        if (implicit.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivity(implicit);
+        } else {
+            Toast.makeText(getContext(), "You must have venmo installed", Toast.LENGTH_SHORT).show();
         }
-        offering.setBoughtBy(ParseUser.getCurrentUser());
-        offering.addToBoughtByArray(ParseUser.getCurrentUser());
-        offering.setQuantityLeft(quantityLeft);
-        offering.saveInBackground();
+
+        purchase.purchaseItem(offering, btnPurchase, notificationLoader, getContext(), tvQuantityLeft);
     }
 }
