@@ -51,6 +51,7 @@ public class ParentProfile {
     public ParseUser user;
     public Charity charity;
     public String profileType;
+    public NotificationLoader notificationClass;
 
     public TextView tvPendingNotificationsTitle;
     public List<Notification> notifications;
@@ -92,6 +93,7 @@ public class ParentProfile {
 
         loadPost = new LoadPost();
         query = new Query();
+        notificationClass = new NotificationLoader();
 
         //initialize tab layout
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
@@ -109,7 +111,7 @@ public class ParentProfile {
                     } else if (position == 2) {
                         queryPosts(KEY_SELLING);
                     } else {
-                        getNotifications(context);
+                        notificationClass.getNotifications(ParentProfile.this, context);
                     }
                 } else {
                     if (position == 0) {
@@ -313,77 +315,6 @@ public class ParentProfile {
 
     public void setCharity(Charity currentCharity) {
         charity = currentCharity;
-    }
-
-    //query and set notifications for current user
-    public void getNotifications(final Context context) {
-        Log.i(TAG, "notification button clicked");
-
-        //clear adapter and set notifications tab as visible
-        adapter.clear();
-        notifications.clear();
-        rvOfferings.setVisibility(View.INVISIBLE);
-        rvNotifications.setVisibility(View.VISIBLE);
-        tvPendingNotificationsTitle.setVisibility(View.VISIBLE);
-        pendingNotifications.setVisibility(View.VISIBLE);
-        pendingNotifications.removeAllViews();
-
-        //query notifications for offerings that the current user is selling
-        query.queryNotificationsForSeller(new FindCallback<Notification>() {
-            @Override
-            public void done(List<Notification> objects, ParseException e) {
-                if (e != null) {
-                    return;
-                }
-
-                if (objects != null) {
-                    for (Notification notification : objects) {
-                        if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                            //notification is for current user to approve
-                            Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
-                            notifications.add(notification);
-                        }
-                    }
-                    notificationAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        //query notifications for offering that the current user is attempting to buy
-        query.queryNotificationsForBuyer(ParseUser.getCurrentUser(), new FindCallback<Notification>() {
-            @Override
-            public void done(List<Notification> objects, ParseException e) {
-                if (e != null) {
-                    return;
-                }
-
-                if (objects != null) {
-                    for (Notification notification : objects) {
-                        Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
-
-                        //if user hasn't seen the notification yet, then display
-                        if (!notification.getUserSeen()) {
-                            TextView textView = new TextView(context);
-                            if (!notification.getUserActed()) {
-                                //notification is still pending on seller approval
-                                textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() + ".");
-                            } else if (notification.getKeyApproved()) {
-                                //attempt to buy has been approved by seller
-                                textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() + ".");
-                                notification.setUserSeen(true);
-                                notification.saveInBackground();
-                            } else {
-                                //attempt to buy has been denied by seller
-                                textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() + ".");
-                                notification.setUserSeen(true);
-                                notification.saveInBackground();
-                            }
-                            pendingNotifications.addView(textView);
-                        }
-                    }
-                }
-            }
-        });
     }
 
     //make string of analytics to pass into AnalyticsFragment
