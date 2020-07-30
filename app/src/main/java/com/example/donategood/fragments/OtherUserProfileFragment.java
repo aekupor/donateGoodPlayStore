@@ -75,7 +75,7 @@ public class OtherUserProfileFragment extends Fragment {
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_OTHER_USER);
         parentProfile.setUser(user);
-        parentProfile.queryInfo(getContext());
+        parentProfile.queryInfo(getContext(), view);
         parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
 
         //only other user's have a chat button and analytics button

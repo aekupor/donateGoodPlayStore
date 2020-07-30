@@ -223,7 +223,7 @@ public class ParentProfile {
                 }
             });
         }
-        pb.setVisibility(ProgressBar.INVISIBLE);
+       //pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     //if user is following that charity/user, set appropiate variables
@@ -288,19 +288,22 @@ public class ParentProfile {
     }
 
     //set information for current or other user profile
-    public void queryInfo(Context context) {
+    public void queryInfo(Context context, View view) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
         query.queryMoneyRaised(this, context);
         queryPosts(KEY_BOUGHT);
         query.setUserRating(user, ratingBar);
+        if (profileType != KEY_CURRENT_USER) {
+            initializeFollow(view, context);
+        }
     }
 
     //set information for charity
-    public void queryCharityInfo(Context context) {
+    public void queryCharityInfo(Context context, View view) {
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
-        query.findCharityMoneyRaised(charity, tvMoneyRaised);
-        pb.setVisibility(ProgressBar.INVISIBLE);
+        query.findCharityMoneyRaised(charity, tvMoneyRaised, pb);
         queryPosts(KEY_SOLD);
+        initializeFollow(view, context);
     }
 
     public void setUser(ParseUser parseUser) {

@@ -58,7 +58,7 @@ public class CharityFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         parentProfile = new ParentProfile();
@@ -99,7 +99,7 @@ public class CharityFragment extends Fragment {
 
                 //set info about charity
                 parentProfile.setCharity(charity);
-                parentProfile.queryCharityInfo(getContext());
+                parentProfile.queryCharityInfo(getContext(), view);
                 parentProfile.checkIfFollowing();
             }
         });

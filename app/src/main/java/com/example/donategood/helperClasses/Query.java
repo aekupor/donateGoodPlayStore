@@ -2,6 +2,7 @@ package com.example.donategood.helperClasses;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -216,7 +217,8 @@ public class Query {
     }
 
     //determines amount of money raised for a charity
-    public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
+    public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney, final ProgressBar pb) {
+        pb.setVisibility(View.VISIBLE);
         final Integer[] moneyRaised = {0};
         final HashMap<ParseUser, Integer> moneyRaisedByPerson = new HashMap<>();
         queryAllPosts(new FindCallback<Offering>() {
@@ -270,6 +272,7 @@ public class Query {
 
                 HashMap<String, Integer> sortedMap = sortMapByPointsByUser(consolidateMapByUser);
                 moneyRaisedForCharityByPerson = sortedMap;
+                pb.setVisibility(View.INVISIBLE);
             }
         });
     }

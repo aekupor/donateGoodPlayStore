@@ -94,7 +94,7 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CURRENT_USER);
         parentProfile.setUser(ParseUser.getCurrentUser());
-        parentProfile.queryInfo(getContext());
+        parentProfile.queryInfo(getContext(), view);
         parentProfile.queryPosts(parentProfile.KEY_BOUGHT);
 
         camera = new Camera();
