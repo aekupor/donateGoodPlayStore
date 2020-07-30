@@ -189,6 +189,7 @@ public class Query {
 
     //find a charity's sold and sellings
     public void setCharityPosts(final Boolean selling, final ParentProfile parentProfile) {
+        parentProfile.pb.setVisibility(View.VISIBLE);
         if (selling && savedSellingPostsForCharity != null) {
             updateAdapter(parentProfile, savedSellingPostsForCharity);
             return;

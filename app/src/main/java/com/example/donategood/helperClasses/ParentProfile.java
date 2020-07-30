@@ -198,9 +198,11 @@ public class ParentProfile {
                     }
                     for (ParseObject followingObject : objects) {
                         Charity followingCharity = (Charity) followingObject;
-                        if (followingCharity.getObjectId().equals(charity.getObjectId())) {
-                            setIsFollowing();
-                            return;
+                        if (followingCharity != null && charity != null) {
+                            if (followingCharity.getObjectId().equals(charity.getObjectId())) {
+                                setIsFollowing();
+                                return;
+                            }
                         }
                     }
                 }
