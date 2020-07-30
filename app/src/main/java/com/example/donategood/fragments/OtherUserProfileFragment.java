@@ -98,17 +98,8 @@ public class OtherUserProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnAnalytics clicked");
-                openAnalyticsDialog(parentProfile.getAnalytics());
+                parentProfile.openAnalyticsDialog(OtherUserProfileFragment.this, getFragmentManager());
             }
         });
-    }
-
-    private void openAnalyticsDialog(String analyticsString) {
-        //open analytics dialog
-        FragmentManager fm = getFragmentManager();
-        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(analyticsString);
-        // SETS the target fragment for use later when sending results
-        fragment.setTargetFragment(OtherUserProfileFragment.this, 200);
-        fragment.show(fm, "fragment_analytics");
     }
 }

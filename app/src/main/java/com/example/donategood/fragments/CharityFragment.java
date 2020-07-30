@@ -80,7 +80,7 @@ public class CharityFragment extends Fragment {
         btnAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openAnalyticsDialog(parentProfile.getAnalytics());
+                parentProfile.openAnalyticsDialog(CharityFragment.this, getFragmentManager());
             }
         });
 
@@ -103,14 +103,5 @@ public class CharityFragment extends Fragment {
                 parentProfile.checkIfFollowing();
             }
         });
-    }
-
-    private void openAnalyticsDialog(String analyticsString) {
-        //open analytics dialog
-        FragmentManager fm = getFragmentManager();
-        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(analyticsString);
-        // SETS the target fragment for use later when sending results
-        fragment.setTargetFragment(CharityFragment.this, 200);
-        fragment.show(fm, "fragment_analytics");
     }
 }
