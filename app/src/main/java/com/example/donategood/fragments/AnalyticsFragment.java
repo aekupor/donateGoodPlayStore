@@ -70,11 +70,12 @@ public class AnalyticsFragment extends DialogFragment {
         }
 
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
-        
+
         pieChart = view.findViewById(R.id.piechartAnalytics);
         createPieChart();
     }
 
+    //TODO: add real data; make this a bar chart for displaying users
     public void createPieChart() {
         List<PieEntry> entries = new ArrayList();
         entries.add(new PieEntry(750f, "Charity1"));
