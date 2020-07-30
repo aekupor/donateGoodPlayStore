@@ -2,9 +2,7 @@ package com.example.donategood.helperClasses;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.donategood.R;
@@ -217,6 +215,7 @@ public class Query {
         });
     }
 
+    /*
     //determines amount of money raised for a charity
     public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney, final ProgressBar pb) {
         pb.setVisibility(View.VISIBLE);
@@ -277,6 +276,8 @@ public class Query {
             }
         });
     }
+
+     */
 
     //search for posts based on parameters
     public void searchForOffering(String searchText, FindCallback<Offering> callback, Integer minPrice, Integer maxPrice, Integer minRating) {

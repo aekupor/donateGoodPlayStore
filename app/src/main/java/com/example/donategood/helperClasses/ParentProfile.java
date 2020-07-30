@@ -52,6 +52,7 @@ public class ParentProfile {
     public Charity charity;
     public String profileType;
     public NotificationLoader notificationClass;
+    public MoneyRaised moneyRaised;
 
     public TextView tvPendingNotificationsTitle;
     public List<Notification> notifications;
@@ -94,6 +95,7 @@ public class ParentProfile {
         loadPost = new LoadPost();
         query = new Query();
         notificationClass = new NotificationLoader();
+        moneyRaised = new MoneyRaised();
 
         //initialize tab layout
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
@@ -276,7 +278,7 @@ public class ParentProfile {
     public void queryCharityInfo(Context context, View view) {
         pb.setVisibility(View.VISIBLE);
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
-        query.findCharityMoneyRaised(charity, tvMoneyRaised, pb);
+        moneyRaised.findCharityMoneyRaised(charity, tvMoneyRaised, pb, query);
         initializeFollow(view, context);
         queryPosts(KEY_SOLD);
     }
