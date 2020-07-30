@@ -27,10 +27,10 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.LoadPost;
+import com.example.donategood.helperClasses.NotificationLoader;
 import com.example.donategood.helperClasses.Query;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
-import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
@@ -54,6 +54,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Query query;
     private Offering offering;
     private LoadPost loadPost;
+    private NotificationLoader notificationLoader;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -142,6 +143,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         numComments = 0;
         loadPost = new LoadPost();
         query = new Query();
+        notificationLoader = new NotificationLoader();
 
         //set up recycler view and adapter for reccomended offerings
         reccomendedOfferings = new ArrayList<>();
@@ -216,7 +218,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         });
     }
 
-    //sets all variables to the appropiate values
+    //sets all variables to the appropriate values
     private void loadInformation() {
         loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
         loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
@@ -382,7 +384,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         updateQuantityLeft(quantityLeft);
 
         //creates notification on the "notifications" tab within the app
-        createNotification();
+        notificationLoader.createNotification(offering);
     }
 
     //called after user has created a comment
@@ -467,15 +469,5 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         offering.addToBoughtByArray(ParseUser.getCurrentUser());
         offering.setQuantityLeft(quantityLeft);
         offering.saveInBackground();
-    }
-
-    //when user purchases an item, creates a notification for the seller to approve
-    private void createNotification() {
-        Notification notification = new Notification();
-        notification.setUserActed(false);
-        notification.setKeyOffering(offering);
-        notification.setKeyUser(ParseUser.getCurrentUser());
-        notification.setSellingUser(offering.getUser());
-        notification.saveInBackground();
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.donategood.R;
 import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.models.Notification;
+import com.example.donategood.models.Offering;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -119,5 +120,15 @@ public class NotificationLoader {
         parentProfile.notificationAdapter.clear();
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         parentProfile.pendingNotifications.setVisibility(View.INVISIBLE);
+    }
+
+    //when user purchases an item, creates a notification for the seller to approve
+    public void createNotification(Offering offering) {
+        Notification notification = new Notification();
+        notification.setUserActed(false);
+        notification.setKeyOffering(offering);
+        notification.setKeyUser(ParseUser.getCurrentUser());
+        notification.setSellingUser(offering.getUser());
+        notification.saveInBackground();
     }
 }
