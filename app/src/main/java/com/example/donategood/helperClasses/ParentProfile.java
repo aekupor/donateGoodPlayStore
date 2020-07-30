@@ -380,7 +380,12 @@ public class ParentProfile {
     }
 
     public String getAnalytics() {
-        HashMap<String, Integer> moneyByCharity = query.getCombinedMap();
+        HashMap<String, Integer> moneyByCharity;
+        if (profileType == KEY_CHARITY) {
+            moneyByCharity = query.getMoneyRaisedForCharityByPerson();
+        } else {
+            moneyByCharity = query.getCombinedMap();
+        }
         String analytics = "";
         for (Map.Entry mapElement : moneyByCharity.entrySet()) {
             //set analytics string to be equal to the items of moneyByCharity

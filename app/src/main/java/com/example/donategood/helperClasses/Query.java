@@ -233,12 +233,14 @@ public class Query {
                             //fill HashMap with users
                             for (Object boughtObject : boughtUsers) {
                                 ParseUser boughtUser = (ParseUser) boughtObject;
+                                //add each user who bought an item for that charity
                                 if (moneyRaisedByPerson.containsKey(boughtUser)) {
                                     moneyRaisedByPerson.put(boughtUser, moneyRaisedByPerson.get(boughtUser) + offering.getPrice());
                                 } else {
                                     moneyRaisedByPerson.put(boughtUser, offering.getPrice());
                                 }
                             }
+                            //add sellers who raised money for that charity
                             if (moneyRaisedByPerson.containsKey(offering.getUser())) {
                                 moneyRaisedByPerson.put(offering.getUser(), moneyRaisedByPerson.get(offering.getUser()) + offering.getPrice() * boughtUsers.size());
                             } else {
