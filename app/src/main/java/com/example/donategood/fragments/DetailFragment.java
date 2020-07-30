@@ -26,6 +26,7 @@ import com.example.donategood.OnSwipeTouchListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
+import com.example.donategood.helperClasses.CommentLoader;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.NotificationLoader;
 import com.example.donategood.helperClasses.Query;
@@ -39,23 +40,21 @@ import com.facebook.share.widget.ShareDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DetailFragment extends Fragment implements ComposeCommentFragment.ComposeCommentDialogListener {
 
     public static final String TAG = "DetailFragment";
 
     private String offeringId;
-    private Query query;
-    private Offering offering;
+    public Query query;
+    public Offering offering;
     private LoadPost loadPost;
     private NotificationLoader notificationLoader;
     private Recommend recommend;
+    private CommentLoader commentLoader;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -66,7 +65,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Button btnPurchase;
     private Button btnComment;
     private TextView tvQuantityLeft;
-    private TextView tvCommentTitle;
+    public TextView tvCommentTitle;
     private LinearLayout layoutImages;
     private RatingBar ratingBar;
     private TextView tvDescription;
@@ -76,9 +75,9 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private SmallOfferingAdapter adapter;
     private List<Offering> reccomendedOfferings;
     private RecyclerView rvComments;
-    private CommentAdapter commentAdapter;
-    private List<Comment> allComments;
-    private Integer numComments;
+    public CommentAdapter commentAdapter;
+    public List<Comment> allComments;
+    public Integer numComments;
 
     private ShareButton shareButton;
     private ShareLinkContent content;
@@ -146,6 +145,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         query = new Query();
         notificationLoader = new NotificationLoader();
         recommend = new Recommend();
+        commentLoader = new CommentLoader();
 
         //set up recycler view and adapter for reccomended offerings
         reccomendedOfferings = new ArrayList<>();
@@ -258,31 +258,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         loadPost.setMultipleImages(offering, getContext(), ivOfferingPhoto, layoutImages);
         setShareButton();
         recommend.queryRecommendedPosts(query, offering, adapter, reccomendedOfferings);
-        queryComments();
-    }
-
-    //find all comments related to that post
-    private void queryComments() {
-        query.queryComments(offering, new FindCallback<Comment>() {
-            @Override
-            public void done(List<Comment> objects, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting comments", e);
-                    return;
-                }
-                if (objects.size() != 0) {
-                    //if there are comments related to offering, display them
-                    commentAdapter.clear();
-                    allComments.clear();
-                    allComments.addAll(objects);
-                    commentAdapter.notifyDataSetChanged();
-                    numComments = objects.size();
-                } else {
-                    //if no comments related to offering, hide comments title
-                    tvCommentTitle.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+        commentLoader.queryComments(this);
     }
 
     //initialize FB share button with information about offering
@@ -356,7 +332,11 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     public void onFinishEditDialog(String inputText, String rating) {
         Log.i(TAG, "got comment with text: " + inputText + " and rating: " + rating);
 
-        saveComment(inputText, rating);
+        //add comment to adapter
+        allComments.add(commentLoader.saveComment(inputText, rating, getContext(), offering));
+        commentAdapter.notifyDataSetChanged();
+        tvCommentTitle.setVisibility(View.VISIBLE);
+
         updateOfferingRating(rating);
     }
 
@@ -367,42 +347,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         //sets the target fragment for use later when sending results
         composeCommentFragment.setTargetFragment(DetailFragment.this, 300);
         composeCommentFragment.show(fm, "fragment_compose_comment");
-    }
-
-    //saves comments to backend
-    private void saveComment(String inputText, String rating) {
-        //check if user writing the comment is verified or not
-        Boolean verified = false;
-        ArrayList<Object> boughtByArray = offering.getBoughtByArray();
-        if (boughtByArray != null) {
-            for (Object object : boughtByArray) {
-                if (((ParseUser) object).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                    verified = true;
-                }
-            }
-        }
-
-        Comment comment = new Comment();
-        comment.setByUser(ParseUser.getCurrentUser());
-        comment.setForPost(offering);
-        comment.setText(inputText);
-        comment.setVerified(verified);
-        comment.setRating(Integer.parseInt(rating));
-        comment.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
-                }
-                Log.i(TAG, "Post save was successful!");
-            }
-        });
-
-        //add comment to adapter
-        allComments.add(comment);
-        commentAdapter.notifyDataSetChanged();
-        tvCommentTitle.setVisibility(View.VISIBLE);
     }
 
     //update rating of offering based on rating from new comment
