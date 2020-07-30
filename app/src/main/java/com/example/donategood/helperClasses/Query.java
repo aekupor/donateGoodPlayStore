@@ -40,7 +40,7 @@ public class Query {
     private List<Offering> savedSellingPostsForCharity;
     private List<Offering> savedSoldPostsForCharity;
     public  HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity;
-    public HashMap<String, Integer> savedCombinedMap;
+    public HashMap<String, Integer> moneyRaisedForPersonByCharity;
     public HashMap<String, Integer> moneyRaisedForCharityByPerson;
 
     //query all available posts with a page limit
@@ -424,7 +424,7 @@ public class Query {
                     } else {
                         consolidateMapByCharity.put(charity.getTitle(), value);
                     }
-                    savedCombinedMap = consolidateMapByCharity;
+                    moneyRaisedForPersonByCharity = consolidateMapByCharity;
                 }
 
                 Set<String> charities = consolidateMapByCharity.keySet();
@@ -523,13 +523,8 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    //return HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity
-    public HashMap<Charity, Integer> getSortedMapMoneyRaisedByCharity() {
-        return sortedMapMoneyRaisedByCharity;
-    }
-
-    public HashMap<String, Integer> getCombinedMap() {
-        return savedCombinedMap;
+    public HashMap<String, Integer> getMoneyRaisedForPersonByCharity() {
+        return moneyRaisedForPersonByCharity;
     }
 
     public HashMap<String, Integer> getMoneyRaisedForCharityByPerson() {

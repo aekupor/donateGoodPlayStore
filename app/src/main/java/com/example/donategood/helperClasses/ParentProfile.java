@@ -388,7 +388,7 @@ public class ParentProfile {
         if (profileType == KEY_CHARITY) {
             moneyByCharity = query.getMoneyRaisedForCharityByPerson();
         } else {
-            moneyByCharity = query.getCombinedMap();
+            moneyByCharity = query.getMoneyRaisedForPersonByCharity();
         }
         String analytics = "";
         for (Map.Entry mapElement : moneyByCharity.entrySet()) {
