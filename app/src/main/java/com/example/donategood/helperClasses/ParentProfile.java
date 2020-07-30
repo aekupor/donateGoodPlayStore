@@ -382,6 +382,7 @@ public class ParentProfile {
         });
     }
 
+    //make string of analytics to pass into AnalyticsFragment
     public String getAnalytics() {
         HashMap<String, Integer> moneyByCharity;
         if (profileType == KEY_CHARITY) {
@@ -397,10 +398,15 @@ public class ParentProfile {
         return analytics;
     }
 
+    //open AnalyticsFragment
     public void openAnalyticsDialog(Fragment currentFragment, FragmentManager fmManager) {
-        //open analytics dialog
         FragmentManager fm = fmManager;
-        AnalyticsFragment fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(getAnalytics());
+        AnalyticsFragment fragment;
+        if (profileType == KEY_CHARITY) {
+            fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(getAnalytics(), true);
+        } else {
+            fragment = (AnalyticsFragment) AnalyticsFragment.newInstance(getAnalytics(), false);
+        }
         // SETS the target fragment for use later when sending results
         fragment.setTargetFragment(currentFragment, 200);
         fragment.show(fm, "fragment_analytics");

@@ -19,11 +19,13 @@ public class AnalyticsFragment extends DialogFragment {
 
     private String analytics;
     private TextView tvAnalytics;
+    private Boolean forCharityFragment;
 
-    public static AnalyticsFragment newInstance(String analytics) {
+    public static AnalyticsFragment newInstance(String analytics, Boolean charityFragment) {
         AnalyticsFragment fragment = new AnalyticsFragment();
         Bundle args = new Bundle();
         args.putString("analytics", analytics);
+        args.putBoolean("charityFragment", charityFragment);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,7 +34,8 @@ public class AnalyticsFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         analytics = getArguments().getString("analytics", "");
-        Log.i(TAG, "analytics got: " + analytics);
+        forCharityFragment = getArguments().getBoolean("charityFragment");
+        Log.i(TAG, "analytics got: " + analytics + " with forCharityFragment: " + forCharityFragment);
     }
 
     @Override
