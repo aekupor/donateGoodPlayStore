@@ -223,14 +223,12 @@ public class ParentProfile {
                 }
             });
         }
-       //pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     //if user is following that charity/user, set appropiate variables
     private void setIsFollowing() {
         following = true;
         ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
-        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     //initialize notifications and related variables
@@ -300,10 +298,11 @@ public class ParentProfile {
 
     //set information for charity
     public void queryCharityInfo(Context context, View view) {
+        pb.setVisibility(View.VISIBLE);
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
         query.findCharityMoneyRaised(charity, tvMoneyRaised, pb);
-        queryPosts(KEY_SOLD);
         initializeFollow(view, context);
+        queryPosts(KEY_SOLD);
     }
 
     public void setUser(ParseUser parseUser) {
