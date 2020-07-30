@@ -12,12 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.donategood.R;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AnalyticsFragment extends DialogFragment {
 
@@ -26,7 +28,7 @@ public class AnalyticsFragment extends DialogFragment {
     private String analytics;
     private TextView tvAnalytics;
     private Boolean forCharityFragment;
-    private BarChart chart;
+    private PieChart pieChart;
 
     public static AnalyticsFragment newInstance(String analytics, Boolean charityFragment) {
         AnalyticsFragment fragment = new AnalyticsFragment();
@@ -70,35 +72,41 @@ public class AnalyticsFragment extends DialogFragment {
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
 
 
-        chart = (BarChart) view.findViewById(R.id.chart);
-        graphTesting();
+        pieChart = view.findViewById(R.id.piechartAnalytics);
+        createPieChart();
     }
 
-    public void graphTesting() {
-        BarEntry beCarbs = new BarEntry(1, 3);
-        BarEntry beProtein = new BarEntry(2, 4);
-        BarEntry beFat = new BarEntry(3, 5);
+    public void createPieChart() {
+        List<PieEntry> NoOfEmp = new ArrayList();
 
-        ArrayList carbSet = new ArrayList();
-        carbSet.add(beCarbs);
+        NoOfEmp.add(new PieEntry(945f, 0));
+        NoOfEmp.add(new PieEntry(1040f, 1));
+        NoOfEmp.add(new PieEntry(1133f, 2));
+        NoOfEmp.add(new PieEntry(1240f, 3));
+        NoOfEmp.add(new PieEntry(1369f, 4));
+        NoOfEmp.add(new PieEntry(1487f, 5));
+        NoOfEmp.add(new PieEntry(1501f, 6));
+        NoOfEmp.add(new PieEntry(1645f, 7));
+        NoOfEmp.add(new PieEntry(1578f, 8));
+        NoOfEmp.add(new PieEntry(1695f, 9));
+        PieDataSet dataSet = new PieDataSet(NoOfEmp, "Number Of Employees");
 
-        ArrayList proteinSet = new ArrayList();
-        proteinSet.add(beProtein);
+        List<String> year = new ArrayList();
+        year.add("2008");
+        year.add("2009");
+        year.add("2010");
+        year.add("2011");
+        year.add("2012");
+        year.add("2013");
+        year.add("2014");
+        year.add("2015");
+        year.add("2016");
+        year.add("2017");
 
-        ArrayList fatSet = new ArrayList();
-        fatSet.add(beFat);
-
-        BarDataSet carbDataSet = new BarDataSet(carbSet, "Carbs");
-        BarDataSet proteinDataSet = new BarDataSet(proteinSet, "Protein");
-        BarDataSet fatDataSet = new BarDataSet(fatSet, "Fat");
-
-        ArrayList dataSets = new ArrayList();
-        dataSets.add(carbDataSet);
-        dataSets.add(proteinDataSet);
-        dataSets.add(fatDataSet);
-
-        BarData data = new BarData(dataSets);
-        chart.setData(data);
-        chart.invalidate(); // refresh
+        PieData data = new PieData(dataSet);
+        pieChart.setData(data);
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieChart.animateXY(5000, 5000);
+        pieChart.invalidate(); // refresh
     }
 }
