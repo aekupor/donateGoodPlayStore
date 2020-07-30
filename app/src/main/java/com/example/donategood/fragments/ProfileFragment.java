@@ -78,7 +78,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
                 return true;
             case R.id.action_analytics:
                 Log.i(TAG, "action_analytics clicked");
-
                 openAnalyticsDialog(parentProfile.getAnalytics());
                 return true;
             default:
