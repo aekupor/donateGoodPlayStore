@@ -29,6 +29,7 @@ public class CharityFragment extends Fragment {
     private Charity charity;
     private String charityName;
     private Button btnWebsite;
+    private Button btnAnalytics;
     private ParentProfile parentProfile;
 
     public CharityFragment() {
@@ -64,6 +65,7 @@ public class CharityFragment extends Fragment {
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CHARITY);
 
         btnWebsite = view.findViewById(R.id.btnCharityWebsite);
+        btnAnalytics = view.findViewById(R.id.btnCharityAnalytics);
 
         btnWebsite.setOnClickListener(new View.OnClickListener() {
             @Override

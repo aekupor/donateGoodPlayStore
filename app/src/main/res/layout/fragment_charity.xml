@@ -120,4 +120,15 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         android:src="@drawable/ic_baseline_person_add_24" />
+
+    <Button
+        android:id="@+id/btnCharityAnalytics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_toStartOf="@+id/btnCharityWebsite"
+        android:text="Analytics" />
+
 </RelativeLayout>
