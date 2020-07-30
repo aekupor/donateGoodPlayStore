@@ -121,6 +121,11 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             }
         });
 
+        initializeVariables(view);
+        findOffering();
+    }
+
+    private void initializeVariables(View view) {
         //find all variables
         tvTitle = view.findViewById(R.id.tvDetailTitle);
         tvPrice = view.findViewById(R.id.tvDetailPrice);
@@ -201,8 +206,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 showEditDialog();
             }
         });
-
-        findOffering();
     }
 
     //finds the offering to display on detail page (offering that the user clicked on)
