@@ -5,11 +5,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.donategood.R;
+import com.example.donategood.adapters.NotificationAdapter;
 import com.example.donategood.models.Notification;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationLoader {
@@ -85,5 +90,34 @@ public class NotificationLoader {
                 }
             }
         });
+    }
+
+    //initialize notifications and related variables
+    public void initializeNotifications(View view, final Context context, ParentProfile parentProfile) {
+        parentProfile.rvNotifications = view.findViewById(R.id.rvNotifications);
+        parentProfile.pendingNotifications = view.findViewById(R.id.layoutNotification);
+        parentProfile.tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
+
+        //make notifications invisible until user clicks on "notification" tab
+        parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
+        parentProfile.pendingNotifications.setVisibility(View.INVISIBLE);
+
+        //initialize adapter and recycler view
+        parentProfile.notifications = new ArrayList<>();
+        parentProfile.notificationAdapter = new NotificationAdapter(context, parentProfile.notifications);
+
+        parentProfile.rvNotifications.setAdapter(parentProfile.notificationAdapter);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(context);
+        parentProfile.rvNotifications.setLayoutManager(linearLayoutManager2);
+    }
+
+
+    //make notifications tab invisible
+    public void hideNotificationsTab(ParentProfile parentProfile) {
+        parentProfile.rvOfferings.setVisibility(View.VISIBLE);
+        parentProfile.rvNotifications.setVisibility(View.INVISIBLE);
+        parentProfile.notificationAdapter.clear();
+        parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
+        parentProfile.pendingNotifications.setVisibility(View.INVISIBLE);
     }
 }

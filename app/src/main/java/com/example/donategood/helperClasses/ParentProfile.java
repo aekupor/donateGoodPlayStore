@@ -143,7 +143,7 @@ public class ParentProfile {
 
         //only the current user has a "notifications" tab
         if (profileType == KEY_CURRENT_USER) {
-            initializeNotifications(view, context);
+            notificationClass.initializeNotifications(view, context, ParentProfile.this);
         } else {
             //only other users and charities have a "follow" option
             initializeFollow(view, context);
@@ -235,25 +235,6 @@ public class ParentProfile {
         ivFollow.setImageResource(R.drawable.ic_baseline_person_add_disabled_24);
     }
 
-    //initialize notifications and related variables
-    public void initializeNotifications(View view, final Context context) {
-        rvNotifications = view.findViewById(R.id.rvNotifications);
-        pendingNotifications = view.findViewById(R.id.layoutNotification);
-        tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
-
-        //make notifications invisible until user clicks on "notification" tab
-        tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
-        pendingNotifications.setVisibility(View.INVISIBLE);
-
-        //initialize adapter and recycler view
-        notifications = new ArrayList<>();
-        notificationAdapter = new NotificationAdapter(context, notifications);
-
-        rvNotifications.setAdapter(notificationAdapter);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(context);
-        rvNotifications.setLayoutManager(linearLayoutManager2);
-    }
-
     //call correct query depending on queryType
     public void queryPosts(String queryType) {
         pb.setVisibility(ProgressBar.VISIBLE);
@@ -270,7 +251,7 @@ public class ParentProfile {
         } else {
             if (profileType == KEY_CURRENT_USER) {
                 //if is current user, hide the notification tab since not on that tab
-                hideNotificationsTab();
+                notificationClass.hideNotificationsTab(ParentProfile.this);
             }
             query.queryPosts(queryType, this);
             if (user.get("bio") != null) {
@@ -278,15 +259,6 @@ public class ParentProfile {
                 tvBio.setText(user.get("bio").toString());
             }
         }
-    }
-
-    //make notifications tab invisible
-    public void hideNotificationsTab() {
-        rvOfferings.setVisibility(View.VISIBLE);
-        rvNotifications.setVisibility(View.INVISIBLE);
-        notificationAdapter.clear();
-        tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
-        pendingNotifications.setVisibility(View.INVISIBLE);
     }
 
     //set information for current or other user profile
