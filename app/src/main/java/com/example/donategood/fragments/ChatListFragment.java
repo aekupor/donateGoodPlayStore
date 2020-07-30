@@ -29,17 +29,18 @@ import java.util.List;
 public class ChatListFragment extends Fragment {
 
     public static final String TAG = "ChatListFragment";
-    
-    private ChatListAdapter adapter;
-    private RecyclerView rvChatPreview;
-    private ArrayList<String> userIdList;
+
     private Query query;
     private FloatingActionButton btnNewChat;
     private TextView tvChatWithTitle;
 
-    private ChatListAdapter userAdapter;
-    private ArrayList<String> allUsers;
-    private RecyclerView rvUsers;
+    private ChatListAdapter adapterChatList;
+    private RecyclerView rvChat;
+    private ArrayList<String> chatUserList;
+
+    private ChatListAdapter adapterNoChatList;
+    private ArrayList<String> noChatYetUserList;
+    private RecyclerView rvNoChat;
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -57,34 +58,34 @@ public class ChatListFragment extends Fragment {
 
         Log.i(TAG, "onViewCreated chat list fragment");
 
-        rvChatPreview = view.findViewById(R.id.rvChatPreview);
+        rvChat = view.findViewById(R.id.rvChatPreview);
         btnNewChat = view.findViewById(R.id.fabNewChat);
         tvChatWithTitle = view.findViewById(R.id.tvViewAllUsersTitle);
 
         query = new Query();
-        userIdList = new ArrayList<>();
-        adapter = new ChatListAdapter(getContext(), userIdList);
+        chatUserList = new ArrayList<>();
+        adapterChatList = new ChatListAdapter(getContext(), chatUserList);
 
-        rvChatPreview.setAdapter(adapter);
+        rvChat.setAdapter(adapterChatList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvChatPreview.setLayoutManager(linearLayoutManager);
+        rvChat.setLayoutManager(linearLayoutManager);
 
-        allUsers = new ArrayList<>();
-        userAdapter = new ChatListAdapter(getContext(), allUsers);
-        rvUsers = view.findViewById(R.id.rvUsers);
+        noChatYetUserList = new ArrayList<>();
+        adapterNoChatList = new ChatListAdapter(getContext(), noChatYetUserList);
+        rvNoChat = view.findViewById(R.id.rvUsers);
 
-        rvUsers.setAdapter(userAdapter);
+        rvNoChat.setAdapter(adapterNoChatList);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
-        rvUsers.setLayoutManager(linearLayoutManager2);
+        rvNoChat.setLayoutManager(linearLayoutManager2);
 
-        rvUsers.setVisibility(View.INVISIBLE);
+        rvNoChat.setVisibility(View.INVISIBLE);
         tvChatWithTitle.setVisibility(View.INVISIBLE);
 
         btnNewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnNewChat clicked");
-                rvUsers.setVisibility(View.VISIBLE);
+                rvNoChat.setVisibility(View.VISIBLE);
                 tvChatWithTitle.setVisibility(View.VISIBLE);
             }
         });
@@ -105,16 +106,16 @@ public class ChatListFragment extends Fragment {
                     List<String> userIds = new ArrayList<String>(Arrays.asList(message.getRoomId().split(" ")));
                     //add other user's id to userIdList
                     if (userIds.get(0).equals(ParseUser.getCurrentUser().getObjectId())) {
-                        if (!userIdList.contains(userIds.get(1))) {
-                            userIdList.add(userIds.get(1));
+                        if (!chatUserList.contains(userIds.get(1))) {
+                            chatUserList.add(userIds.get(1));
                         }
                     } else if (userIds.get(1).equals(ParseUser.getCurrentUser().getObjectId())) {
-                        if (!userIdList.contains(userIds.get(0))) {
-                            userIdList.add(userIds.get(0));
+                        if (!chatUserList.contains(userIds.get(0))) {
+                            chatUserList.add(userIds.get(0));
                         }
                     }
                 }
-                adapter.notifyDataSetChanged();
+                adapterChatList.notifyDataSetChanged();
 
                 //find all users on app
                 query.findAllUsers(new FindCallback<ParseUser>() {
@@ -124,12 +125,12 @@ public class ChatListFragment extends Fragment {
                             Log.e(TAG, "error getting all users");
                         }
                         for (ParseUser user : objects) {
-                            if (!user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId()) && !userIdList.contains(user.getObjectId())) {
+                            if (!user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId()) && !chatUserList.contains(user.getObjectId())) {
                                 //only add user to noChatYetUserList if user is not the current user and is not already in chatUserList
-                                allUsers.add(user.getObjectId());
+                                noChatYetUserList.add(user.getObjectId());
                             }
                         }
-                        userAdapter.notifyDataSetChanged();
+                        adapterNoChatList.notifyDataSetChanged();
                     }
                 });
             }
