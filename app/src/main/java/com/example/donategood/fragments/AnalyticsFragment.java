@@ -50,7 +50,7 @@ public class AnalyticsFragment extends DialogFragment {
         String[] charityAndMoney = analytics.split("; ");
         for (String str : charityAndMoney) {
             String[] splitCharityAndMoney = str.split("=");
-            tvAnalytics.setText(tvAnalytics.getText() + "You raised $" + splitCharityAndMoney[1] + " for " + splitCharityAndMoney[0] + ".\n");
+            tvAnalytics.setText(tvAnalytics.getText() + "User raised $" + splitCharityAndMoney[1] + " for " + splitCharityAndMoney[0] + ".\n");
         }
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
     }

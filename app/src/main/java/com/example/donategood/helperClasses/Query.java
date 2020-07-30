@@ -41,6 +41,7 @@ public class Query {
     private List<Offering> savedSoldPostsForCharity;
     public  HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity;
     public HashMap<String, Integer> savedCombinedMap;
+    public HashMap<ParseUser, Integer> moneyRaisedForCharityByPerson;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -64,6 +65,7 @@ public class Query {
     //query all posts, available and not available
     public void queryAllPosts(FindCallback<Offering> callback) {
         ParseQuery<Offering> query = ParseQuery.getQuery(Offering.class);
+        query.include("user");
         query.addDescendingOrder(Offering.KEY_CREATED_AT);
         query.findInBackground(callback);
     }
@@ -218,6 +220,7 @@ public class Query {
     //determines amount of money raised for a charity
     public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney) {
         final Integer[] moneyRaised = {0};
+        final HashMap<ParseUser, Integer> moneyRaisedByPerson = new HashMap<>();
         queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
@@ -226,10 +229,30 @@ public class Query {
                         ArrayList<Object> boughtUsers = offering.getBoughtByArray();
                         if (boughtUsers != null && !boughtUsers.isEmpty()) {
                             moneyRaised[0] += boughtUsers.size() * offering.getPrice();
+
+                            //fill HashMap with users
+                            for (Object boughtObject : boughtUsers) {
+                                ParseUser boughtUser = (ParseUser) boughtObject;
+                                if (moneyRaisedByPerson.containsKey(boughtUser)) {
+                                    moneyRaisedByPerson.put(boughtUser, moneyRaisedByPerson.get(boughtUser) + offering.getPrice());
+                                } else {
+                                    moneyRaisedByPerson.put(boughtUser, offering.getPrice());
+                                }
+                            }
+                            if (moneyRaisedByPerson.containsKey(offering.getUser())) {
+                                moneyRaisedByPerson.put(offering.getUser(), moneyRaisedByPerson.get(offering.getUser()) + offering.getPrice() * boughtUsers.size());
+                            } else {
+                                moneyRaisedByPerson.put(offering.getUser(), offering.getPrice());
+                            }
                         }
                     }
                 }
                 tvMoney.setText("$" + moneyRaised[0].toString());
+
+                //sort map
+                HashMap<ParseUser, Integer> sortedMap = sortMapByPointsByUser(moneyRaisedByPerson);
+                moneyRaisedForCharityByPerson = sortedMap;
+
             }
         });
     }
@@ -418,6 +441,26 @@ public class Query {
         // put data from sorted list to hashmap
         HashMap<Charity, Integer> temp = new LinkedHashMap<Charity, Integer>();
         for (Map.Entry<Charity, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
+    }
+
+    //sorts map with the largest number of points first
+    public HashMap<ParseUser, Integer> sortMapByPointsByUser(Map<ParseUser, Integer> pointValues) {
+        // Create a list from elements of HashMap
+        List<Map.Entry<ParseUser, Integer> > list = new LinkedList<Map.Entry<ParseUser, Integer> >(pointValues.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<ParseUser, Integer>>() {
+            public int compare(Map.Entry<ParseUser, Integer> o1, Map.Entry<ParseUser, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<ParseUser, Integer> temp = new LinkedHashMap<ParseUser, Integer>();
+        for (Map.Entry<ParseUser, Integer> aa : list) {
             temp.put(aa.getKey(), aa.getValue());
         }
         return temp;
