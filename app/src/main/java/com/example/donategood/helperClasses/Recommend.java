@@ -1,7 +1,11 @@
 package com.example.donategood.helperClasses;
 
+import android.util.Log;
+
+import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -101,5 +105,43 @@ public class Recommend {
     
     private Integer checkRating(Offering offering) {
         return offering.getRating();
+    }
+
+    //query recommended posts based on current offering
+    public void queryRecommendedPosts(Query query, final Offering offering, final SmallOfferingAdapter adapter, final List<Offering> reccomendedOfferings) {
+        final Recommend recommend = new Recommend();
+        final Map<Offering, Integer>[] pointValues = new Map[]{new HashMap<>()};
+
+        //find all available posts
+        query.queryAllAvailablePosts(new FindCallback<Offering>() {
+            @Override
+            public void done(List<Offering> offerings, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting offerings", e);
+                    return;
+                }
+                for (Offering otherOffering : offerings) {
+                    if (otherOffering.getObjectId().equals(offering.getObjectId())) {
+                        //if offering is the same, do not include as recommended offering
+                        continue;
+                    }
+
+                    //determine point value for each offering
+                    Integer pointValue = recommend.getPointValue(offering, otherOffering);
+                    pointValues[0].put(otherOffering, pointValue);
+                }
+
+                //sort map to have most recommended offerings show up at the top
+                final Map<Offering, Integer>[] sortedPointValues = new Map[]{new HashMap<>()};
+                sortedPointValues[0] = recommend.sortMapByPoints(pointValues[0]);
+                Log.i(TAG, "sorted point values list: " + sortedPointValues[0].toString());
+
+                //update adapter with recommended offerings
+                adapter.clear();
+                reccomendedOfferings.clear();
+                reccomendedOfferings.addAll(sortedPointValues[0].keySet());
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

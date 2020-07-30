@@ -55,6 +55,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Offering offering;
     private LoadPost loadPost;
     private NotificationLoader notificationLoader;
+    private Recommend recommend;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -144,6 +145,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         loadPost = new LoadPost();
         query = new Query();
         notificationLoader = new NotificationLoader();
+        recommend = new Recommend();
 
         //set up recycler view and adapter for reccomended offerings
         reccomendedOfferings = new ArrayList<>();
@@ -255,46 +257,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
         loadPost.setMultipleImages(offering, getContext(), ivOfferingPhoto, layoutImages);
         setShareButton();
-        queryRecommendedPosts();
+        recommend.queryRecommendedPosts(query, offering, adapter, reccomendedOfferings);
         queryComments();
-    }
-
-    //query recommended posts based on current offering
-    private void queryRecommendedPosts() {
-        final Recommend recommend = new Recommend();
-        final Map<Offering, Integer>[] pointValues = new Map[]{new HashMap<>()};
-
-        //find all available posts
-        query.queryAllAvailablePosts(new FindCallback<Offering>() {
-               @Override
-               public void done(List<Offering> offerings, ParseException e) {
-                   if (e != null) {
-                       Log.e(TAG, "Issue with getting offerings", e);
-                       return;
-                   }
-                   for (Offering otherOffering : offerings) {
-                       if (otherOffering.getObjectId().equals(offering.getObjectId())) {
-                           //if offering is the same, do not include as recommended offering
-                           continue;
-                       }
-
-                       //determine point value for each offering
-                       Integer pointValue = recommend.getPointValue(offering, otherOffering);
-                       pointValues[0].put(otherOffering, pointValue);
-                   }
-
-                   //sort map to have most recommended offerings show up at the top
-                   final Map<Offering, Integer>[] sortedPointValues = new Map[]{new HashMap<>()};
-                   sortedPointValues[0] = recommend.sortMapByPoints(pointValues[0]);
-                   Log.i(TAG, "sorted point values list: " + sortedPointValues[0].toString());
-
-                   //update adapter with recommended offerings
-                   adapter.clear();
-                   reccomendedOfferings.clear();
-                   reccomendedOfferings.addAll(sortedPointValues[0].keySet());
-                   adapter.notifyDataSetChanged();
-               }
-           });
     }
 
     //find all comments related to that post
