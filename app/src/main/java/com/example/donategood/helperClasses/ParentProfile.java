@@ -266,7 +266,7 @@ public class ParentProfile {
     //set information for current or other user profile
     public void queryInfo(Context context, View view) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
-        query.queryMoneyRaised(this, context);
+        moneyRaised.queryMoneyRaised(this, context, query);
         queryPosts(KEY_BOUGHT);
         query.setUserRating(user, ratingBar);
         if (profileType != KEY_CURRENT_USER) {
