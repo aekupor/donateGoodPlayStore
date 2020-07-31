@@ -6,237 +6,240 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/tvDetailTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="110dp"
-        tools:text="Test Offering" />
-
-    <com.facebook.share.widget.ShareButton
-        android:id="@+id/fbShareButtonDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailCharityImage"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@+id/btnComment" />
-
-    <TextView
-        android:id="@+id/tvDetailPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailTitle"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvDetailTitle"
-        android:textColor="#000000"
-        tools:layout_editor_absoluteX="84dp"
-        tools:text="20" />
-
-    <ImageView
-        android:id="@+id/ivDetailCharityImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/tvDetailDescription"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="4dp"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="404dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvDetailCharity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailDescription"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/ivDetailCharityImage"
-        android:textColor="#000000"
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="328dp"
-        tools:text="BLM" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnPurchase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailCharityImage"
-        android:backgroundTint="#FFFFFF"
-        android:text="Purchase"
-        android:textColor="@color/purple"
-        android:theme="@style/Theme.MaterialComponents"
-        app:cornerRadius="5dp"
-        app:strokeColor="@color/purple"
-        app:strokeWidth="2dp" />
-
-    <TextView
-        android:id="@+id/tvDetailUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailPrice"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/ivDetailProfileImage"
-        android:textColor="#000000"
-        tools:text="Ashlee" />
-
-    <ImageView
-        android:id="@+id/ivDetailOfferingPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_below="@+id/tvQuantityLeft"
-        android:layout_marginTop="4dp"
-        android:layout_centerHorizontal="true"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvRecommendOfferingsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rvComments"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"
-        android:text="See Other Recommended Offerings:"
-        android:textColor="#000000"
-        android:textStyle="bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecommendOfferings"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/tvRecommendOfferingsTitle"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="4dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvComments"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvViewCommentsTitle"
-        android:layout_marginTop="4dp" />
+        android:layout_margin="16dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailCharityImage"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@+id/btnPurchase"
-        android:backgroundTint="#FFFFFF"
-        android:text="Comment"
-        android:textColor="@color/purple"
-        android:theme="@style/Theme.MaterialComponents"
-        app:cornerRadius="5dp"
-        app:strokeColor="@color/purple"
-        app:strokeWidth="2dp" />
+        <TextView
+            android:id="@+id/tvDetailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="149dp"
+            tools:layout_editor_absoluteY="110dp"
+            tools:text="Test Offering" />
 
-    <TextView
-        android:id="@+id/tvQuantityLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvDetailUser"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvDetailUser"
-        android:textColor="#000000"
-        tools:text="Quantity left: 2" />
+        <com.facebook.share.widget.ShareButton
+            android:id="@+id/fbShareButtonDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivDetailCharityImage"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/btnComment" />
 
-    <TextView
-        android:id="@+id/tvViewCommentsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnPurchase"
-        android:layout_marginTop="8dp"
-        android:text="View Comments:"
-        android:textColor="#000000"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDetailPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDetailTitle"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toStartOf="@+id/btnEditOffering"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="84dp"
+            tools:text="20" />
 
-    <TextView
-        android:id="@+id/tvAvgRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnComment"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/tvViewCommentsTitle"
-        android:textColor="#000000"
-        tools:text="Average Rating:" />
+        <ImageView
+            android:id="@+id/ivDetailCharityImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/tvDetailDescription"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            tools:layout_editor_absoluteX="45dp"
+            tools:layout_editor_absoluteY="404dp"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <HorizontalScrollView
-        android:id="@+id/svImages"
-        android:layout_width="180dp"
-        android:layout_height="250dp"
-        android:layout_below="@+id/tvQuantityLeft"
-        android:layout_marginTop="4dp"
-        android:adjustViewBounds="true"
-        android:layout_centerHorizontal="true"
-        android:fillViewport="true">
+        <TextView
+            android:id="@+id/tvDetailCharity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDetailDescription"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/ivDetailCharityImage"
+            android:textColor="#000000"
+            tools:layout_editor_absoluteX="212dp"
+            tools:layout_editor_absoluteY="328dp"
+            tools:text="BLM" />
 
-        <LinearLayout
-            android:id="@+id/linearImages"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPurchase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivDetailCharityImage"
+            android:backgroundTint="#FFFFFF"
+            android:text="Purchase"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/tvDetailUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDetailPrice"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/ivDetailProfileImage"
+            android:textColor="#000000"
+            tools:text="Ashlee" />
+
+        <ImageView
+            android:id="@+id/ivDetailOfferingPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_below="@+id/tvQuantityLeft"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvRecommendOfferingsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rvComments"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
+            android:text="See Other Recommended Offerings:"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecommendOfferings"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/tvRecommendOfferingsTitle"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvComments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_below="@+id/tvViewCommentsTitle"
+            android:layout_marginTop="4dp" />
 
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivDetailCharityImage"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/btnPurchase"
+            android:backgroundTint="#FFFFFF"
+            android:text="Comment"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            app:strokeWidth="2dp" />
 
-    </HorizontalScrollView>
+        <TextView
+            android:id="@+id/tvQuantityLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvDetailUser"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/tvDetailUser"
+            android:textColor="#000000"
+            tools:text="Quantity left: 2" />
 
-    <RatingBar
-        android:id="@+id/rbDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnComment"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:theme="@style/RatingBar"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_toEndOf="@+id/tvAvgRating" />
+        <TextView
+            android:id="@+id/tvViewCommentsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnPurchase"
+            android:layout_marginTop="8dp"
+            android:text="View Comments:"
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvDetailDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailOfferingPhoto"
-        android:layout_marginTop="4dp"
-        android:textColor="#000000"
-        tools:text="this is some more details" />
+        <TextView
+            android:id="@+id/tvAvgRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnComment"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/tvViewCommentsTitle"
+            android:textColor="#000000"
+            tools:text="Average Rating:" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnEditOffering"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="Edit"
-        android:textColor="@color/purple"
-        android:theme="@style/Theme.MaterialComponents"
-        app:cornerRadius="5dp"
-        app:strokeColor="@color/purple"
-        app:strokeWidth="2dp" />
+        <HorizontalScrollView
+            android:id="@+id/svImages"
+            android:layout_width="180dp"
+            android:layout_height="250dp"
+            android:layout_below="@+id/tvQuantityLeft"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/ivDetailProfileImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/tvDetailTitle"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="4dp"
-        tools:srcCompat="@tools:sample/avatars" />
+            <LinearLayout
+                android:id="@+id/linearImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-</RelativeLayout>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <RatingBar
+            android:id="@+id/rbDetail"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnComment"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/tvAvgRating"
+            android:theme="@style/RatingBar" />
+
+        <TextView
+            android:id="@+id/tvDetailDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivDetailOfferingPhoto"
+            android:layout_marginTop="4dp"
+            android:textColor="#000000"
+            tools:text="this is some more details" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEditOffering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Edit"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/purple"
+            app:strokeWidth="2dp" />
+
+        <ImageView
+            android:id="@+id/ivDetailProfileImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/tvDetailTitle"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </RelativeLayout>
 </ScrollView>
