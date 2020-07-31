@@ -85,11 +85,25 @@ public class NewCharityFragment extends Fragment {
                     return;
                 }
 
+                //check that all required fields are filled
+                if (etCharityName.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Charity must have title.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (etCharityWebsite.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Charity must website title.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (ivProfile.getDrawable() == null) {
+                    Toast.makeText(getContext(), "You must upload a photo.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //create new Charity and save in background
                 Charity charity = new Charity();
                 charity.setTitle(etCharityName.getText().toString());
                 charity.setWebsite(etCharityWebsite.getText().toString());
-                charity.setGrouping(etCharityGrouping.getText().toString());
+                if (etCharityGrouping.getText() != null) {
+                    charity.setGrouping(etCharityGrouping.getText().toString());
+                }
                 charity.setImage((new ParseFile(camera.getPhotoFile())));
                 charity.saveInBackground(new SaveCallback() {
                     @Override
