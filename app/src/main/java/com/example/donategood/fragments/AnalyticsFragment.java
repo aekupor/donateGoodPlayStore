@@ -73,7 +73,11 @@ public class AnalyticsFragment extends DialogFragment {
             }
         }
 
-        tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
+        if (tvAnalytics.getText().equals("")) {
+            tvAnalytics.setText("No money raised yet!");
+        } else {
+            tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
+        }
 
         pieChart = view.findViewById(R.id.piechartAnalytics);
 
