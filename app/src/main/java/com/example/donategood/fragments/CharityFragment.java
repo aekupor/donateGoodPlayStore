@@ -73,7 +73,7 @@ public class CharityFragment extends Fragment {
                 //go to webview fragment
                 final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
                 Fragment fragment = WebViewFragment.newInstance(charity.getWebsite());
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().addToBackStack("charity").replace(R.id.flContainer, fragment).commit();
             }
         });
 
