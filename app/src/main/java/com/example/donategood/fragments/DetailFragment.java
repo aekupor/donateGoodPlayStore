@@ -230,6 +230,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     //sets all variables to the appropriate values
     private void loadInformation() {
         loadPost.setTitlePrice(offering, tvTitle, tvPrice);
+        loadPost.setUserFromOffering(offering, getContext(), tvUser, ivProfileImage);
         loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
 
         if (offering.getRating() == 0) {
