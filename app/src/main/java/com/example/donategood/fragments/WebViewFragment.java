@@ -51,5 +51,8 @@ public class WebViewFragment extends Fragment {
 
         webView = view.findViewById(R.id.webviewCharity);
         webView.loadUrl(url);
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
     }
 }
