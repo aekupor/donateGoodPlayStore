@@ -59,11 +59,14 @@
             android:id="@+id/tvDetailCharity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/btnPurchase"
             android:layout_below="@+id/tvDetailDescription"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
             android:layout_toEndOf="@+id/ivDetailCharityImage"
             android:textColor="#000000"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="212dp"
             tools:layout_editor_absoluteY="328dp"
             tools:text="BLM" />
@@ -88,10 +91,11 @@
             android:layout_above="@+id/ivDetailOfferingPhoto"
             android:layout_below="@+id/tvDetailPrice"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
             android:layout_toEndOf="@+id/ivDetailProfileImage"
             android:textColor="#000000"
+            android:textSize="20sp"
             tools:text="Ashlee" />
 
         <ImageView
@@ -153,6 +157,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
             android:textColor="#000000"
+            android:textSize="20sp"
             tools:text="Quantity left: 2" />
 
         <TextView
@@ -212,18 +217,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivDetailOfferingPhoto"
-            android:layout_marginTop="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
             android:textColor="#000000"
+            android:textSize="18sp"
             tools:text="this is some more details" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEditOffering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDetailPrice"
+            android:layout_below="@+id/tvDetailDescription"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="328dp"
-            android:layout_marginEnd="-1dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
             android:backgroundTint="#FFFFFF"
             android:text="Edit"
             android:textColor="@color/purple"
