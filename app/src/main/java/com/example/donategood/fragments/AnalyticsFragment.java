@@ -59,6 +59,7 @@ public class AnalyticsFragment extends DialogFragment {
 
         tvAnalytics = view.findViewById(R.id.tvAnalytics);
 
+        List<PieEntry> entries = new ArrayList();
         String[] charityAndMoney = analytics.split("; ");
         for (String str : charityAndMoney) {
             String[] splitCharityAndMoney = str.split("=");
@@ -67,28 +68,20 @@ public class AnalyticsFragment extends DialogFragment {
             } else {
                 tvAnalytics.setText(tvAnalytics.getText() + "Raised $" + splitCharityAndMoney[1] + " for " + splitCharityAndMoney[0] + ".\n");
             }
+            entries.add(new PieEntry(Float.parseFloat(splitCharityAndMoney[1]), splitCharityAndMoney[0]));
         }
 
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
 
         pieChart = view.findViewById(R.id.piechartAnalytics);
-        createPieChart();
-    }
-
-    //TODO: add real data; make this a bar chart for displaying users
-    public void createPieChart() {
-        List<PieEntry> entries = new ArrayList();
-        entries.add(new PieEntry(750f, "Charity1"));
-        entries.add(new PieEntry(300f, "Charity2"));
-        entries.add(new PieEntry(150f, "Charity3"));
-        entries.add(new PieEntry(20f, "Charity4"));
 
         PieDataSet dataSet = new PieDataSet(entries, "Money Raised for Charities");
         PieData data = new PieData(dataSet);
-        pieChart.setData(data);
-
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        pieChart.animateXY(5000, 5000);
+
+        pieChart.setData(data);
+        pieChart.animateXY(700, 700);
+        pieChart.getDescription().setEnabled(false);
         pieChart.invalidate(); // refresh
     }
 }
