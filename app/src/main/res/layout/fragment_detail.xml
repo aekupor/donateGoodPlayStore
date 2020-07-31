@@ -14,6 +14,7 @@
         android:id="@+id/tvDetailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000000"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="149dp"
         tools:layout_editor_absoluteY="110dp"
@@ -36,6 +37,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvDetailTitle"
+        android:textColor="#000000"
         tools:layout_editor_absoluteX="84dp"
         tools:text="20" />
 
@@ -59,6 +61,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivDetailCharityImage"
+        android:textColor="#000000"
         tools:layout_editor_absoluteX="212dp"
         tools:layout_editor_absoluteY="328dp"
         tools:text="BLM" />
@@ -84,6 +87,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivDetailProfileImage"
+        android:textColor="#000000"
         tools:text="Ashlee" />
 
     <ImageView
@@ -103,6 +107,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="4dp"
         android:text="See Other Recommended Offerings:"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -143,6 +148,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvDetailUser"
+        android:textColor="#000000"
         tools:text="Quantity left: 2" />
 
     <TextView
@@ -152,6 +158,7 @@
         android:layout_below="@+id/btnPurchase"
         android:layout_marginTop="8dp"
         android:text="View Comments:"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
     <TextView
@@ -162,6 +169,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/tvViewCommentsTitle"
+        android:textColor="#000000"
         tools:text="Average Rating:" />
 
     <HorizontalScrollView
@@ -201,6 +209,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivDetailOfferingPhoto"
         android:layout_marginTop="4dp"
+        android:textColor="#000000"
         tools:text="this is some more details" />
 
     <Button
