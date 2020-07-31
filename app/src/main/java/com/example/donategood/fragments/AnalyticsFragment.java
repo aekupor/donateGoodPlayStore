@@ -63,12 +63,14 @@ public class AnalyticsFragment extends DialogFragment {
         String[] charityAndMoney = analytics.split("; ");
         for (String str : charityAndMoney) {
             String[] splitCharityAndMoney = str.split("=");
-            if (forCharityFragment) {
-                tvAnalytics.setText(tvAnalytics.getText() + splitCharityAndMoney[0] + " raised $" + splitCharityAndMoney[1] + ".\n");
-            } else {
-                tvAnalytics.setText(tvAnalytics.getText() + "Raised $" + splitCharityAndMoney[1] + " for " + splitCharityAndMoney[0] + ".\n");
+            if (splitCharityAndMoney.length == 2) {
+                if (forCharityFragment) {
+                    tvAnalytics.setText(tvAnalytics.getText() + splitCharityAndMoney[0] + " raised $" + splitCharityAndMoney[1] + ".\n");
+                } else {
+                    tvAnalytics.setText(tvAnalytics.getText() + "Raised $" + splitCharityAndMoney[1] + " for " + splitCharityAndMoney[0] + ".\n");
+                }
+                entries.add(new PieEntry(Float.parseFloat(splitCharityAndMoney[1]), splitCharityAndMoney[0]));
             }
-            entries.add(new PieEntry(Float.parseFloat(splitCharityAndMoney[1]), splitCharityAndMoney[0]));
         }
 
         tvAnalytics.setText(tvAnalytics.getText() + "Amazing job!");
