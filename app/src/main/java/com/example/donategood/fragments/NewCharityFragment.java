@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class NewCharityFragment extends Fragment {
     private EditText etCharityGrouping;
     private Button btnCharityPhoto;
     private Button btnSubmit;
+    private ImageView ivProfile;
 
     private static Camera camera;
 
@@ -58,6 +60,7 @@ public class NewCharityFragment extends Fragment {
         etCharityGrouping = view.findViewById(R.id.etCharityGrouping);
         btnCharityPhoto = view.findViewById(R.id.btnCharityUploadPhoto);
         btnSubmit = view.findViewById(R.id.btnNewCharitySubmit);
+        ivProfile = view.findViewById(R.id.ivNewCharityProfile);
 
         camera = new Camera();
 
