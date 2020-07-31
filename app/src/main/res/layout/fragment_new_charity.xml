@@ -25,11 +25,15 @@
         android:layout_height="wrap_content"
         android:hint="charity grouping" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCharityUploadPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload Profile Picture"/>
+        android:backgroundTint="#FFFFFF"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp"
+        android:text="Upload Profile Picture" />
 
     <ImageView
         android:id="@+id/ivNewCharityProfile"
@@ -37,10 +41,14 @@
         android:layout_height="200dp"
         tools:src="@tools:sample/avatars" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNewCharitySubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp"
         android:text="Submit" />
 
 </LinearLayout>
