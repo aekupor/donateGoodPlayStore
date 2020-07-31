@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
                     //if required fields are empty
                     Toast.makeText(RegisterActivity.this, "Field cannot be empty!", Toast.LENGTH_SHORT).show();
-                } else if (!email.contains(".") || !email.contains("@")) {
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     //if email is not proper email
                     Toast.makeText(RegisterActivity.this, "Email is not valid", Toast.LENGTH_SHORT).show();
                 } else {
