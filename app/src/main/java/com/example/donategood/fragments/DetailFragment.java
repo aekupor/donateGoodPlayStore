@@ -194,6 +194,13 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             }
         });
 
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToOtherFragment("user");
+            }
+        });
+
         btnPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
