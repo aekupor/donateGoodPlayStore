@@ -7,23 +7,47 @@
     android:orientation="vertical"
     tools:context=".fragments.NewCharityFragment">
 
-    <EditText
-        android:id="@+id/etCharityName"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="charity name" />
+        app:boxStrokeColor="@color/purple"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="charity name">
 
-    <EditText
-        android:id="@+id/etCharityWebsite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="charity website" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCharityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/etCharityGrouping"
-        android:layout_width="wrap_content"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="charity grouping" />
+        app:boxStrokeColor="@color/purple"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="charity website">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCharityWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/purple"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="charity grouping">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCharityGrouping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCharityUploadPhoto"
