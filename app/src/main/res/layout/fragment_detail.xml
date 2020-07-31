@@ -212,15 +212,21 @@
         android:textColor="#000000"
         tools:text="this is some more details" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditOffering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="28dp"
-        android:text="Edit" />
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Edit"
+        android:textColor="@color/purple"
+        android:theme="@style/Theme.MaterialComponents"
+        app:cornerRadius="5dp"
+        app:strokeColor="@color/purple"
+        app:strokeWidth="2dp" />
 
     <ImageView
         android:id="@+id/ivDetailProfileImage"
