@@ -2,6 +2,7 @@ package com.example.donategood.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,13 @@ public class NewCharityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnSubmit clicked");
+
+                //check that website is valid
+                if (!Patterns.WEB_URL.matcher(etCharityWebsite.getText().toString()).matches()) {
+                    Toast.makeText(getContext(), "Website is not a valid URL.", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "not a valid url");
+                    return;
+                }
 
                 //create new Charity and save in background
                 Charity charity = new Charity();
