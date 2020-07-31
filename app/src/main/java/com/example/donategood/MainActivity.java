@@ -150,11 +150,6 @@ public class MainActivity extends AppCompatActivity {
                     image = camera.loadFromUri(photoUri, mainContext);
                     photoFile = camera.createFile(mainContext, image, "filename");
                     camera.setPhotoFile(photoFile);
-
-                    if (requestCode == UPLOAD_PHOTO_CHARITY) {
-                        //do not set ivPhotoToUpload or save in user background
-                        return;
-                    }
                 } else {
                     //if error
                     Toast.makeText(getApplicationContext(), "Issue with picture!", Toast.LENGTH_SHORT).show();
@@ -212,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
             ivPhotoToUpload = (ImageView) findViewById(R.id.ivProfileProfileImage);
             camera = ProfileFragment.getCamera();
         } else if (requestCode == UPLOAD_PHOTO_CHARITY) {
+            ivPhotoToUpload = (ImageView) findViewById(R.id.ivNewCharityProfile);
             camera = NewCharityFragment.getCamera();
         } else {
             ivPhotoToUpload = (ImageView) findViewById(R.id.ivComposePhoto);
