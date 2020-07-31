@@ -71,6 +71,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private RatingBar ratingBar;
     private TextView tvDescription;
     private Button btnEdit;
+    private ImageView ivProfileImage;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -144,6 +145,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         rvComments = view.findViewById(R.id.rvComments);
         tvDescription = view.findViewById(R.id.tvDetailDescription);
         btnEdit = view.findViewById(R.id.btnEditOffering);
+        ivProfileImage = view.findViewById(R.id.ivDetailProfileImage);
 
         numComments = 0;
         loadPost = new LoadPost();
@@ -227,7 +229,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     //sets all variables to the appropriate values
     private void loadInformation() {
-        loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
+        loadPost.setTitlePrice(offering, tvTitle, tvPrice);
         loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
 
         if (offering.getRating() == 0) {

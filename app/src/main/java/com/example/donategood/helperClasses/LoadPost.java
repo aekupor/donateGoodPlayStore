@@ -63,15 +63,16 @@ public class LoadPost {
         }
     }
 
-    //sets the title, price, and selling user name of an offering from the specified offering
-    public void setTitlePriceUser(Offering offering, TextView tvTitle, TextView tvPrice, TextView tvUser) {
+    //sets the title and price of an offering from the specified offering
+    public void setTitlePrice(Offering offering, TextView tvTitle, TextView tvPrice) {
         tvTitle.setText(offering.getTitle());
         tvPrice.setText("$" + Integer.toString(offering.getPrice()));
-        try {
-            tvUser.setText(offering.getUser().fetchIfNeeded().getUsername());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    }
+
+    //sets the user name and photo from the specified offering
+    public void setUserFromOffering(Offering offering, Context context, TextView tvUser, ImageView ivProfile) {
+        ParseUser user = offering.getUser();
+        setUser(user, context, tvUser, ivProfile);
     }
 
     //sets the name and photo of a user from the specified ParseUser
