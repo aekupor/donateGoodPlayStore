@@ -57,7 +57,8 @@ public class SmallOfferingAdapter extends OfferingAdapter {
         }
 
         public void bind(Offering offering) {
-            loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
+            loadPost.setTitlePrice(offering, tvTitle, tvPrice);
+            loadPost.setUserFromOffering(offering, context, tvUser, null);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
             tvUser.setVisibility(View.INVISIBLE);
 

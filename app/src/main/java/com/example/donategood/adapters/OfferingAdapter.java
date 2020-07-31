@@ -94,8 +94,8 @@ public class OfferingAdapter extends RecyclerView.Adapter<OfferingAdapter.ViewHo
         }
 
         public void bind(Offering offering) {
-            loadPost.setTitlePriceUser(offering, tvTitle, tvPrice, tvUser);
-            loadPost.setUser(offering.getUser(), context, tvUser, ivUserProfile);
+            loadPost.setTitlePrice(offering, tvTitle, tvPrice);
+            loadPost.setUserFromOffering(offering, context, tvUser, ivUserProfile);
             loadPost.setCharity(offering, context, tvCharity, ivCharityProfile);
             loadPost.setPostImage(offering.getImage(), context, ivOfferingPhoto);
             if (offering.getRating() == 0) {

@@ -82,18 +82,21 @@ public class LoadPost {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Serializable profileImage;
 
-        if (user.getParseFile("profileImage") != null) {
-            profileImage = user.getParseFile("profileImage").getUrl();
-        } else {
-            profileImage = R.drawable.ic_baseline_person_outline_24;
+        if (ivPhoto != null) {
+            Serializable profileImage;
+
+            if (user.getParseFile("profileImage") != null) {
+                profileImage = user.getParseFile("profileImage").getUrl();
+            } else {
+                profileImage = R.drawable.ic_baseline_person_outline_24;
+            }
+
+            Glide.with(context)
+                    .load(profileImage)
+                    .circleCrop()
+                    .into(ivPhoto);
         }
-
-        Glide.with(context)
-                .load(profileImage)
-                .circleCrop()
-                .into(ivPhoto);
     }
 
     //sets the name and photo of a user from their name and url of their FB picture
