@@ -34,15 +34,14 @@
             android:id="@+id/tvDetailPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDetailTitle"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="4dp"
-            android:layout_toStartOf="@+id/btnEditOffering"
+            android:layout_marginEnd="0dp"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="24sp"
             tools:layout_editor_absoluteX="84dp"
-            tools:text="20" />
+            tools:text="$20" />
 
         <ImageView
             android:id="@+id/ivDetailCharityImage"
@@ -219,10 +218,10 @@
             android:id="@+id/btnEditOffering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/tvDetailPrice"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="0dp"
             android:backgroundTint="#FFFFFF"
             android:text="Edit"
             android:textColor="@color/purple"
