@@ -1,13 +1,10 @@
 package com.example.donategood.helperClasses;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.example.donategood.R;
 import com.example.donategood.models.Charity;
 import com.example.donategood.models.Offering;
@@ -16,7 +13,6 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class LoadPost {
 
@@ -106,25 +102,5 @@ public class LoadPost {
                 .load(url)
                 .circleCrop()
                 .into(ivPhoto);
-    }
-
-    //sets image of offering for detail page
-    public void setMultipleImages(Offering offering, Context context, ImageView ivOfferingPhoto, LinearLayout layoutImages) {
-        if (!offering.hasMultipleImages()) {
-            //if offering only has one image
-            setPostImage(offering.getImage(), context, ivOfferingPhoto);
-        } else {
-            //if offering has multiple images
-            ArrayList<ParseFile> imagesArray = offering.getImagesArray();
-            for (ParseFile image : imagesArray) {
-                ImageView ivImage = new ImageView(context);
-                ViewTarget<ImageView, Drawable> into = Glide.with(context)
-                        .load(image.getUrl())
-                        .into(ivImage);
-
-                ivImage.setAdjustViewBounds(true);
-                layoutImages.addView(into.getView());
-            }
-        }
     }
 }

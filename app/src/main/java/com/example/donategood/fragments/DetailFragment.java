@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,7 +68,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Button btnComment;
     private TextView tvQuantityLeft;
     public TextView tvCommentTitle;
-    private LinearLayout layoutImages;
     private RatingBar ratingBar;
     private TextView tvDescription;
     private Button btnEdit;
@@ -147,7 +145,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         btnComment = view.findViewById(R.id.btnComment);
         tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
         tvCommentTitle = view.findViewById(R.id.tvViewCommentsTitle);
-        layoutImages = (LinearLayout) view.findViewById(R.id.linearImages);
         ratingBar = (RatingBar) view.findViewById(R.id.rbDetail);
         rvComments = view.findViewById(R.id.rvComments);
         tvDescription = view.findViewById(R.id.tvDetailDescription);
@@ -257,8 +254,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     }
 
     private void setCurrentImage() {
-        layoutImages.setVisibility(View.INVISIBLE);
-        ivOfferingPhoto.setVisibility(View.VISIBLE);
         Glide.with(getContext())
                 .load(imagesArray.get(currImage).getUrl())
                 .into(ivOfferingPhoto);
