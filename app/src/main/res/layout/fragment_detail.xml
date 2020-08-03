@@ -231,23 +231,25 @@
 
         <Button
             android:id="@+id/btnNextPicture"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="168dp"
-            android:layout_marginEnd="290dp"
-            android:text="Next" />
+            android:layout_alignTop="@+id/ivDetailOfferingPhoto"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="100dp"
+            android:layout_toEndOf="@+id/ivDetailOfferingPhoto"
+            android:background="@drawable/ic_baseline_keyboard_arrow_right_24"
+            android:backgroundTint="#000000" />
 
         <Button
             android:id="@+id/btnPreviousPicture"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="221dp"
-            android:text="Back" />
+            android:layout_alignTop="@+id/ivDetailOfferingPhoto"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="0dp"
+            android:layout_toStartOf="@+id/ivDetailOfferingPhoto"
+            android:background="@drawable/ic_baseline_keyboard_arrow_left_24"
+            android:backgroundTint="#000000" />
 
     </RelativeLayout>
 </ScrollView>
