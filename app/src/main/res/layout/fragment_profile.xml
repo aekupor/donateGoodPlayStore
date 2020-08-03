@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
     tools:context=".fragments.ProfileFragment">
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
         tools:text="this is my bio" />
 
     <TextView
@@ -24,6 +26,9 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
         tools:text="Ashlee" />
 
     <ImageView
@@ -62,6 +67,8 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        android:textSize="18sp"
         tools:text="100" />
 
 
@@ -120,8 +127,8 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@id/tabLayout"/>
+        android:layout_below="@id/tabLayout"
+        android:background="@android:color/darker_gray" />
 
     <ProgressBar
         android:id="@+id/pbProfileLoading"
@@ -130,8 +137,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:indeterminate="true"
         android:layout_marginEnd="0dp"
+        android:indeterminate="true"
         android:visibility="invisible" />
 
     <LinearLayout
@@ -156,14 +163,14 @@
 
     <RatingBar
         android:id="@+id/rbProfile"
+        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvProfileProfileName"
         android:layout_marginStart="40dp"
         android:layout_marginTop="4dp"
-        android:theme="@style/RatingBar"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_toEndOf="@+id/tvProfileMoneyRaised" />
+        android:layout_toEndOf="@+id/tvProfileMoneyRaised"
+        android:theme="@style/RatingBar" />
 
     <ImageView
         android:id="@+id/ivLevelIcon"
