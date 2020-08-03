@@ -33,6 +33,7 @@ public class NotificationLoader {
         parentProfile.rvNotifications.setVisibility(View.VISIBLE);
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.VISIBLE);
         parentProfile.pendingNotifications.setVisibility(View.VISIBLE);
+        parentProfile.tvToDoNotificationsTitle.setVisibility(View.VISIBLE);
         parentProfile.pendingNotifications.removeAllViews();
 
         //query notifications for offerings that the current user is selling
@@ -105,6 +106,7 @@ public class NotificationLoader {
         parentProfile.rvNotifications = view.findViewById(R.id.rvNotifications);
         parentProfile.pendingNotifications = view.findViewById(R.id.layoutNotification);
         parentProfile.tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
+        parentProfile.tvToDoNotificationsTitle = view.findViewById(R.id.tvToDoNotificationsTitle);
 
         //make notifications invisible until user clicks on "notification" tab
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
@@ -127,6 +129,7 @@ public class NotificationLoader {
         parentProfile.notificationAdapter.clear();
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         parentProfile.pendingNotifications.setVisibility(View.INVISIBLE);
+        parentProfile.tvToDoNotificationsTitle.setVisibility(View.INVISIBLE);
     }
 
     //when user purchases an item, creates a notification for the seller to approve

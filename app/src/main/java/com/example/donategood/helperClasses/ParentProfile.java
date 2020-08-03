@@ -56,6 +56,7 @@ public class ParentProfile {
     public RecyclerView rvNotifications;
     public NotificationAdapter notificationAdapter;
     public LinearLayout pendingNotifications;
+    public TextView tvToDoNotificationsTitle;
 
     public TextView tvName;
     public ImageView ivProfileImage;
