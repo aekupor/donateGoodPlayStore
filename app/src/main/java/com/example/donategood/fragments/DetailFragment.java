@@ -241,6 +241,12 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnPreviousPicture clicked");
+
+                currImage--;
+                if (currImage == -1) {
+                    currImage = 1;
+                }
+                setCurrentImage();
             }
         });
     }
