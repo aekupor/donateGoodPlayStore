@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,14 +58,39 @@ public class OtherUserProfileFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_other_user_profile_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_other_user_profile, container, false);
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_analytics_other_profile:
+                Log.i(TAG, "action_analytics_other_profile clicked");
+
+                return true;
+            case R.id.action_chat_other_user:
+                Log.i(TAG, "action_chat_other_user clicked");
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+
         //if user clicked on is signed in user, go to ProfileFragment
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
