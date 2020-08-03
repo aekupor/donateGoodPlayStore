@@ -141,16 +141,22 @@
         android:indeterminate="true"
         android:visibility="invisible" />
 
-    <LinearLayout
-        android:id="@+id/layoutNotification"
-        android:layout_width="match_parent"
-        android:layout_height="332dp"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_below="@+id/tvWaitingNotificationsTitle"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_height="332dp">
+            <LinearLayout
+                android:id="@+id/layoutNotification"
+                android:layout_width="match_parent"
+                android:layout_height="332dp"
+
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="vertical">
+            </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/tvWaitingNotificationsTitle"
