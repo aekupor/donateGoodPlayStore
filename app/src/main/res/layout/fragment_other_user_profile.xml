@@ -7,21 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.OtherUserProfileFragment">
 
-
-    <TextView
-        android:id="@+id/tvProfileProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Ashlee" />
-
-    <ImageView
-        android:id="@+id/ivProfileProfileImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/tvProfileProfileName"
-        android:layout_marginTop="4dp"
-        tools:src="@tools:sample/avatars" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProfileOfferings"
         android:layout_width="match_parent"
@@ -30,16 +15,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="4dp" />
-
-    <TextView
-        android:id="@+id/tvProfileMoneyRaised"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivProfileProfileImage"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/ivProfileProfileImage"
-        tools:text="100" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -88,19 +63,69 @@
         android:background="@android:color/darker_gray"
         android:layout_below="@id/tabLayout"/>
 
+    <ImageView
+        android:id="@+id/ivFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/rbProfile"
+        android:src="@drawable/ic_baseline_person_add_24" />
+
+    <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileMoneyRaised"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        tools:text="this is my bio" />
+
+    <TextView
+        android:id="@+id/tvProfileProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:text="Ashlee" />
+
+    <ImageView
+        android:id="@+id/ivProfileProfileImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvProfileMoneyRaised"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileProfileName"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivProfileProfileImage"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:text="100" />
+
     <ProgressBar
         android:id="@+id/pbProfileLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tabLayout"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:indeterminate="true"
-        android:layout_marginStart="97dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="21dp"
-        android:layout_toEndOf="@+id/tvProfileMoneyRaised"
         android:visibility="invisible" />
+
 
     <RatingBar
         android:id="@+id/rbProfile"
@@ -108,16 +133,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvProfileProfileName"
-        android:layout_marginStart="4dp"
-        android:theme="@style/RatingBar"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/tvProfileMoneyRaised" />
+        android:layout_toEndOf="@+id/tvProfileMoneyRaised"
+        android:theme="@style/RatingBar" />
 
     <ImageView
         android:id="@+id/ivLevelIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/tvProfileProfileName"
         android:src="@drawable/level_one" />
 
@@ -129,25 +154,5 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/ivLevelIcon"
         android:src="@drawable/level_one" />
-
-    <ImageView
-        android:id="@+id/ivFollow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfileMoneyRaised"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/ivProfileProfileImage"
-        android:src="@drawable/ic_baseline_person_add_24" />
-
-    <TextView
-        android:id="@+id/tvBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivFollow"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfileProfileImage"
-        tools:text="this is my bio" />
 
 </RelativeLayout>
