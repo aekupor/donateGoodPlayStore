@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
     tools:context=".fragments.ComposeFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/purple"
         android:id="@+id/etTitleBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="title">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="title"
+        app:boxStrokeColor="@color/purple">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,21 +40,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
+        android:id="@+id/priceQuantityList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/priceQuantityList"
         android:layout_below="@+id/etDescriptionBox"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPriceBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/purple"
-            android:id="@+id/etPriceBox"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="price">
+            android:hint="price"
+            app:boxStrokeColor="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPrice"
@@ -64,16 +65,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etQuantityBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/purple"
-            android:id="@+id/etQuantityBox"
-            android:layout_weight="1"
             android:layout_marginStart="40dp"
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/etPriceBox"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="quantity">
+            android:layout_weight="1"
+            android:hint="quantity"
+            app:boxStrokeColor="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etQuantity"
@@ -88,8 +89,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/priceQuantityList"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:orientation="vertical">
 
@@ -98,8 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Take Photo"
             android:backgroundTint="#FFFFFF"
+            android:text="Take Photo"
             android:textColor="@color/purple"
             android:theme="@style/Theme.MaterialComponents"
             app:cornerRadius="5dp" />
@@ -109,8 +110,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Upload Photo"
             android:backgroundTint="#FFFFFF"
+            android:text="Upload Photo"
             android:textColor="@color/purple"
             android:theme="@style/Theme.MaterialComponents"
             app:cornerRadius="5dp" />
@@ -120,8 +121,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Take Multiple"
             android:backgroundTint="#FFFFFF"
+            android:text="Take Multiple"
             android:textColor="@color/purple"
             android:theme="@style/Theme.MaterialComponents"
             app:cornerRadius="5dp" />
@@ -146,14 +147,14 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etTagsBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/purple"
-        android:id="@+id/etTagsBox"
-        android:layout_marginTop="4dp"
         android:layout_below="@+id/spinnerCharity"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="tags">
+        android:layout_marginTop="4dp"
+        android:hint="tags"
+        app:boxStrokeColor="@color/purple">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTags"
@@ -185,16 +186,16 @@
         android:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etVenmoComposeBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/purple"
-        android:id="@+id/etVenmoComposeBox"
         android:layout_below="@+id/etTagsBox"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/btnSubmit"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Add venmo username">
+        android:hint="Add venmo username"
+        app:boxStrokeColor="@color/purple">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etVenmoCompose"
