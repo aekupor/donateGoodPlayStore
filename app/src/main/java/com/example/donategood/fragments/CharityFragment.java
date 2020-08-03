@@ -3,6 +3,9 @@ package com.example.donategood.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,14 +55,36 @@ public class CharityFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_charity_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_charity, container, false);
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_analytics_charity:
+                Log.i(TAG, "action_analytics_charity clicked");
+                return true;
+            case R.id.action_website:
+                Log.i(TAG, "action_website clicked");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
 
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CHARITY);
