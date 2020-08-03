@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -145,6 +146,11 @@ public class ParentProfile {
                 @Override
                 public void onClick(View view) {
                     Log.i(TAG, "ivLevelIcon clicked");
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                    alertDialog.setTitle("hi");
+                    alertDialog.setMessage("this is my app");
+                    alertDialog.show();
                 }
             });
 
@@ -152,6 +158,11 @@ public class ParentProfile {
                 @Override
                 public void onClick(View view) {
                     Log.i(TAG, "ivCharityIcon clicked");
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                    alertDialog.setTitle("hi");
+                    alertDialog.setMessage("this is my app");
+                    alertDialog.show();
                 }
             });
         }
