@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,8 +30,6 @@ public class OtherUserProfileFragment extends Fragment {
     public static final String TAG = "OtherUserProfileFragment";
 
     private ParentProfile parentProfile;
-    private Button btnChat;
-    private Button btnAnalytics;
     private ParseUser user;
 
     public OtherUserProfileFragment() {
@@ -55,14 +56,45 @@ public class OtherUserProfileFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_other_user_profile_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_other_user_profile, container, false);
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_analytics_other_profile:
+                Log.i(TAG, "action_analytics_other_profile clicked");
+
+                //open analytics dialog
+                parentProfile.openAnalyticsDialog(OtherUserProfileFragment.this, getFragmentManager());
+                return true;
+            case R.id.action_chat_other_user:
+                Log.i(TAG, "action_chat_other_user clicked");
+
+                //open up chat
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("user", Parcels.wrap(user));
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+
         //if user clicked on is signed in user, go to ProfileFragment
         if (user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
             final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
@@ -77,29 +109,5 @@ public class OtherUserProfileFragment extends Fragment {
         parentProfile.setUser(user);
         parentProfile.queryInfo(getContext(), view);
         parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
-
-        //only other user's have a chat button and analytics button
-        btnChat = view.findViewById(R.id.btnChat);
-        btnAnalytics = view.findViewById(R.id.btnAnalytics);
-
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "btnChat clicked");
-                //open up chat
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("user", Parcels.wrap(user));
-                startActivity(intent);
-            }
-        });
-
-        btnAnalytics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "btnAnalytics clicked");
-                parentProfile.openAnalyticsDialog(OtherUserProfileFragment.this, getFragmentManager());
-            }
-        });
     }
 }

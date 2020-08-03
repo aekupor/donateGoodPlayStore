@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_chat_other_user"
+        android:enabled="true"
+        android:title="Chat" />
+    <item
+        android:id="@+id/action_analytics_other_profile"
+        android:enabled="true"
+        android:title="Analytics" />
+</menu>
