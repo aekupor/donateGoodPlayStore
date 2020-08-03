@@ -51,7 +51,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotifications"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="260dp"
         android:layout_below="@+id/tvToDoNotificationsTitle"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"

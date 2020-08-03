@@ -80,15 +80,15 @@ public class NotificationLoader {
                             TextView textView = new TextView(context);
                             if (!notification.getUserActed()) {
                                 //notification is still pending on seller approval
-                                textView.setText("Still waiting on seller to approval your purchase of " + forOfferingTitle + ".");
+                                textView.setText("Still waiting on seller to approval your purchase of " + forOfferingTitle + ".\n");
                             } else if (notification.getKeyApproved()) {
                                 //attempt to buy has been approved by seller
-                                textView.setText("You have been approved to buy " + forOfferingTitle + ".");
+                                textView.setText("You have been approved to buy " + forOfferingTitle + ".\n");
                                 notification.setUserSeen(true);
                                 notification.saveInBackground();
                             } else {
                                 //attempt to buy has been denied by seller
-                                textView.setText("You have NOT been approved to buy " + forOfferingTitle + ".");
+                                textView.setText("You have NOT been approved to buy " + forOfferingTitle + ".\n");
                                 notification.setUserSeen(true);
                                 notification.saveInBackground();
                             }
