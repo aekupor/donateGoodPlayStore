@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,6 +57,7 @@ public class ParentProfile {
     public RecyclerView rvNotifications;
     public NotificationAdapter notificationAdapter;
     public LinearLayout pendingNotifications;
+    public TextView tvToDoNotificationsTitle;
 
     public TextView tvName;
     public ImageView ivProfileImage;
@@ -139,6 +141,30 @@ public class ParentProfile {
             ivLevelIcon = view.findViewById(R.id.ivLevelIcon);
             ivCharityIcon = view.findViewById(R.id.ivCharityIcon);
             tvBio = view.findViewById(R.id.tvBio);
+
+            ivLevelIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "ivLevelIcon clicked");
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                    alertDialog.setTitle("What does this mean?");
+                    alertDialog.setMessage("This is your DonateGood level! This level is calculated based on how much money you have raised for chairities. Click the analytics button in the upper right hand corner to view more.");
+                    alertDialog.show();
+                }
+            });
+
+            ivCharityIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "ivCharityIcon clicked");
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                    alertDialog.setTitle("What does this mean?");
+                    alertDialog.setMessage("This is your highest supported charity! Click the analytics button in the upper right hand corner to view more.");
+                    alertDialog.show();
+                }
+            });
         }
 
         //only the current user has a "notifications" tab

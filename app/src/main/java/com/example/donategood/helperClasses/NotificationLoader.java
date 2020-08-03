@@ -33,6 +33,7 @@ public class NotificationLoader {
         parentProfile.rvNotifications.setVisibility(View.VISIBLE);
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.VISIBLE);
         parentProfile.pendingNotifications.setVisibility(View.VISIBLE);
+        parentProfile.tvToDoNotificationsTitle.setVisibility(View.VISIBLE);
         parentProfile.pendingNotifications.removeAllViews();
 
         //query notifications for offerings that the current user is selling
@@ -47,7 +48,6 @@ public class NotificationLoader {
                     for (Notification notification : objects) {
                         if (notification.getSellingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                             //notification is for current user to approve
-                            Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
                             parentProfile.notifications.add(notification);
                         }
                     }
@@ -66,27 +66,35 @@ public class NotificationLoader {
 
                 if (objects != null) {
                     for (Notification notification : objects) {
-                        Log.i(TAG, "found notification for title for post: " + notification.getKeyOffering().getTitle());
+                        String forOfferingTitle = null;
+                        try {
+                            Offering offering = notification.getKeyOffering().fetchIfNeeded();
+                            forOfferingTitle = offering.getTitle();
+                        } catch (ParseException ex) {
+                            ex.printStackTrace();
+                        }
+                        Log.i(TAG, "found notification for title for post: " + forOfferingTitle);
 
                         //if user hasn't seen the notification yet, then display
                         if (!notification.getUserSeen()) {
                             TextView textView = new TextView(context);
                             if (!notification.getUserActed()) {
                                 //notification is still pending on seller approval
-                                textView.setText("Still waiting on seller to approval your purchase of " + notification.getKeyOffering().getTitle() + ".");
+                                textView.setText("Still waiting on seller to approval your purchase of " + forOfferingTitle + ".");
                             } else if (notification.getKeyApproved()) {
                                 //attempt to buy has been approved by seller
-                                textView.setText("You have been approved to buy " + notification.getKeyOffering().getTitle() + ".");
+                                textView.setText("You have been approved to buy " + forOfferingTitle + ".");
                                 notification.setUserSeen(true);
                                 notification.saveInBackground();
                             } else {
                                 //attempt to buy has been denied by seller
-                                textView.setText("You have NOT been approved to buy " + notification.getKeyOffering().getTitle() + ".");
+                                textView.setText("You have NOT been approved to buy " + forOfferingTitle + ".");
                                 notification.setUserSeen(true);
                                 notification.saveInBackground();
                             }
                             parentProfile.pendingNotifications.addView(textView);
                         }
+
                     }
                 }
             }
@@ -98,6 +106,7 @@ public class NotificationLoader {
         parentProfile.rvNotifications = view.findViewById(R.id.rvNotifications);
         parentProfile.pendingNotifications = view.findViewById(R.id.layoutNotification);
         parentProfile.tvPendingNotificationsTitle = view.findViewById(R.id.tvWaitingNotificationsTitle);
+        parentProfile.tvToDoNotificationsTitle = view.findViewById(R.id.tvToDoNotificationsTitle);
 
         //make notifications invisible until user clicks on "notification" tab
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
@@ -120,6 +129,7 @@ public class NotificationLoader {
         parentProfile.notificationAdapter.clear();
         parentProfile.tvPendingNotificationsTitle.setVisibility(View.INVISIBLE);
         parentProfile.pendingNotifications.setVisibility(View.INVISIBLE);
+        parentProfile.tvToDoNotificationsTitle.setVisibility(View.INVISIBLE);
     }
 
     //when user purchases an item, creates a notification for the seller to approve
