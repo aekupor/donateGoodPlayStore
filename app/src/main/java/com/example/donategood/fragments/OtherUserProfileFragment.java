@@ -76,10 +76,16 @@ public class OtherUserProfileFragment extends Fragment {
             case R.id.action_analytics_other_profile:
                 Log.i(TAG, "action_analytics_other_profile clicked");
 
+                //open analytics dialog
+                parentProfile.openAnalyticsDialog(OtherUserProfileFragment.this, getFragmentManager());
                 return true;
             case R.id.action_chat_other_user:
                 Log.i(TAG, "action_chat_other_user clicked");
 
+                //open up chat
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("user", Parcels.wrap(user));
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
