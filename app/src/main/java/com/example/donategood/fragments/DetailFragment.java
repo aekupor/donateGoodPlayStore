@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.donategood.OnSwipeTouchListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
@@ -256,6 +257,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private void setCurrentImage() {
         Glide.with(getContext())
                 .load(imagesArray.get(currImage).getUrl())
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivOfferingPhoto);
     }
 
