@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_margin="8dp">
 
         <TextView
             android:id="@+id/tvDetailTitle"
@@ -98,14 +98,42 @@
             android:textSize="20sp"
             tools:text="Ashlee" />
 
-        <ImageView
-            android:id="@+id/ivDetailOfferingPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
+        <LinearLayout
+            android:id="@+id/imageLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/ivDetailProfileImage"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="0dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPreviousPicture"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_baseline_keyboard_arrow_left_24"
+                android:backgroundTint="#000000" />
+
+            <ImageView
+                android:id="@+id/ivDetailOfferingPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="10"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/btnNextPicture"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="100dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:backgroundTint="#000000" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvRecommendOfferingsTitle"
@@ -121,7 +149,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRecommendOfferings"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_below="@+id/tvRecommendOfferingsTitle"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="4dp" />
@@ -196,9 +224,9 @@
             android:id="@+id/tvDetailDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivDetailOfferingPhoto"
+            android:layout_below="@+id/imageLinearLayout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="0dp"
             android:textColor="#000000"
             android:textSize="18sp"
             tools:text="this is some more details" />
@@ -228,28 +256,6 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="4dp"
             tools:srcCompat="@tools:sample/avatars" />
-
-        <Button
-            android:id="@+id/btnNextPicture"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ivDetailOfferingPhoto"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="100dp"
-            android:layout_toEndOf="@+id/ivDetailOfferingPhoto"
-            android:background="@drawable/ic_baseline_keyboard_arrow_right_24"
-            android:backgroundTint="#000000" />
-
-        <Button
-            android:id="@+id/btnPreviousPicture"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ivDetailOfferingPhoto"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="0dp"
-            android:layout_toStartOf="@+id/ivDetailOfferingPhoto"
-            android:background="@drawable/ic_baseline_keyboard_arrow_left_24"
-            android:backgroundTint="#000000" />
 
     </RelativeLayout>
 </ScrollView>
