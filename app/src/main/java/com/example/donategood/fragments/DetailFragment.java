@@ -78,6 +78,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private ArrayList<ParseFile> imagesArray;
     private Integer currImage;
     private Button btnPreviousPicture;
+    private Integer numImages;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -230,7 +231,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 Log.i(TAG, "btnNextPicture clicked. currImage: " + currImage);
 
                 currImage++;
-                if (currImage == 2) {
+                if (currImage == numImages) {
                     currImage = 0;
                 }
                 setCurrentImage();
@@ -244,7 +245,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
                 currImage--;
                 if (currImage == -1) {
-                    currImage = 1;
+                    currImage = numImages - 1;
                 }
                 setCurrentImage();
             }
@@ -322,6 +323,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         commentLoader.queryComments(this);
 
         imagesArray = offering.getImagesArray();
+        numImages = imagesArray.size();
         currImage = 0;
         setInitialImage();
     }
