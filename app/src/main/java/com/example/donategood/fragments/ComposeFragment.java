@@ -168,7 +168,7 @@ public class ComposeFragment extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "btnSubmit onClick");
 
-                if (ParseUser.getCurrentUser().get("venmoName") == null) {
+                if (ParseUser.getCurrentUser().get("venmoName") == null || ParseUser.getCurrentUser().get("venmoName").equals("")) {
                     Log.i(TAG, "user doesn't have venmo name");
 
                     //if user doesn't have a venmo username stored, make them enter one and save to Parse
@@ -177,6 +177,7 @@ public class ComposeFragment extends Fragment {
 
                     if (etVenmo.getText().toString().isEmpty()) {
                         Toast.makeText(getContext(), "You must add your venmo username", Toast.LENGTH_SHORT).show();
+                        return;
                     } else {
                         ParseUser.getCurrentUser().put("venmoName", etVenmo.getText().toString());
                         ParseUser.getCurrentUser().saveInBackground();
