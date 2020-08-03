@@ -225,10 +225,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         btnNextPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "btnNextPicture clicked");
+                Log.i(TAG, "btnNextPicture clicked. currImage: " + currImage);
 
                 currImage++;
-                if (currImage == 1) {
+                if (currImage == 2) {
                     currImage = 0;
                 }
                 setCurrentImage();
