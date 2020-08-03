@@ -72,9 +72,15 @@ public class CharityFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_analytics_charity:
                 Log.i(TAG, "action_analytics_charity clicked");
+                //open analytics dialog
+                parentProfile.openAnalyticsDialog(CharityFragment.this, getFragmentManager());
                 return true;
             case R.id.action_website:
                 Log.i(TAG, "action_website clicked");
+                //go to webview fragment
+                final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
+                Fragment fragment = WebViewFragment.newInstance(charity.getWebsite());
+                fragmentManager.beginTransaction().addToBackStack("charity").replace(R.id.flContainer, fragment).commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -95,17 +101,14 @@ public class CharityFragment extends Fragment {
         btnWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //go to webview fragment
-                final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
-                Fragment fragment = WebViewFragment.newInstance(charity.getWebsite());
-                fragmentManager.beginTransaction().addToBackStack("charity").replace(R.id.flContainer, fragment).commit();
+
             }
         });
 
         btnAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parentProfile.openAnalyticsDialog(CharityFragment.this, getFragmentManager());
+
             }
         });
 
