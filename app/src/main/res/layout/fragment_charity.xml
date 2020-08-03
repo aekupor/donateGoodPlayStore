@@ -51,7 +51,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnCharityWebsite"
+        android:layout_below="@+id/ivProfileProfileImage"
         android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
@@ -96,22 +96,6 @@
         android:layout_marginBottom="4dp"
         android:visibility="invisible" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCharityWebsite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfileProfileName"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="View Website"
-        android:textColor="@color/purple"
-        android:theme="@style/Theme.MaterialComponents"
-        app:cornerRadius="5dp"
-        app:strokeColor="@color/purple"
-        app:strokeWidth="2dp" />
-
     <ImageView
         android:id="@+id/ivFollow"
         android:layout_width="wrap_content"
@@ -121,15 +105,5 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         android:src="@drawable/ic_baseline_person_add_24" />
-
-    <Button
-        android:id="@+id/btnCharityAnalytics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfileProfileName"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_toStartOf="@+id/btnCharityWebsite"
-        android:text="Analytics" />
 
 </RelativeLayout>

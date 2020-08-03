@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -31,8 +30,6 @@ public class CharityFragment extends Fragment {
 
     private Charity charity;
     private String charityName;
-    private Button btnWebsite;
-    private Button btnAnalytics;
     private ParentProfile parentProfile;
 
     public CharityFragment() {
@@ -94,24 +91,6 @@ public class CharityFragment extends Fragment {
 
         parentProfile = new ParentProfile();
         parentProfile.initializeVariables(view, getContext(), parentProfile.KEY_CHARITY);
-
-        btnWebsite = view.findViewById(R.id.btnCharityWebsite);
-        btnAnalytics = view.findViewById(R.id.btnCharityAnalytics);
-
-        btnWebsite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        btnAnalytics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         parentProfile.pb.setVisibility(ProgressBar.VISIBLE);
 
         //query to find charity

@@ -30,7 +30,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
     private static Camera camera;
     private Boolean bioEdit;
     private ParentProfile parentProfile;
-    private String analytics;
 
     public ProfileFragment() {
         // Required empty public constructor
