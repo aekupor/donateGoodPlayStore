@@ -102,16 +102,6 @@
         android:layout_toEndOf="@+id/tvProfileMoneyRaised"
         android:visibility="invisible" />
 
-    <Button
-        android:id="@+id/btnChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/tvProfileMoneyRaised"
-        android:text="Chat" />
-
     <RatingBar
         android:id="@+id/rbProfile"
         style="?android:attr/ratingBarStyleSmall"
@@ -160,13 +150,4 @@
         android:layout_toEndOf="@+id/ivProfileProfileImage"
         tools:text="this is my bio" />
 
-    <Button
-        android:id="@+id/btnAnalytics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="62dp"
-        android:text="Analytics" />
 </RelativeLayout>

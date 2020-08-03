@@ -30,8 +30,6 @@ public class OtherUserProfileFragment extends Fragment {
     public static final String TAG = "OtherUserProfileFragment";
 
     private ParentProfile parentProfile;
-    private Button btnChat;
-    private Button btnAnalytics;
     private ParseUser user;
 
     public OtherUserProfileFragment() {
@@ -111,29 +109,5 @@ public class OtherUserProfileFragment extends Fragment {
         parentProfile.setUser(user);
         parentProfile.queryInfo(getContext(), view);
         parentProfile.queryPosts(ParentProfile.KEY_BOUGHT);
-
-        //only other user's have a chat button and analytics button
-        btnChat = view.findViewById(R.id.btnChat);
-        btnAnalytics = view.findViewById(R.id.btnAnalytics);
-
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "btnChat clicked");
-                //open up chat
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("user", Parcels.wrap(user));
-                startActivity(intent);
-            }
-        });
-
-        btnAnalytics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "btnAnalytics clicked");
-                parentProfile.openAnalyticsDialog(OtherUserProfileFragment.this, getFragmentManager());
-            }
-        });
     }
 }
