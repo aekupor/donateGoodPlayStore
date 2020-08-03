@@ -140,6 +140,20 @@ public class ParentProfile {
             ivLevelIcon = view.findViewById(R.id.ivLevelIcon);
             ivCharityIcon = view.findViewById(R.id.ivCharityIcon);
             tvBio = view.findViewById(R.id.tvBio);
+
+            ivLevelIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "ivLevelIcon clicked");
+                }
+            });
+
+            ivCharityIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i(TAG, "ivCharityIcon clicked");
+                }
+            });
         }
 
         //only the current user has a "notifications" tab
