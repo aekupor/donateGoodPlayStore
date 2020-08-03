@@ -317,15 +317,20 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             btnEdit.setVisibility(View.INVISIBLE);
         }
 
-        loadPost.setMultipleImages(offering, getContext(), ivOfferingPhoto, layoutImages);
+        loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
         fbQuery.setShareButton(shareButton, offering, this);
         recommend.queryRecommendedPosts(query, offering, adapter, reccomendedOfferings);
         commentLoader.queryComments(this);
 
-        imagesArray = offering.getImagesArray();
-        numImages = imagesArray.size();
-        currImage = 0;
-        setInitialImage();
+        if (offering.hasMultipleImages()) {
+            imagesArray = offering.getImagesArray();
+            numImages = imagesArray.size();
+            currImage = 0;
+            setInitialImage();
+        } else {
+            btnNextPicture.setVisibility(View.INVISIBLE);
+            btnPreviousPicture.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void goToOtherFragment(String fragmentName) {
