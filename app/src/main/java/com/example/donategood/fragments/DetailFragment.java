@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.donategood.OnSwipeTouchListener;
 import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
@@ -38,6 +39,7 @@ import com.example.donategood.models.Offering;
 import com.facebook.share.widget.ShareButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -73,6 +75,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Button btnEdit;
     private ImageView ivProfileImage;
     private Button btnNextPicture;
+    private ArrayList<ParseFile> imagesArray;
+    private Integer currImage;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -222,8 +226,26 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "btnNextPicture clicked");
+
+                currImage++;
+                if (currImage == 1) {
+                    currImage = 0;
+                }
+                setCurrentImage();
             }
         });
+    }
+
+    private void setInitialImage() {
+        setCurrentImage();
+    }
+
+    private void setCurrentImage() {
+        layoutImages.setVisibility(View.INVISIBLE);
+        ivOfferingPhoto.setVisibility(View.VISIBLE);
+        Glide.with(getContext())
+                .load(imagesArray.get(currImage).getUrl())
+                .into(ivOfferingPhoto);
     }
 
     //finds the offering to display on detail page (offering that the user clicked on)
@@ -283,6 +305,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         fbQuery.setShareButton(shareButton, offering, this);
         recommend.queryRecommendedPosts(query, offering, adapter, reccomendedOfferings);
         commentLoader.queryComments(this);
+
+        imagesArray = offering.getImagesArray();
+        currImage = 0;
+        setInitialImage();
     }
 
     private void goToOtherFragment(String fragmentName) {
