@@ -249,5 +249,15 @@
             android:layout_marginTop="4dp"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <Button
+            android:id="@+id/btnNextPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="168dp"
+            android:layout_marginEnd="290dp"
+            android:text="Next" />
+
     </RelativeLayout>
 </ScrollView>

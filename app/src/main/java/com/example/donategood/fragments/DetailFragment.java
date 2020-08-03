@@ -72,6 +72,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private TextView tvDescription;
     private Button btnEdit;
     private ImageView ivProfileImage;
+    private Button btnNextPicture;
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
@@ -146,6 +147,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvDescription = view.findViewById(R.id.tvDetailDescription);
         btnEdit = view.findViewById(R.id.btnEditOffering);
         ivProfileImage = view.findViewById(R.id.ivDetailProfileImage);
+        btnNextPicture = view.findViewById(R.id.btnNextPicture);
 
         numComments = 0;
         loadPost = new LoadPost();
@@ -213,6 +215,13 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             public void onClick(View view) {
                 Log.i(TAG, "comment button clicked");
                 showEditDialog();
+            }
+        });
+
+        btnNextPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "btnNextPicture clicked");
             }
         });
     }
