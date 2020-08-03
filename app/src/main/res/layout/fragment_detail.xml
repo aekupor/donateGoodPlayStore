@@ -180,9 +180,9 @@
             android:id="@+id/tvQuantityLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvDetailUser"
+            android:layout_below="@+id/rbDetail"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="0dp"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -198,26 +198,15 @@
             android:textColor="#000000"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvAvgRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnComment"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/tvViewCommentsTitle"
-            android:textColor="#000000"
-            tools:text="Average Rating:" />
-
         <RatingBar
             android:id="@+id/rbDetail"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnComment"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/tvAvgRating"
+            android:layout_below="@+id/tvDetailPrice"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="0dp"
             android:theme="@style/RatingBar" />
 
         <TextView
