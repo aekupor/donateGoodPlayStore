@@ -148,8 +148,8 @@ public class ParentProfile {
                     Log.i(TAG, "ivLevelIcon clicked");
 
                     AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                    alertDialog.setTitle("hi");
-                    alertDialog.setMessage("this is my app");
+                    alertDialog.setTitle("What does this mean?");
+                    alertDialog.setMessage("This is your DonateGood level! This level is calculated based on how much money you have raised for chairities. Click the analytics button in the upper right hand corner to view more.");
                     alertDialog.show();
                 }
             });
@@ -160,8 +160,8 @@ public class ParentProfile {
                     Log.i(TAG, "ivCharityIcon clicked");
 
                     AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                    alertDialog.setTitle("hi");
-                    alertDialog.setMessage("this is my app");
+                    alertDialog.setTitle("What does this mean?");
+                    alertDialog.setMessage("This is your highest supported charity! Click the analytics button in the upper right hand corner to view more.");
                     alertDialog.show();
                 }
             });
