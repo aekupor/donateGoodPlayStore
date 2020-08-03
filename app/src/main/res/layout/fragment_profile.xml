@@ -52,11 +52,11 @@
         android:id="@+id/rvNotifications"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/line"
+        android:layout_below="@+id/tvToDoNotificationsTitle"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp" />
 
     <TextView
@@ -159,6 +159,7 @@
         android:layout_below="@+id/rvNotifications"
         android:layout_marginTop="4dp"
         android:text="Pending Notifications:"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
     <RatingBar
@@ -188,5 +189,15 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/ivLevelIcon"
         android:src="@drawable/level_one" />
+
+    <TextView
+        android:id="@+id/tvToDoNotificationsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rvProfileOfferings"
+        android:layout_marginTop="0dp"
+        android:text="Action Needed Notifications:"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
 </RelativeLayout>
