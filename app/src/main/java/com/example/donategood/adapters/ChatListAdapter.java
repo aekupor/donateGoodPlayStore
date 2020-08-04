@@ -16,6 +16,7 @@ import com.example.donategood.ChatActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.Query;
+import com.example.donategood.models.Message;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-    public static final String TAG = "UserAdapter";
+    public static final String TAG = "ChatListAdapter";
 
     private Context context;
     private List<String> userIds;
@@ -68,6 +69,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         TextView tvUsername;
         ImageView ivProfileImage;
+        TextView tvMessagePreview;
+        ImageView ivUnread;
 
         LoadPost loadPost;
         Query query;
@@ -77,6 +80,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
             tvUsername = itemView.findViewById(R.id.tvOtherPersonChatName);
             ivProfileImage = itemView.findViewById(R.id.ivChatOtherPersonProfile);
+            tvMessagePreview = itemView.findViewById(R.id.tvMessagePreview);
+            ivUnread = itemView.findViewById(R.id.ivUnread);
 
             loadPost = new LoadPost();
             query = new Query();
@@ -85,6 +90,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         }
 
         public void bind(String userId) {
+            ivUnread.setVisibility(View.INVISIBLE);
+
             query.findUserById(userId, new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> objects, ParseException e) {
@@ -92,7 +99,26 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                         Log.e(TAG, "issue getting users");
                         return;
                     }
+                    Log.i(TAG, "got user:" + objects.get(0).getUsername());
                     loadPost.setUser(objects.get(0), context, tvUsername, ivProfileImage);
+
+                    //get most recent message
+                    query.queryAllChatsByRoomId(findRoomId(objects.get(0)), new FindCallback<Message>() {
+                        @Override
+                        public void done(List<Message> objects, ParseException e) {
+                            if (e != null) {
+                                Log.e("message", "Error Loading Messages" + e);
+                            }
+                            if (objects.size() != 0) {
+                                Message recentMessage = objects.get(0);
+                                Log.i(TAG, "most recent message:" + recentMessage.getBody());
+                                tvMessagePreview.setText(recentMessage.getBody());
+                                if (recentMessage.getUnread()) {
+                                    ivUnread.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
+                    });
                 }
             });
         }
@@ -118,6 +144,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                     }
                 });
             }
+        }
+    }
+
+    //determines the roomId based on the users in the room and their ids
+    private String findRoomId(ParseUser otherUser) {
+        Integer compare = otherUser.getObjectId().compareTo(ParseUser.getCurrentUser().getObjectId());
+        if (compare < 0) {
+            return otherUser.getObjectId() + " " + ParseUser.getCurrentUser().getObjectId();
+        } else {
+            return ParseUser.getCurrentUser().getObjectId() + " " + otherUser.getObjectId();
         }
     }
 }
