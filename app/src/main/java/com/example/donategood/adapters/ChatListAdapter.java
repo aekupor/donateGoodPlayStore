@@ -113,7 +113,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                                 Message recentMessage = objects.get(0);
                                 Log.i(TAG, "most recent message:" + recentMessage.getBody());
                                 tvMessagePreview.setText(recentMessage.getBody());
-                                if (recentMessage.getUnread()) {
+                                if (recentMessage.getUnread() && !recentMessage.getUserId().equals(ParseUser.getCurrentUser().getObjectId())) {
                                     ivUnread.setVisibility(View.VISIBLE);
                                 }
                             }
