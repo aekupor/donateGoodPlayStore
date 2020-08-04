@@ -54,7 +54,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (message.getUserId().equals(ParseUser.getCurrentUser().getObjectId())) {
             isMe = true;
         }
-        //final boolean isMe = message.getUserId() != null && message.getUserId().equals(mUserId);
 
         if (isMe) {
             //if chat is from current user
