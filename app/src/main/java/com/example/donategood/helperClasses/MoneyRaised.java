@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MoneyRaised {
 
@@ -182,24 +181,23 @@ public class MoneyRaised {
                     } else {
                         consolidateMapByCharity.put(charity.getTitle(), value);
                     }
-                    query.moneyRaisedForPersonByCharity = consolidateMapByCharity;
                 }
+                query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(consolidateMapByCharity);
 
-                Set<String> charities = consolidateMapByCharity.keySet();
-                for (String charity : charities) {
-                    query.findCharity(charity, new FindCallback<Charity>() {
-                        @Override
-                        public void done(List<Charity> objects, ParseException e) {
-                            //set charity icon with profile image of charity with most money raised
-                            Glide.with(context)
-                                    .load(objects.get(0).getImage().getUrl())
-                                    .into(parentProfile.ivCharityIcon);
-                            parentProfile.pb.setVisibility(View.INVISIBLE);
-                            return;
-                        }
-                    });
-                    return;
-                }
+                Map.Entry<String,Integer> entry = query.moneyRaisedForPersonByCharity.entrySet().iterator().next();
+                String key = entry.getKey();
+
+                query.findCharity(key, new FindCallback<Charity>() {
+                    @Override
+                    public void done(List<Charity> objects, ParseException e) {
+                        //set charity icon with profile image of charity with most money raised
+                        Glide.with(context)
+                                .load(objects.get(0).getImage().getUrl())
+                                .into(parentProfile.ivCharityIcon);
+                        parentProfile.pb.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                });
             }
         });
     }
