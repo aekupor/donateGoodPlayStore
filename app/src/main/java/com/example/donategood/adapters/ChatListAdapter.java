@@ -90,6 +90,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         }
 
         public void bind(String userId) {
+            ivUnread.setVisibility(View.INVISIBLE);
+
             query.findUserById(userId, new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> objects, ParseException e) {
@@ -109,8 +111,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                             }
                             if (objects.size() != 0) {
                                 Message recentMessage = objects.get(0);
-                                tvMessagePreview.setText(objects.get(0).getBody());
                                 Log.i(TAG, "most recent message:" + recentMessage.getBody());
+                                tvMessagePreview.setText(recentMessage.getBody());
+                                if (recentMessage.getUnread()) {
+                                    ivUnread.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
                     });
