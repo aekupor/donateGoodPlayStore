@@ -98,10 +98,11 @@ public class ChatActivity extends AppCompatActivity {
                 message.setBody(data);
                 message.setUserId(ParseUser.getCurrentUser().getObjectId());
                 message.setRoomID(roomId);
+                message.setUnread(true);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if(e == null) {
+                        if (e == null) {
                             refreshMessages();
                         } else {
                             Log.e(TAG, "Failed to save message", e);
@@ -127,6 +128,13 @@ public class ChatActivity extends AppCompatActivity {
                     if (mFirstLoad) {
                         rvChat.scrollToPosition(0);
                         mFirstLoad = false;
+                    }
+
+                    for (Message message : objects) {
+                        if (!message.getUserId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            message.setUnread(false);
+                            message.saveInBackground();
+                        }
                     }
                 } else {
                     Log.e("message", "Error Loading Messages" + e);
