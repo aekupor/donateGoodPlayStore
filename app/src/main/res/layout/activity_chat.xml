@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,18 +24,25 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:layout_height="wrap_content" >
-        <EditText
-            android:id="@+id/etMessage"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_toLeftOf="@+id/btSend"
+            android:hint="Say anything"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etMessage"
             android:layout_alignBottom="@+id/btSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:hint="Say anything"
             android:inputType="textShortMessage"
             android:imeOptions="actionSend"
             />
-        <Button
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +50,11 @@
             android:paddingRight="10dp"
             android:layout_alignParentRight="true"
             android:text="Send"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/purple"
+            android:theme="@style/Theme.MaterialComponents"
+            app:cornerRadius="5dp"
             android:textSize="18sp" >
-        </Button>
+        </com.google.android.material.button.MaterialButton>
     </RelativeLayout>
 </RelativeLayout>
