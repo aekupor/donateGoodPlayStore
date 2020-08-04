@@ -132,6 +132,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     for (Message message : objects) {
                         if (!message.getUserId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            //set as read once other user (not the sender user) has read the message
                             message.setUnread(false);
                             message.saveInBackground();
                         }
