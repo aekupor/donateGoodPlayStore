@@ -30,6 +30,8 @@ public class ChatListFragment extends Fragment {
 
     public static final String TAG = "ChatListFragment";
 
+    private boolean shouldRefreshOnResume = false;
+
     private Query query;
     private FloatingActionButton btnNewChat;
     private TextView tvChatWithTitle;
@@ -50,6 +52,23 @@ public class ChatListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat_list, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check should we need to refresh the fragment
+        if (shouldRefreshOnResume){
+            // refresh fragment
+            Log.i(TAG, "refreshing fragment");
+            findChatUsers();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        shouldRefreshOnResume = true;
     }
 
     @Override
