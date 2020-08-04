@@ -70,6 +70,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         TextView tvUsername;
         ImageView ivProfileImage;
         TextView tvMessagePreview;
+        ImageView ivUnread;
 
         LoadPost loadPost;
         Query query;
@@ -80,6 +81,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             tvUsername = itemView.findViewById(R.id.tvOtherPersonChatName);
             ivProfileImage = itemView.findViewById(R.id.ivChatOtherPersonProfile);
             tvMessagePreview = itemView.findViewById(R.id.tvMessagePreview);
+            ivUnread = itemView.findViewById(R.id.ivUnread);
 
             loadPost = new LoadPost();
             query = new Query();
