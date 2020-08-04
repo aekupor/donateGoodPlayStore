@@ -69,6 +69,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         TextView tvUsername;
         ImageView ivProfileImage;
+        TextView tvMessagePreview;
 
         LoadPost loadPost;
         Query query;
@@ -78,6 +79,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
             tvUsername = itemView.findViewById(R.id.tvOtherPersonChatName);
             ivProfileImage = itemView.findViewById(R.id.ivChatOtherPersonProfile);
+            tvMessagePreview = itemView.findViewById(R.id.tvMessagePreview);
 
             loadPost = new LoadPost();
             query = new Query();
@@ -105,6 +107,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                             }
                             if (objects.size() != 0) {
                                 Message recentMessage = objects.get(0);
+                                tvMessagePreview.setText(objects.get(0).getBody());
                                 Log.i(TAG, "most recent message:" + recentMessage.getBody());
                             }
                         }

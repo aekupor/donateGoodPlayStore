@@ -17,9 +17,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
+        android:layout_centerVertical="false"
         android:layout_marginStart="5dp"
         android:layout_marginTop="14dp"
         android:layout_toEndOf="@+id/ivChatOtherPersonProfile"
         tools:text="ashlee" />
+
+    <TextView
+        android:id="@+id/tvMessagePreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOtherPersonChatName"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/ivChatOtherPersonProfile"
+        tools:text="hey this is my chat" />
 </RelativeLayout>
