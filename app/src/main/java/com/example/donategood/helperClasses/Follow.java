@@ -1,9 +1,12 @@
 package com.example.donategood.helperClasses;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.donategood.R;
@@ -38,7 +41,19 @@ public class Follow {
                     }
                     ParseUser.getCurrentUser().saveInBackground();
                     parentProfile.ivFollow.setImageResource(R.drawable.ic_baseline_person_add_24);
-                    Toast.makeText(context, "Unfollowed", Toast.LENGTH_SHORT).show();
+
+                    //make and design toast
+                    Toast toast = Toast.makeText(context, "Unfollowed!", Toast.LENGTH_LONG);
+                    View toastView = toast.getView();
+
+                    TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+                    toastMessage.setTextSize(15);
+                    toastMessage.setTextColor(Color.WHITE);
+                    toastMessage.setGravity(Gravity.CENTER);
+                    toastMessage.setCompoundDrawablePadding(16);
+                    toastView.setBackgroundColor(Color.LTGRAY);
+                    toast.show();
+
                     parentProfile.following = false;
                 } else {
                     //if user is not already following, onClick follows
