@@ -84,7 +84,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
 
     private RecyclerView rvRecommendedOfferings;
     private SmallOfferingAdapter adapter;
-    private List<Offering> reccomendedOfferings;
+    private List<Offering> recommendedOfferings;
     private RecyclerView rvComments;
     public CommentAdapter commentAdapter;
     public List<Comment> allComments;
@@ -121,6 +121,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //if user swipes right, go back to home screen
         view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeRight() {
@@ -167,8 +168,8 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         fbQuery = new FBQuery();
 
         //set up recycler view and adapter for reccomended offerings
-        reccomendedOfferings = new ArrayList<>();
-        adapter = new SmallOfferingAdapter(getContext(), reccomendedOfferings);
+        recommendedOfferings = new ArrayList<>();
+        adapter = new SmallOfferingAdapter(getContext(), recommendedOfferings);
 
         rvRecommendedOfferings.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -229,10 +230,12 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         btnNextPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "btnNextPicture clicked. currImage: " + currImage);
+                Log.i(TAG, "btnNextPicture clicked");
 
+                //go to next image
                 currImage++;
                 if (currImage == numImages) {
+                    //if reached end of images, go back to beginning
                     currImage = 0;
                 }
                 setCurrentImage();
@@ -244,8 +247,10 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             public void onClick(View view) {
                 Log.i(TAG, "btnPreviousPicture clicked");
 
+                //go to previous image
                 currImage--;
                 if (currImage == -1) {
+                    //if reached beginning of images, go to end
                     currImage = numImages - 1;
                 }
                 setCurrentImage();
@@ -253,10 +258,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         });
     }
 
-    private void setInitialImage() {
-        setCurrentImage();
-    }
-
+    //sets appropriate image based on where the user has scrolled to
     private void setCurrentImage() {
         Glide.with(getContext())
                 .load(imagesArray.get(currImage).getUrl())
@@ -286,26 +288,33 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         loadPost.setTitlePrice(offering, tvTitle, tvPrice);
         loadPost.setUserFromOffering(offering, getContext(), tvUser, ivProfileImage);
         loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
+        loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
+        fbQuery.setShareButton(shareButton, offering, this);
+        recommend.queryRecommendedPosts(query, offering, adapter, recommendedOfferings);
+        commentLoader.queryComments(this);
 
+        //only show rating if offering has one
         if (offering.getRating() == 0) {
             ratingBar.setVisibility(View.INVISIBLE);
         } else {
             ratingBar.setNumStars(offering.getRating());
         }
 
+        //only show description if offering has one
         if (offering.getDescription() == null) {
             tvDescription.setVisibility(View.INVISIBLE);
         } else {
             tvDescription.setText(offering.getDescription());
         }
 
+        //hide purchase button if there is no quantity left
         tvQuantityLeft.setText("Quantity Left: " + offering.getQuantityLeft().toString());
         if (offering.getQuantityLeft() == 0) {
             btnPurchase.setVisibility(View.INVISIBLE);
         }
 
+        //only show edit button if selling user of offering is the current signed in user
         if (offering.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-            //only show edit button if selling user of offering is the current signed in user
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -317,22 +326,19 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             btnEdit.setVisibility(View.INVISIBLE);
         }
 
-        loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
-        fbQuery.setShareButton(shareButton, offering, this);
-        recommend.queryRecommendedPosts(query, offering, adapter, reccomendedOfferings);
-        commentLoader.queryComments(this);
-
+        //create picture scrolling if offering has multiple images
         if (offering.hasMultipleImages()) {
             imagesArray = offering.getImagesArray();
             numImages = imagesArray.size();
             currImage = 0;
-            setInitialImage();
+            setCurrentImage();
         } else {
             btnNextPicture.setVisibility(View.INVISIBLE);
             btnPreviousPicture.setVisibility(View.INVISIBLE);
         }
     }
 
+    //navigate to a different specified fragment
     private void goToOtherFragment(String fragmentName) {
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = null;
@@ -382,13 +388,13 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 + offering.getUser().get("venmoName") + "&amount="
                 + offering.getPrice().toString() + "&note=" + offering.getTitle()));
 
+        //check if user has venmo installed
         if (implicit.resolveActivity(getContext().getPackageManager()) != null) {
             startActivity(implicit);
+            purchase.purchaseItem(offering, btnPurchase, notificationLoader, getContext(), tvQuantityLeft);
         } else {
             Toast.makeText(getContext(), "You must have venmo installed", Toast.LENGTH_SHORT).show();
-            return;
         }
 
-        purchase.purchaseItem(offering, btnPurchase, notificationLoader, getContext(), tvQuantityLeft);
     }
 }
