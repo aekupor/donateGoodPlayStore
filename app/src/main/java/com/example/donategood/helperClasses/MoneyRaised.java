@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class MoneyRaised {
 
@@ -29,13 +28,10 @@ public class MoneyRaised {
 
     //determines amount of money raised for a charity
     public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney, final ProgressBar pb, final Query query) {
-
-        final TreeMap<String, Integer> tmap = new TreeMap();
-
-
         pb.setVisibility(View.VISIBLE);
+
+        final HashMap<String, Integer> moneyRaisedMap = new HashMap<>();
         final Integer[] moneyRaised = {0};
-        final HashMap<ParseUser, Integer> moneyRaisedByPerson = new HashMap<>();
         query.queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
@@ -54,67 +50,31 @@ public class MoneyRaised {
                                 } catch (ParseException ex) {
                                     ex.printStackTrace();
                                 }
-                                //add each user who bought an item for that charity
-                                if (moneyRaisedByPerson.containsKey(boughtUser)) {
-                                    moneyRaisedByPerson.put(boughtUser, moneyRaisedByPerson.get(boughtUser) + offering.getPrice());
-                                } else {
-                                    moneyRaisedByPerson.put(boughtUser, offering.getPrice());
-                                }
 
-                                if (tmap.containsKey(boughtUsername)) {
-                                    tmap.put(boughtUsername, tmap.get(boughtUsername) + offering.getPrice());
+                                if (moneyRaisedMap.containsKey(boughtUsername)) {
+                                    moneyRaisedMap.put(boughtUsername, moneyRaisedMap.get(boughtUsername) + offering.getPrice());
                                 } else {
-                                    tmap.put(boughtUsername, offering.getPrice());
+                                    moneyRaisedMap.put(boughtUsername, offering.getPrice());
                                 }
                             }
-                            //add sellers who raised money for that charity
 
+                            //add sellers who raised money for that charity
                             String username = "";
                             try {
                                 username = offering.getUser().fetchIfNeeded().getUsername();
                             } catch (ParseException ex) {
                                 ex.printStackTrace();
                             }
-                            if (moneyRaisedByPerson.containsKey(offering.getUser())) {
-                                moneyRaisedByPerson.put(offering.getUser(), moneyRaisedByPerson.get(offering.getUser()) + offering.getPrice() * boughtUsers.size());
+                            if (moneyRaisedMap.containsKey(username)) {
+                                moneyRaisedMap.put(username, moneyRaisedMap.get(username) + offering.getPrice() * boughtUsers.size());
                             } else {
-                                moneyRaisedByPerson.put(offering.getUser(), offering.getPrice());
-                                tmap.put(username, offering.getPrice());
-                            }
-
-                            if (tmap.containsKey(username)) {
-                                tmap.put(username, tmap.get(username) + offering.getPrice() * boughtUsers.size());
-                            } else {
-                                tmap.put(username, offering.getPrice());
+                                moneyRaisedMap.put(username, offering.getPrice() * boughtUsers.size());
                             }
                         }
                     }
                 }
-
-                //make map that has only one entry by user (add up all the prices)
-                HashMap<String, Integer> consolidateMapByUser = new HashMap<>();
-                Integer totalMoney = 0;
-                for (Map.Entry mapElement : moneyRaisedByPerson.entrySet()) {
-                    ParseUser key = (ParseUser) mapElement.getKey();
-                    ParseUser user = null;
-                    try {
-                        user = key.fetchIfNeeded();
-                    } catch (ParseException e2) {
-                        e2.printStackTrace();
-                    }
-                    int value = (int)mapElement.getValue();
-                    totalMoney += value;
-
-                    if (consolidateMapByUser.containsKey(user.getUsername())) {
-                        consolidateMapByUser.put(user.getUsername(), consolidateMapByUser.get(user.getUsername()) + value);
-                    } else {
-                        consolidateMapByUser.put(user.getUsername(), value);
-                    }
-                }
-                tvMoney.setText("$" + totalMoney.toString());
-
-                HashMap<String, Integer> sortedMap = sortMapByPointsByUser(consolidateMapByUser);
-                query.moneyRaisedForCharityByPerson = sortedMap;
+                tvMoney.setText("$" + moneyRaised[0].toString());
+                query.moneyRaisedForCharityByPerson = sortMapByPointsByUser(moneyRaisedMap);
                 pb.setVisibility(View.INVISIBLE);
             }
         });
