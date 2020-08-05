@@ -142,31 +142,7 @@ public class MoneyRaised {
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 parentProfile.tvMoneyRaised.setText("$" + totalMoney.toString());
 
-                //determine the level of the user based on the amount of money raised + sold
-                int iconImage = -1;
-                if (totalMoney < 100) {
-                    iconImage = R.drawable.level_one;
-                } else if (totalMoney < 200) {
-                    iconImage = R.drawable.level_two;
-                } else if (totalMoney < 300) {
-                    iconImage = R.drawable.level_three;
-                } else if (totalMoney < 400) {
-                    iconImage = R.drawable.level_four;
-                } else if (totalMoney < 500) {
-                    iconImage = R.drawable.level_five;
-                } else {
-                    iconImage = R.drawable.crown;
-                }
-
-                //set icon based on level
-                if (totalMoney < 25) {
-                    parentProfile.ivLevelIcon.setVisibility(View.INVISIBLE);
-                } else {
-                    Glide.with(context)
-                            .load(iconImage)
-                            .circleCrop()
-                            .into(parentProfile.ivLevelIcon);
-                }
+                setIcon(totalMoney, parentProfile, context, determineImage(totalMoney));
 
                 query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(moneyRaisedByCharity);
 
@@ -206,5 +182,34 @@ public class MoneyRaised {
             temp.put(aa.getKey(), aa.getValue());
         }
         return temp;
+    }
+
+    //determine the level of the user based on the amount of money raised + sold
+    public Integer determineImage(Integer totalMoney) {
+        if (totalMoney < 100) {
+            return R.drawable.level_one;
+        } else if (totalMoney < 200) {
+            return R.drawable.level_two;
+        } else if (totalMoney < 300) {
+            return R.drawable.level_three;
+        } else if (totalMoney < 400) {
+            return R.drawable.level_four;
+        } else if (totalMoney < 500) {
+            return R.drawable.level_five;
+        } else {
+            return R.drawable.crown;
+        }
+    }
+
+    //set icon based on level
+    public void setIcon(Integer totalMoney, ParentProfile parentProfile, Context context, Integer iconImage) {
+        if (totalMoney < 25) {
+            parentProfile.ivLevelIcon.setVisibility(View.INVISIBLE);
+        } else {
+            Glide.with(context)
+                    .load(iconImage)
+                    .circleCrop()
+                    .into(parentProfile.ivLevelIcon);
+        }
     }
 }
