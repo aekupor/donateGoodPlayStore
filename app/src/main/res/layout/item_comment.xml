@@ -21,6 +21,7 @@
         android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/ivProfileImageComment"
         android:layout_weight="1"
+        android:textColor="#000000"
         android:textStyle="bold"
         tools:text="ashlee" />
 
@@ -33,6 +34,7 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivProfileImageComment"
         android:layout_weight="1"
+        android:textColor="#000000"
         tools:text="hey this is my comment" />
 
     <RatingBar
