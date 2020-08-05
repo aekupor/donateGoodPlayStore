@@ -106,35 +106,13 @@ public class MoneyRaised {
                             if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
-                                String charityName = null;
-                                try {
-                                    Charity charity = offering.getCharity().fetchIfNeeded();
-                                    charityName = charity.getTitle();
-                                } catch (ParseException ex) {
-                                    ex.printStackTrace();
-                                }
-                                if (moneyRaisedByCharity.containsKey(charityName)) {
-                                    moneyRaisedByCharity.put(charityName, moneyRaisedByCharity.get(charityName) + offering.getPrice());
-                                } else {
-                                    moneyRaisedByCharity.put(charityName, offering.getPrice());
-                                }
+                                addToMap(offering, moneyRaisedByCharity, offering.getPrice());
                             }
                         }
                         if (offering.getUser().getObjectId().equals(parentProfile.user.getObjectId())) {
                             //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
-                            String charityName = null;
-                            try {
-                                Charity charity = offering.getCharity().fetchIfNeeded();
-                                charityName = charity.getTitle();
-                            } catch (ParseException ex) {
-                                ex.printStackTrace();
-                            }
-                            if (moneyRaisedByCharity.containsKey(charityName)) {
-                                moneyRaisedByCharity.put(charityName, moneyRaisedByCharity.get(charityName) + offering.getPrice() * boughtUsers.size());
-                            } else {
-                                moneyRaisedByCharity.put(charityName, offering.getPrice() * boughtUsers.size());
-                            }
+                            addToMap(offering, moneyRaisedByCharity, offering.getPrice() * boughtUsers.size());
                         }
                     }
                 }
@@ -210,6 +188,21 @@ public class MoneyRaised {
                     .load(iconImage)
                     .circleCrop()
                     .into(parentProfile.ivLevelIcon);
+        }
+    }
+
+    public void addToMap(Offering offering, Map<String, Integer> map, Integer money) {
+        String charityName = null;
+        try {
+            Charity charity = offering.getCharity().fetchIfNeeded();
+            charityName = charity.getTitle();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        if (map.containsKey(charityName)) {
+            map.put(charityName, map.get(charityName) + money);
+        } else {
+            map.put(charityName, money);
         }
     }
 }
