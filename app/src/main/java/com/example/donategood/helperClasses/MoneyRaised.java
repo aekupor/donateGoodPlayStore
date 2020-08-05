@@ -43,34 +43,11 @@ public class MoneyRaised {
 
                             //give the "buyers" of the offering credit towards supporting that charity
                             for (Object boughtObject : boughtUsers) {
-                                ParseUser boughtUser = (ParseUser) boughtObject;
-                                String boughtUsername = "";
-                                try {
-                                    boughtUsername = boughtUser.fetchIfNeeded().getUsername();
-                                } catch (ParseException ex) {
-                                    ex.printStackTrace();
-                                }
-
-                                if (moneyRaisedMap.containsKey(boughtUsername)) {
-                                    moneyRaisedMap.put(boughtUsername, moneyRaisedMap.get(boughtUsername) + offering.getPrice());
-                                } else {
-                                    moneyRaisedMap.put(boughtUsername, offering.getPrice());
-                                }
+                                addToMapWithUser((ParseUser)boughtObject, moneyRaisedMap, offering.getPrice());
                             }
 
                             //give the "sellers" of the offering credit towards supporting that charity
-                            String username = "";
-                            try {
-                                username = offering.getUser().fetchIfNeeded().getUsername();
-                            } catch (ParseException ex) {
-                                ex.printStackTrace();
-                            }
-
-                            if (moneyRaisedMap.containsKey(username)) {
-                                moneyRaisedMap.put(username, moneyRaisedMap.get(username) + offering.getPrice() * boughtUsers.size());
-                            } else {
-                                moneyRaisedMap.put(username, offering.getPrice() * boughtUsers.size());
-                            }
+                            addToMapWithUser(offering.getUser(), moneyRaisedMap, offering.getPrice() * boughtUsers.size());
                         }
                     }
                 }
@@ -106,13 +83,13 @@ public class MoneyRaised {
                             if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
-                                addToMap(offering, moneyRaisedByCharity, offering.getPrice());
+                                addToMapWithOffering(offering, moneyRaisedByCharity, offering.getPrice());
                             }
                         }
                         if (offering.getUser().getObjectId().equals(parentProfile.user.getObjectId())) {
                             //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
-                            addToMap(offering, moneyRaisedByCharity, offering.getPrice() * boughtUsers.size());
+                            addToMapWithOffering(offering, moneyRaisedByCharity, offering.getPrice() * boughtUsers.size());
                         }
                     }
                 }
@@ -191,7 +168,7 @@ public class MoneyRaised {
         }
     }
 
-    public void addToMap(Offering offering, Map<String, Integer> map, Integer money) {
+    public void addToMapWithOffering(Offering offering, Map<String, Integer> map, Integer money) {
         String charityName = null;
         try {
             Charity charity = offering.getCharity().fetchIfNeeded();
@@ -203,6 +180,21 @@ public class MoneyRaised {
             map.put(charityName, map.get(charityName) + money);
         } else {
             map.put(charityName, money);
+        }
+    }
+
+    public void addToMapWithUser(ParseUser user, Map<String, Integer> map, Integer money) {
+        String username = "";
+        try {
+            username = user.fetchIfNeeded().getUsername();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        if (map.containsKey(username)) {
+            map.put(username, map.get(username) + money);
+        } else {
+            map.put(username, money);
         }
     }
 }
