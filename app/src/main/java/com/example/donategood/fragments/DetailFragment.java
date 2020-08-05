@@ -48,6 +48,9 @@ import java.util.List;
 public class DetailFragment extends Fragment implements ComposeCommentFragment.ComposeCommentDialogListener {
 
     public static final String TAG = "DetailFragment";
+    public static final String CHARITY_KEY = "charity";
+    public static final String USER_KEY = "user";
+    public static final String COMPOSE_KEY = "compose";
 
     private String offeringId;
     public Query query;
@@ -183,28 +186,28 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         tvCharity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOtherFragment("charity");
+                goToOtherFragment(CHARITY_KEY);
             }
         });
 
         ivCharityImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOtherFragment("charity");
+                goToOtherFragment(CHARITY_KEY);
             }
         });
 
         tvUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOtherFragment("user");
+                goToOtherFragment(USER_KEY);
             }
         });
 
         ivProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOtherFragment("user");
+                goToOtherFragment(USER_KEY);
             }
         });
 
@@ -307,7 +310,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
                 @Override
                 public void onClick(View view) {
                     Log.i(TAG, "edit button clicked");
-                    goToOtherFragment("compose");
+                    goToOtherFragment(COMPOSE_KEY);
                 }
             });
         } else {
@@ -333,15 +336,15 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private void goToOtherFragment(String fragmentName) {
         final FragmentManager fragmentManager = ((AppCompatActivity)getContext()).getSupportFragmentManager();
         Fragment fragment = null;
-        if (fragmentName.equals("charity")) {
+        if (fragmentName.equals(CHARITY_KEY)) {
             //go to charity fragment
             fragment = CharityFragment.newInstance(offering.getCharity().getTitle());
-        } else if (fragmentName.equals("user")) {
+        } else if (fragmentName.equals(USER_KEY)) {
             //go to other user profile fragment
             Bundle bundle = new Bundle();
-            bundle.putParcelable("user", offering.getUser());
+            bundle.putParcelable(USER_KEY, offering.getUser());
             fragment = OtherUserProfileFragment.newInstance(bundle);
-        } else if (fragmentName.equals("compose")) {
+        } else if (fragmentName.equals(COMPOSE_KEY)) {
             // go to compose fragment to edit the offering
             Bundle bundle = new Bundle();
             bundle.putParcelable("offering", offering);
@@ -383,6 +386,7 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
             startActivity(implicit);
         } else {
             Toast.makeText(getContext(), "You must have venmo installed", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         purchase.purchaseItem(offering, btnPurchase, notificationLoader, getContext(), tvQuantityLeft);
