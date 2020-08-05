@@ -93,7 +93,7 @@ public class MoneyRaised {
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
 
-        final HashMap<Charity, Integer> moneyRaisedByCharity = new HashMap<>();
+        final HashMap<String, Integer> moneyRaisedByCharity = new HashMap<>();
 
         query.queryAllPosts(new FindCallback<Offering>() {
             @Override
@@ -106,27 +106,34 @@ public class MoneyRaised {
                             if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
-                                Charity charity = null;
+                                String charityName = null;
                                 try {
-                                    charity = offering.getCharity().fetchIfNeeded();
+                                    Charity charity = offering.getCharity().fetchIfNeeded();
+                                    charityName = charity.getTitle();
                                 } catch (ParseException ex) {
                                     ex.printStackTrace();
                                 }
-                                if (moneyRaisedByCharity.containsKey(charity)) {
-                                    moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice());
+                                if (moneyRaisedByCharity.containsKey(charityName)) {
+                                    moneyRaisedByCharity.put(charityName, moneyRaisedByCharity.get(charityName) + offering.getPrice());
                                 } else {
-                                    moneyRaisedByCharity.put(charity, offering.getPrice());
+                                    moneyRaisedByCharity.put(charityName, offering.getPrice());
                                 }
                             }
                         }
                         if (offering.getUser().getObjectId().equals(parentProfile.user.getObjectId())) {
                             //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
-                            Charity charity = offering.getCharity();
-                            if (moneyRaisedByCharity.containsKey(charity)) {
-                                moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice() * boughtUsers.size());
+                            String charityName = null;
+                            try {
+                                Charity charity = offering.getCharity().fetchIfNeeded();
+                                charityName = charity.getTitle();
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
+                            if (moneyRaisedByCharity.containsKey(charityName)) {
+                                moneyRaisedByCharity.put(charityName, moneyRaisedByCharity.get(charityName) + offering.getPrice() * boughtUsers.size());
                             } else {
-                                moneyRaisedByCharity.put(charity, offering.getPrice() * boughtUsers.size());
+                                moneyRaisedByCharity.put(charityName, offering.getPrice() * boughtUsers.size());
                             }
                         }
                     }
@@ -161,29 +168,7 @@ public class MoneyRaised {
                             .into(parentProfile.ivLevelIcon);
                 }
 
-                //sort map
-                HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
-                query.sortedMapMoneyRaisedByCharity = sortedMap;
-
-                //make map that has only one entry by charity (add up all the prices)
-                HashMap<String, Integer> consolidateMapByCharity = new HashMap<>();
-                for (Map.Entry mapElement : query.sortedMapMoneyRaisedByCharity.entrySet()) {
-                    Charity key = (Charity) mapElement.getKey();
-                    Charity charity = null;
-                    try {
-                        charity = key.fetchIfNeeded();
-                    } catch (ParseException e2) {
-                        e2.printStackTrace();
-                    }
-                    int value = (int) mapElement.getValue();
-
-                    if (consolidateMapByCharity.containsKey(charity.getTitle())) {
-                        consolidateMapByCharity.put(charity.getTitle(), consolidateMapByCharity.get(charity.getTitle()) + value);
-                    } else {
-                        consolidateMapByCharity.put(charity.getTitle(), value);
-                    }
-                }
-                query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(consolidateMapByCharity);
+                query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(moneyRaisedByCharity);
 
                 Map.Entry<String,Integer> entry = query.moneyRaisedForPersonByCharity.entrySet().iterator().next();
                 String key = entry.getKey();
@@ -201,26 +186,6 @@ public class MoneyRaised {
                 });
             }
         });
-    }
-
-    //sorts map with the largest number of points first
-    public HashMap<Charity, Integer> sortMapByPoints(Map<Charity, Integer> pointValues) {
-        // Create a list from elements of HashMap
-        List<Map.Entry<Charity, Integer> > list = new LinkedList<Map.Entry<Charity, Integer> >(pointValues.entrySet());
-
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<Charity, Integer>>() {
-            public int compare(Map.Entry<Charity, Integer> o1, Map.Entry<Charity, Integer> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<Charity, Integer> temp = new LinkedHashMap<Charity, Integer>();
-        for (Map.Entry<Charity, Integer> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
-        }
-        return temp;
     }
 
     //sorts map with the largest number of points first

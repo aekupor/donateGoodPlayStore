@@ -27,7 +27,6 @@ public class Query {
     private List<Offering> savedSoldPostsForUser;
     private List<Offering> savedSellingPostsForCharity;
     private List<Offering> savedSoldPostsForCharity;
-    public  HashMap<Charity, Integer> sortedMapMoneyRaisedByCharity;
     public HashMap<String, Integer> moneyRaisedForPersonByCharity;
     public HashMap<String, Integer> moneyRaisedForCharityByPerson;
 
