@@ -57,10 +57,10 @@ public class MoneyRaised {
                         }
                     }
                 }
-                tvMoney.setText("$" + moneyRaised[0].toString());
 
                 //make map that has only one entry by user (add up all the prices)
                 HashMap<String, Integer> consolidateMapByUser = new HashMap<>();
+                Integer totalMoney = 0;
                 for (Map.Entry mapElement : moneyRaisedByPerson.entrySet()) {
                     ParseUser key = (ParseUser) mapElement.getKey();
                     ParseUser user = null;
@@ -70,6 +70,7 @@ public class MoneyRaised {
                         e2.printStackTrace();
                     }
                     int value = (int)mapElement.getValue();
+                    totalMoney += value;
 
                     if (consolidateMapByUser.containsKey(user.getUsername())) {
                         consolidateMapByUser.put(user.getUsername(), consolidateMapByUser.get(user.getUsername()) + value);
@@ -77,6 +78,7 @@ public class MoneyRaised {
                         consolidateMapByUser.put(user.getUsername(), value);
                     }
                 }
+                tvMoney.setText("$" + totalMoney.toString());
 
                 HashMap<String, Integer> sortedMap = sortMapByPointsByUser(consolidateMapByUser);
                 query.moneyRaisedForCharityByPerson = sortedMap;
