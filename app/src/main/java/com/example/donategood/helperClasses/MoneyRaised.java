@@ -51,6 +51,7 @@ public class MoneyRaised {
                         }
                     }
                 }
+
                 // NOTE: tvMoney will be actual amount of money raised for a charity,
                 // while the values in moneyRaisedMap will add up to twice that amount.
                 // Ex: Nathan buys Ashlee's product for $10 for Charity X. The amount of money
@@ -101,20 +102,7 @@ public class MoneyRaised {
 
                 query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(moneyRaisedByCharity);
 
-                Map.Entry<String,Integer> entry = query.moneyRaisedForPersonByCharity.entrySet().iterator().next();
-                String key = entry.getKey();
-
-                query.findCharity(key, new FindCallback<Charity>() {
-                    @Override
-                    public void done(List<Charity> objects, ParseException e) {
-                        //set charity icon with profile image of charity with most money raised
-                        Glide.with(context)
-                                .load(objects.get(0).getImage().getUrl())
-                                .into(parentProfile.ivCharityIcon);
-                        parentProfile.pb.setVisibility(View.INVISIBLE);
-                        return;
-                    }
-                });
+                setCharityIcon(query, context, parentProfile);
             }
         });
     }
@@ -196,5 +184,22 @@ public class MoneyRaised {
         } else {
             map.put(username, money);
         }
+    }
+
+    public void setCharityIcon(Query query, final Context context, final ParentProfile parentProfile) {
+        Map.Entry<String,Integer> entry = query.moneyRaisedForPersonByCharity.entrySet().iterator().next();
+        String key = entry.getKey();
+
+        query.findCharity(key, new FindCallback<Charity>() {
+            @Override
+            public void done(List<Charity> objects, ParseException e) {
+                //set charity icon with profile image of charity with most money raised
+                Glide.with(context)
+                        .load(objects.get(0).getImage().getUrl())
+                        .into(parentProfile.ivCharityIcon);
+                parentProfile.pb.setVisibility(View.INVISIBLE);
+                return;
+            }
+        });
     }
 }
