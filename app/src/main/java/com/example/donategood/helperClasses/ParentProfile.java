@@ -205,7 +205,7 @@ public class ParentProfile {
     //set information for current or other user profile
     public void queryInfo(Context context, View view) {
         loadPost.setUser(user, context, tvName, ivProfileImage);
-        moneyRaised.queryMoneyRaised(this, context, query);
+        moneyRaised.queryMoneyRaisedByUser(this, context, query);
         queryPosts(KEY_BOUGHT);
         query.setUserRating(user, ratingBar);
         if (profileType != KEY_CURRENT_USER) {
@@ -217,7 +217,7 @@ public class ParentProfile {
     public void queryCharityInfo(Context context, View view) {
         pb.setVisibility(View.VISIBLE);
         loadPost.setCharityWithCharity(charity, context, tvName, ivProfileImage);
-        moneyRaised.findCharityMoneyRaised(charity, tvMoneyRaised, pb, query);
+        moneyRaised.queryMoneyRaisedForCharity(charity, tvMoneyRaised, pb, query);
         follow.initializeFollow(view, context, this);
         follow.checkIfFollowing(this);
         queryPosts(KEY_SOLD);
@@ -235,9 +235,9 @@ public class ParentProfile {
     public String getAnalytics() {
         HashMap<String, Integer> moneyByCharity;
         if (profileType == KEY_CHARITY) {
-            moneyByCharity = query.getMoneyRaisedForCharityByPerson();
+            moneyByCharity = query.getMoneyRaisedForSpecificCharity();
         } else {
-            moneyByCharity = query.getMoneyRaisedForPersonByCharity();
+            moneyByCharity = query.getMoneyRaisedBySpecificUser();
         }
         String analytics = "";
         for (Map.Entry mapElement : moneyByCharity.entrySet()) {

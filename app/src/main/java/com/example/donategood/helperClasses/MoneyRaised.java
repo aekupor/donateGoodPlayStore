@@ -24,109 +24,80 @@ import java.util.Map;
 
 public class MoneyRaised {
 
+    public static final String TAG = "MoneyRaised";
+
     //determines amount of money raised for a charity
-    public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney, final ProgressBar pb, final Query query) {
+    public void queryMoneyRaisedForCharity(final Charity charity, final TextView tvMoney, final ProgressBar pb, final Query query) {
         pb.setVisibility(View.VISIBLE);
+
+        final HashMap<String, Integer> moneyRaisedMap = new HashMap<>();
         final Integer[] moneyRaised = {0};
-        final HashMap<ParseUser, Integer> moneyRaisedByPerson = new HashMap<>();
         query.queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {
                     if (offering.getCharity().getObjectId().equals(charity.getObjectId())) {
                         ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+
                         if (boughtUsers != null && !boughtUsers.isEmpty()) {
                             moneyRaised[0] += boughtUsers.size() * offering.getPrice();
 
-                            //fill HashMap with users
+                            //give the "buyers" of the offering credit towards supporting that charity
                             for (Object boughtObject : boughtUsers) {
-                                ParseUser boughtUser = (ParseUser) boughtObject;
-                                //add each user who bought an item for that charity
-                                if (moneyRaisedByPerson.containsKey(boughtUser)) {
-                                    moneyRaisedByPerson.put(boughtUser, moneyRaisedByPerson.get(boughtUser) + offering.getPrice());
-                                } else {
-                                    moneyRaisedByPerson.put(boughtUser, offering.getPrice());
-                                }
+                                addToMapWithUser((ParseUser)boughtObject, moneyRaisedMap, offering.getPrice());
                             }
-                            //add sellers who raised money for that charity
-                            if (moneyRaisedByPerson.containsKey(offering.getUser())) {
-                                moneyRaisedByPerson.put(offering.getUser(), moneyRaisedByPerson.get(offering.getUser()) + offering.getPrice() * boughtUsers.size());
-                            } else {
-                                moneyRaisedByPerson.put(offering.getUser(), offering.getPrice());
-                            }
+
+                            //give the "sellers" of the offering credit towards supporting that charity
+                            addToMapWithUser(offering.getUser(), moneyRaisedMap, offering.getPrice() * boughtUsers.size());
                         }
                     }
                 }
+
+                // NOTE: tvMoney will be actual amount of money raised for a charity,
+                // while the values in moneyRaisedMap will add up to twice that amount.
+                // Ex: Nathan buys Ashlee's product for $10 for Charity X. The amount of money
+                // raised for that charity is $10, but Nathan and Ashlee both get $10 of credit
+                // towards supporting that charity.
+
+                //set money raised
                 tvMoney.setText("$" + moneyRaised[0].toString());
 
-                //make map that has only one entry by user (add up all the prices)
-                HashMap<String, Integer> consolidateMapByUser = new HashMap<>();
-                for (Map.Entry mapElement : moneyRaisedByPerson.entrySet()) {
-                    ParseUser key = (ParseUser) mapElement.getKey();
-                    ParseUser user = null;
-                    try {
-                        user = key.fetchIfNeeded();
-                    } catch (ParseException e2) {
-                        e2.printStackTrace();
-                    }
-                    int value = (int)mapElement.getValue();
-
-                    if (consolidateMapByUser.containsKey(user.getUsername())) {
-                        consolidateMapByUser.put(user.getUsername(), consolidateMapByUser.get(user.getUsername()) + value);
-                    } else {
-                        consolidateMapByUser.put(user.getUsername(), value);
-                    }
-                }
-
-                HashMap<String, Integer> sortedMap = sortMapByPointsByUser(consolidateMapByUser);
-                query.moneyRaisedForCharityByPerson = sortedMap;
+                //save map
+                query.moneyRaisedForSpecificCharity = sortMapByValues(moneyRaisedMap);
                 pb.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     //find money raised by a specified user
-    public void queryMoneyRaised(final ParentProfile parentProfile, final Context context, final Query query) {
+    public void queryMoneyRaisedByUser(final ParentProfile parentProfile, final Context context, final Query query) {
         parentProfile.pb.setVisibility(View.VISIBLE);
 
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
-
-        final HashMap<Charity, Integer> moneyRaisedByCharity = new HashMap<>();
+        final HashMap<String, Integer> moneyRaisedMap = new HashMap<>();
 
         query.queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {
                     ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+
                     if (boughtUsers != null && !boughtUsers.isEmpty()) {
                         for (Object object : boughtUsers) {
                             ParseUser user = (ParseUser) object;
+
                             if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
-                                Charity charity = null;
-                                try {
-                                    charity = offering.getCharity().fetchIfNeeded();
-                                } catch (ParseException ex) {
-                                    ex.printStackTrace();
-                                }
-                                if (moneyRaisedByCharity.containsKey(charity)) {
-                                    moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice());
-                                } else {
-                                    moneyRaisedByCharity.put(charity, offering.getPrice());
-                                }
+                                addToMapWithOffering(offering, moneyRaisedMap, offering.getPrice());
                             }
                         }
+
                         if (offering.getUser().getObjectId().equals(parentProfile.user.getObjectId())) {
                             //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
-                            Charity charity = offering.getCharity();
-                            if (moneyRaisedByCharity.containsKey(charity)) {
-                                moneyRaisedByCharity.put(charity, moneyRaisedByCharity.get(charity) + offering.getPrice() * boughtUsers.size());
-                            } else {
-                                moneyRaisedByCharity.put(charity, offering.getPrice() * boughtUsers.size());
-                            }
+                            addToMapWithOffering(offering, moneyRaisedMap, offering.getPrice() * boughtUsers.size());
                         }
                     }
                 }
@@ -134,96 +105,18 @@ public class MoneyRaised {
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 parentProfile.tvMoneyRaised.setText("$" + totalMoney.toString());
 
-                //determine the level of the user based on the amount of money raised + sold
-                int iconImage = -1;
-                if (totalMoney < 100) {
-                    iconImage = R.drawable.level_one;
-                } else if (totalMoney < 200) {
-                    iconImage = R.drawable.level_two;
-                } else if (totalMoney < 300) {
-                    iconImage = R.drawable.level_three;
-                } else if (totalMoney < 400) {
-                    iconImage = R.drawable.level_four;
-                } else if (totalMoney < 500) {
-                    iconImage = R.drawable.level_five;
-                } else {
-                    iconImage = R.drawable.crown;
-                }
+                //save map
+                query.moneyRaisedBySpecificUser = sortMapByValues(moneyRaisedMap);
 
-                //set icon based on level
-                if (totalMoney < 25) {
-                    parentProfile.ivLevelIcon.setVisibility(View.INVISIBLE);
-                } else {
-                    Glide.with(context)
-                            .load(iconImage)
-                            .circleCrop()
-                            .into(parentProfile.ivLevelIcon);
-                }
-
-                //sort map
-                HashMap<Charity, Integer> sortedMap = sortMapByPoints(moneyRaisedByCharity);
-                query.sortedMapMoneyRaisedByCharity = sortedMap;
-
-                //make map that has only one entry by charity (add up all the prices)
-                HashMap<String, Integer> consolidateMapByCharity = new HashMap<>();
-                for (Map.Entry mapElement : query.sortedMapMoneyRaisedByCharity.entrySet()) {
-                    Charity key = (Charity) mapElement.getKey();
-                    Charity charity = null;
-                    try {
-                        charity = key.fetchIfNeeded();
-                    } catch (ParseException e2) {
-                        e2.printStackTrace();
-                    }
-                    int value = (int) mapElement.getValue();
-
-                    if (consolidateMapByCharity.containsKey(charity.getTitle())) {
-                        consolidateMapByCharity.put(charity.getTitle(), consolidateMapByCharity.get(charity.getTitle()) + value);
-                    } else {
-                        consolidateMapByCharity.put(charity.getTitle(), value);
-                    }
-                }
-                query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(consolidateMapByCharity);
-
-                Map.Entry<String,Integer> entry = query.moneyRaisedForPersonByCharity.entrySet().iterator().next();
-                String key = entry.getKey();
-
-                query.findCharity(key, new FindCallback<Charity>() {
-                    @Override
-                    public void done(List<Charity> objects, ParseException e) {
-                        //set charity icon with profile image of charity with most money raised
-                        Glide.with(context)
-                                .load(objects.get(0).getImage().getUrl())
-                                .into(parentProfile.ivCharityIcon);
-                        parentProfile.pb.setVisibility(View.INVISIBLE);
-                        return;
-                    }
-                });
+                //set appropriate icons for user
+                setIcon(totalMoney, parentProfile, context, determineImage(totalMoney));
+                setCharityIcon(query, context, parentProfile);
             }
         });
     }
 
     //sorts map with the largest number of points first
-    public HashMap<Charity, Integer> sortMapByPoints(Map<Charity, Integer> pointValues) {
-        // Create a list from elements of HashMap
-        List<Map.Entry<Charity, Integer> > list = new LinkedList<Map.Entry<Charity, Integer> >(pointValues.entrySet());
-
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<Charity, Integer>>() {
-            public int compare(Map.Entry<Charity, Integer> o1, Map.Entry<Charity, Integer> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<Charity, Integer> temp = new LinkedHashMap<Charity, Integer>();
-        for (Map.Entry<Charity, Integer> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
-        }
-        return temp;
-    }
-
-    //sorts map with the largest number of points first
-    public HashMap<String, Integer> sortMapByPointsByUser(Map<String, Integer> pointValues) {
+    public HashMap<String, Integer> sortMapByValues(Map<String, Integer> pointValues) {
         // Create a list from elements of HashMap
         List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(pointValues.entrySet());
 
@@ -240,5 +133,81 @@ public class MoneyRaised {
             temp.put(aa.getKey(), aa.getValue());
         }
         return temp;
+    }
+
+    //determine the level of the user based on the amount of money raised + sold
+    public Integer determineImage(Integer totalMoney) {
+        if (totalMoney < 100) {
+            return R.drawable.level_one;
+        } else if (totalMoney < 200) {
+            return R.drawable.level_two;
+        } else if (totalMoney < 300) {
+            return R.drawable.level_three;
+        } else if (totalMoney < 400) {
+            return R.drawable.level_four;
+        } else if (totalMoney < 500) {
+            return R.drawable.level_five;
+        } else {
+            return R.drawable.crown;
+        }
+    }
+
+    //set icon based on level
+    public void setIcon(Integer totalMoney, ParentProfile parentProfile, Context context, Integer iconImage) {
+        if (totalMoney < 25) {
+            parentProfile.ivLevelIcon.setVisibility(View.INVISIBLE);
+        } else {
+            Glide.with(context)
+                    .load(iconImage)
+                    .circleCrop()
+                    .into(parentProfile.ivLevelIcon);
+        }
+    }
+
+    public void addToMapWithOffering(Offering offering, Map<String, Integer> map, Integer money) {
+        String charityName = null;
+        try {
+            Charity charity = offering.getCharity().fetchIfNeeded();
+            charityName = charity.getTitle();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        if (map.containsKey(charityName)) {
+            map.put(charityName, map.get(charityName) + money);
+        } else {
+            map.put(charityName, money);
+        }
+    }
+
+    public void addToMapWithUser(ParseUser user, Map<String, Integer> map, Integer money) {
+        String username = "";
+        try {
+            username = user.fetchIfNeeded().getUsername();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        if (map.containsKey(username)) {
+            map.put(username, map.get(username) + money);
+        } else {
+            map.put(username, money);
+        }
+    }
+
+    public void setCharityIcon(Query query, final Context context, final ParentProfile parentProfile) {
+        Map.Entry<String,Integer> entry = query.moneyRaisedBySpecificUser.entrySet().iterator().next();
+        String key = entry.getKey();
+
+        query.findCharity(key, new FindCallback<Charity>() {
+            @Override
+            public void done(List<Charity> objects, ParseException e) {
+                //set charity icon with profile image of charity with most money raised
+                Glide.with(context)
+                        .load(objects.get(0).getImage().getUrl())
+                        .into(parentProfile.ivCharityIcon);
+                parentProfile.pb.setVisibility(View.INVISIBLE);
+                return;
+            }
+        });
     }
 }
