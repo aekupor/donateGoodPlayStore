@@ -41,7 +41,7 @@ public class MoneyRaised {
                         if (boughtUsers != null && !boughtUsers.isEmpty()) {
                             moneyRaised[0] += boughtUsers.size() * offering.getPrice();
 
-                            //fill HashMap with users
+                            //give the "buyers" of the offering credit towards supporting that charity
                             for (Object boughtObject : boughtUsers) {
                                 ParseUser boughtUser = (ParseUser) boughtObject;
                                 String boughtUsername = "";
@@ -58,13 +58,14 @@ public class MoneyRaised {
                                 }
                             }
 
-                            //add sellers who raised money for that charity
+                            //give the "sellers" of the offering credit towards supporting that charity
                             String username = "";
                             try {
                                 username = offering.getUser().fetchIfNeeded().getUsername();
                             } catch (ParseException ex) {
                                 ex.printStackTrace();
                             }
+
                             if (moneyRaisedMap.containsKey(username)) {
                                 moneyRaisedMap.put(username, moneyRaisedMap.get(username) + offering.getPrice() * boughtUsers.size());
                             } else {
@@ -73,6 +74,11 @@ public class MoneyRaised {
                         }
                     }
                 }
+                // NOTE: tvMoney will be actual amount of money raised for a charity,
+                // while the values in moneyRaisedMap will add up to twice that amount.
+                // Ex: Nathan buys Ashlee's product for $10 for Charity X. The amount of money
+                // raised for that charity is $10, but Nathan and Ashlee both get $10 of credit
+                // towards supporting that charity.
                 tvMoney.setText("$" + moneyRaised[0].toString());
                 query.moneyRaisedForCharityByPerson = sortMapByPointsByUser(moneyRaisedMap);
                 pb.setVisibility(View.INVISIBLE);
