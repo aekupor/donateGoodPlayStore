@@ -167,7 +167,7 @@ public class Query {
                     }
                 }
                 if (numPosts[0] == 0) {
-                    ratingBar.setNumStars(0);
+                    ratingBar.setVisibility(View.INVISIBLE);
                 } else {
                     ratingBar.setNumStars(totalRating[0] / numPosts[0]);
                 }
@@ -242,7 +242,7 @@ public class Query {
                         }
                     }
                 }
-                savedBoughtPostsForUser = offerings;
+                savedBoughtPostsForUser = newOfferings;
                 updateAdapter(parentProfile, newOfferings);
             }
         });

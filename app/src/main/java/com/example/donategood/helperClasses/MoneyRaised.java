@@ -195,6 +195,10 @@ public class MoneyRaised {
     }
 
     public void setCharityIcon(Query query, final Context context, final ParentProfile parentProfile) {
+        if (query.moneyRaisedBySpecificUser.isEmpty()) {
+            parentProfile.ivCharityIcon.setVisibility(View.INVISIBLE);
+            return;
+        }
         Map.Entry<String,Integer> entry = query.moneyRaisedBySpecificUser.entrySet().iterator().next();
         String key = entry.getKey();
 
