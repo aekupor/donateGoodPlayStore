@@ -63,7 +63,7 @@ public class MoneyRaised {
                 tvMoney.setText("$" + moneyRaised[0].toString());
 
                 //save map
-                query.moneyRaisedForSpecificCharity = sortMapByPointsByUser(moneyRaisedMap);
+                query.moneyRaisedForSpecificCharity = sortMapByValues(moneyRaisedMap);
                 pb.setVisibility(View.INVISIBLE);
             }
         });
@@ -105,18 +105,18 @@ public class MoneyRaised {
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 parentProfile.tvMoneyRaised.setText("$" + totalMoney.toString());
 
+                //save map
+                query.moneyRaisedBySpecificUser = sortMapByValues(moneyRaisedMap);
+
                 //set appropriate icons for user
                 setIcon(totalMoney, parentProfile, context, determineImage(totalMoney));
                 setCharityIcon(query, context, parentProfile);
-
-                //save map
-                query.moneyRaisedBySpecificUser = sortMapByPointsByUser(moneyRaisedMap);
             }
         });
     }
 
     //sorts map with the largest number of points first
-    public HashMap<String, Integer> sortMapByPointsByUser(Map<String, Integer> pointValues) {
+    public HashMap<String, Integer> sortMapByValues(Map<String, Integer> pointValues) {
         // Create a list from elements of HashMap
         List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(pointValues.entrySet());
 
