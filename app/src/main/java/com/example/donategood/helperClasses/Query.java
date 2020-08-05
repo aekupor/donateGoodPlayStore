@@ -27,8 +27,8 @@ public class Query {
     private List<Offering> savedSoldPostsForUser;
     private List<Offering> savedSellingPostsForCharity;
     private List<Offering> savedSoldPostsForCharity;
-    public HashMap<String, Integer> moneyRaisedForPersonByCharity;
-    public HashMap<String, Integer> moneyRaisedForCharityByPerson;
+    public HashMap<String, Integer> moneyRaisedBySpecificUser;
+    public HashMap<String, Integer> moneyRaisedForSpecificCharity;
 
     //query all available posts with a page limit
     public void queryAllPostsByPage(Integer page, FindCallback<Offering> callback) {
@@ -297,11 +297,11 @@ public class Query {
         query.findInBackground(callback);
     }
 
-    public HashMap<String, Integer> getMoneyRaisedForPersonByCharity() {
-        return moneyRaisedForPersonByCharity;
+    public HashMap<String, Integer> getMoneyRaisedBySpecificUser() {
+        return moneyRaisedBySpecificUser;
     }
 
-    public HashMap<String, Integer> getMoneyRaisedForCharityByPerson() {
-        return moneyRaisedForCharityByPerson;
+    public HashMap<String, Integer> getMoneyRaisedForSpecificCharity() {
+        return moneyRaisedForSpecificCharity;
     }
 }

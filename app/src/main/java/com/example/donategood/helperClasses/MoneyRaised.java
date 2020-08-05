@@ -27,7 +27,7 @@ public class MoneyRaised {
     public static final String TAG = "MoneyRaised";
 
     //determines amount of money raised for a charity
-    public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney, final ProgressBar pb, final Query query) {
+    public void queryMoneyRaisedForCharity(final Charity charity, final TextView tvMoney, final ProgressBar pb, final Query query) {
         pb.setVisibility(View.VISIBLE);
 
         final HashMap<String, Integer> moneyRaisedMap = new HashMap<>();
@@ -38,6 +38,7 @@ public class MoneyRaised {
                 for (Offering offering : objects) {
                     if (offering.getCharity().getObjectId().equals(charity.getObjectId())) {
                         ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+
                         if (boughtUsers != null && !boughtUsers.isEmpty()) {
                             moneyRaised[0] += boughtUsers.size() * offering.getPrice();
 
@@ -57,40 +58,46 @@ public class MoneyRaised {
                 // Ex: Nathan buys Ashlee's product for $10 for Charity X. The amount of money
                 // raised for that charity is $10, but Nathan and Ashlee both get $10 of credit
                 // towards supporting that charity.
+
+                //set money raised
                 tvMoney.setText("$" + moneyRaised[0].toString());
-                query.moneyRaisedForCharityByPerson = sortMapByPointsByUser(moneyRaisedMap);
+
+                //save map
+                query.moneyRaisedForSpecificCharity = sortMapByPointsByUser(moneyRaisedMap);
                 pb.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     //find money raised by a specified user
-    public void queryMoneyRaised(final ParentProfile parentProfile, final Context context, final Query query) {
+    public void queryMoneyRaisedByUser(final ParentProfile parentProfile, final Context context, final Query query) {
         parentProfile.pb.setVisibility(View.VISIBLE);
 
         final Integer[] moneyRaised = {0};
         final Integer[] moneySold = {0};
-
-        final HashMap<String, Integer> moneyRaisedByCharity = new HashMap<>();
+        final HashMap<String, Integer> moneyRaisedMap = new HashMap<>();
 
         query.queryAllPosts(new FindCallback<Offering>() {
             @Override
             public void done(List<Offering> objects, ParseException e) {
                 for (Offering offering : objects) {
                     ArrayList<Object> boughtUsers = offering.getBoughtByArray();
+
                     if (boughtUsers != null && !boughtUsers.isEmpty()) {
                         for (Object object : boughtUsers) {
                             ParseUser user = (ParseUser) object;
+
                             if (user.getObjectId().equals(parentProfile.user.getObjectId())) {
                                 //if user bought the offering, add its price to the total money raised
                                 moneyRaised[0] += offering.getPrice();
-                                addToMapWithOffering(offering, moneyRaisedByCharity, offering.getPrice());
+                                addToMapWithOffering(offering, moneyRaisedMap, offering.getPrice());
                             }
                         }
+
                         if (offering.getUser().getObjectId().equals(parentProfile.user.getObjectId())) {
                             //if user sold the offering, add its price * quantity sold to the total money sold
                             moneySold[0] += offering.getPrice() * boughtUsers.size();
-                            addToMapWithOffering(offering, moneyRaisedByCharity, offering.getPrice() * boughtUsers.size());
+                            addToMapWithOffering(offering, moneyRaisedMap, offering.getPrice() * boughtUsers.size());
                         }
                     }
                 }
@@ -98,11 +105,12 @@ public class MoneyRaised {
                 Integer totalMoney = moneyRaised[0] + moneySold[0];
                 parentProfile.tvMoneyRaised.setText("$" + totalMoney.toString());
 
+                //set appropriate icons for user
                 setIcon(totalMoney, parentProfile, context, determineImage(totalMoney));
-
-                query.moneyRaisedForPersonByCharity = sortMapByPointsByUser(moneyRaisedByCharity);
-
                 setCharityIcon(query, context, parentProfile);
+
+                //save map
+                query.moneyRaisedBySpecificUser = sortMapByPointsByUser(moneyRaisedMap);
             }
         });
     }
@@ -187,7 +195,7 @@ public class MoneyRaised {
     }
 
     public void setCharityIcon(Query query, final Context context, final ParentProfile parentProfile) {
-        Map.Entry<String,Integer> entry = query.moneyRaisedForPersonByCharity.entrySet().iterator().next();
+        Map.Entry<String,Integer> entry = query.moneyRaisedBySpecificUser.entrySet().iterator().next();
         String key = entry.getKey();
 
         query.findCharity(key, new FindCallback<Charity>() {
