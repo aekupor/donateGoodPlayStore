@@ -21,11 +21,18 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class MoneyRaised {
 
+    public static final String TAG = "MoneyRaised";
+
     //determines amount of money raised for a charity
     public void findCharityMoneyRaised(final Charity charity, final TextView tvMoney, final ProgressBar pb, final Query query) {
+
+        final TreeMap<String, Integer> tmap = new TreeMap();
+
+
         pb.setVisibility(View.VISIBLE);
         final Integer[] moneyRaised = {0};
         final HashMap<ParseUser, Integer> moneyRaisedByPerson = new HashMap<>();
@@ -41,18 +48,44 @@ public class MoneyRaised {
                             //fill HashMap with users
                             for (Object boughtObject : boughtUsers) {
                                 ParseUser boughtUser = (ParseUser) boughtObject;
+                                String boughtUsername = "";
+                                try {
+                                    boughtUsername = boughtUser.fetchIfNeeded().getUsername();
+                                } catch (ParseException ex) {
+                                    ex.printStackTrace();
+                                }
                                 //add each user who bought an item for that charity
                                 if (moneyRaisedByPerson.containsKey(boughtUser)) {
                                     moneyRaisedByPerson.put(boughtUser, moneyRaisedByPerson.get(boughtUser) + offering.getPrice());
                                 } else {
                                     moneyRaisedByPerson.put(boughtUser, offering.getPrice());
                                 }
+
+                                if (tmap.containsKey(boughtUsername)) {
+                                    tmap.put(boughtUsername, tmap.get(boughtUsername) + offering.getPrice());
+                                } else {
+                                    tmap.put(boughtUsername, offering.getPrice());
+                                }
                             }
                             //add sellers who raised money for that charity
+
+                            String username = "";
+                            try {
+                                username = offering.getUser().fetchIfNeeded().getUsername();
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
                             if (moneyRaisedByPerson.containsKey(offering.getUser())) {
                                 moneyRaisedByPerson.put(offering.getUser(), moneyRaisedByPerson.get(offering.getUser()) + offering.getPrice() * boughtUsers.size());
                             } else {
                                 moneyRaisedByPerson.put(offering.getUser(), offering.getPrice());
+                                tmap.put(username, offering.getPrice());
+                            }
+
+                            if (tmap.containsKey(username)) {
+                                tmap.put(username, tmap.get(username) + offering.getPrice() * boughtUsers.size());
+                            } else {
+                                tmap.put(username, offering.getPrice());
                             }
                         }
                     }
