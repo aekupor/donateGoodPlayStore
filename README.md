@@ -3,6 +3,8 @@
 ## Demo
 View a 2 minute [Video Demo](https://youtu.be/ltUCjAmkABA) of the app.
 
+![Home page](https://imgur.com/a/bU2N3A6.gif)
+
 ## Overview
 ### Description
 A marketplace where all proceeds are donated to charities. 
