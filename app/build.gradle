@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.example.donategood"
+        applicationId "com.ashleeProject.donategood"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -20,6 +20,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    aaptOptions { cruncherEnabled = false }
+
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
