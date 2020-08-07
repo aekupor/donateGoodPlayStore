@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentManager;
 import com.example.donategood.LoginActivity;
 import com.example.donategood.R;
 import com.example.donategood.helperClasses.Camera;
-import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.ParentProfile;
 import com.parse.ParseUser;
 

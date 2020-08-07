@@ -28,7 +28,6 @@ import com.example.donategood.R;
 import com.example.donategood.adapters.CommentAdapter;
 import com.example.donategood.adapters.SmallOfferingAdapter;
 import com.example.donategood.helperClasses.CommentLoader;
-import com.example.donategood.helperClasses.FBQuery;
 import com.example.donategood.helperClasses.LoadPost;
 import com.example.donategood.helperClasses.NotificationLoader;
 import com.example.donategood.helperClasses.Purchase;
