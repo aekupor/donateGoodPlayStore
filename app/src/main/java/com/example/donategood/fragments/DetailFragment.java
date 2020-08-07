@@ -36,7 +36,6 @@ import com.example.donategood.helperClasses.Query;
 import com.example.donategood.helperClasses.Recommend;
 import com.example.donategood.models.Comment;
 import com.example.donategood.models.Offering;
-import com.facebook.share.widget.ShareButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -89,8 +88,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     public CommentAdapter commentAdapter;
     public List<Comment> allComments;
     public Integer numComments;
-
-    private ShareButton shareButton;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -145,7 +142,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         ivCharityImage = view.findViewById(R.id.ivDetailCharityImage);
         btnPurchase = view.findViewById(R.id.btnPurchase);
         ivOfferingPhoto = view.findViewById(R.id.ivDetailOfferingPhoto);
-        shareButton = (ShareButton)view.findViewById(R.id.fbShareButtonDetail);
         rvRecommendedOfferings = view.findViewById(R.id.rvRecommendOfferings);
         btnComment = view.findViewById(R.id.btnComment);
         tvQuantityLeft = view.findViewById(R.id.tvQuantityLeft);
@@ -289,7 +285,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         loadPost.setUserFromOffering(offering, getContext(), tvUser, ivProfileImage);
         loadPost.setCharity(offering, getContext(), tvCharity, ivCharityImage);
         loadPost.setPostImage(offering.getImage(), getContext(), ivOfferingPhoto);
-        fbQuery.setShareButton(shareButton, offering, this);
         recommend.queryRecommendedPosts(query, offering, adapter, recommendedOfferings);
         commentLoader.queryComments(this);
 

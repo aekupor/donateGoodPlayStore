@@ -22,14 +22,6 @@
             tools:layout_editor_absoluteY="110dp"
             tools:text="Test Offering" />
 
-        <com.facebook.share.widget.ShareButton
-            android:id="@+id/fbShareButtonDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivDetailCharityImage"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/btnComment" />
-
         <TextView
             android:id="@+id/tvDetailPrice"
             android:layout_width="wrap_content"
