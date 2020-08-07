@@ -58,7 +58,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
     private Recommend recommend;
     private CommentLoader commentLoader;
     private Purchase purchase;
-    private FBQuery fbQuery;
 
     private TextView tvTitle;
     private TextView tvPrice;
@@ -160,7 +159,6 @@ public class DetailFragment extends Fragment implements ComposeCommentFragment.C
         recommend = new Recommend();
         commentLoader = new CommentLoader();
         purchase = new Purchase();
-        fbQuery = new FBQuery();
 
         //set up recycler view and adapter for reccomended offerings
         recommendedOfferings = new ArrayList<>();

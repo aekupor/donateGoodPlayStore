@@ -10,8 +10,6 @@ import com.example.donategood.models.Comment;
 import com.example.donategood.models.Message;
 import com.example.donategood.models.Notification;
 import com.example.donategood.models.Offering;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -24,9 +22,6 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 
         // Register parse models
         ParseObject.registerSubclass(Offering.class);

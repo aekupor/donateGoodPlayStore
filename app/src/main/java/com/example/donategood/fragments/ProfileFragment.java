@@ -96,9 +96,6 @@ public class ProfileFragment extends Fragment implements ChangeNameFragment.Chan
         parentProfile.queryPosts(parentProfile.KEY_BOUGHT);
 
         camera = new Camera();
-
-        FBQuery fbQuery = new FBQuery();
-        fbQuery.checkFBLogin(parentProfile, getContext());
     }
 
     public static Camera getCamera() {
