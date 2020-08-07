@@ -10,14 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.LoginStatusCallback;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -33,58 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnLogin;
     private Button btnRegister;
-    private LoginButton fbLoginButton;
-    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        callbackManager = CallbackManager.Factory.create();
-
-        fbLoginButton = (LoginButton) findViewById(R.id.btnFBLogin);
-        fbLoginButton.setReadPermissions(Arrays.asList(EMAIL));
-
-        // FB callback registration
-        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                Log.i(TAG, "onSuccess FB login");
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-                Log.i(TAG, "onCancel FB login");
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Log.i(TAG, "onError FB login");
-            }
-        });
-
-        //enable express login
-        LoginManager.getInstance().retrieveLoginStatus(this, new LoginStatusCallback() {
-            @Override
-            public void onCompleted(AccessToken accessToken) {
-                // User was previously logged in, can log them in directly here.
-                // If this callback is called, a popup notification appears that says
-                // "Logged in as <User Name>"
-            }
-            @Override
-            public void onFailure() {
-                // No access token could be retrieved for the user
-            }
-            @Override
-            public void onError(Exception exception) {
-                // An error occurred
-            }
-        });
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
         //if user is already logged in, send to MainActivity
         if (ParseUser.getCurrentUser() != null) {
@@ -150,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
